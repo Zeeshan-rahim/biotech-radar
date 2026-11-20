@@ -1,0 +1,81 @@
+{
+ "state": {
+  "zone:NEU": "Hold",
+  "zone:DXB": "Hold",
+  "zone:EMV": "Sell",
+  "zone:CU6": "Buy",
+  "soon:cu6-c0": 1,
+  "zone:LTP": "Hold",
+  "overdue:ltp-c1": 1,
+  "ann:2924-03164135-6A1356001": 1,
+  "ann:2924-03162945-6A1355517": 1,
+  "ann:2924-03163553-2A1711428": 1
+ },
+ "log": [
+  {
+   "at": "2026-11-20T12:17+11:00",
+   "items": [
+    {
+     "key": "first",
+     "text": "First run of your radar: this shows where everything stands today.",
+     "level": "info"
+    },
+    {
+     "key": "zone:NEU",
+     "text": "**NEU** is in the hold zone (buy ≤ A$6.433, sell ≥ A$25.551).",
+     "level": "info"
+    },
+    {
+     "key": "zone:DXB",
+     "text": "**DXB** is in the hold zone (buy ≤ A$0.116, sell ≥ A$0.372).",
+     "level": "info"
+    },
+    {
+     "key": "zone:EMV",
+     "text": "**EMV** is at A$1.365, at or above your sell/trim price A$1.335 (draft assumptions — review them).",
+     "level": "action"
+    },
+    {
+     "key": "zone:CU6",
+     "text": "**CU6** is at A$1.868, at or below your buy price A$2.074 (draft assumptions — review them).",
+     "level": "action"
+    },
+    {
+     "key": "soon:cu6-c0",
+     "text": "**CU6** catalyst in 5 day(s): Annual general meeting (25 Nov 2026).",
+     "level": "info"
+    },
+    {
+     "key": "zone:LTP",
+     "text": "**LTP** is in the hold zone (buy ≤ A$0.340, sell ≥ A$0.447).",
+     "level": "info"
+    },
+    {
+     "key": "overdue:ltp-c1",
+     "text": "**LTP** catalyst date has passed without being marked done: SPONTAN Phase II final results (was Q3 CY2026 (guided)). Check for news or a delay.",
+     "level": "action"
+    },
+    {
+     "key": "ann:2924-03164135-6A1356001",
+     "text": "**EMV** price-sensitive: New $3m Grant Unlocks Traumatic Brain Injury Opportunity (2026-11-20). [PDF](https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03164135-6A1356001?access_token=83ff96335c2d45a094df02a206a39ff4)",
+     "level": "info"
+    },
+    {
+     "key": "ann:2924-03162945-6A1355517",
+     "text": "**EMV** price-sensitive: Emu Regional Benefits CRCP Progress Payment Received (2026-11-18). [PDF](https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03162945-6A1355517?access_token=83ff96335c2d45a094df02a206a39ff4)",
+     "level": "info"
+    },
+    {
+     "key": "ann:2924-03163553-2A1711428",
+     "text": "**CU6** price-sensitive: Follow-up assessments completed in Phase III AMPLIFY trial (2026-11-19). [PDF](https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03163553-2A1711428?access_token=83ff96335c2d45a094df02a206a39ff4)",
+     "level": "info"
+    },
+    {
+     "key": "proposals",
+     "text": "11 new item(s) waiting in your Review queue.",
+     "level": "info"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+{
+ "NEU": {
+  "history": [
+   [
+    "2026-11-20",
+    21.19
+   ]
+  ],
+  "last": 21.19,
+  "lastDate": "2026-11-20",
+  "source": "ASX (Markit) last price"
+ },
+ "DXB": {
+  "history": [
+   [
+    "2026-11-20",
+    0.18
+   ]
+  ],
+  "last": 0.18,
+  "lastDate": "2026-11-20",
+  "source": "ASX (Markit) last price"
+ },
+ "EMV": {
+  "history": [
+   [
+    "2026-11-20",
+    1.365
+   ]
+  ],
+  "last": 1.365,
+  "lastDate": "2026-11-20",
+  "source": "ASX (Markit) last price"
+ },
+ "CU6": {
+  "history": [
+   [
+    "2026-11-20",
+    1.8675000000000002
+   ]
+  ],
+  "last": 1.8675000000000002,
+  "lastDate": "2026-11-20",
+  "source": "ASX (Markit) last price"
+ },
+ "LTP": {
+  "history": [
+   [
+    "2026-11-20",
+    0.39
+   ]
+  ],
+  "last": 0.39,
+  "lastDate": "2026-11-20",
+  "source": "ASX (Markit) last price"
+ }
+}

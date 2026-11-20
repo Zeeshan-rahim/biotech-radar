@@ -1,0 +1,293 @@
+{
+ "items": [
+  {
+   "id": "NEU:2924-03162475-2A1710954",
+   "ticker": "NEU",
+   "company": "neu",
+   "date": "2026-11-17",
+   "at": "2026-11-17T09:52:32+11:00",
+   "headline": "Acadia enters DAYBUE STIX distribution agreement in Japan",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03162475-2A1710954?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": false,
+   "kind": "deal",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "catalystDone",
+     "catalystId": "neu-c3",
+     "title": "Japan NDA submission for trofinetide",
+     "result": "Acadia enters DAYBUE STIX distribution agreement in Japan"
+    },
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-11-17",
+      "title": "Acadia enters DAYBUE STIX distribution agreement in Japan",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-20"
+  },
+  {
+   "id": "NEU:2924-03158326-2A1708525",
+   "ticker": "NEU",
+   "company": "neu",
+   "date": "2026-11-05",
+   "at": "2026-11-05T09:57:35+11:00",
+   "headline": "Q3 2026 DAYBUE net sales up 39%, full year guidance upgraded",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03158326-2A1708525?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": true,
+   "kind": "info",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-11-05",
+      "title": "Q3 2026 DAYBUE net sales up 39%, full year guidance upgraded",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-20"
+  },
+  {
+   "id": "DXB:2924-03154832-3A705264",
+   "ticker": "DXB",
+   "company": "dxb",
+   "date": "2026-10-29",
+   "at": "2026-10-29T08:31:49+11:00",
+   "headline": "Dimerix Quarterly Activities Report and Appendix 4C",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03154832-3A705264?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": true,
+   "kind": "finance",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-10-29",
+      "title": "Dimerix Quarterly Activities Report and Appendix 4C",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-20"
+  },
+  {
+   "id": "DXB:2924-03152119-3A704774",
+   "ticker": "DXB",
+   "company": "dxb",
+   "date": "2026-10-23",
+   "at": "2026-10-23T09:27:55+11:00",
+   "headline": "New Data Supports Biological Rationale for DMX-200 in FSGS",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03152119-3A704774?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": true,
+   "kind": "trial",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-10-23",
+      "title": "New Data Supports Biological Rationale for DMX-200 in FSGS",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-20"
+  },
+  {
+   "id": "EMV:2924-03164135-6A1356001",
+   "ticker": "EMV",
+   "company": "emv",
+   "date": "2026-11-20",
+   "at": "2026-11-20T08:21:56+11:00",
+   "headline": "New $3m Grant Unlocks Traumatic Brain Injury Opportunity",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03164135-6A1356001?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": true,
+   "kind": "info",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-11-20",
+      "title": "New $3m Grant Unlocks Traumatic Brain Injury Opportunity",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-20"
+  },
+  {
+   "id": "EMV:2924-03162945-6A1355517",
+   "ticker": "EMV",
+   "company": "emv",
+   "date": "2026-11-18",
+   "at": "2026-11-18T08:40:26+11:00",
+   "headline": "Emu Regional Benefits CRCP Progress Payment Received",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03162945-6A1355517?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": true,
+   "kind": "info",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "catalystDone",
+     "catalystId": "emv-c2",
+     "title": "Regional Benefits Study launch",
+     "result": "Emu Regional Benefits CRCP Progress Payment Received"
+    },
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-11-18",
+      "title": "Emu Regional Benefits CRCP Progress Payment Received",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-20"
+  },
+  {
+   "id": "EMV:2924-03152777-6A1351215",
+   "ticker": "EMV",
+   "company": "emv",
+   "date": "2026-10-26",
+   "at": "2026-10-26T08:53:01+11:00",
+   "headline": "Quarterly Activities/Appendix 4C Cash Flow Report",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03152777-6A1351215?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": true,
+   "kind": "finance",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-10-26",
+      "title": "Quarterly Activities/Appendix 4C Cash Flow Report",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-20"
+  },
+  {
+   "id": "CU6:2924-03163553-2A1711428",
+   "ticker": "CU6",
+   "company": "cu6",
+   "date": "2026-11-19",
+   "at": "2026-11-19T08:33:26+11:00",
+   "headline": "Follow-up assessments completed in Phase III AMPLIFY trial",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03163553-2A1711428?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": true,
+   "kind": "trial",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "catalystDone",
+     "catalystId": "cu6-c1",
+     "title": "AMPLIFY Phase III results",
+     "result": "Follow-up assessments completed in Phase III AMPLIFY trial"
+    },
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-11-19",
+      "title": "Follow-up assessments completed in Phase III AMPLIFY trial",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-20"
+  },
+  {
+   "id": "CU6:2924-03160944-2A1710206",
+   "ticker": "CU6",
+   "company": "cu6",
+   "date": "2026-11-12",
+   "at": "2026-11-12T10:17:01+11:00",
+   "headline": "First FDA Breakthrough Therapy designation in PSMA PET",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03160944-2A1710206?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": true,
+   "kind": "regulatory",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-11-12",
+      "title": "First FDA Breakthrough Therapy designation in PSMA PET",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-20"
+  },
+  {
+   "id": "CU6:2924-03160461-2A1709978",
+   "ticker": "CU6",
+   "company": "cu6",
+   "date": "2026-11-11",
+   "at": "2026-11-11T10:07:56+11:00",
+   "headline": "Trading Halt",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03160461-2A1709978?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": true,
+   "kind": "halt",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-11-11",
+      "title": "Trading Halt",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-20"
+  },
+  {
+   "id": "LTP:2924-03159362-3A706066",
+   "ticker": "LTP",
+   "company": "ltp",
+   "date": "2026-11-09",
+   "at": "2026-11-09T08:52:01+11:00",
+   "headline": "LTR Secures Indian Patent Supporting SPONTAN and ROXUS",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03159362-3A706066?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": true,
+   "kind": "info",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "catalystDone",
+     "catalystId": "ltp-c1",
+     "title": "SPONTAN Phase II final results",
+     "result": "LTR Secures Indian Patent Supporting SPONTAN and ROXUS"
+    },
+    {
+     "op": "catalystDone",
+     "catalystId": "ltp-c2",
+     "title": "FDA pre-IND / IND feedback for SPONTAN",
+     "result": "LTR Secures Indian Patent Supporting SPONTAN and ROXUS"
+    },
+    {
+     "op": "catalystDone",
+     "catalystId": "ltp-c3",
+     "title": "ROXUS US sales via 503A pharmacy partner",
+     "result": "LTR Secures Indian Patent Supporting SPONTAN and ROXUS"
+    },
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-11-09",
+      "title": "LTR Secures Indian Patent Supporting SPONTAN and ROXUS",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-20"
+  }
+ ]
+}
