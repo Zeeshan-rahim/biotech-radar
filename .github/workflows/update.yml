@@ -1,0 +1,41 @@
+name: Update radar
+
+on:
+  schedule:
+    - cron: '47 22 * * 0-4'   # 8:47 am Brisbane, Mon-Fri (after pre-open announcements)
+    - cron: '17 7 * * 1-5'    # 5:17 pm Brisbane, Mon-Fri (after the close)
+  workflow_dispatch: {}        # "Run workflow" button, and the page's "Update now"
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: radar-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install PDF reader (for 4C cash-flow reports)
+        run: pip install "pypdf>=4,<7"
+      - name: Fetch prices and announcements, build review items and alerts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python scripts/update.py
+      - name: Save data back to the repository
+        run: |
+          git config user.name "radar-bot"
+          git config user.email "radar-bot@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git commit -m "Data update $(date -u +%Y-%m-%dT%H:%MZ)"
+          git pull --rebase --autostash || true
+          git push
