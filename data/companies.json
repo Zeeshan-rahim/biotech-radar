@@ -381,7 +381,40 @@
     "focus": 2
    },
    "scoreNotes": "Self-funded from royalties (no dilution); FDA-aligned Koala endpoints; Orphan/RPD designations. Exit path for NNZ-2591 not yet set (partner vs go-it-alone). Open-label Phase 2 is the main evidence gap.",
-   "keywords": "koala|nnz-2591|ercanetide|daybue|trofinetide|pitt hopkins|phelan|hie|angelman"
+   "keywords": "koala|nnz-2591|ercanetide|daybue|trofinetide|pitt hopkins|phelan|hie|angelman",
+   "notes": [
+    {
+     "title": "David Craig's 'Four Walls' audit (from your Neuren exit plan)",
+     "source": "Copied from your Nov 2026 Neuren valuation and exit plan. The 'Four Walls' name and the 1-in-7,300 prevalence study could not be confirmed in public sources \u2014 treat as your thesis, and check against the book.",
+     "head": [
+      "Craig's Structural Wall",
+      "Industry Failure Mode",
+      "How Neuren Solved It in PMS"
+     ],
+     "rows": [
+      [
+       "Wall 1: Patient Finding & Diagnostic Opacity",
+       "Underestimating true prevalence; failing to locate undiagnosed patients for trials and launch.",
+       "Co-funded a 2026 Mount Sinai / CureSHANK study (180k records) proving PMS occurs in 1 in 7,300 people\u2014more than double prior 1-in-15,000 estimates."
+      ],
+      [
+       "Wall 2: Missing Natural History & Endpoints",
+       "Using generic scales that fail FDA review or drown drug signals in behavioral noise.",
+       "Aligned with FDA via Type C meetings on two bespoke co-primary endpoints (PMSA-C clinician scale & VABS-3 receptive communication)."
+      ],
+      [
+       "Wall 3: Small-Population Capital & CMC Stack",
+       "Dilutive equity raises and unscalable small-batch manufacturing delays.",
+       "Locked in scalable oral liquid CMC early and self-funded Koala (~US$65M) via A$286.5M cash + ~US$91M\u2013$93M 2026 trofinetide income."
+      ],
+      [
+       "Wall 4: Patient-Centered Ecosystem & Access",
+       "Slow trial enrollment and payer pushback at launch due to weak community trust.",
+       "Deep strategic alliance with PMSF and CureSHANK (Presenting Sponsor at 2026 Family Conference; rapid Koala referral waitlists)."
+      ]
+     ]
+    }
+   ]
   },
   {
    "id": "dxb",

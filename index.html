@@ -89,7 +89,8 @@ svg text{fill:var(--muted);font-size:11px}
 const S = {cfg:null, data:{companies:[]}, prices:{}, anns:{}, props:{items:[]}, decisions:{}, reactions:{}, alerts:{log:[]}, status:{},
   positions:{}, dirty:new Set(), edit:{}, filter:'all'};
 const LS = {get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}}, set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const GH = Object.assign(guessRepo(), LS.get('radar.gh',{}));
+const GH = Object.assign(guessRepo(), {sync:'ladder'}, LS.get('radar.gh',{}));
+if(GH.syncPositions!==undefined){GH.sync=GH.syncPositions?'full':'ladder';delete GH.syncPositions}
 const TODAY = new Date(); const TODAY_ISO = iso(TODAY);
 function guessRepo(){const h=location.hostname, p=location.pathname.split('/').filter(Boolean);
   return h.endsWith('github.io')?{owner:h.split('.')[0],repo:p[0]||'',branch:'main'}:{owner:'',repo:'',branch:'main'}}
@@ -148,9 +149,11 @@ function evaluate(co,price){
   if(co.section==='rare'){const m=R.rare.targetMultiple??10;buy=Math.min(sv?sv/m:0,ev);rule=`${m}x if it works`}
   else{const r=(R[co.section]||R.other).targetReturn??.15;buy=ev/Math.pow(1+r,T);rule=`${Math.round(r*100)}% a year`}
   buy=Math.min(buy,sell);
+  const mB=+co.buyOverride>0, mS=+co.sellOverride>0; let sell2=sell;
+  if(mB)buy=+co.buyOverride; if(mS)sell2=+co.sellOverride;
   const expRet=Math.pow(ev/price,1/T)-1;
-  const signal=price<=buy?'Buy':price>=sell?'Sell / trim':'Hold';
-  return {...out,signal,ev,buy,sell,T,expRet,psucc:ps/tot,sv,upIfWorks:sv?sv/price:null,downIfFails:bear/price-1,rule,draft:!co.reviewed,floor};
+  const signal=price<=buy?'Buy':price>=sell2?'Sell / trim':'Hold';
+  return {...out,signal,ev,buy,sell:sell2,modelBuy:mB?null:buy,manualBuy:mB,manualSell:mS,T,expRet,psucc:ps/tot,sv,upIfWorks:sv?sv/price:null,downIfFails:bear/price-1,rule,draft:!co.reviewed,floor};
 }
 function pillClass(sig){return sig==='Buy'?'p-buy':sig==='Sell / trim'?'p-sell':sig==='Hold'?'p-hold':'p-none'}
 function latestFin(co){const f=(co.finance||[]).filter(x=>x.cash!=null).sort((a,b)=>(a.period||'').localeCompare(b.period||''));return f[f.length-1]||null}
@@ -278,7 +281,9 @@ function decisionCard(co,e,lp,pos){
   } else {
     lines.push(`Your rule (${e.rule}): buy at <b>${money(e.buy)}</b> or less. Success case is <b>${e.upIfWorks?e.upIfWorks.toFixed(1)+'x':'–'}</b> today's price; worst case <b>${pct(e.downIfFails)}</b>.`);
   }
-  lines.push(`Sell or trim at <b>${money(e.sell)}</b> or more — above that the expected return drops below ${Math.round(e.floor*100)}% a year.`);
+  lines.push(e.manualSell?`Sell or trim at <b>${money(e.sell)}</b> or more <span class="pill p-warn">your price</span>.`:`Sell or trim at <b>${money(e.sell)}</b> or more — above that the expected return drops below ${Math.round(e.floor*100)}% a year.`);
+  if(e.manualBuy)lines.push(`<span class="pill p-warn">your price</span> Buy price set by you at <b>${money(e.buy)}</b> (overrides the rule above).`);
+  lines.push(`<span class="row small" style="margin-top:4px">Set your own: buy ≤ <input type="number" step="0.001" value="${co.buyOverride??''}" placeholder="auto" data-p="companies:${co.id}:buyOverride" data-t="n"> sell ≥ <input type="number" step="0.001" value="${co.sellOverride??''}" placeholder="auto" data-p="companies:${co.id}:sellOverride" data-t="n"><span class="tiny muted">Leave blank to use your rules. Then Save changes.</span></span>`);
   if(held){
     const val=pos.shares*e.price, gain=(e.price-pos.cost)*pos.shares;
     let t=`You hold <b>${(+pos.shares).toLocaleString()}</b> shares at ${money(pos.cost)}: worth ${money(val,0)}, ${gain>=0?'up':'down'} ${money(Math.abs(gain),0)}.`;
@@ -368,7 +373,7 @@ function posCard(co){
    <details ${p.plan&&p.plan.length?'open':''}><summary>Sell ladder (alerts when a step's price is reached)</summary>
    <table><thead><tr><th>Step</th><th>Price ≥</th><th>Shares</th><th>Done</th><th></th><th></th></tr></thead><tbody>${plan}</tbody></table>
    <button style="margin-top:6px" onclick="addPlan('${T}')">+ Step</button></details>
-   <p class="tiny muted">Stored on this device. ${GH.syncPositions?'Also saved to your GitHub repo (visible to anyone if the repo is public) so alerts can use it.':'Not sent to GitHub, so ladder and time-limit alerts only appear here. Turn on syncing in Settings to get them by email.'}</p></div>`;
+   <p class="tiny muted">Stored on this device. ${GH.sync==='full'?'Shares, cost and ladder are also saved to GitHub (public if the repo is public).':GH.sync==='ladder'?'Only the ladder prices go to GitHub for email/phone alerts — your shares and cost stay on this device.':'Nothing is sent to GitHub; ladder alerts only show here.'}</p></div>`;
 }
 function reactionCard(co,lp){
   const ups=(co.catalysts||[]).filter(c=>!c.done&&c.big&&pd(c.date)>=new Date(TODAY.getTime()-30*864e5)).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,4);
@@ -404,7 +409,8 @@ function catalystCard(co){
 function factsCard(co){
   const ed=S.edit[co.id], P=`companies:${co.id}`;
   const hist=[...(co.history||[])].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,30);
-  return `<div class="card"><h3>Key facts</h3>${ed?`<textarea style="min-height:140px" onchange="setFacts('${co.id}',this.value)">${esc((co.facts||[]).join('\n'))}</textarea><p class="tiny muted">One fact per line.</p>`:`<ul class="small">${(co.facts||[]).map(f=>`<li>${esc(f)}</li>`).join('')}</ul>`}
+  const notes=(co.notes||[]).map(n=>`<details open><summary><b>${esc(n.title)}</b></summary>${n.source?`<p class="tiny muted">${esc(n.source)}</p>`:''}<table><thead><tr>${(n.head||[]).map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${(n.rows||[]).map(r=>`<tr>${r.map(c=>`<td class="small">${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></details>`).join('');
+  return `<div class="card"><h3>Key facts</h3>${notes}${ed?`<textarea style="min-height:140px" onchange="setFacts('${co.id}',this.value)">${esc((co.facts||[]).join('\n'))}</textarea><p class="tiny muted">One fact per line.</p>`:`<ul class="small">${(co.facts||[]).map(f=>`<li>${esc(f)}</li>`).join('')}</ul>`}
    <details><summary>History (${hist.length})</summary><table><tbody>${hist.map(h=>`<tr><td class="small">${fmtDate(h.date)}</td><td class="small"><b>${esc(h.title)}</b> <span class="muted">${esc(h.desc||'')}</span></td></tr>`).join('')}</tbody></table></details></div>`;
 }
 function annCard(co){
@@ -502,9 +508,12 @@ function viewSettings(){
   const tot=S.data.companies.reduce((a,co)=>{const p=S.positions[co.ticker],lp=lastPrice(co.ticker);return a+(p&&p.shares&&lp?p.shares*lp.v:0)},0);
   const st=S.status||{};
   return `<div class="grid g2">
-  <div class="card"><h3>Your positions</h3><table><thead><tr><th>Stock</th><th>Shares</th><th>Avg cost</th><th>First bought</th><th class="num">Value</th></tr></thead><tbody>${posRows}</tbody></table>
+  <div class="card"><h3>Your positions</h3><div style="overflow:auto"><table><thead><tr><th>Stock</th><th>Shares</th><th>Avg cost</th><th>First bought</th><th class="num">Value</th></tr></thead><tbody>${posRows}</tbody></table></div>
    <p class="small">Total ${money(tot,0)}. ${S.data.companies.map(co=>{const p=S.positions[co.ticker],lp=lastPrice(co.ticker);return p&&p.shares&&lp&&tot?`${co.ticker} ${Math.round(p.shares*lp.v/tot*100)}%`:''}).filter(Boolean).join(' · ')}</p>
-   <label class="chk"><input type="checkbox" ${GH.syncPositions?'checked':''} onchange="GH.syncPositions=this.checked;LS.set('radar.gh',GH);if(this.checked)markDirty('positions');route()"> Also save positions to GitHub (needed for ladder and time-limit alerts by email). <b>Anyone can read a public repo.</b></label>
+   <div class="small"><b>What goes to GitHub</b> (for email/phone alerts):<br>
+   <label class="chk"><input type="radio" name="sync" ${GH.sync==='ladder'?'checked':''} onchange="GH.sync='ladder';LS.set('radar.gh',GH);markDirty('positions');route()"> Ladder prices only — recommended. Gets sell-ladder alerts; shares, cost and dates stay private.</label><br>
+   <label class="chk"><input type="radio" name="sync" ${GH.sync==='off'?'checked':''} onchange="GH.sync='off';LS.set('radar.gh',GH);route()"> Nothing — ladder alerts only on this page.</label><br>
+   <label class="chk"><input type="radio" name="sync" ${GH.sync==='full'?'checked':''} onchange="GH.sync='full';LS.set('radar.gh',GH);markDirty('positions');route()"> Everything — adds holding-time alerts. <b>Anyone can read a public repo.</b></label></div>
    <div class="row" style="margin-top:8px"><button onclick="exportPos()">Download positions file</button><label class="btn">Import positions file<input type="file" accept=".json" style="display:none" onchange="importPos(this.files[0])"></label></div></div>
   <div class="card"><h3>Your rules</h3>
    <div class="row">Rare disease: at least <input class="w-s" type="number" value="${R.rare.targetMultiple}" onchange="setCfg('rules.rare.targetMultiple',+this.value)">x, max <input class="w-s" type="number" value="${R.rare.maxYears}" onchange="setCfg('rules.rare.maxYears',+this.value)"> years</div>
@@ -545,11 +554,12 @@ function addFin(id){const g=k=>{const v=document.getElementById('f-'+k).value;re
 function addRaise(id){const d=document.getElementById('r-date').value;if(!d)return toast('Pick a date');const co=companyById(id);(co.raises=co.raises||[]).push({date:d,amount:+document.getElementById('r-amt').value||null,price:+document.getElementById('r-px').value||null});markDirty('companies');route()}
 function applyRaw(id){try{const o=JSON.parse(document.getElementById('raw-'+id).value);const i=S.data.companies.findIndex(c=>c.id===id);S.data.companies[i]=o;markDirty('companies');route();toast('Applied')}catch(e){alert('That JSON has an error: '+e.message)}}
 function setCfg(path,v){setPath(S.cfg,path,v);markDirty('config');renderTop()}
-function setPos(t,path,v){const p=S.positions[t]=S.positions[t]||{};setPath(p,path,v);LS.set('radar.positions',S.positions);if(GH.syncPositions)markDirty('positions');renderTop()}
-function addPlan(t){const p=S.positions[t]=S.positions[t]||{};(p.plan=p.plan||[]).push({label:'Step '+(p.plan.length+1),price:null,shares:null,done:false});LS.set('radar.positions',S.positions);if(GH.syncPositions)markDirty('positions');route()}
-function delPlan(t,i){S.positions[t].plan.splice(i,1);LS.set('radar.positions',S.positions);if(GH.syncPositions)markDirty('positions');route()}
+function syncDirty(path){if(GH.sync==='full'||(GH.sync==='ladder'&&String(path).startsWith('plan')))markDirty('positions')}
+function setPos(t,path,v){const p=S.positions[t]=S.positions[t]||{};setPath(p,path,v);LS.set('radar.positions',S.positions);syncDirty(path);renderTop()}
+function addPlan(t){const p=S.positions[t]=S.positions[t]||{};(p.plan=p.plan||[]).push({label:'Step '+(p.plan.length+1),price:null,shares:null,done:false});LS.set('radar.positions',S.positions);syncDirty('plan');route()}
+function delPlan(t,i){S.positions[t].plan.splice(i,1);LS.set('radar.positions',S.positions);syncDirty('plan');route()}
 function exportPos(){download('my-positions.json',JSON.stringify(S.positions,null,1))}
-function importPos(f){if(!f)return;f.text().then(t=>{try{S.positions=Object.assign(S.positions,JSON.parse(t));LS.set('radar.positions',S.positions);if(GH.syncPositions)markDirty('positions');toast('Positions imported');route()}catch(e){alert('Not a valid positions file')}})}
+function importPos(f){if(!f)return;f.text().then(t=>{try{S.positions=Object.assign(S.positions,JSON.parse(t));LS.set('radar.positions',S.positions);syncDirty('plan');toast('Positions imported');route()}catch(e){alert('Not a valid positions file')}})}
 function download(name,text){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'application/json'}));a.download=name;a.click()}
 function addStock(sec){
   const t=(prompt('ASX code (e.g. PNV):')||'').trim().toUpperCase(); if(!t)return; if(companyById(t))return toast('Already listed');
@@ -565,7 +575,8 @@ function b64(s){const b=new TextEncoder().encode(s);let x='';for(let i=0;i<b.len
 async function gh(path,opt={}){const r=await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/${path}`,{...opt,headers:{Authorization:`Bearer ${GH.token}`,Accept:'application/vnd.github+json',...(opt.headers||{})}});if(!r.ok&&r.status!==404)throw new Error(`${r.status} ${(await r.text()).slice(0,140)}`);return r.status===404?null:(r.status===204?{}:r.json())}
 async function putFile(name,content,msg){const p=`contents/data/${name}`;const cur=await gh(p+`?ref=${GH.branch}`);
   await gh(p,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg,content:b64(content),branch:GH.branch,sha:cur&&cur.sha})})}
-function fileBody(f){return f==='companies'?JSON.stringify({...S.data,updated:TODAY_ISO},null,1):f==='config'?JSON.stringify(S.cfg,null,1):f==='decisions'?JSON.stringify(S.decisions,null,1):JSON.stringify(S.positions,null,1)}
+function fileBody(f){return f==='companies'?JSON.stringify({...S.data,updated:TODAY_ISO},null,1):f==='config'?JSON.stringify(S.cfg,null,1):f==='decisions'?JSON.stringify(S.decisions,null,1):JSON.stringify(positionsForRepo(),null,1)}
+function positionsForRepo(){if(GH.sync==='full')return S.positions;const o={};for(const[t,p]of Object.entries(S.positions))if(p.plan&&p.plan.length)o[t]={plan:p.plan.map(s=>({label:s.label,price:s.price,done:!!s.done}))};return o}
 async function saveAll(){
   const files=[...S.dirty];
   if(!GH.token||!GH.owner||!GH.repo){files.forEach(f=>download(f+'.json',fileBody(f)));toast('No GitHub token: files downloaded — upload them to the data folder on GitHub');return}

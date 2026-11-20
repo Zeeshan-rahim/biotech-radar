@@ -364,7 +364,8 @@ def build_alerts(cfg, companies, prices, positions, new_anns, new_props, state, 
         if last and pos.get('plan'):
             for i, tr in enumerate(pos['plan']):
                 if not tr.get('done') and tr.get('price') and last >= float(tr['price']):
-                    fire(f'ladder:{t}:{i}', 1, f"**{t}** reached your sell-ladder step '{tr.get('label','')}' — sell {tr.get('shares','?')} at ≥ A${float(tr['price']):.2f}.", 'action')
+                    amt = f"{tr['shares']:,} shares" if tr.get('shares') else 'your planned amount'
+                    fire(f'ladder:{t}:{i}', 1, f"**{t}** is at A${last:.2f} and reached your sell-ladder step '{tr.get('label','')}' (≥ A${float(tr['price']):.2f}) — sell {amt}.", 'action')
         if pos.get('bought'):
             b = parse_date(pos['bought'])
             maxy = cfg['rules'].get(co['section'], cfg['rules']['other']).get('maxYears', 3)

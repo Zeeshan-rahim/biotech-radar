@@ -62,6 +62,13 @@ def evaluate(co, price, cfg, today=None):
         buy = ev / (1 + r) ** T
         rule_txt = f"{round(r*100)}%/yr"
     buy = min(buy, sell)
+    try:
+        if float(co.get('buyOverride') or 0) > 0:
+            buy = float(co['buyOverride'])
+        if float(co.get('sellOverride') or 0) > 0:
+            sell = float(co['sellOverride'])
+    except (TypeError, ValueError):
+        pass
     exp_ret = (ev / price) ** (1 / T) - 1
     if price <= buy:
         sig = 'Buy'

@@ -17,7 +17,7 @@ Cost: **A$0**. GitHub Pages and GitHub Actions are free for public repositories.
 ### 1. Create the repository
 1. Sign up at https://github.com (free).
 2. Click **+ → New repository**. Name it `biotech-radar`, choose **Public**, then click **Create repository**.
-3. On the new repository page, click **uploading an existing file**. Drag in **everything inside** the `biotech-radar` folder from the zip: `index.html`, `README.md`, and the `data`, `scripts` and `.github` folders. Click **Commit changes**.
+3. On the new repository page, click **uploading an existing file**. Upload the *unzipped* files, not the .zip. Drag in **everything inside** the `biotech-radar` folder from the zip: `index.html`, `README.md`, and the `data`, `scripts` and `.github` folders. Click **Commit changes**.
    - Hidden folders: if your computer hides the `.github` folder, create the file by hand instead. Click **Add file → Create new file**, type the name `.github/workflows/update.yml`, paste in the contents of that file, and commit.
 
 ### 2. Turn on the website
@@ -46,7 +46,12 @@ The token is stored only in that browser. Repeat this step on each device you us
 ### 6. Enter your positions
 In the radar, go to **Settings & positions → Import positions file** and choose `my-positions.json` (supplied separately, **not** in the repository). It holds your Neuren holding of 38,000 shares at A$15.40 and the 4-step sell ladder from your exit plan. Add the other holdings by hand.
 
-Positions are kept on your device. If you tick *Also save positions to GitHub*, the email alerts can include sell-ladder and time-limit warnings. The catch is that **anyone can read a public repository**. To keep them private while syncing, use a private repository instead; GitHub Pages on a private repository needs a paid GitHub plan.
+Positions are kept on your device. Under **What goes to GitHub** you choose what the robot can see:
+- **Ladder prices only (default).** Only your sell-ladder step names and prices are saved to the repository. The robot emails you when one is reached. Your share counts, cost and dates never leave your device. Anyone reading the repository would see a few price levels, not your holdings.
+- **Nothing.** Ladder alerts appear only on the page.
+- **Everything.** This adds holding-time-limit alerts, but your holdings become public if the repository is public.
+
+**Your own prices:** on any stock's page, the Decision box has *Set your own: buy ≤ / sell ≥*. Leave these blank to use your rules; fill them in to override. Sell-ladder prices are edited in *Your position*.
 
 ### 7. Review the draft assumptions
 Every stock starts as **Draft**. Open each one and check its scenarios, which drive the buy/sell prices, then tick *I've reviewed these*.
