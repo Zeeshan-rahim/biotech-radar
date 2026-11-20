@@ -24,7 +24,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install PDF reader (for 4C cash-flow reports)
-        run: pip install "pypdf>=4,<7"
+        run: pip install "pypdf[crypto]>=4,<7"
       - name: Fetch prices and announcements, build review items and alerts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
