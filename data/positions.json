@@ -1,0 +1,26 @@
+{
+ "NEU": {
+  "plan": [
+   {
+    "label": "Tranche 1 – de-risk now",
+    "price": 23,
+    "done": false
+   },
+   {
+    "label": "Tranche 2 – pre-readout run",
+    "price": 31,
+    "done": false
+   },
+   {
+    "label": "Tranche 3 – after positive Koala",
+    "price": 38,
+    "done": false
+   },
+   {
+    "label": "Tranche 4 – M&A runner",
+    "price": 48,
+    "done": false
+   }
+  ]
+ }
+}
