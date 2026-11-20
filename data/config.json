@@ -1,0 +1,342 @@
+{
+ "sections": {
+  "rare": "Rare disease",
+  "device": "Medical devices",
+  "other": "Other pharma, biotech & medical"
+ },
+ "rules": {
+  "rare": {
+   "targetMultiple": 10,
+   "maxYears": 8,
+   "note": "At least a 10-bagger if the main bet works; hold up to 8 years."
+  },
+  "device": {
+   "targetReturn": 0.15,
+   "maxYears": 3,
+   "note": "15% a year expected return; hold up to 3 years."
+  },
+  "other": {
+   "targetReturn": 0.15,
+   "maxYears": 3,
+   "note": "15% a year expected return; hold up to 3 years."
+  },
+  "sellFloorReturn": 0.05,
+  "sellFloorNote": "Sell or trim when the expected return from today's price falls below this (it pays better elsewhere)."
+ },
+ "alerts": {
+  "catalystDaysAhead": 7,
+  "overdueGraceDays": 3,
+  "bigMovePct": 10,
+  "runwayMonths": 12,
+  "ntfy": true,
+  "githubIssue": true
+ },
+ "pos": {
+  "source": "Approximate Phase 3 (or pivotal) success rates, rounded from published industry studies (BIO/Informa/QLS 2011\u20132020 and similar). Rough starting points \u2014 edit freely.",
+  "areas": {
+   "neuro": {
+    "label": "Neurology / neurodevelopment",
+    "p": 0.5
+   },
+   "renal": {
+    "label": "Kidney",
+    "p": 0.55
+   },
+   "onc": {
+    "label": "Oncology therapy",
+    "p": 0.48
+   },
+   "dximg": {
+    "label": "Diagnostic imaging agent",
+    "p": 0.75
+   },
+   "device": {
+    "label": "Device pivotal / validation",
+    "p": 0.7
+   },
+   "b505": {
+    "label": "505(b)(2) reformulation of approved drug",
+    "p": 0.75
+   },
+   "metab": {
+    "label": "Metabolic / endocrine",
+    "p": 0.6
+   },
+   "other": {
+    "label": "Other",
+    "p": 0.58
+   }
+  },
+  "phaseAdj": {
+   "P1": 0.35,
+   "P2": 0.55,
+   "P3": 1.0,
+   "DEV": 1.0,
+   "NDA": 1.6
+  },
+  "mods": {
+   "rare": {
+    "label": "Rare disease (higher success historically)",
+    "odds": 1.3
+   },
+   "samePos3": {
+    "label": "Same drug already won a Phase 3",
+    "odds": 3.0
+   },
+   "partner": {
+    "label": "Big-pharma partner involved",
+    "odds": 1.1
+   },
+   "openLabelOnly": {
+    "label": "Efficacy evidence only open-label",
+    "odds": 0.6
+   },
+   "enrolDelay": {
+    "label": "Enrolment has slipped",
+    "odds": 0.9
+   },
+   "smallSponsor": {
+    "label": "Small sponsor running it alone",
+    "odds": 0.85
+   },
+   "classApproved": {
+    "label": "Same drug class already approved",
+    "odds": 1.8
+   },
+   "fdaAligned": {
+    "label": "Design agreed with FDA",
+    "odds": 1.3
+   },
+   "fastTrack": {
+    "label": "Fast Track designation",
+    "odds": 1.1
+   },
+   "breakthrough": {
+    "label": "Breakthrough Therapy designation",
+    "odds": 1.4
+   },
+   "interimPass": {
+    "label": "Passed a pre-specified interim analysis",
+    "odds": 1.4
+   },
+   "poorClass": {
+    "label": "Drug class has a poor record",
+    "odds": 0.5
+   },
+   "validatedEndpoint": {
+    "label": "Endpoint accepted for full approval",
+    "odds": 1.2
+   },
+   "knownMolecule": {
+    "label": "Molecule already approved (new form)",
+    "odds": 1.5
+   },
+   "subjectiveEndpoint": {
+    "label": "Subjective / caregiver-rated endpoint",
+    "odds": 0.8
+   }
+  },
+  "cap": 0.97
+ },
+ "reactions": {
+  "source": "Rough rules of thumb for ASX small/mid-cap healthcare stocks, not one study. The app shows each stock's own measured moves as they build up \u2014 trust those more over time.",
+  "types": {
+   "trial": {
+    "label": "Trial readout",
+    "up": 40,
+    "down": -55
+   },
+   "approval": {
+    "label": "Regulatory decision",
+    "up": 10,
+    "down": -35
+   },
+   "filing": {
+    "label": "Filing / submission",
+    "up": 5,
+    "down": -15
+   },
+   "designation": {
+    "label": "FDA designation",
+    "up": 8,
+    "down": 0
+   },
+   "deal": {
+    "label": "Licensing / partnering",
+    "up": 15,
+    "down": -5
+   },
+   "raise": {
+    "label": "Capital raise",
+    "up": 0,
+    "down": -15
+   },
+   "report": {
+    "label": "Quarterly / results report",
+    "up": 5,
+    "down": -8
+   },
+   "meeting": {
+    "label": "FDA meeting / AGM / update",
+    "up": 5,
+    "down": -10
+   },
+   "launch": {
+    "label": "Launch / sales update",
+    "up": 10,
+    "down": -20
+   },
+   "other": {
+    "label": "Other",
+    "up": 5,
+    "down": -10
+   }
+  }
+ },
+ "marketDiscount": 0.12,
+ "scorecards": {
+  "rare": {
+   "title": "Rare-disease operator scorecard",
+   "source": "Built from public descriptions of David R. Craig, The New Rules of Rare Disease (2026): small populations, incomplete natural-history data, uncertain endpoints, unconventional funding, finding scattered patients, capital efficiency and milestone-based financing. Not the book's own checklist.",
+   "items": [
+    [
+     "endpoint",
+     "Natural history and endpoint clarity",
+     "Is the primary endpoint agreed with FDA and backed by natural-history data?"
+    ],
+    [
+     "patients",
+     "Patient finding and advocacy",
+     "Registries, advocacy-group ties, trial recruitment speed."
+    ],
+    [
+     "regulatory",
+     "Regulatory acceleration used",
+     "Orphan, Rare Pediatric (voucher), Breakthrough, accelerated approval."
+    ],
+    [
+     "capital",
+     "Capital efficiency and non-dilutive money",
+     "Royalties, grants, partner cash rather than share issues."
+    ],
+    [
+     "milestone",
+     "Funded to the next value step",
+     "Cash covers the company past its next big readout?"
+    ],
+    [
+     "cmc",
+     "Manufacturing (CMC) readiness",
+     "Scalable product supply locked in before it is needed."
+    ],
+    [
+     "exit",
+     "Partnering / exit path",
+     "Credible buyers or partners for the asset."
+    ],
+    [
+     "focus",
+     "Focus and lean execution",
+     "Spending on the work that moves value; promises kept."
+    ]
+   ]
+  },
+  "device": {
+   "title": "Device commercialisation scorecard",
+   "source": "Mehta, Commercializing Successful Biomedical Technologies (2nd ed., 2022): ch.2 market and referral chain, ch.5 device stage-gate and failure modes, ch.6 FDA pathways, ch.7 manufacturing, ch.8 reimbursement.",
+   "items": [
+    [
+     "utility",
+     "Clinical utility (the 'so-what?' test)",
+     "Does the result change a clinical decision or outcome?"
+    ],
+    [
+     "pathway",
+     "Regulatory pathway clarity",
+     "510(k) / De Novo / PMA chosen and FDA meetings held."
+    ],
+    [
+     "evidence",
+     "Stage-gate position",
+     "Feasibility \u2192 optimisation \u2192 demonstration (pivotal) \u2192 production \u2192 launch."
+    ],
+    [
+     "reimb",
+     "Reimbursement path",
+     "Coding, coverage and payment for the device or procedure."
+    ],
+    [
+     "users",
+     "End user and referral chain fit",
+     "Who decides, who pays, fits the workflow."
+    ],
+    [
+     "mfg",
+     "Manufacturing and quality system",
+     "Design for manufacture, ISO 13485, production units."
+    ],
+    [
+     "ip",
+     "IP and freedom to operate",
+     "Patents and licences protect the product."
+    ],
+    [
+     "funding",
+     "Funded to next milestone",
+     "Cash and non-dilutive funding vs burn."
+    ],
+    [
+     "compete",
+     "Competitive position",
+     "Alternatives (e.g. CT, existing devices) and switching cost."
+    ]
+   ]
+  },
+  "other": {
+   "title": "Drug commercialisation scorecard",
+   "source": "Mehta, Commercializing Successful Biomedical Technologies (2nd ed., 2022): ch.5 drug failure modes (ADME 41%, efficacy 31%, toxicity 22%, business 6%), ch.6 FDA pathways incl. 505(b)(2), ch.7 scale-up, ch.4 IP/licensing, ch.8 reimbursement.",
+   "items": [
+    [
+     "efficacy",
+     "Main failure modes retired",
+     "Efficacy, safety and drug-property (ADME) risks addressed by data."
+    ],
+    [
+     "pathway",
+     "Regulatory pathway",
+     "Route chosen, FDA meetings, designations."
+    ],
+    [
+     "reimb",
+     "Reimbursement / payer path",
+     "Formulary coverage or cash-pay reality."
+    ],
+    [
+     "market",
+     "Market and referral chain",
+     "Who prescribes, competing products, real need."
+    ],
+    [
+     "mfg",
+     "Manufacturing scale-up (CMC)",
+     "Commercial supply arranged."
+    ],
+    [
+     "ip",
+     "IP and licensing",
+     "Patent life, freedom to operate, licence terms."
+    ],
+    [
+     "funding",
+     "Funded to next milestone",
+     "Cash vs burn to the next value step."
+    ],
+    [
+     "model",
+     "Business model fit",
+     "Partner vs go-it-alone suits the asset."
+    ]
+   ]
+  }
+ }
+}

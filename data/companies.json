@@ -1,0 +1,1450 @@
+{
+ "updated": "2026-11-20",
+ "companies": [
+  {
+   "id": "neu",
+   "ticker": "NEU",
+   "name": "Neuren Pharmaceuticals",
+   "section": "rare",
+   "color": 0,
+   "tagline": "DAYBUE royalties fund the NNZ-2591 rare neurodevelopmental pipeline",
+   "facts": [
+    "Q3 2026 DAYBUE net sales US$140m (+39% y/y); 2026 trofinetide income guided US$91\u201393m incl. the US$35m EU milestone (5 Nov 2026).",
+    "Japan Phase 3 trofinetide results consistent with LAVENDER; Japan NDA planned 2027.",
+    "FDA Orphan Drug Designation for NNZ-2591 in HIE (2 Nov 2026). Trofinetide US patents extended to Mar 2041.",
+    "Koala Phase 3 (Phelan-McDermid, ~160 children, placebo-controlled) dosing since Feb 2026; top-line timing not yet guided.",
+    "Broker targets: Ord Minnett A$27.80 (6 Nov 2026), Canaccord A$24.76 (1 Sep 2026)."
+   ],
+   "horizon": "2034-11-20",
+   "reviewed": false,
+   "scenarios": [
+    {
+     "name": "Bear",
+     "prob": 55,
+     "value": 16,
+     "success": false,
+     "note": "Koala fails. Value = DAYBUE royalties + cash + dividends to 2034."
+    },
+    {
+     "name": "Base",
+     "prob": 33,
+     "value": 55,
+     "success": true,
+     "note": "Koala succeeds ~2028, approval ~2030, PMS sales ramping or partnered."
+    },
+    {
+     "name": "Bull",
+     "prob": 12,
+     "value": 90,
+     "success": true,
+     "note": "Several NNZ-2591 indications work and/or a takeover at a premium."
+    }
+   ],
+   "trials": [
+    {
+     "status": "positive",
+     "driver": false,
+     "mods": [
+      "rare",
+      "samePos3",
+      "partner"
+     ],
+     "note": "Same drug already won US approval after the positive Lavender Phase 3.",
+     "n": "",
+     "endpoint": "Bridging efficacy and safety in Japanese patients",
+     "history": [
+      {
+       "date": "2026-11-05",
+       "text": "Completed the Phase 3 study of trofinetide in Rett syndrome in Japan, with results consistent with the LAVENDER Phase 3 study and supportive of a planned regulatory filing."
+      }
+     ],
+     "id": "neu-japan",
+     "co": "neu",
+     "name": "Japan Phase 3 (trofinetide)",
+     "keys": "japan",
+     "drug": "Trofinetide",
+     "indication": "Rett syndrome (Japan)",
+     "phase": "P3",
+     "area": "neuro",
+     "readout": "2026-10-20",
+     "readoutWhen": "Sep\u2013Nov 2026",
+     "posOverride": null
+    },
+    {
+     "status": "enrolling",
+     "driver": true,
+     "mods": [
+      "rare",
+      "openLabelOnly"
+     ],
+     "note": "Prior efficacy evidence is an open-label Phase 2; many such signals fade against placebo.",
+     "n": "~160",
+     "endpoint": "Placebo-controlled efficacy",
+     "history": [],
+     "id": "neu-koala",
+     "co": "neu",
+     "name": "Koala Phase 3 (NNZ-2591)",
+     "keys": "koala",
+     "drug": "NNZ-2591",
+     "indication": "Phelan-McDermid syndrome",
+     "phase": "P3",
+     "area": "neuro",
+     "readout": "2028-06-30",
+     "readoutWhen": "2028 (not guided)",
+     "posOverride": null
+    },
+    {
+     "status": "planned",
+     "driver": false,
+     "mods": [
+      "rare",
+      "openLabelOnly"
+     ],
+     "note": "FDA design meeting due Q4 2026.",
+     "n": "",
+     "endpoint": "",
+     "history": [],
+     "id": "neu-pths",
+     "co": "neu",
+     "name": "Pitt Hopkins Phase 3 (NNZ-2591)",
+     "keys": "pitt hopkins|pths",
+     "drug": "NNZ-2591",
+     "indication": "Pitt Hopkins syndrome",
+     "phase": "P3",
+     "area": "neuro",
+     "readout": "2029-12-31",
+     "readoutWhen": "Not guided (est.)",
+     "posOverride": null
+    }
+   ],
+   "catalysts": [
+    {
+     "id": "neu-c1",
+     "date": "2026-12-15",
+     "when": "Q4 2026",
+     "title": "Pitt Hopkins FDA meetings",
+     "desc": "Meeting to align the Phase 3 design, plus a patient-focused drug development meeting.",
+     "big": false,
+     "event": "meeting",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "neu-c2",
+     "date": "2027-05-15",
+     "when": "2027",
+     "title": "Koala enrolment and top-line timing guidance",
+     "desc": "~160 children with Phelan-McDermid syndrome. Formal top-line timing comes at ~50% enrolled.",
+     "big": true,
+     "event": "meeting",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "neu-c3",
+     "date": "2027-07-01",
+     "when": "2027",
+     "title": "Japan NDA submission for trofinetide",
+     "desc": "Opens the ~1,000-patient Japanese Rett market.",
+     "big": false,
+     "event": "filing",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "neu-c4",
+     "date": "2027-09-15",
+     "when": "2027",
+     "title": "HIE IND and FDA meeting for NNZ-2591",
+     "desc": "Adds a new indication to the NNZ-2591 program.",
+     "big": false,
+     "event": "meeting",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "neu-c5",
+     "date": "2028-06-30",
+     "when": "2028 (not guided)",
+     "title": "Koala Phase 3 top-line results",
+     "desc": "Placeholder only. The company hasn't guided timing yet; update this when it does.",
+     "big": true,
+     "event": "trial",
+     "done": false,
+     "result": "",
+     "upPct": 60,
+     "downPct": -45
+    },
+    {
+     "id": "neu-c6",
+     "date": "2029-03-01",
+     "when": "2029 (if positive)",
+     "title": "NDA filing and commercial path for NNZ-2591",
+     "desc": "If Koala succeeds: NDA, a sale or licence decision, and a potential Priority Review Voucher.",
+     "big": false,
+     "event": "filing",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "neu-c7",
+     "date": "2030-06-30",
+     "when": "2030 (if positive)",
+     "title": "FDA decision on NNZ-2591 for Phelan-McDermid",
+     "desc": "Only if Koala succeeds; could earn a Priority Review Voucher.",
+     "big": true,
+     "event": "approval",
+     "done": false,
+     "result": ""
+    }
+   ],
+   "history": [
+    {
+     "date": "2026-11-05",
+     "title": "Acadia Q3 2026 results",
+     "desc": "DAYBUE net sales for the quarter, which set Neuren's royalty income."
+    },
+    {
+     "date": "2021-12-06",
+     "title": "Lavender Phase 3 succeeds",
+     "desc": "Acadia's trofinetide trial met both endpoints in Rett syndrome; Neuren shares roughly doubled that day."
+    },
+    {
+     "date": "2023-03-10",
+     "title": "FDA approves DAYBUE",
+     "desc": "First approved Rett syndrome treatment; US launch followed in April."
+    },
+    {
+     "date": "2023-07-24",
+     "title": "Global licence to Acadia",
+     "desc": "Worldwide trofinetide rights for US$100m upfront plus ex-North America milestones."
+    },
+    {
+     "date": "2023-12-11",
+     "title": "NNZ-2591 Phelan-McDermid Phase 2",
+     "desc": "Open-label results supported moving to a single Phase 3."
+    },
+    {
+     "date": "2024-02-20",
+     "title": "Short-seller report",
+     "desc": "Culper Research questioned DAYBUE's safety presentation; shares fell sharply."
+    },
+    {
+     "date": "2025-04-03",
+     "title": "Shares down ~48% in a year",
+     "desc": "DAYBUE growth slowed and the price fell to about $10.60."
+    },
+    {
+     "date": "2026-02-15",
+     "title": "Koala Phase 3 first patient",
+     "desc": "Pivotal NNZ-2591 trial in Phelan-McDermid syndrome begins dosing."
+    },
+    {
+     "date": "2026-06-29",
+     "title": "Positive CHMP opinion",
+     "desc": "European recommendation for DAYBUE; shares jumped 36%."
+    },
+    {
+     "date": "2026-08-26",
+     "title": "EU approval and first dividend",
+     "desc": "Record royalties and a 15c fully franked interim dividend."
+    },
+    {
+     "date": "2026-10-01",
+     "title": "Germany launch, US$35m EU milestone",
+     "desc": "First EU commercial sale; milestone confirmed 5 Nov 2026."
+    },
+    {
+     "date": "2026-11-02",
+     "title": "Orphan Drug Designation for NNZ-2591 in HIE",
+     "desc": "FDA designation for neonatal hypoxic-ischemic encephalopathy."
+    },
+    {
+     "date": "2026-11-05",
+     "title": "Japan Phase 3 positive; 2026 guidance upgraded",
+     "desc": "Results consistent with LAVENDER; income guidance US$91\u201393m."
+    }
+   ],
+   "promises": [
+    {
+     "id": "neu-p1",
+     "text": "Japan Phase 3 trofinetide top-line results in Q4 2026",
+     "due": "2026-12-31",
+     "status": "kept",
+     "comment": "Acadia, 5 Nov 2026: Completed the Phase 3 study of trofinetide in Rett syndrome in Japan, with results consistent with the LAVENDER Phase 3 study and supportive of a planned regulatory filing.",
+     "checked": "2026-11-09"
+    },
+    {
+     "id": "neu-p2",
+     "text": "First EU commercial sale, triggering the US$35m milestone, in Q4 2026",
+     "due": "2026-12-31",
+     "status": "kept",
+     "comment": "DAYBUE launched in Germany Oct 2026; Neuren received the US$35m milestone (announced 5 Nov 2026).",
+     "checked": "2026-11-20"
+    },
+    {
+     "id": "neu-p3",
+     "text": "FDA meeting to align the Pitt Hopkins Phase 3 design in Q4 2026",
+     "due": "2026-12-31",
+     "status": "open",
+     "comment": "",
+     "checked": ""
+    },
+    {
+     "id": "neu-p4",
+     "text": "Start the juvenile toxicity study for the HIE IND in Q3 2026",
+     "due": "2026-09-30",
+     "status": "unclear",
+     "comment": "Still not confirmed. FDA granted Orphan Drug Designation for NNZ-2591 in HIE on 2 Nov 2026, but no word on the juvenile toxicity study start.",
+     "checked": "2026-11-20"
+    },
+    {
+     "id": "neu-p5",
+     "text": "Give Koala top-line timing once enrolment reaches about 50%",
+     "due": "",
+     "status": "open",
+     "comment": "",
+     "checked": ""
+    },
+    {
+     "id": "neu-p6",
+     "text": "Submit the Japan NDA for trofinetide in 2027",
+     "due": "2027-12-31",
+     "status": "open",
+     "comment": "",
+     "checked": ""
+    },
+    {
+     "id": "neu-p7",
+     "text": "Win EU approval for DAYBUE after CHMP re-examination",
+     "due": "2026-08-31",
+     "status": "kept",
+     "comment": "Approved in August 2026.",
+     "checked": "2026-09-27"
+    },
+    {
+     "id": "neu-p8",
+     "text": "Pay dividends of 70\u2013100% of the Available Pool from royalties",
+     "due": "",
+     "status": "ontrack",
+     "comment": "First 15c interim declared Aug 2026.",
+     "checked": "2026-09-27"
+    }
+   ],
+   "reporting": "half",
+   "recurring": [
+    {
+     "label": "Acadia results",
+     "months": [
+      2,
+      5,
+      8,
+      11
+     ],
+     "day": 5,
+     "title": "Acadia quarterly results (DAYBUE sales)",
+     "event": "report"
+    },
+    {
+     "label": "Results",
+     "months": [
+      2,
+      8
+     ],
+     "day": 26,
+     "title": "Neuren half/full-year results and dividend",
+     "event": "report"
+    }
+   ],
+   "finance": [
+    {
+     "period": "2026-06-30",
+     "cash": 287,
+     "opcf": null,
+     "rnd": null,
+     "staff": null,
+     "admin": null,
+     "shares": 126.7,
+     "source": "H1 2026 results (cash and investments)",
+     "profitable": true
+    }
+   ],
+   "raises": [],
+   "scorecard": {
+    "endpoint": 2,
+    "patients": 2,
+    "regulatory": 2,
+    "capital": 2,
+    "milestone": 2,
+    "cmc": 1,
+    "exit": 1,
+    "focus": 2
+   },
+   "scoreNotes": "Self-funded from royalties (no dilution); FDA-aligned Koala endpoints; Orphan/RPD designations. Exit path for NNZ-2591 not yet set (partner vs go-it-alone). Open-label Phase 2 is the main evidence gap.",
+   "keywords": "koala|nnz-2591|ercanetide|daybue|trofinetide|pitt hopkins|phelan|hie|angelman"
+  },
+  {
+   "id": "dxb",
+   "ticker": "DXB",
+   "name": "Dimerix",
+   "section": "rare",
+   "color": 5,
+   "tagline": "DMX-200 for the rare kidney disease FSGS, partnered in the US with Amicus",
+   "facts": [
+    "ACTION3 Phase 3: 333 adults dosed across 219 sites in 21 countries; >90% power confirmed in blinded review (Apr 2026).",
+    "Shares fell ~36% on 28 Apr 2026 when the early (accelerated approval) readout was dropped; trial runs to final proteinuria endpoint.",
+    "Kidney Week (Oct 2026) human data link CCR2 activity to worse FSGS outcomes \u2014 supports the target, not proof DMX-200 works.",
+    "Up to A$34m non-dilutive facility (half drawn by Sep 2026). Bought DMX-652 (AKI) Jul 2026.",
+    "Partners: Amicus (US, up to US$560m milestones), Everest (Greater China/SE Asia), FUSO (Japan) and others."
+   ],
+   "horizon": "2034-11-20",
+   "reviewed": false,
+   "scenarios": [
+    {
+     "name": "Bear",
+     "prob": 55,
+     "value": 0.05,
+     "success": false,
+     "note": "ACTION3 misses in 2028; cash-strapped, shares collapse."
+    },
+    {
+     "name": "Base",
+     "prob": 33,
+     "value": 1.0,
+     "success": true,
+     "note": "Success, FDA approval ~2030, Amicus milestones and royalties flow."
+    },
+    {
+     "name": "Bull",
+     "prob": 12,
+     "value": 1.6,
+     "success": true,
+     "note": "Strong data plus buyout. Rare \u2014 don't anchor on it."
+    }
+   ],
+   "trials": [
+    {
+     "status": "ongoing",
+     "driver": true,
+     "mods": [
+      "rare",
+      "interimPass",
+      "poorClass",
+      "partner",
+      "validatedEndpoint"
+     ],
+     "note": "Adults fully dosed (333, final adult started Mar 2026). Interim (2024) passed; CCR2 class has a poor record; no early readout (Apr 2026).",
+     "n": "333 adults",
+     "endpoint": "Proteinuria",
+     "history": [
+      {
+       "date": "2026-10-16",
+       "text": "fully enrolled (Full-year result)"
+      }
+     ],
+     "id": "dxb-action3",
+     "co": "dxb",
+     "name": "ACTION3 Phase III",
+     "keys": "action3|action 3",
+     "drug": "DMX-200",
+     "indication": "FSGS (kidney)",
+     "phase": "P3",
+     "area": "renal",
+     "readout": "2028-07-15",
+     "readoutWhen": "Mid 2028 (est.)",
+     "posOverride": null
+    }
+   ],
+   "catalysts": [
+    {
+     "id": "dxb-c1",
+     "date": "2026-12-15",
+     "when": "Rolling",
+     "title": "New licensing deals",
+     "desc": "Advanced talks for territories not yet licensed; each deal brings upfront cash.",
+     "big": true,
+     "event": "deal",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "dxb-c2",
+     "date": "2027-03-01",
+     "when": "Rolling",
+     "title": "Independent safety reviews",
+     "desc": "Seven reviews passed so far with no safety issues or protocol changes.",
+     "big": false,
+     "event": "other",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "dxb-c3",
+     "date": "2027-06-15",
+     "when": "Ongoing",
+     "title": "Adolescent cohort recruitment",
+     "desc": "Patients aged 12\u201317; success could widen the label.",
+     "big": false,
+     "event": "other",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "dxb-c4",
+     "date": "2028-03-31",
+     "when": "Mar 2028",
+     "title": "Last adult patient's last dose",
+     "desc": "Final treatment visit in ACTION3 before database lock.",
+     "big": false,
+     "event": "other",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "dxb-c5",
+     "date": "2028-07-15",
+     "when": "Mid 2028 (est.)",
+     "title": "ACTION3 Phase III top-line",
+     "desc": "Primary endpoint is proteinuria, which the FDA accepts for full approval.",
+     "big": true,
+     "event": "trial",
+     "done": false,
+     "result": "",
+     "upPct": 150,
+     "downPct": -75
+    },
+    {
+     "id": "dxb-c6",
+     "date": "2029-01-15",
+     "when": "Late 2028\u201329 (est.)",
+     "title": "US filing by Amicus",
+     "desc": "Unlocks success-based milestones and royalties if approved.",
+     "big": true,
+     "event": "filing",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "dxb-c7",
+     "date": "2030-01-15",
+     "when": "2030 (est.)",
+     "title": "FDA decision on DMX-200",
+     "desc": "Only if ACTION3 succeeds.",
+     "big": true,
+     "event": "approval",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "dxb-c8",
+     "date": "2030-09-01",
+     "when": "2030\u201331 (est.)",
+     "title": "US launch by Amicus",
+     "desc": "Royalties and sales milestones begin.",
+     "big": false,
+     "event": "launch",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "dxb-c90",
+     "date": "2027-03-31",
+     "when": "By 31 Mar 2027",
+     "title": "Last date to draw remaining non-dilutive facility",
+     "desc": "Up to A$34m facility: half drawn by Sep 2026; remainder lapses if not drawn by 31 Mar 2027.",
+     "big": false,
+     "event": "other",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "dxb-c91",
+     "date": "2027-06-30",
+     "when": "2027",
+     "title": "DMX-652 Phase 2 first patient (acute kidney injury)",
+     "desc": "Acquired Jul 2026 (US$5m upfront). Site initiation H2 2026, dosing 2027.",
+     "big": false,
+     "event": "trial",
+     "done": false,
+     "result": ""
+    }
+   ],
+   "history": [
+    {
+     "date": "2024-03-11",
+     "title": "ACTION3 interim analysis passed",
+     "desc": "DMX-200 performing better than placebo on proteinuria."
+    },
+    {
+     "date": "2025-05-01",
+     "title": "Amicus US licence",
+     "desc": "US$30m upfront, up to US$560m milestones plus royalties."
+    },
+    {
+     "date": "2025-06-15",
+     "title": "FUSO Japan milestone",
+     "desc": "400 million yen payment."
+    },
+    {
+     "date": "2025-12-15",
+     "title": "Adult enrolment complete",
+     "desc": "ACTION3 adult cohort fully recruited."
+    },
+    {
+     "date": "2026-04-28",
+     "title": "Trial runs to final endpoint",
+     "desc": "No early readout; last dose now March 2028. Shares fell to ~$0.16 during 2026."
+    },
+    {
+     "date": "2026-06-16",
+     "title": "Everest Medicines licence",
+     "desc": "US$10m upfront for Greater China, Korea and SE Asia."
+    }
+   ],
+   "promises": [
+    {
+     "id": "dxb-p1",
+     "text": "Complete full adult ACTION3 enrolment by end of 2025",
+     "due": "2025-12-31",
+     "status": "kept",
+     "comment": "Done December 2025.",
+     "checked": "2026-09-27"
+    },
+    {
+     "id": "dxb-p2",
+     "text": "Report the blinded statistical review in April 2026",
+     "due": "2026-04-30",
+     "status": "kept",
+     "comment": "Reported 28 April 2026.",
+     "checked": "2026-09-27"
+    },
+    {
+     "id": "dxb-p3",
+     "text": "Run an interim analysis to support Accelerated Approval",
+     "due": "",
+     "status": "changed",
+     "comment": "Dropped in April 2026; the trial now runs to its final endpoint.",
+     "checked": "2026-09-27"
+    },
+    {
+     "id": "dxb-p4",
+     "text": "Last adult patient's last dose in March 2028",
+     "due": "2028-03-31",
+     "status": "ontrack",
+     "comment": "Management says it is still on track, now March 2028. Not yet delivered.",
+     "checked": "2026-10-16"
+    },
+    {
+     "id": "dxb-p5",
+     "text": "Sign licensing deals for remaining territories",
+     "due": "",
+     "status": "open",
+     "comment": "",
+     "checked": ""
+    }
+   ],
+   "reporting": "quarterly",
+   "recurring": [],
+   "finance": [],
+   "raises": [],
+   "scorecard": {
+    "endpoint": 2,
+    "patients": 2,
+    "regulatory": 1,
+    "capital": 2,
+    "milestone": 1,
+    "cmc": 1,
+    "exit": 2,
+    "focus": 1
+   },
+   "scoreNotes": "FDA agreed proteinuria supports full approval; strong regional licensing (non-dilutive cash). Funding through 2028 readout depends on facility draws; DMX-652 adds spend outside the core readout.",
+   "keywords": "action3|action 3|dmx-200|dmx-652|fsgs|amicus|idmc"
+  },
+  {
+   "id": "emv",
+   "ticker": "EMV",
+   "name": "EMVision Medical Devices",
+   "section": "device",
+   "color": 1,
+   "tagline": "Portable brain scanners for stroke at the bedside and in ambulances",
+   "facts": [
+    "Cash A$17.1m at 30 Jun 2026 after a A$14m raise (Sep 2025); FY26 quarterly burn averaged ~A$1.6m net of grants; A$4.6m grants still to come.",
+    "Pivotal (validation) trial enrolment slipped from H1 2026 to late 2026 / early 2027.",
+    "Ischaemia endpoint being added, subject to an FDA pre-submission meeting (H2 2026).",
+    "First Responder: RFDS aeromedical study (May 2026) and Mobile Stroke Unit Stage 1 (Sep 2026)."
+   ],
+   "horizon": "2029-11-20",
+   "reviewed": false,
+   "scenarios": [
+    {
+     "name": "Bear",
+     "prob": 45,
+     "value": 0.5,
+     "success": false,
+     "note": "Clearance slips or misses; raises at low prices dilute holders."
+    },
+    {
+     "name": "Base",
+     "prob": 40,
+     "value": 1.8,
+     "success": true,
+     "note": "De Novo clearance ~2028, slow hospital uptake, ~30% dilution."
+    },
+    {
+     "name": "Bull",
+     "prob": 15,
+     "value": 4.0,
+     "success": true,
+     "note": "Clear US stroke-care adoption or takeover by an imaging major."
+    }
+   ],
+   "trials": [
+    {
+     "status": "enrolling",
+     "driver": true,
+     "mods": [
+      "enrolDelay",
+      "smallSponsor"
+     ],
+     "note": "Enrolment ran behind the 2025 guidance.",
+     "n": "300",
+     "endpoint": "Diagnostic accuracy vs CT",
+     "history": [],
+     "id": "emv-pivotal",
+     "co": "emv",
+     "name": "emu pivotal validation trial",
+     "keys": "pivotal|emu",
+     "drug": "emu portable brain scanner",
+     "indication": "Stroke (haemorrhage detection)",
+     "phase": "DEV",
+     "area": "device",
+     "readout": "2027-06-30",
+     "readoutWhen": "2027 (after full enrolment)",
+     "posOverride": null
+    }
+   ],
+   "catalysts": [
+    {
+     "id": "emv-c1",
+     "date": "2026-11-30",
+     "when": "H2 2026",
+     "title": "FDA pre-submission meeting",
+     "desc": "Aligns on adding an acute ischaemia endpoint alongside haemorrhage detection, then a protocol amendment.",
+     "big": true,
+     "event": "filing",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "emv-c2",
+     "date": "2026-12-10",
+     "when": "H2 2026",
+     "title": "Regional Benefits Study launch",
+     "desc": "First study of emu's benefit in real use, at remote SA emergency departments without CT.",
+     "big": false,
+     "event": "launch",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "emv-c3",
+     "date": "2027-02-15",
+     "when": "Early 2027",
+     "title": "Pivotal trial fully enrolled",
+     "desc": "The gating step before data readout and submission.",
+     "big": false,
+     "event": "other",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "emv-c4",
+     "date": "2027-06-30",
+     "when": "2027",
+     "title": "FDA De Novo submission",
+     "desc": "Built on the pivotal trial's haemorrhage and, if added, ischaemia results.",
+     "big": false,
+     "event": "filing",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "emv-c5",
+     "date": "2027-09-01",
+     "when": "2027",
+     "title": "First Responder production units",
+     "desc": "Production-equivalent devices for diagnostic and regulatory testing.",
+     "big": false,
+     "event": "other",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "emv-c6",
+     "date": "2027-12-15",
+     "when": "Late 2027 (broker est.)",
+     "title": "FDA De Novo decision on emu",
+     "desc": "Brokers flag clearance as the major value inflection point.",
+     "big": true,
+     "event": "approval",
+     "done": false,
+     "result": "",
+     "upPct": 40,
+     "downPct": -45
+    },
+    {
+     "id": "emv-c7",
+     "date": "2028-06-01",
+     "when": "2028 (if cleared)",
+     "title": "US commercial launch of emu",
+     "desc": "Reimbursement and go-to-market build-out after clearance.",
+     "big": false,
+     "event": "launch",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "emv-c8",
+     "date": "2029-01-15",
+     "when": "2028\u201329 (est.)",
+     "title": "First Responder regulatory submission",
+     "desc": "Not yet guided; follows production-unit and diagnostic testing.",
+     "big": false,
+     "event": "filing",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "emv-c9",
+     "date": "2030-03-01",
+     "when": "2030 (est.)",
+     "title": "First Responder market entry",
+     "desc": "Not guided; depends on clearance and funding.",
+     "big": false,
+     "event": "other",
+     "done": false,
+     "result": ""
+    }
+   ],
+   "history": [
+    {
+     "date": "2024-02-28",
+     "title": "Keysight invests US$10m",
+     "desc": "Strategic investment from the test and measurement group."
+    },
+    {
+     "date": "2024-07-15",
+     "title": "Pivotal trial under way",
+     "desc": "Validation trial of emu starts in US and Australian hospitals."
+    },
+    {
+     "date": "2025-07-01",
+     "title": "Five of six pivotal sites active",
+     "desc": "Recruitment expands across both countries."
+    },
+    {
+     "date": "2025-09-15",
+     "title": "A$14m capital raise",
+     "desc": "Funding for the pivotal trial and FDA pathway."
+    },
+    {
+     "date": "2026-05-11",
+     "title": "Ischaemia endpoint added",
+     "desc": "Pivotal trial to validate ischaemic stroke detection too, pending FDA."
+    },
+    {
+     "date": "2026-05-27",
+     "title": "RFDS aeromedical study",
+     "desc": "First Responder works in air retrieval."
+    },
+    {
+     "date": "2026-09-16",
+     "title": "Mobile Stroke Unit Stage 1",
+     "desc": "First Responder trialled in road ambulances; Stroke Alliance MOU."
+    }
+   ],
+   "promises": [
+    {
+     "id": "emv-p1",
+     "text": "Meet pivotal trial recruitment targets by H1 2026 (said in 2025)",
+     "due": "2026-06-30",
+     "status": "late",
+     "comment": "Full enrolment now guided for late 2026 or early 2027.",
+     "checked": "2026-09-27"
+    },
+    {
+     "id": "emv-p2",
+     "text": "Hold an FDA pre-submission meeting on the ischaemia endpoint",
+     "due": "2026-12-31",
+     "status": "open",
+     "comment": "",
+     "checked": ""
+    },
+    {
+     "id": "emv-p3",
+     "text": "Launch the Regional Benefits Study in H2 2026",
+     "due": "2026-12-31",
+     "status": "open",
+     "comment": "",
+     "checked": ""
+    },
+    {
+     "id": "emv-p4",
+     "text": "Complete pivotal trial enrolment by early CY2027",
+     "due": "2027-03-31",
+     "status": "open",
+     "comment": "",
+     "checked": ""
+    },
+    {
+     "id": "emv-p5",
+     "text": "Submit for FDA De Novo clearance after the pivotal trial",
+     "due": "2027-12-31",
+     "status": "open",
+     "comment": "",
+     "checked": ""
+    },
+    {
+     "id": "emv-p6",
+     "text": "Report First Responder Mobile Stroke Unit Stage 1",
+     "due": "2026-09-30",
+     "status": "kept",
+     "comment": "Reported 16 Sep 2026.",
+     "checked": "2026-09-27"
+    }
+   ],
+   "reporting": "quarterly",
+   "recurring": [],
+   "finance": [
+    {
+     "period": "2026-06-30",
+     "cash": 17.1,
+     "opcf": -1.6,
+     "rnd": null,
+     "staff": null,
+     "admin": null,
+     "shares": null,
+     "source": "Jun 2026 4C / FY26 results (burn is FY26 average net of grants)",
+     "profitable": false
+    }
+   ],
+   "raises": [
+    {
+     "date": "2025-09-15",
+     "amount": 14,
+     "price": null
+    }
+   ],
+   "scorecard": {
+    "utility": 2,
+    "pathway": 1,
+    "evidence": 1,
+    "reimb": 0,
+    "users": 1,
+    "mfg": 1,
+    "ip": 2,
+    "funding": 1,
+    "compete": 1
+   },
+   "scoreNotes": "Clear clinical need (no CT in ambulances/regional EDs). De Novo route set but pivotal still enrolling and endpoint being changed. No reimbursement code/coverage yet \u2014 the biggest commercial gap in Mehta's framework. Cash covers ~2 years at current burn, not launch.",
+   "keywords": "pivotal|emu|de novo|first responder|q-sub|pre-submission|regional benefits"
+  },
+  {
+   "id": "cu6",
+   "ticker": "CU6",
+   "name": "Clarity Pharmaceuticals",
+   "section": "other",
+   "color": 3,
+   "tagline": "Copper-based radiopharmaceuticals for prostate cancer imaging and therapy",
+   "facts": [
+    "FDA Breakthrough Therapy designation for 64Cu-SAR-bisPSMA in biochemical recurrence (12 Nov 2026); shares rose ~23% to A$2.05, then fell back to ~A$1.88.",
+    "AMPLIFY and CLARIFY recruitment complete; topline for both guided H1 2027.",
+    "Cash A$178m at 30 Jun 2026; net operating outflow ~A$19m a quarter. A$203m placement at A$4.20 (Jul 2025) \u2014 shares now far below that.",
+    "Crowded PSMA PET market: several agents already FDA-approved."
+   ],
+   "horizon": "2029-11-20",
+   "reviewed": false,
+   "scenarios": [
+    {
+     "name": "Bear",
+     "prob": 35,
+     "value": 0.9,
+     "success": false,
+     "note": "Data/FDA setback or weak uptake in a crowded market, plus dilution."
+    },
+    {
+     "name": "Base",
+     "prob": 45,
+     "value": 3.2,
+     "success": true,
+     "note": "Approval ~2028, gradual share gains, at least one more raise."
+    },
+    {
+     "name": "Bull",
+     "prob": 20,
+     "value": 7.0,
+     "success": true,
+     "note": "Strong imaging uptake plus working Cu-67 therapy, or a takeover."
+    }
+   ],
+   "trials": [
+    {
+     "status": "ongoing",
+     "driver": true,
+     "mods": [
+      "classApproved",
+      "fdaAligned",
+      "breakthrough"
+     ],
+     "note": "Several PSMA PET agents are already FDA-approved.",
+     "n": "",
+     "endpoint": "Diagnostic performance (registrational)",
+     "history": [],
+     "id": "cu6-amplify",
+     "co": "cu6",
+     "name": "AMPLIFY Phase III",
+     "keys": "amplify",
+     "drug": "64Cu-SAR-bisPSMA",
+     "indication": "Recurrent prostate cancer (imaging)",
+     "phase": "P3",
+     "area": "dximg",
+     "readout": "2027-04-30",
+     "readoutWhen": "H1 2027",
+     "posOverride": null
+    },
+    {
+     "status": "ongoing",
+     "driver": false,
+     "mods": [
+      "classApproved",
+      "fdaAligned"
+     ],
+     "note": "",
+     "n": "",
+     "endpoint": "",
+     "history": [],
+     "id": "cu6-clarify",
+     "co": "cu6",
+     "name": "CLARIFY Phase III",
+     "keys": "clarify",
+     "drug": "64Cu-SAR-bisPSMA",
+     "indication": "Pre-prostatectomy staging (imaging)",
+     "phase": "P3",
+     "area": "dximg",
+     "readout": "2027-06-15",
+     "readoutWhen": "H1 2027",
+     "posOverride": null
+    },
+    {
+     "status": "ongoing",
+     "driver": false,
+     "mods": [
+      "smallSponsor"
+     ],
+     "note": "Therapy arm; would make Clarity more than an imaging company.",
+     "n": "",
+     "endpoint": "",
+     "history": [],
+     "id": "cu6-secure",
+     "co": "cu6",
+     "name": "SECuRE Phase I/IIa",
+     "keys": "secure",
+     "drug": "67Cu-SAR-bisPSMA",
+     "indication": "Metastatic prostate cancer (therapy)",
+     "phase": "P2",
+     "area": "onc",
+     "readout": "2027-03-15",
+     "readoutWhen": "2027",
+     "posOverride": null
+    }
+   ],
+   "catalysts": [
+    {
+     "id": "cu6-c0",
+     "date": "2026-11-25",
+     "when": "25 Nov 2026",
+     "title": "Annual general meeting",
+     "desc": "First AGM after Breakthrough Therapy designation; watch timing guidance and cash.",
+     "big": false,
+     "event": "meeting",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "cu6-c1",
+     "date": "2027-04-30",
+     "when": "H1 2027 (guided)",
+     "title": "AMPLIFY Phase III results",
+     "desc": "Registrational imaging trial in recurrent prostate cancer. Company now guides topline for both Phase IIIs in H1 2027.",
+     "big": true,
+     "event": "trial",
+     "done": false,
+     "result": "",
+     "upPct": 30,
+     "downPct": -50
+    },
+    {
+     "id": "cu6-c2",
+     "date": "2027-03-15",
+     "when": "2027",
+     "title": "SECuRE therapy updates",
+     "desc": "Cu-67 SAR-bisPSMA in advanced prostate cancer; watch for a move toward Phase III.",
+     "big": false,
+     "event": "other",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "cu6-c3",
+     "date": "2027-06-15",
+     "when": "H1 2027 (guided)",
+     "title": "CLARIFY Phase III results",
+     "desc": "Together with AMPLIFY, covers the two main prostate cancer imaging populations.",
+     "big": true,
+     "event": "trial",
+     "done": false,
+     "result": "",
+     "upPct": 25,
+     "downPct": -40
+    },
+    {
+     "id": "cu6-c4",
+     "date": "2027-09-01",
+     "when": "2027 (est.)",
+     "title": "Neuroendocrine tumour Phase III start",
+     "desc": "In planning; expands beyond prostate cancer.",
+     "big": false,
+     "event": "other",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "cu6-c5",
+     "date": "2027-10-15",
+     "when": "2027",
+     "title": "FDA submission for 64Cu-SAR-bisPSMA",
+     "desc": "Based on AMPLIFY and CLARIFY data.",
+     "big": true,
+     "event": "filing",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "cu6-c6",
+     "date": "2028-08-01",
+     "when": "2028 (est.)",
+     "title": "FDA decision and US launch",
+     "desc": "Commercial copper-64 supply and manufacturing deals are already signed.",
+     "big": true,
+     "event": "approval",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "cu6-c7",
+     "date": "2029-11-01",
+     "when": "2029\u201330 (est.)",
+     "title": "Cu-67 therapy Phase III data",
+     "desc": "Not guided; would decide whether Clarity is more than an imaging company.",
+     "big": false,
+     "event": "other",
+     "done": false,
+     "result": ""
+    }
+   ],
+   "history": [
+    {
+     "date": "2021-08-25",
+     "title": "ASX listing",
+     "desc": "IPO at $1.00 a share."
+    },
+    {
+     "date": "2024-10-14",
+     "title": "FDA backs AMPLIFY design",
+     "desc": "End-of-phase meeting supports a registrational trial."
+    },
+    {
+     "date": "2025-01-31",
+     "title": "Second Fast Track designation",
+     "desc": "For imaging in biochemical recurrence."
+    },
+    {
+     "date": "2025-05-29",
+     "title": "AMPLIFY first patient",
+     "desc": "Phase III recruitment begins."
+    },
+    {
+     "date": "2025-07-28",
+     "title": "A$203m placement",
+     "desc": "Raised at $4.20 a share, a level the shares later fell well below."
+    },
+    {
+     "date": "2026-03-10",
+     "title": "AMPLIFY enrolment target hit",
+     "desc": "Recruitment closed ahead of plan."
+    },
+    {
+     "date": "2026-04-13",
+     "title": "Commercial manufacturing deal",
+     "desc": "Nucleus RadioPharma to supply Cu-64 SAR-bisPSMA."
+    },
+    {
+     "date": "2026-11-12",
+     "title": "Breakthrough Therapy designation",
+     "desc": "64Cu-SAR-bisPSMA in biochemical recurrence; shares +23% on the day."
+    }
+   ],
+   "promises": [
+    {
+     "id": "cu6-p1",
+     "text": "Complete the AMPLIFY Phase III trial by December 2026",
+     "due": "2026-12-31",
+     "status": "ontrack",
+     "comment": "Recruitment complete; topline now guided for H1 2027 rather than Dec 2026. Watch for slippage.",
+     "checked": "2026-11-20"
+    },
+    {
+     "id": "cu6-p2",
+     "text": "Close CLARIFY Phase III recruitment in CY2026",
+     "due": "2026-12-31",
+     "status": "kept",
+     "comment": "CLARIFY dosed its 383-participant target; both Phase IIIs now in follow-up (Nov 2026).",
+     "checked": "2026-11-20"
+    },
+    {
+     "id": "cu6-p3",
+     "text": "File with the FDA for 64Cu-SAR-bisPSMA using AMPLIFY and CLARIFY data",
+     "due": "2027-12-31",
+     "status": "open",
+     "comment": "",
+     "checked": ""
+    },
+    {
+     "id": "cu6-p4",
+     "text": "Reach the AMPLIFY enrolment target",
+     "due": "2026-06-30",
+     "status": "kept",
+     "comment": "Hit in March 2026, ahead of plan.",
+     "checked": "2026-09-27"
+    },
+    {
+     "id": "cu6-p5",
+     "text": "Plan a Phase III trial in neuroendocrine tumours",
+     "due": "",
+     "status": "open",
+     "comment": "",
+     "checked": ""
+    }
+   ],
+   "reporting": "quarterly",
+   "recurring": [],
+   "finance": [
+    {
+     "period": "2026-06-30",
+     "cash": 178.3,
+     "opcf": -19,
+     "rnd": null,
+     "staff": null,
+     "admin": null,
+     "shares": null,
+     "source": "Jun 2026 4C",
+     "profitable": false
+    }
+   ],
+   "raises": [
+    {
+     "date": "2025-07-28",
+     "amount": 203,
+     "price": 4.2
+    }
+   ],
+   "scorecard": {
+    "efficacy": 2,
+    "pathway": 2,
+    "reimb": 1,
+    "market": 1,
+    "mfg": 2,
+    "ip": 2,
+    "funding": 2,
+    "model": 1
+   },
+   "scoreNotes": "Strong Phase II data and Breakthrough designation; commercial Cu-64 supply deals signed. Risk is commercial: payers and sites already use approved PSMA PET agents (Mehta: the \"so-what\" test for diagnostics).",
+   "keywords": "amplify|clarify|secure|sar-bispsma|cobra|breakthrough|nda"
+  },
+  {
+   "id": "ltp",
+   "ticker": "LTP",
+   "name": "LTR Pharma",
+   "section": "other",
+   "color": 2,
+   "tagline": "SPONTAN rapid-onset nasal vardenafil for erectile dysfunction; ROXUS for US compounding",
+   "facts": [
+    "SPONTAN Phase II PK (May 2026): median Tmax 10 min vs 60 min for oral vardenafil; supports a 505(b)(2) US filing. Final results were guided for Q3 CY2026 \u2014 check they were released.",
+    "ROXUS: US exclusive pharmacy partner (Jun 2026) under the 503A compounding route for earlier US sales.",
+    "147-patient real-world study (Aug 2026): 68% overall reported improvement.",
+    "Cash ~A$24m (early 2026); market cap ~A$78m at A$0.43 (Oct 2026). Partners: Aptar (device), Mayne Pharma (manufacturing)."
+   ],
+   "horizon": "2029-11-20",
+   "reviewed": false,
+   "scenarios": [
+    {
+     "name": "Bear",
+     "prob": 40,
+     "value": 0.15,
+     "success": false,
+     "note": "Slow US progress, ED drugs mostly cash-pay, repeated raises."
+    },
+    {
+     "name": "Base",
+     "prob": 45,
+     "value": 0.55,
+     "success": true,
+     "note": "505(b)(2) filed/approved ~2028\u201329, modest ROXUS sales."
+    },
+    {
+     "name": "Bull",
+     "prob": 15,
+     "value": 1.4,
+     "success": true,
+     "note": "US approval plus a commercial partner or acquisition."
+    }
+   ],
+   "trials": [
+    {
+     "id": "ltp-spontan",
+     "co": "ltp",
+     "name": "SPONTAN Phase II PK / 505(b)(2) program",
+     "drug": "Vardenafil nasal spray",
+     "indication": "Erectile dysfunction",
+     "phase": "P3",
+     "area": "b505",
+     "mods": [
+      "knownMolecule",
+      "smallSponsor"
+     ],
+     "status": "ongoing",
+     "readout": "2026-09-30",
+     "readoutWhen": "Final PK results guided Q3 CY2026",
+     "driver": true,
+     "n": "27",
+     "endpoint": "Pharmacokinetics vs oral vardenafil",
+     "note": "Approved molecule; a 505(b)(2) filing mainly needs bridging PK and safety data, so this is treated as the pivotal step.",
+     "history": [],
+     "keys": "spontan|phase ii|505",
+     "posOverride": null
+    }
+   ],
+   "catalysts": [
+    {
+     "id": "ltp-c1",
+     "date": "2026-09-30",
+     "when": "Q3 CY2026 (guided)",
+     "title": "SPONTAN Phase II final results",
+     "desc": "Final statistics to support the 505(b)(2) filing. Check whether released.",
+     "big": true,
+     "event": "trial",
+     "done": false,
+     "result": "",
+     "upPct": 15,
+     "downPct": -25
+    },
+    {
+     "id": "ltp-c2",
+     "date": "2027-03-31",
+     "when": "2027 (est.)",
+     "title": "FDA pre-IND / IND feedback for SPONTAN",
+     "desc": "Confirms 505(b)(2) data package.",
+     "big": true,
+     "event": "meeting",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "ltp-c3",
+     "date": "2027-06-30",
+     "when": "2027 (est.)",
+     "title": "ROXUS US sales via 503A pharmacy partner",
+     "desc": "First evidence of US revenue.",
+     "big": false,
+     "event": "launch",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "ltp-c4",
+     "date": "2028-06-30",
+     "when": "Not guided",
+     "title": "SPONTAN 505(b)(2) NDA submission",
+     "desc": "Placeholder until the company gives timing.",
+     "big": true,
+     "event": "filing",
+     "done": false,
+     "result": ""
+    }
+   ],
+   "history": [
+    {
+     "date": "2026-05-04",
+     "title": "SPONTAN interim Phase II PK",
+     "desc": "Tmax 10 min vs 60 min oral."
+    },
+    {
+     "date": "2026-06-11",
+     "title": "Exclusive US pharmacy partner for ROXUS",
+     "desc": ""
+    },
+    {
+     "date": "2026-08-11",
+     "title": "147-patient real-world study",
+     "desc": ""
+    }
+   ],
+   "promises": [
+    {
+     "id": "ltp-p1",
+     "text": "Final SPONTAN Phase II results in Q3 CY2026",
+     "due": "2026-09-30",
+     "status": "unclear",
+     "comment": "Not confirmed in research so far \u2014 check the Oct 2026 4C.",
+     "checked": "2026-11-20"
+    },
+    {
+     "id": "ltp-p2",
+     "text": "US market entry in 2026 (ROXUS via 503A)",
+     "due": "2026-12-31",
+     "status": "open",
+     "comment": "",
+     "checked": ""
+    }
+   ],
+   "reporting": "quarterly",
+   "recurring": [],
+   "finance": [
+    {
+     "period": "2026-03-31",
+     "cash": 24.1,
+     "opcf": null,
+     "rnd": null,
+     "staff": null,
+     "admin": null,
+     "shares": 181,
+     "source": "May 2026 investor presentation; shares estimated from market cap",
+     "profitable": false
+    }
+   ],
+   "raises": [],
+   "scorecard": {
+    "efficacy": 2,
+    "pathway": 2,
+    "reimb": 0,
+    "market": 1,
+    "mfg": 2,
+    "ip": 1,
+    "funding": 1,
+    "model": 1
+   },
+   "scoreNotes": "Low technical risk (approved molecule, 505(b)(2)). Mehta's reimbursement chapter is the weak point: ED treatments are often not covered, so this is a cash-pay convenience product competing with cheap generic tablets.",
+   "keywords": "spontan|roxus|505|fda|pre-ind|ind|aptar|mayne"
+  }
+ ]
+}

@@ -1,0 +1,81 @@
+# Medical catalyst radar
+
+A free, self-updating website for tracking ASX biotech, medical-device and pharma stocks. It runs on your own GitHub account and doesn't need Claude.
+
+- **Three sections:** Rare disease · Medical devices · Other pharma, biotech & medical
+- **For each stock:** probability of success, management and spending efficiency, anticipated market reaction, and buy/sell prices from your own rules
+- **Catalyst follow-up:** a calendar, overdue warnings, and a promise tracker
+- **Robot runs twice each weekday** (8:47 am and 5:17 pm Brisbane time). It fetches prices and ASX announcements, reads quarterly 4C cash-flow reports, records how each stock moved after news, and sends you alerts.
+- **Flag-and-confirm:** the robot never changes your assumptions. It puts suggestions in the **Review queue**, and you apply or dismiss each one.
+
+Cost: **A$0**. GitHub Pages and GitHub Actions are free for public repositories.
+
+---
+
+## One-time setup (about 20 minutes)
+
+### 1. Create the repository
+1. Sign up at https://github.com (free).
+2. Click **+ → New repository**. Name it `biotech-radar`, choose **Public**, then click **Create repository**.
+3. On the new repository page, click **uploading an existing file**. Drag in **everything inside** the `biotech-radar` folder from the zip: `index.html`, `README.md`, and the `data`, `scripts` and `.github` folders. Click **Commit changes**.
+   - Hidden folders: if your computer hides the `.github` folder, create the file by hand instead. Click **Add file → Create new file**, type the name `.github/workflows/update.yml`, paste in the contents of that file, and commit.
+
+### 2. Turn on the website
+**Settings → Pages →** Source: *Deploy from a branch* → Branch: `main`, folder `/ (root)` → **Save**.
+About a minute later your radar is live at `https://YOUR-USERNAME.github.io/biotech-radar/`.
+
+### 3. Let the robot write and send alerts
+**Settings → Actions → General →** Workflow permissions: **Read and write permissions** → **Save**.
+
+### 4. Run it the first time
+Go to **Actions → Update radar → Run workflow**. After about 2 minutes, refresh your radar. You should see prices, announcements, the Review queue and a first alert summary.
+- **Email alerts:** each run that finds something opens a GitHub *issue* that mentions you, and GitHub emails you. To confirm email is set up, check that **Settings (your profile) → Notifications → Email** is ticked for "Participating, @mentions".
+- **Phone alerts (optional, free):**
+  1. Install the **ntfy** app (iOS or Android).
+  2. In the app, subscribe to a long random topic name, e.g. `radar-k39fj2lq8x`.
+  3. On GitHub, go to repo **Settings → Secrets and variables → Actions → New repository secret**. Name it `NTFY_TOPIC`, and set the value to the topic name from step 2.
+
+### 5. Let the page save your edits (needs a token)
+1. Go to GitHub **profile picture → Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token**.
+2. Under **Repository access**, choose *Only select repositories* and pick `biotech-radar`.
+3. Set **Permissions:** *Contents* → Read and write, and *Actions* → Read and write.
+4. Generate the token, copy it, and paste it into the radar under **Settings & positions → GitHub connection**, then click **Test**.
+
+The token is stored only in that browser. Repeat this step on each device you use, or skip it on devices where you only read.
+
+### 6. Enter your positions
+In the radar, go to **Settings & positions → Import positions file** and choose `my-positions.json` (supplied separately, **not** in the repository). It holds your Neuren holding of 38,000 shares at A$15.40 and the 4-step sell ladder from your exit plan. Add the other holdings by hand.
+
+Positions are kept on your device. If you tick *Also save positions to GitHub*, the email alerts can include sell-ladder and time-limit warnings. The catch is that **anyone can read a public repository**. To keep them private while syncing, use a private repository instead; GitHub Pages on a private repository needs a paid GitHub plan.
+
+### 7. Review the draft assumptions
+Every stock starts as **Draft**. Open each one and check its scenarios, which drive the buy/sell prices, then tick *I've reviewed these*.
+
+---
+
+## How the numbers work
+
+| What | How it's calculated |
+|---|---|
+| Expected value | Probability-weighted average of your scenario values per share at the horizon date |
+| Rare disease buy price | Success-case value ÷ 10. If it works, buying at this price gives your 10x. The buy price is also capped at the expected value. |
+| Other sections buy price | Expected value discounted at 15% a year to the horizon |
+| Sell / trim price | Expected value discounted at 5% a year. Above this, the expected return is below 5% a year. |
+| Probability of success | Base rate for the area × stage, adjusted by modifiers (e.g. "open-label only" ×0.6 odds, "design agreed with FDA" ×1.3). All are editable in Settings. |
+| Management grade | Promises kept 40% · cash runway and dilution 30% · scorecard 30% |
+| Scorecards | Rare disease: built from public descriptions of David R. Craig, *The New Rules of Rare Disease* (2026). Devices and other: Mehta, *Commercializing Successful Biomedical Technologies* (2nd ed.). |
+| Market reaction | Rough base rates for each type of event. The page also shows each stock's own measured one-day and five-day moves, which build up over time. |
+
+## Adding a stock
+Open the section → **+ Add stock** → fill in the scenarios, trials, catalysts and keywords → **Save changes**. Prices arrive at the next update; click **Update now** to fetch them straight away.
+
+## If something breaks
+The robot uses the same public data feeds as the ASX website and Yahoo Finance. These are free but unofficial, so they can change without notice. Problems show under **Settings & positions → Robot status** and in the **Actions** tab. Copy the error and ask Claude to fix `scripts/update.py`.
+
+To check the robot logic offline, run `python scripts/test_update.py`.
+
+## Files
+- `data/companies.json`, `data/config.json`, `data/decisions.json`: yours (edited from the page)
+- `data/prices.json`, `announcements.json`, `proposals.json`, `reactions.json`, `alerts.json`, `status.json`: written by the robot
+
+*Decision support built on your own assumptions, not financial advice.*

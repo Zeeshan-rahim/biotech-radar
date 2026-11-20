@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Medical catalyst radar</title>
+<style>
+:root{
+  --bg:#F3F5FA; --panel:#FFFFFF; --panel2:#F7F8FC; --line:#D5DBEA; --text:#111A33; --muted:#5A6485;
+  --buy:#1F7A3A; --buy-soft:#E2F4E6; --sell:#B4470F; --sell-soft:#FDEBDD; --hold:#3D4E86; --hold-soft:#E7EBF7;
+  --warn:#9A6700; --warn-soft:#FFF4D6; --bad:#B42318; --bad-soft:#FDE7E5; --accent:#2457C5;
+  --c0:#6A3FD6; --c1:#0B8177; --c2:#1D5FD1; --c3:#B0287A; --c4:#A15C00; --c5:#2E7D32; --c6:#C0392B; --c7:#4A5578;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#0A0E1C; --panel:#111830; --panel2:#151E3A; --line:#27335F; --text:#E7ECFF; --muted:#94A0C8;
+  --buy:#7BD88A; --buy-soft:#12301A; --sell:#FF9A5C; --sell-soft:#3A1E12; --hold:#A9B8F0; --hold-soft:#1B2550;
+  --warn:#F5C451; --warn-soft:#3A2E0E; --bad:#FF8F80; --bad-soft:#3A1612; --accent:#7FB0FF;
+  --c0:#B89BFF; --c1:#46E3D5; --c2:#7FB0FF; --c3:#FF8AD0; --c4:#FFC061; --c5:#86E08F; --c6:#FF8F80; --c7:#A8B4DA;}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:400 15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:env(safe-area-inset-bottom)}
+a{color:var(--accent)}
+.wrap{max-width:1200px;margin:0 auto;padding:18px 16px 60px}
+header{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;justify-content:space-between;margin-bottom:12px}
+h1{font-size:24px;margin:0;font-weight:650;letter-spacing:-.01em}
+h2{font-size:19px;margin:22px 0 8px}
+h3{font-size:16px;margin:0 0 8px}
+.muted{color:var(--muted)} .small{font-size:13px} .tiny{font-size:12px}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 16px;border-bottom:1px solid var(--line);padding-bottom:10px}
+nav a{padding:7px 12px;border-radius:8px;text-decoration:none;color:var(--text);font-weight:550;font-size:14px;border:1px solid transparent}
+nav a.on{background:var(--panel);border-color:var(--line)}
+nav a .n{display:inline-block;min-width:20px;padding:0 6px;margin-left:6px;border-radius:10px;background:var(--sell);color:#fff;font-size:12px;text-align:center}
+button,.btn{font:550 13.5px system-ui,sans-serif;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);cursor:pointer;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
+button:hover{border-color:var(--muted)}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+button.danger{color:var(--bad)}
+button:disabled{opacity:.5;cursor:default}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600}
+tr.click{cursor:pointer} tr.click:hover td{background:var(--panel2)}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tk{font-weight:700;display:inline-flex;align-items:center;gap:6px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12.5px;font-weight:650;white-space:nowrap}
+.p-buy{background:var(--buy-soft);color:var(--buy)} .p-sell{background:var(--sell-soft);color:var(--sell)} .p-hold{background:var(--hold-soft);color:var(--hold)}
+.p-warn{background:var(--warn-soft);color:var(--warn)} .p-bad{background:var(--bad-soft);color:var(--bad)} .p-none{background:var(--panel2);color:var(--muted)}
+.draft{outline:1.5px dashed var(--warn);outline-offset:1px}
+.kpi{background:var(--panel2);border-radius:10px;padding:10px 12px}
+.kpi b{display:block;font-size:20px;font-variant-numeric:tabular-nums}
+.kpi span{font-size:12.5px;color:var(--muted)}
+.banner{border-radius:10px;padding:10px 14px;margin:0 0 14px;font-size:14px}
+.b-warn{background:var(--warn-soft);color:var(--warn)} .b-bad{background:var(--bad-soft);color:var(--bad)} .b-info{background:var(--hold-soft);color:var(--hold)}
+input,select,textarea{font:inherit;font-size:14px;padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:var(--panel);color:var(--text);max-width:100%}
+input[type=number]{width:96px} input.w-s{width:70px} input.w-l{width:100%}
+textarea{width:100%;min-height:80px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sp{flex:1}
+.bar{height:8px;border-radius:5px;background:var(--panel2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.decision{font-size:15.5px;line-height:1.6}
+.decision b{font-variant-numeric:tabular-nums}
+details{margin-top:8px} summary{cursor:pointer;color:var(--muted);font-size:13.5px}
+.chk{display:inline-flex;gap:4px;align-items:center;margin:2px 10px 2px 0;font-size:13.5px}
+.big{font-weight:650}
+.foot{margin-top:30px;font-size:12.5px;color:var(--muted)}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;z-index:9;max-width:90vw}
+svg text{fill:var(--muted);font-size:11px}
+@media (max-width:640px){.hide-s{display:none} th,td{padding:6px 5px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div><h1>Medical catalyst radar</h1><div class="small muted" id="status">Loading…</div></div>
+  <div class="row" id="topbtns"></div>
+</header>
+<nav id="nav"></nav>
+<div id="banners"></div>
+<main id="main"></main>
+<div class="foot">Decision support built on your own assumptions, not financial advice. Probabilities and price levels move whenever you change the inputs — check them before acting, and consider tax (e.g. the 12-month CGT discount) and a licensed adviser for big decisions.</div>
+</div>
+<script>
+'use strict';
+/* ====================================================== state */
+const S = {cfg:null, data:{companies:[]}, prices:{}, anns:{}, props:{items:[]}, decisions:{}, reactions:{}, alerts:{log:[]}, status:{},
+  positions:{}, dirty:new Set(), edit:{}, filter:'all'};
+const LS = {get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}}, set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const GH = Object.assign(guessRepo(), LS.get('radar.gh',{}));
+const TODAY = new Date(); const TODAY_ISO = iso(TODAY);
+function guessRepo(){const h=location.hostname, p=location.pathname.split('/').filter(Boolean);
+  return h.endsWith('github.io')?{owner:h.split('.')[0],repo:p[0]||'',branch:'main'}:{owner:'',repo:'',branch:'main'}}
+function iso(d){return new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10)}
+function pd(s){if(!s)return null;const m=String(s).match(/^(\d{4})-(\d\d)-(\d\d)/);return m?new Date(+m[1],+m[2]-1,+m[3]):null}
+function days(a,b){return Math.round((b-a)/864e5)}
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=s=>document.querySelector(s);
+function money(v,dp){if(v==null||isNaN(v))return '–';const d=dp??(Math.abs(v)<1?3:2);return 'A$'+Number(v).toLocaleString('en-AU',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function pct(v,dp=0){return v==null||isNaN(v)?'–':(v>0?'+':'')+(v*100).toFixed(dp)+'%'}
+function fmtDate(s){const d=pd(s);return d?d.toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}):'–'}
+function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),3600)}
+
+/* ====================================================== load */
+async function getJSON(name,def){try{const r=await fetch('data/'+name+'?t='+Date.now(),{cache:'no-store'});if(!r.ok)return def;return await r.json()}catch(e){return def}}
+async function load(){
+  const [cfg,data,prices,anns,props,dec,rx,al,st,posRepo]=await Promise.all([
+    getJSON('config.json',null),getJSON('companies.json',null),getJSON('prices.json',{}),getJSON('announcements.json',{}),
+    getJSON('proposals.json',{items:[]}),getJSON('decisions.json',{}),getJSON('reactions.json',{}),getJSON('alerts.json',{log:[]}),
+    getJSON('status.json',{}),getJSON('positions.json',null)]);
+  if(!cfg||!data){$('#main').innerHTML='<div class="card"><h3>Data not found</h3><p>This page needs to be opened from your GitHub Pages address (or a local web server), so it can read the <code>data</code> folder. Opening the file directly from your computer won\'t work.</p></div>';$('#status').textContent='';return}
+  Object.assign(S,{cfg,data,prices,anns,props,decisions:dec,reactions:rx,alerts:al,status:st});
+  const local=LS.get('radar.positions',null);
+  S.positions = local || posRepo || {};
+  if(!local && posRepo) LS.set('radar.positions',posRepo);
+  route();
+}
+window.addEventListener('hashchange',route);
+
+/* ====================================================== model (mirror of scripts/model.py) */
+function trialPos(t){
+  if(t.status==='positive')return 1; if(t.status==='negative')return 0;
+  if(t.posOverride!=null&&t.posOverride!=='')return +t.posOverride/100;
+  const pc=S.cfg.pos, a=pc.areas[t.area]||pc.areas.other;
+  let p=a.p*(pc.phaseAdj[t.phase||'P3']??1); p=Math.min(Math.max(p,.01),.99);
+  let odds=p/(1-p); for(const m of (t.mods||[])) if(pc.mods[m]) odds*=pc.mods[m].odds;
+  return Math.min(odds/(1+odds),pc.cap??.97);
+}
+function posSteps(t){
+  const pc=S.cfg.pos, a=pc.areas[t.area]||pc.areas.other, ph=pc.phaseAdj[t.phase||'P3']??1;
+  const s=[`${a.label}: ${(a.p*100).toFixed(0)}% base`]; if(ph!==1)s.push(`${t.phase} stage ×${ph}`);
+  for(const m of (t.mods||[])) if(pc.mods[m]) s.push(`${pc.mods[m].label} (odds ×${pc.mods[m].odds})`);
+  return s;
+}
+function lastPrice(t){const p=S.prices[t];return p&&p.history&&p.history.length?{v:p.history[p.history.length-1][1],d:p.history[p.history.length-1][0]}:null}
+function evaluate(co,price){
+  const out={signal:'No data',price};
+  const sc=(co.scenarios||[]).filter(s=>(+s.prob||0)>0&&s.value!=null&&s.value!=='');
+  if(!sc.length||!price)return out;
+  const tot=sc.reduce((a,s)=>a+ +s.prob,0), ev=sc.reduce((a,s)=>a+ s.prob*s.value,0)/tot;
+  const hz=pd(co.horizon)||TODAY, T=Math.max(.25,(hz-TODAY)/(365.25*864e5));
+  const R=S.cfg.rules, floor=R.sellFloorReturn??.05, sell=ev/Math.pow(1+floor,T);
+  const succ=sc.filter(s=>s.success), ps=succ.reduce((a,s)=>a+ +s.prob,0);
+  const sv=ps?succ.reduce((a,s)=>a+s.prob*s.value,0)/ps:null, bear=Math.min(...sc.map(s=>+s.value));
+  let buy,rule;
+  if(co.section==='rare'){const m=R.rare.targetMultiple??10;buy=Math.min(sv?sv/m:0,ev);rule=`${m}x if it works`}
+  else{const r=(R[co.section]||R.other).targetReturn??.15;buy=ev/Math.pow(1+r,T);rule=`${Math.round(r*100)}% a year`}
+  buy=Math.min(buy,sell);
+  const expRet=Math.pow(ev/price,1/T)-1;
+  const signal=price<=buy?'Buy':price>=sell?'Sell / trim':'Hold';
+  return {...out,signal,ev,buy,sell,T,expRet,psucc:ps/tot,sv,upIfWorks:sv?sv/price:null,downIfFails:bear/price-1,rule,draft:!co.reviewed,floor};
+}
+function pillClass(sig){return sig==='Buy'?'p-buy':sig==='Sell / trim'?'p-sell':sig==='Hold'?'p-hold':'p-none'}
+function latestFin(co){const f=(co.finance||[]).filter(x=>x.cash!=null).sort((a,b)=>(a.period||'').localeCompare(b.period||''));return f[f.length-1]||null}
+function runway(co){const f=latestFin(co);if(!f)return null;if(f.profitable)return {self:true,f};if(f.opcf==null||f.opcf>=0)return {f};return {months:f.cash/(-f.opcf)*3,f}}
+function mgmt(co){
+  const ps=(co.promises||[]), res=ps.filter(p=>['kept','late','missed','unclear','changed'].includes(p.status));
+  const w={kept:1,changed:.5,late:0,missed:0,unclear:0};
+  const prom=res.length?res.reduce((a,p)=>a+(w[p.status]??0),0)/res.length:null;
+  const rw=runway(co); let cap=null;
+  if(rw){cap=rw.self?1:rw.months==null?null:rw.months>=24?1:rw.months>=12?.6:rw.months>=6?.3:0}
+  const recentRaises=(co.raises||[]).filter(r=>{const d=pd(r.date);return d&&days(d,TODAY)<730}).length;
+  if(cap!=null&&recentRaises>1)cap=Math.max(0,cap-.2);
+  const items=(S.cfg.scorecards[co.section]||S.cfg.scorecards.other).items, sco=co.scorecard||{};
+  const scored=items.filter(i=>sco[i[0]]!=null&&sco[i[0]]!==''), card=scored.length?scored.reduce((a,i)=>a+ +sco[i[0]],0)/(2*scored.length):null;
+  const parts=[[prom,.4],[cap,.3],[card,.3]].filter(x=>x[0]!=null), tw=parts.reduce((a,x)=>a+x[1],0);
+  const score=tw?parts.reduce((a,x)=>a+x[0]*x[1],0)/tw:null;
+  const grade=score==null?'–':score>=.8?'A':score>=.65?'B':score>=.5?'C':'D';
+  const lf=[...(co.finance||[])].filter(x=>x.rnd!=null).sort((a,b)=>(a.period||'').localeCompare(b.period||'')).pop();
+  let rndShare=null,ovh=null; if(lf){const r=Math.abs(lf.rnd||0),s=Math.abs(lf.staff||0),a=Math.abs(lf.admin||0),t=r+s+a; if(t){rndShare=r/t;ovh=(s+a)/t}}
+  return {prom,res:res.length,cap,card,score,grade,rw,recentRaises,rndShare,ovh,lf};
+}
+function driverTrial(co){const t=(co.trials||[]).filter(t=>t.driver&&!['positive','negative'].includes(t.status));return t[0]||(co.trials||[]).find(t=>!['positive','negative'].includes(t.status))||null}
+function expandRecurring(co,months=12){
+  const out=[], end=new Date(TODAY.getTime()+months*31*864e5), rec=[...(co.recurring||[])];
+  if(co.reporting==='quarterly')rec.push({label:'Quarterly 4C',months:[1,4,7,10],day:31,title:'Quarterly activities report and Appendix 4C',event:'report'});
+  for(const r of rec)for(const y of [TODAY.getFullYear(),TODAY.getFullYear()+1,TODAY.getFullYear()+2])for(const m of r.months){
+    const dim=new Date(y,m,0).getDate(), d=new Date(y,m-1,Math.min(r.day||28,dim));
+    if(d>=new Date(TODAY.getTime()-3*864e5)&&d<=end)out.push({id:`rec-${co.id}-${r.label}-${iso(d)}`,date:iso(d),title:r.title,big:false,event:r.event||'report',done:false,recurring:true});
+  }
+  return out;
+}
+function nextBig(co){const c=(co.catalysts||[]).filter(c=>!c.done&&c.big&&pd(c.date)).sort((a,b)=>a.date.localeCompare(b.date));return c[0]||null}
+function reactFor(c){const t=S.cfg.reactions.types[c.event]||S.cfg.reactions.types.other;return {up:(c.upPct??t.up)/100,down:(c.downPct??t.down)/100,label:t.label}}
+function companyById(id){return S.data.companies.find(c=>c.id===id||c.ticker===id)}
+function markDirty(f){S.dirty.add(f);renderTop()}
+
+/* ====================================================== routing / chrome */
+function route(){
+  const h=(location.hash||'#rare').slice(1); const [view,arg]=h.split('/');
+  renderTop(); renderNav(view); renderBanners();
+  const m=$('#main');
+  if(view==='co'&&arg)m.innerHTML=viewCompany(arg);
+  else if(['rare','device','other'].includes(view))m.innerHTML=viewSection(view);
+  else if(view==='calendar')m.innerHTML=viewCalendar();
+  else if(view==='review')m.innerHTML=viewReview();
+  else if(view==='alerts')m.innerHTML=viewAlerts();
+  else if(view==='settings')m.innerHTML=viewSettings();
+  else m.innerHTML=viewSection('rare');
+  window.scrollTo({top:0});
+  if(view==='co')drawChart(arg);
+}
+function pending(){return S.props.items.filter(p=>!S.decisions[p.id])}
+function renderNav(v){
+  const n=pending().length, sec=S.cfg.sections;
+  const L=[['rare',sec.rare],['device',sec.device],['other',sec.other],['calendar','Catalyst calendar'],['review','Review queue'+(n?`<span class="n">${n}</span>`:'')],['alerts','Alerts'],['settings','Settings & positions']];
+  const cur=v==='co'?(companyById(location.hash.split('/')[1])||{}).section:v;
+  $('#nav').innerHTML=L.map(([k,l])=>`<a href="#${k}" class="${cur===k?'on':''}">${l}</a>`).join('');
+}
+function renderTop(){
+  const st=S.status||{}; const last=st.lastRun?new Date(st.lastRun):null;
+  const age=last?Math.round((Date.now()-last)/36e5):null;
+  $('#status').innerHTML=last?`Data updated ${last.toLocaleString('en-AU',{weekday:'short',day:'numeric',month:'short',hour:'numeric',minute:'2-digit'})}${age>36?` <span class="pill p-warn">${Math.round(age/24)} days old</span>`:''}${(st.errors||[]).length?` · <a href="#settings">${st.errors.length} source warning(s)</a>`:''}`:'Waiting for the first automatic update (prices and announcements appear after it runs).';
+  const d=S.dirty.size;
+  $('#topbtns').innerHTML=`${d?`<span class="pill p-warn">${d} unsaved file${d>1?'s':''}</span><button class="primary" onclick="saveAll()">Save changes</button>`:''}<button onclick="runNow()" title="Ask GitHub to fetch prices and announcements now">Update now</button>`;
+}
+function renderBanners(){
+  const b=[];
+  if(S.data.companies.some(c=>!c.reviewed))b.push(`<div class="banner b-warn"><b>Draft assumptions.</b> Buy/sell levels for stocks marked with a dashed outline come from starting estimates I set from your old radar and Nov 2026 research. Open each stock, check the scenarios, then tick “I've reviewed these”.</div>`);
+  if(!GH.token)b.push(`<div class="banner b-info">Read-only mode: to save edits and accept review items from this page, add a GitHub access token in <a href="#settings">Settings</a>. Until then, changes can be downloaded as files.</div>`);
+  $('#banners').innerHTML=b.join('');
+}
+
+/* ====================================================== section view */
+function viewSection(sec){
+  const R=S.cfg.rules, rule=sec==='rare'?`Rule: buy only if it can return at least <b>${R.rare.targetMultiple}x</b> when the main bet works, and hold at most <b>${R.rare.maxYears} years</b>.`:`Rule: aim for <b>${Math.round((R[sec]||R.other).targetReturn*100)}% a year</b>, hold at most <b>${(R[sec]||R.other).maxYears} years</b>.`;
+  const cos=S.data.companies.filter(c=>c.section===sec);
+  const rows=cos.map(co=>{
+    const lp=lastPrice(co.ticker), e=evaluate(co,lp&&lp.v), dt=driverTrial(co), m=mgmt(co), nb=nextBig(co), pos=S.positions[co.ticker];
+    const pl=pos&&pos.shares&&lp?(lp.v-pos.cost)*pos.shares:null;
+    return `<tr class="click" onclick="location.hash='co/${co.ticker}'">
+      <td><span class="tk"><i class="dot" style="background:var(--c${co.color??7})"></i>${esc(co.ticker)}</span><div class="tiny muted">${esc(co.name)}</div></td>
+      <td class="num">${lp?money(lp.v):'–'}<div class="tiny muted">${lp?fmtDate(lp.d):''}</div></td>
+      <td><span class="pill ${pillClass(e.signal)} ${e.draft?'draft':''}">${e.signal}</span></td>
+      <td class="num">${money(e.buy)}</td><td class="num">${money(e.sell)}</td>
+      <td class="num hide-s">${e.expRet!=null?pct(e.expRet,1)+'/yr':'–'}</td>
+      <td class="num hide-s">${e.upIfWorks?e.upIfWorks.toFixed(1)+'x':'–'} / ${e.downIfFails!=null?pct(e.downIfFails):'–'}</td>
+      <td class="num">${dt?Math.round(trialPos(dt)*100)+'%':'–'}<div class="tiny muted">${dt?esc(dt.name.split(' (')[0]):''}</div></td>
+      <td><span class="pill ${m.grade==='A'?'p-buy':m.grade==='B'?'p-hold':m.grade==='C'?'p-warn':m.grade==='D'?'p-bad':'p-none'}">${m.grade}</span></td>
+      <td class="hide-s">${nb?`${esc(nb.title)}<div class="tiny muted">${esc(nb.when||fmtDate(nb.date))} · ${days(TODAY,pd(nb.date))} days</div>`:'–'}</td>
+      <td class="num hide-s">${pl!=null?`<span style="color:var(--${pl>=0?'buy':'bad'})">${pl>=0?'+':''}${money(pl,0)}</span>`:''}</td></tr>`}).join('');
+  return `<div class="row"><p class="small" style="margin:0">${rule} <span class="muted">Change in Settings.</span></p><span class="sp"></span><button onclick="addStock('${sec}')">+ Add stock</button></div>
+  <div class="card" style="padding:6px 8px;margin-top:10px;overflow:auto"><table>
+  <thead><tr><th>Stock</th><th class="num">Price</th><th>Signal</th><th class="num">Buy ≤</th><th class="num">Sell ≥</th><th class="num hide-s">Expected</th><th class="num hide-s">If works / fails</th><th class="num">Success odds</th><th>Mgmt</th><th class="hide-s">Next big catalyst</th><th class="num hide-s">Your P/L</th></tr></thead>
+  <tbody>${rows||'<tr><td colspan="11" class="muted">No stocks in this section yet.</td></tr>'}</tbody></table></div>
+  <p class="tiny muted">Expected = average return a year to the scenario horizon if your probabilities are right. “If works / fails” compares the success-case and worst-case values with today's price. Success odds = chance the lead trial succeeds (base rates × modifiers).</p>`;
+}
+
+/* ====================================================== company view */
+function viewCompany(tk){
+  const co=companyById(tk); if(!co)return '<div class="card">Stock not found.</div>';
+  const ed=S.edit[co.id]; const lp=lastPrice(co.ticker), e=evaluate(co,lp&&lp.v), pos=S.positions[co.ticker]||{};
+  return `<div class="row" style="margin-bottom:10px"><a href="#${co.section}">← ${esc(S.cfg.sections[co.section])}</a><span class="sp"></span>
+    <button onclick="toggleEdit('${co.id}')">${ed?'Done editing':'Edit this stock'}</button></div>
+  <div class="card"><div class="row"><div><h2 style="margin:0">${esc(co.name)} <span class="muted">(${esc(co.ticker)})</span></h2><div class="muted small">${esc(co.tagline||'')}</div></div><span class="sp"></span>
+    <div style="text-align:right"><b style="font-size:22px">${lp?money(lp.v):'–'}</b><div class="tiny muted">${lp?'close '+fmtDate(lp.d):'no price yet'}</div></div></div>
+    ${ed?basicsEditor(co):''}
+    <div id="chart" style="margin-top:10px"></div></div>
+  ${decisionCard(co,e,lp,pos)}
+  <div class="grid g2">${posCard(co)}${reactionCard(co,lp)}</div>
+  ${scenarioCard(co,e)}
+  ${mgmtCard(co)}
+  ${catalystCard(co)}
+  ${factsCard(co)}
+  ${annCard(co)}
+  ${ed?rawCard(co):''}`;
+}
+function decisionCard(co,e,lp,pos){
+  if(e.signal==='No data')return `<div class="card"><h3>Decision</h3><p class="muted">Needs a price (after the first automatic update) and scenario values with probabilities.</p></div>`;
+  const hz=fmtDate(co.horizon), R=S.cfg.rules, maxY=(R[co.section]||R.other).maxYears;
+  const held=pos.shares>0; let lines=[];
+  lines.push(`<span class="pill ${pillClass(e.signal)} ${e.draft?'draft':''}" style="font-size:15px">${e.signal}${e.draft?' (draft)':''}</span>`);
+  lines.push(`At <b>${money(e.price)}</b>, your scenarios average <b>${money(e.ev)}</b> a share by ${hz} — about <b>${pct(e.expRet,1)} a year</b>.`);
+  if(co.section==='rare'){
+    lines.push(`Your rule (${e.rule}): the success case is worth <b>${money(e.sv)}</b>, so a 10-bagger needs a buy price of <b>${money(e.buy)}</b> or less. Today it would return <b>${e.upIfWorks.toFixed(1)}x</b> if it works and <b>${pct(e.downIfFails)}</b> if it fails.`);
+  } else {
+    lines.push(`Your rule (${e.rule}): buy at <b>${money(e.buy)}</b> or less. Success case is <b>${e.upIfWorks?e.upIfWorks.toFixed(1)+'x':'–'}</b> today's price; worst case <b>${pct(e.downIfFails)}</b>.`);
+  }
+  lines.push(`Sell or trim at <b>${money(e.sell)}</b> or more — above that the expected return drops below ${Math.round(e.floor*100)}% a year.`);
+  if(held){
+    const val=pos.shares*e.price, gain=(e.price-pos.cost)*pos.shares;
+    let t=`You hold <b>${(+pos.shares).toLocaleString()}</b> shares at ${money(pos.cost)}: worth ${money(val,0)}, ${gain>=0?'up':'down'} ${money(Math.abs(gain),0)}.`;
+    const b=pd(pos.bought); if(b){const y=(TODAY-b)/(365.25*864e5);t+=` Held ${y.toFixed(1)} of your ${maxY}-year maximum${y>=maxY?' — <b>time limit reached</b>':''}.`}
+    lines.push(t);
+    const nx=(pos.plan||[]).find(s=>!s.done); if(nx)lines.push(`Next step in your sell ladder: <b>${esc(nx.label||'')}</b> — ${(+nx.shares).toLocaleString()} shares at ≥ ${money(+nx.price)}${e.price>=nx.price?' <span class="pill p-sell">reached</span>':''}.`);
+  }
+  const dt=driverTrial(co); if(dt){const sp=e.psucc, tp=trialPos(dt); if(Math.abs(sp-tp)>.12)lines.push(`<span class="pill p-warn">Check</span> Your scenarios give a ${Math.round(sp*100)}% chance of a good outcome, but the trial model says ${Math.round(tp*100)}% for ${esc(dt.name)}. ${sp<tp?'Fine if commercial risk explains the gap.':'Your scenarios look more optimistic than base rates.'}`)}
+  return `<div class="card decision"><h3>Decision</h3>${lines.map(l=>`<p style="margin:6px 0">${l}</p>`).join('')}</div>`;
+}
+function scenarioCard(co,e){
+  const ed=S.edit[co.id], P=`companies:${co.id}`;
+  const rows=(co.scenarios||[]).map((s,i)=>ed?`<tr><td><input class="w-l" value="${esc(s.name)}" data-p="${P}:scenarios.${i}.name"></td>
+    <td><input type="number" step="1" value="${s.prob??''}" data-p="${P}:scenarios.${i}.prob" data-t="n"></td>
+    <td><input type="number" step="0.01" value="${s.value??''}" data-p="${P}:scenarios.${i}.value" data-t="n"></td>
+    <td><input type="checkbox" ${s.success?'checked':''} data-p="${P}:scenarios.${i}.success" data-t="b"></td>
+    <td><input class="w-l" value="${esc(s.note||'')}" data-p="${P}:scenarios.${i}.note"></td><td><button class="danger" onclick="delItem('${co.id}','scenarios',${i})">✕</button></td></tr>`
+   :`<tr><td><b>${esc(s.name)}</b></td><td class="num">${s.prob}%</td><td class="num">${money(s.value)}</td><td>${s.success?'✓':''}</td><td class="small">${esc(s.note||'')}</td></tr>`).join('');
+  const tot=(co.scenarios||[]).reduce((a,s)=>a+(+s.prob||0),0);
+  return `<div class="card"><div class="row"><h3>Scenarios (value per share by ${fmtDate(co.horizon)}, incl. dividends)</h3><span class="sp"></span>
+    ${co.reviewed?'<span class="pill p-buy">Reviewed</span>':'<span class="pill p-warn">Draft</span>'}</div>
+  <table><thead><tr><th>Scenario</th><th class="num">Prob.</th><th class="num">Value</th><th>Main bet works?</th><th>What has to happen</th>${ed?'<th></th>':''}</tr></thead><tbody>${rows}</tbody></table>
+  ${tot!==100?`<p class="small" style="color:var(--warn)">Probabilities add to ${tot}% (they're re-scaled to 100%).</p>`:''}
+  ${ed?`<div class="row" style="margin-top:8px"><button onclick="addItem('${co.id}','scenarios',{name:'New',prob:0,value:null,success:false,note:''})">+ Scenario</button>
+    <label class="chk">Horizon <input type="date" value="${co.horizon||''}" data-p="${P}:horizon"></label>
+    <label class="chk"><input type="checkbox" ${co.reviewed?'checked':''} data-p="${P}:reviewed" data-t="b"> I've reviewed these</label></div>`:
+    `<div class="row" style="margin-top:8px"><button onclick="toggleEdit('${co.id}')">Edit scenarios</button>${!co.reviewed?`<button onclick="setReviewed('${co.id}')">Looks right — mark reviewed</button>`:''}</div>`}
+  ${trialsBlock(co)}</div>`;
+}
+function trialsBlock(co){
+  const ed=S.edit[co.id], P=`companies:${co.id}`, pc=S.cfg.pos;
+  const rows=(co.trials||[]).map((t,i)=>{
+    const p=trialPos(t);
+    if(!ed)return `<tr><td><b>${esc(t.name)}</b>${t.driver?' <span class="pill p-hold">driver</span>':''}<div class="tiny muted">${esc(t.indication||'')} · ${esc(t.endpoint||'')}</div><details><summary>How ${Math.round(p*100)}% is worked out</summary><div class="tiny">${t.status==='positive'||t.status==='negative'?'Result is in.':t.posOverride!=null&&t.posOverride!==''?'Your manual override.':posSteps(t).map(esc).join(' → ')}</div>${t.note?`<div class="tiny muted">${esc(t.note)}</div>`:''}</details></td>
+      <td>${esc(t.status)}</td><td>${esc(t.readoutWhen||fmtDate(t.readout))}</td><td style="min-width:110px"><b>${Math.round(p*100)}%</b><div class="bar"><i style="width:${p*100}%"></i></div></td></tr>`;
+    return `<tr><td><input class="w-l" value="${esc(t.name)}" data-p="${P}:trials.${i}.name"><div class="row" style="margin-top:4px">
+      <select data-p="${P}:trials.${i}.area">${Object.entries(pc.areas).map(([k,a])=>`<option value="${k}" ${t.area===k?'selected':''}>${esc(a.label)}</option>`).join('')}</select>
+      <select data-p="${P}:trials.${i}.phase">${Object.keys(pc.phaseAdj).map(k=>`<option ${t.phase===k?'selected':''}>${k}</option>`).join('')}</select>
+      <label class="chk"><input type="checkbox" ${t.driver?'checked':''} data-p="${P}:trials.${i}.driver" data-t="b">driver</label>
+      <label class="chk">override % <input class="w-s" type="number" value="${t.posOverride??''}" data-p="${P}:trials.${i}.posOverride" data-t="n"></label></div>
+      <div>${Object.entries(pc.mods).map(([k,m])=>`<label class="chk"><input type="checkbox" ${t.mods&&t.mods.includes(k)?'checked':''} onchange="toggleMod('${co.id}',${i},'${k}',this.checked)">${esc(m.label)}</label>`).join('')}</div>
+      <input class="w-l" placeholder="announcement keywords, e.g. koala|nnz-2591" value="${esc(t.keys||'')}" data-p="${P}:trials.${i}.keys"></td>
+      <td><select data-p="${P}:trials.${i}.status">${['planned','enrolling','ongoing','complete','positive','negative'].map(s=>`<option ${t.status===s?'selected':''}>${s}</option>`).join('')}</select></td>
+      <td><input type="date" value="${t.readout||''}" data-p="${P}:trials.${i}.readout"><input class="w-l" value="${esc(t.readoutWhen||'')}" data-p="${P}:trials.${i}.readoutWhen"></td>
+      <td><b>${Math.round(p*100)}%</b><br><button class="danger" onclick="delItem('${co.id}','trials',${i})">✕</button></td></tr>`}).join('');
+  return `<h3 style="margin-top:16px">Probability of success</h3><p class="tiny muted" style="margin:0 0 6px">${esc(S.cfg.pos.source)}</p>
+   <table><thead><tr><th>Trial / program</th><th>Status</th><th>Readout</th><th>Success odds</th></tr></thead><tbody>${rows||'<tr><td colspan="4" class="muted">No trials listed.</td></tr>'}</tbody></table>
+   ${ed?`<button style="margin-top:6px" onclick="addItem('${co.id}','trials',{id:'${co.id}-t'+Date.now(),name:'New trial',area:'other',phase:'P3',mods:[],status:'ongoing',driver:false,keys:'',readout:'',readoutWhen:'',posOverride:null})">+ Trial</button>`:''}`;
+}
+function mgmtCard(co){
+  const ed=S.edit[co.id], P=`companies:${co.id}`, m=mgmt(co), sc=S.cfg.scorecards[co.section]||S.cfg.scorecards.other, lp=lastPrice(co.ticker);
+  const f=m.rw&&m.rw.f, shares=[...(co.finance||[])].filter(x=>x.shares).pop();
+  const k=[
+    ['Management grade',m.grade,'Promises 40% · capital 30% · scorecard 30%'],
+    ['Promises kept',m.prom!=null?Math.round(m.prom*100)+'%':'–',`${m.res} resolved promise(s)`],
+    ['Cash',f?`A$${f.cash}m`:'–',f?`at ${fmtDate(f.period)}`:'enter from 4C'],
+    ['Runway',m.rw?(m.rw.self?'Self-funding':m.rw.months!=null?Math.round(m.rw.months)+' months':'–'):'–',f&&f.opcf!=null?`burn A$${-f.opcf}m a quarter`:''],
+    ['R&D share of spend',m.rndShare!=null?Math.round(m.rndShare*100)+'%':'–',m.ovh!=null?`overhead ${Math.round(m.ovh*100)}%`:'from 4C lines'],
+    ['Raises in 2 years',String(m.recentRaises),(co.raises||[]).map(r=>`${fmtDate(r.date)}${r.amount?' A$'+r.amount+'m':''}${r.price?' @ '+money(r.price):''}`).join('; ')||'none recorded'],
+  ];
+  if(shares&&lp&&f)k.push(['Cash vs market cap',Math.round(f.cash/(shares.shares*lp.v)*100)+'%',`${shares.shares}m shares`]);
+  const promRows=(co.promises||[]).map((p,i)=>ed?`<tr><td><input class="w-l" value="${esc(p.text)}" data-p="${P}:promises.${i}.text"></td><td><input type="date" value="${p.due||''}" data-p="${P}:promises.${i}.due"></td>
+    <td><select data-p="${P}:promises.${i}.status">${['open','ontrack','kept','late','missed','unclear','changed'].map(s=>`<option ${p.status===s?'selected':''}>${s}</option>`).join('')}</select></td><td><input class="w-l" value="${esc(p.comment||'')}" data-p="${P}:promises.${i}.comment"></td><td><button class="danger" onclick="delItem('${co.id}','promises',${i})">✕</button></td></tr>`
+    :`<tr><td>${esc(p.text)}</td><td>${p.due?fmtDate(p.due):'–'}</td><td><span class="pill ${p.status==='kept'?'p-buy':['late','missed'].includes(p.status)?'p-bad':p.status==='unclear'?'p-warn':'p-none'}">${esc(p.status)}</span></td><td class="small muted">${esc(p.comment||'')}</td></tr>`).join('');
+  const cardRows=sc.items.map(([id,label,help])=>{const v=(co.scorecard||{})[id];
+    return `<tr><td>${esc(label)}<div class="tiny muted">${esc(help)}</div></td><td>${ed?`<select data-p="${P}:scorecard.${id}" data-t="n">${['','0','1','2'].map(o=>`<option ${String(v??'')===o?'selected':''}>${o}</option>`).join('')}</select>`:v==null?'–':['Weak','Partial','Strong'][v]}</td></tr>`}).join('');
+  const finRows=[...(co.finance||[])].sort((a,b)=>(b.period||'').localeCompare(a.period||'')).map(x=>`<tr><td>${fmtDate(x.period)}</td><td class="num">${x.cash??'–'}</td><td class="num">${x.opcf??'–'}</td><td class="num">${x.rnd??'–'}</td><td class="num">${x.staff??'–'}</td><td class="num">${x.admin??'–'}</td><td class="tiny muted">${esc(x.source||'')}</td></tr>`).join('');
+  return `<div class="card"><h3>Management, spending and efficiency</h3>
+   <div class="grid g3">${k.map(([a,b,c])=>`<div class="kpi"><span>${a}</span><b>${b}</b><span>${esc(c)}</span></div>`).join('')}</div>
+   <h3 style="margin-top:16px">Promise tracker</h3><table><thead><tr><th>What they said</th><th>Due</th><th>Status</th><th>Notes</th></tr></thead><tbody>${promRows}</tbody></table>
+   ${ed?`<button style="margin-top:6px" onclick="addItem('${co.id}','promises',{id:'${co.id}-p'+Date.now(),text:'',due:'',status:'open',comment:'',checked:''})">+ Promise</button>`:''}
+   <details ${ed?'open':''}><summary>${esc(sc.title)} (${m.card!=null?Math.round(m.card*100)+'%':'not scored'})</summary><p class="tiny muted">${esc(sc.source)}</p>
+   <table><tbody>${cardRows}</tbody></table>${ed?`<textarea data-p="${P}:scoreNotes">${esc(co.scoreNotes||'')}</textarea>`:`<p class="small">${esc(co.scoreNotes||'')}</p>`}</details>
+   <details ${ed?'open':''}><summary>Cash-flow history (A$m, from quarterly 4C reports)</summary>
+   <table><thead><tr><th>Period</th><th class="num">Cash</th><th class="num">Op. cash flow</th><th class="num">R&amp;D</th><th class="num">Staff</th><th class="num">Admin</th><th>Source</th></tr></thead><tbody>${finRows||'<tr><td colspan="7" class="muted">None yet — accepted 4C items from the Review queue land here.</td></tr>'}</tbody></table>
+   ${ed?`<div class="row" style="margin-top:6px"><input type="date" id="f-period"><input type="number" step="0.01" placeholder="cash" id="f-cash"><input type="number" step="0.01" placeholder="op cash flow" id="f-opcf"><input type="number" step="0.01" placeholder="R&D" id="f-rnd"><input type="number" step="0.01" placeholder="staff" id="f-staff"><input type="number" step="0.01" placeholder="admin" id="f-admin"><input type="number" step="0.1" placeholder="shares (m)" id="f-shares"><label class="chk"><input type="checkbox" id="f-prof">profitable</label><button onclick="addFin('${co.id}')">+ Add quarter</button></div>
+   <div class="row" style="margin-top:6px"><input type="date" id="r-date"><input type="number" placeholder="raise A$m" id="r-amt"><input type="number" step="0.001" placeholder="price" id="r-px"><button onclick="addRaise('${co.id}')">+ Add capital raise</button></div>`:''}</details></div>`;
+}
+function posCard(co){
+  const p=S.positions[co.ticker]||{}, lp=lastPrice(co.ticker), T=co.ticker;
+  const plan=(p.plan||[]).map((s,i)=>`<tr><td><input value="${esc(s.label||'')}" onchange="setPos('${T}','plan.${i}.label',this.value)"></td><td><input type="number" step="0.01" value="${s.price??''}" onchange="setPos('${T}','plan.${i}.price',+this.value)"></td><td><input type="number" value="${s.shares??''}" onchange="setPos('${T}','plan.${i}.shares',+this.value)"></td><td><input type="checkbox" ${s.done?'checked':''} onchange="setPos('${T}','plan.${i}.done',this.checked)"></td><td>${lp&&s.price&&lp.v>=s.price&&!s.done?'<span class="pill p-sell">reached</span>':''}</td><td><button class="danger" onclick="delPlan('${T}',${i})">✕</button></td></tr>`).join('');
+  return `<div class="card"><h3>Your position</h3>
+   <div class="row"><label class="chk">Shares <input type="number" value="${p.shares??''}" onchange="setPos('${T}','shares',+this.value)"></label>
+   <label class="chk">Avg cost A$ <input type="number" step="0.001" value="${p.cost??''}" onchange="setPos('${T}','cost',+this.value)"></label>
+   <label class="chk">First bought <input type="date" value="${p.bought||''}" onchange="setPos('${T}','bought',this.value)"></label></div>
+   ${p.shares&&lp?`<p class="small">Value ${money(p.shares*lp.v,0)} · cost ${money(p.shares*p.cost,0)} · ${pct(lp.v/p.cost-1,1)}</p>`:''}
+   <details ${p.plan&&p.plan.length?'open':''}><summary>Sell ladder (alerts when a step's price is reached)</summary>
+   <table><thead><tr><th>Step</th><th>Price ≥</th><th>Shares</th><th>Done</th><th></th><th></th></tr></thead><tbody>${plan}</tbody></table>
+   <button style="margin-top:6px" onclick="addPlan('${T}')">+ Step</button></details>
+   <p class="tiny muted">Stored on this device. ${GH.syncPositions?'Also saved to your GitHub repo (visible to anyone if the repo is public) so alerts can use it.':'Not sent to GitHub, so ladder and time-limit alerts only appear here. Turn on syncing in Settings to get them by email.'}</p></div>`;
+}
+function reactionCard(co,lp){
+  const ups=(co.catalysts||[]).filter(c=>!c.done&&c.big&&pd(c.date)>=new Date(TODAY.getTime()-30*864e5)).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,4);
+  const rx=Object.values(S.reactions[co.ticker]||{}).sort((a,b)=>b.date.localeCompare(a.date));
+  const abs=rx.map(r=>Math.abs(r.d1)).sort((a,b)=>a-b), med=abs.length?abs[Math.floor(abs.length/2)]:null;
+  const byKind={};rx.forEach(r=>{(byKind[r.kind]=byKind[r.kind]||[]).push(r.d1)});
+  return `<div class="card"><h3>Anticipated market reaction</h3>
+   ${ups.length?`<table><thead><tr><th>Upcoming</th><th class="num">If good</th><th class="num">If bad</th></tr></thead><tbody>${ups.map(c=>{const r=reactFor(c);return `<tr><td>${esc(c.title)}<div class="tiny muted">${esc(c.when||fmtDate(c.date))} · ${esc(r.label)}${c.upPct!=null?' · your estimate':''}</div></td><td class="num" style="color:var(--buy)">${pct(r.up)}${lp?`<div class="tiny">${money(lp.v*(1+r.up))}</div>`:''}</td><td class="num" style="color:var(--bad)">${pct(r.down)}${lp?`<div class="tiny">${money(lp.v*(1+r.down))}</div>`:''}</td></tr>`}).join('')}</tbody></table>`:'<p class="muted small">No big catalysts in the coming months.</p>'}
+   <p class="tiny muted">${esc(S.cfg.reactions.source)} Set your own per catalyst in Edit.</p>
+   <details><summary>Measured moves after this stock's price-sensitive news (${rx.length})</summary>
+   ${med!=null?`<p class="small">Typical one-day move: ±${med.toFixed(1)}%. ${Object.entries(byKind).map(([k,v])=>`${esc(k)}: avg ${(v.reduce((a,b)=>a+b,0)/v.length).toFixed(1)}%`).join(' · ')}</p>`:''}
+   <table><tbody>${rx.slice(0,25).map(r=>`<tr><td class="small">${fmtDate(r.date)}</td><td class="small">${esc(r.headline)}</td><td class="num" style="color:var(--${r.d1>=0?'buy':'bad'})">${r.d1>0?'+':''}${r.d1}%</td><td class="num tiny muted">${r.d5!=null?'5d '+(r.d5>0?'+':'')+r.d5+'%':''}</td></tr>`).join('')||'<tr><td class="muted small">Builds up automatically after each update.</td></tr>'}</tbody></table></details></div>`;
+}
+function catalystCard(co){
+  const ed=S.edit[co.id], P=`companies:${co.id}`, ev=Object.entries(S.cfg.reactions.types);
+  const list=(co.catalysts||[]).map((c,i)=>({c,i})).sort((a,b)=>(a.c.date||'').localeCompare(b.c.date||''));
+  const rows=list.map(({c,i})=>{const d=pd(c.date), dd=d?days(TODAY,d):null, over=!c.done&&dd!=null&&dd<-3;
+    if(ed)return `<tr><td><input type="date" value="${c.date||''}" data-p="${P}:catalysts.${i}.date"><input class="w-l" value="${esc(c.when||'')}" placeholder="as company says it" data-p="${P}:catalysts.${i}.when"></td>
+      <td><input class="w-l" value="${esc(c.title)}" data-p="${P}:catalysts.${i}.title"><input class="w-l" value="${esc(c.desc||'')}" data-p="${P}:catalysts.${i}.desc"><input class="w-l" value="${esc(c.result||'')}" placeholder="result" data-p="${P}:catalysts.${i}.result"></td>
+      <td><select data-p="${P}:catalysts.${i}.event">${ev.map(([k,t])=>`<option value="${k}" ${c.event===k?'selected':''}>${esc(t.label)}</option>`).join('')}</select>
+      <label class="chk"><input type="checkbox" ${c.big?'checked':''} data-p="${P}:catalysts.${i}.big" data-t="b">big</label><label class="chk"><input type="checkbox" ${c.done?'checked':''} data-p="${P}:catalysts.${i}.done" data-t="b">done</label>
+      <div class="row">up% <input class="w-s" type="number" value="${c.upPct??''}" data-p="${P}:catalysts.${i}.upPct" data-t="n"> down% <input class="w-s" type="number" value="${c.downPct??''}" data-p="${P}:catalysts.${i}.downPct" data-t="n"></div></td>
+      <td><button class="danger" onclick="delItem('${co.id}','catalysts',${i})">✕</button></td></tr>`;
+    return `<tr style="${c.done?'opacity:.6':''}"><td class="small">${esc(c.when||fmtDate(c.date))}<div class="tiny muted">${c.done?'done':dd!=null?(dd>=0?`in ${dd} days`:`${-dd} days ago`):''}</div></td>
+      <td><span class="${c.big?'big':''}">${esc(c.title)}</span>${over?' <span class="pill p-warn">overdue — check</span>':''}<div class="tiny muted">${esc(c.desc||'')}${c.result?` <b>Result:</b> ${esc(c.result)}`:''}</div></td>
+      <td>${c.big?'<span class="pill p-hold">big</span>':''}</td><td>${!c.done?`<button onclick="markDone('${co.id}',${i})">Mark done</button>`:''}</td></tr>`}).join('');
+  const rec=expandRecurring(co,6).map(c=>`<span class="pill p-none" style="margin:2px">${fmtDate(c.date)} · ${esc(c.title)}</span>`).join('');
+  return `<div class="card"><h3>Catalysts to follow up</h3><table><tbody>${rows||'<tr><td class="muted">None.</td></tr>'}</tbody></table>
+   ${ed?`<button style="margin-top:6px" onclick="addItem('${co.id}','catalysts',{id:'${co.id}-c'+Date.now(),date:'',when:'',title:'New catalyst',desc:'',big:false,event:'other',done:false,result:''})">+ Catalyst</button>`:''}
+   ${rec?`<p class="small" style="margin-top:10px">Routine reports: ${rec}</p>`:''}
+   ${ed?`<div class="row small" style="margin-top:6px">Reporting: <select data-p="${P}:reporting"><option ${co.reporting==='quarterly'?'selected':''}>quarterly</option><option ${co.reporting==='half'?'selected':''}>half</option></select></div>`:''}</div>`;
+}
+function factsCard(co){
+  const ed=S.edit[co.id], P=`companies:${co.id}`;
+  const hist=[...(co.history||[])].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,30);
+  return `<div class="card"><h3>Key facts</h3>${ed?`<textarea style="min-height:140px" onchange="setFacts('${co.id}',this.value)">${esc((co.facts||[]).join('\n'))}</textarea><p class="tiny muted">One fact per line.</p>`:`<ul class="small">${(co.facts||[]).map(f=>`<li>${esc(f)}</li>`).join('')}</ul>`}
+   <details><summary>History (${hist.length})</summary><table><tbody>${hist.map(h=>`<tr><td class="small">${fmtDate(h.date)}</td><td class="small"><b>${esc(h.title)}</b> <span class="muted">${esc(h.desc||'')}</span></td></tr>`).join('')}</tbody></table></details></div>`;
+}
+function annCard(co){
+  const a=(S.anns[co.ticker]||[]).slice(0,15);
+  return `<div class="card"><h3>Latest ASX announcements</h3>${a.length?`<table><tbody>${a.map(x=>`<tr><td class="small">${fmtDate(x.date)}</td><td class="small">${x.sensitive?'<span class="pill p-sell">$</span> ':''}<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.headline)}</a></td></tr>`).join('')}</tbody></table>`:'<p class="muted small">Appear after the first automatic update.</p>'}</div>`;
+}
+function basicsEditor(co){const P=`companies:${co.id}`;
+  return `<div class="row" style="margin-top:10px"><input value="${esc(co.name)}" data-p="${P}:name"><select data-p="${P}:section">${Object.entries(S.cfg.sections).map(([k,l])=>`<option value="${k}" ${co.section===k?'selected':''}>${esc(l)}</option>`).join('')}</select>
+   <input style="flex:1;min-width:240px" value="${esc(co.tagline||'')}" data-p="${P}:tagline"><input style="min-width:240px" value="${esc(co.keywords||'')}" placeholder="announcement keywords a|b|c" data-p="${P}:keywords">
+   <button class="danger" onclick="removeStock('${co.id}')">Remove stock</button></div>`}
+function rawCard(co){return `<div class="card"><details><summary>Advanced: edit everything as JSON</summary><textarea id="raw-${co.id}" style="min-height:300px;font-family:ui-monospace,monospace;font-size:12px">${esc(JSON.stringify(co,null,1))}</textarea><button onclick="applyRaw('${co.id}')">Apply JSON</button></details></div>`}
+
+/* chart */
+function drawChart(tk){
+  const co=companyById(tk), el=$('#chart'); if(!co||!el)return;
+  const h=(S.prices[co.ticker]||{}).history||[]; if(h.length<2){el.innerHTML='';return}
+  const pts=h.slice(-260), lp=pts[pts.length-1][1], e=evaluate(co,lp);
+  const W=el.clientWidth||700, H=170, pad=34; const vals=pts.map(p=>p[1]).concat([e.buy,e.sell].filter(x=>x&&x<lp*3&&x>lp/4));
+  const mn=Math.min(...vals)*.95, mx=Math.max(...vals)*1.05, x=i=>pad+(W-pad-6)*i/(pts.length-1), y=v=>H-18-(H-28)*(v-mn)/(mx-mn);
+  const line=pts.map((p,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(p[1]).toFixed(1)}`).join('');
+  const lvl=(v,c,t)=>v&&v>mn&&v<mx?`<line x1="${pad}" x2="${W-6}" y1="${y(v)}" y2="${y(v)}" stroke="var(--${c})" stroke-dasharray="5 4"/><text x="${W-8}" y="${y(v)-4}" text-anchor="end" style="fill:var(--${c})">${t} ${money(v)}</text>`:'';
+  const first=pd(pts[0][0]), last=pd(pts[pts.length-1][0]);
+  const marks=(co.catalysts||[]).filter(c=>c.big&&pd(c.date)>=first&&pd(c.date)<=last).map(c=>{const i=pts.findIndex(p=>p[0]>=c.date);return i<0?'':`<circle cx="${x(i)}" cy="${y(pts[i][1])}" r="4" fill="var(--sell)"><title>${esc(c.title)}</title></circle>`}).join('');
+  el.innerHTML=`<svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}"><text x="2" y="${y(mx/1.05)+4}">${money(mx/1.05)}</text><text x="2" y="${y(mn/.95)}">${money(mn/.95)}</text>
+   <path d="${line}" fill="none" stroke="var(--c${co.color??7})" stroke-width="2"/>${lvl(e.buy,'buy','Buy ≤')}${lvl(e.sell,'sell','Sell ≥')}${marks}
+   <text x="${pad}" y="${H-3}">${fmtDate(pts[0][0])}</text><text x="${W-6}" y="${H-3}" text-anchor="end">${fmtDate(pts[pts.length-1][0])}</text></svg>`;
+}
+
+/* ====================================================== calendar */
+function viewCalendar(){
+  const f=S.filter; let all=[];
+  for(const co of S.data.companies){if(f!=='all'&&co.section!==f)continue;
+    (co.catalysts||[]).forEach((c,i)=>all.push({co,c,i})); expandRecurring(co,12).forEach(c=>all.push({co,c,i:-1}));}
+  const lp=t=>lastPrice(t);
+  const over=all.filter(x=>!x.c.done&&!x.c.recurring&&pd(x.c.date)&&days(TODAY,pd(x.c.date))<-3);
+  const up=all.filter(x=>!x.c.done&&pd(x.c.date)&&days(TODAY,pd(x.c.date))>=-3).sort((a,b)=>a.c.date.localeCompare(b.c.date));
+  const row=({co,c,i})=>{const r=reactFor(c),p=lp(co.ticker),d=days(TODAY,pd(c.date));
+    return `<tr><td class="small">${fmtDate(c.date)}<div class="tiny muted">${d>=0?`in ${d} days`:`${-d} days ago`}</div></td><td><a class="tk" href="#co/${co.ticker}"><i class="dot" style="background:var(--c${co.color??7})"></i>${co.ticker}</a></td>
+    <td><span class="${c.big?'big':''}">${esc(c.title)}</span><div class="tiny muted">${esc(c.when||'')} ${esc(c.desc||'')}</div></td>
+    <td class="num small">${c.big&&p?`<span style="color:var(--buy)">${pct(r.up)}</span> / <span style="color:var(--bad)">${pct(r.down)}</span>`:''}</td>
+    <td>${i>=0?`<button onclick="markDone('${co.id}',${i})">Done</button>`:''}</td></tr>`};
+  return `<div class="row"><select onchange="S.filter=this.value;route()"><option value="all">All sections</option>${Object.entries(S.cfg.sections).map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${esc(l)}</option>`).join('')}</select>
+   <span class="sp"></span><span class="small muted">Big catalysts in bold. Reaction = your estimate or the base rate.</span></div>
+   ${over.length?`<div class="card" style="margin-top:10px"><h3 style="color:var(--warn)">Overdue — date passed, not marked done (${over.length})</h3><table><tbody>${over.map(row).join('')}</tbody></table><p class="tiny muted">Either it happened (mark done, add the result) or it slipped (edit the date — a slip is worth noting in the promise tracker).</p></div>`:''}
+   <div class="card" style="margin-top:10px"><h3>Coming up</h3><table><thead><tr><th>Date</th><th>Stock</th><th>Event</th><th class="num">Reaction</th><th></th></tr></thead><tbody>${up.map(row).join('')}</tbody></table></div>`;
+}
+
+/* ====================================================== review queue */
+function viewReview(){
+  const P=pending().sort((a,b)=>b.at.localeCompare(a.at));
+  const done=S.props.items.filter(p=>S.decisions[p.id]).sort((a,b)=>b.at.localeCompare(a.at)).slice(0,20);
+  const desc=(p,x,j)=>{const id=`${p.id}|${j}`;let t='';
+    if(x.op==='addFinance'){const e=x.entry;t=`Add cash-flow figures for ${fmtDate(e.period)}: cash A$${e.cash}m, operating cash flow A$${e.opcf??'?'}m, R&D ${e.rnd??'?'}, staff ${e.staff??'?'}, admin ${e.admin??'?'}${e.quartersFunded?`, ${e.quartersFunded} quarters funded`:''}. <span class="tiny muted">(read automatically from the PDF — check it)</span>`}
+    else if(x.op==='trialStatus')t=`Set trial <b>${esc(x.trialId)}</b> to <b>${esc(x.status)}</b>`;
+    else if(x.op==='catalystDone')t=`Mark catalyst “${esc(x.title)}” as done`;
+    else if(x.op==='addRaise')t=`Record a capital raise on ${fmtDate(x.entry.date)} <input type="number" placeholder="A$m" id="amt-${esc(id)}" class="w-s"> at <input type="number" step="0.001" placeholder="price" id="px-${esc(id)}" class="w-s">`;
+    else if(x.op==='addHistory')t=`Add to history`;
+    return `<label class="chk" style="display:flex"><input type="checkbox" data-patch="${esc(id)}" ${x.op==='trialStatus'&&x.status==='check'?'':'checked'}> <span>${t}</span></label>`};
+  const card=p=>{const co=companyById(p.company)||{};
+    return `<div class="card"><div class="row"><a class="tk" href="#co/${p.ticker}"><i class="dot" style="background:var(--c${co.color??7})"></i>${p.ticker}</a>
+     <span class="pill ${p.kind==='halt'||p.kind==='raise'?'p-sell':p.kind==='trial'||p.kind==='regulatory'?'p-hold':'p-none'}">${esc(p.kind)}</span>${p.sensitive?'<span class="pill p-warn">price sensitive</span>':''}
+     ${p.sentiment!=='unclear'?`<span class="pill ${p.sentiment==='positive'?'p-buy':'p-bad'}">reads ${p.sentiment}</span>`:''}<span class="sp"></span><span class="small muted">${new Date(p.at).toLocaleString('en-AU',{day:'numeric',month:'short',year:'numeric',hour:'numeric',minute:'2-digit'})}</span></div>
+     <p style="margin:8px 0"><a href="${esc(p.url)}" target="_blank" rel="noopener"><b>${esc(p.headline)}</b></a>${p.reaction?` <span class="small" style="color:var(--${p.reaction.d1>=0?'buy':'bad'})">share price ${p.reaction.d1>0?'+':''}${p.reaction.d1}% on the day</span>`:''}</p>
+     <div>${p.patches.map((x,j)=>desc(p,x,j)).join('')}</div>
+     <div class="row" style="margin-top:8px"><button class="primary" onclick="accept('${esc(p.id)}')">Apply ticked</button><button onclick="dismiss('${esc(p.id)}')">Dismiss</button><span class="tiny muted">Read the announcement first — the suggestions come from the headline, so they can be wrong.</span></div></div>`};
+  return `<p class="small muted">The robot reads every new ASX announcement for your stocks and suggests changes. Nothing changes until you apply it here. Then press <b>Save changes</b>.</p>
+   ${P.map(card).join('')||'<div class="card muted">Nothing waiting. New items appear after each automatic update.</div>'}
+   ${done.length?`<details><summary>Recently handled (${done.length})</summary><table><tbody>${done.map(p=>`<tr><td class="small">${fmtDate(p.date)}</td><td class="small">${p.ticker}</td><td class="small">${esc(p.headline)}</td><td class="small muted">${esc(S.decisions[p.id].status)}</td></tr>`).join('')}</tbody></table></details>`:''}`;
+}
+function accept(pid){
+  const p=S.props.items.find(x=>x.id===pid), co=companyById(p.company); if(!co)return toast('Stock no longer exists');
+  p.patches.forEach((x,j)=>{const id=`${pid}|${j}`, box=document.querySelector(`[data-patch="${CSS.escape(id)}"]`); if(!box||!box.checked)return;
+    if(x.op==='addFinance'){co.finance=co.finance||[];co.finance=co.finance.filter(f=>f.period!==x.entry.period);co.finance.push({opcf:null,rnd:null,staff:null,admin:null,shares:null,profitable:false,...x.entry})}
+    else if(x.op==='trialStatus'){const t=(co.trials||[]).find(t=>t.id===x.trialId);if(t){if(x.status!=='check')t.status=x.status;(t.history=t.history||[]).push({date:p.date,text:x.text})}}
+    else if(x.op==='catalystDone'){const c=(co.catalysts||[]).find(c=>c.id===x.catalystId);if(c){c.done=true;c.result=x.result}}
+    else if(x.op==='addRaise'){const a=document.getElementById('amt-'+id),pr=document.getElementById('px-'+id);(co.raises=co.raises||[]).push({date:x.entry.date,amount:a&&a.value?+a.value:null,price:pr&&pr.value?+pr.value:null})}
+    else if(x.op==='addHistory'){(co.history=co.history||[]).push(x.entry)}
+  });
+  S.decisions[pid]={status:'applied',at:TODAY_ISO}; markDirty('companies');markDirty('decisions');route();toast('Applied — remember to Save changes');
+}
+function dismiss(pid){S.decisions[pid]={status:'dismissed',at:TODAY_ISO};markDirty('decisions');route()}
+
+/* ====================================================== alerts */
+function viewAlerts(){
+  const L=S.alerts.log||[];
+  return `<p class="small muted">Every update that found something is listed here. The same alerts go to your email (via a GitHub issue) and, if set up, your phone.</p>
+  ${L.map(b=>`<div class="card"><h3>${new Date(b.at).toLocaleString('en-AU',{weekday:'short',day:'numeric',month:'short',hour:'numeric',minute:'2-digit'})}</h3><ul>${b.items.map(a=>`<li class="small" style="${a.level==='action'?'font-weight:600':''}">${md(a.text)}</li>`).join('')}</ul></div>`).join('')||'<div class="card muted">No alerts yet.</div>'}`;
+}
+function md(t){return esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\[PDF\]\((.+?)\)/g,(m,u)=>`<a href="${u.replace(/&amp;/g,'&')}" target="_blank" rel="noopener">PDF</a>`)}
+
+/* ====================================================== settings */
+function viewSettings(){
+  const R=S.cfg.rules, A=S.cfg.alerts;
+  const posRows=S.data.companies.map(co=>{const p=S.positions[co.ticker]||{},lp=lastPrice(co.ticker);return `<tr><td><a href="#co/${co.ticker}">${co.ticker}</a></td><td><input type="number" value="${p.shares??''}" onchange="setPos('${co.ticker}','shares',+this.value)"></td><td><input type="number" step="0.001" value="${p.cost??''}" onchange="setPos('${co.ticker}','cost',+this.value)"></td><td><input type="date" value="${p.bought||''}" onchange="setPos('${co.ticker}','bought',this.value)"></td><td class="num">${p.shares&&lp?money(p.shares*lp.v,0):''}</td></tr>`}).join('');
+  const tot=S.data.companies.reduce((a,co)=>{const p=S.positions[co.ticker],lp=lastPrice(co.ticker);return a+(p&&p.shares&&lp?p.shares*lp.v:0)},0);
+  const st=S.status||{};
+  return `<div class="grid g2">
+  <div class="card"><h3>Your positions</h3><table><thead><tr><th>Stock</th><th>Shares</th><th>Avg cost</th><th>First bought</th><th class="num">Value</th></tr></thead><tbody>${posRows}</tbody></table>
+   <p class="small">Total ${money(tot,0)}. ${S.data.companies.map(co=>{const p=S.positions[co.ticker],lp=lastPrice(co.ticker);return p&&p.shares&&lp&&tot?`${co.ticker} ${Math.round(p.shares*lp.v/tot*100)}%`:''}).filter(Boolean).join(' · ')}</p>
+   <label class="chk"><input type="checkbox" ${GH.syncPositions?'checked':''} onchange="GH.syncPositions=this.checked;LS.set('radar.gh',GH);if(this.checked)markDirty('positions');route()"> Also save positions to GitHub (needed for ladder and time-limit alerts by email). <b>Anyone can read a public repo.</b></label>
+   <div class="row" style="margin-top:8px"><button onclick="exportPos()">Download positions file</button><label class="btn">Import positions file<input type="file" accept=".json" style="display:none" onchange="importPos(this.files[0])"></label></div></div>
+  <div class="card"><h3>Your rules</h3>
+   <div class="row">Rare disease: at least <input class="w-s" type="number" value="${R.rare.targetMultiple}" onchange="setCfg('rules.rare.targetMultiple',+this.value)">x, max <input class="w-s" type="number" value="${R.rare.maxYears}" onchange="setCfg('rules.rare.maxYears',+this.value)"> years</div>
+   <div class="row" style="margin-top:6px">Devices: <input class="w-s" type="number" value="${R.device.targetReturn*100}" onchange="setCfg('rules.device.targetReturn',this.value/100)">% a year, max <input class="w-s" type="number" value="${R.device.maxYears}" onchange="setCfg('rules.device.maxYears',+this.value)"> years</div>
+   <div class="row" style="margin-top:6px">Other: <input class="w-s" type="number" value="${R.other.targetReturn*100}" onchange="setCfg('rules.other.targetReturn',this.value/100)">% a year, max <input class="w-s" type="number" value="${R.other.maxYears}" onchange="setCfg('rules.other.maxYears',+this.value)"> years</div>
+   <div class="row" style="margin-top:6px">Sell/trim when expected return falls below <input class="w-s" type="number" value="${R.sellFloorReturn*100}" onchange="setCfg('rules.sellFloorReturn',this.value/100)">% a year</div>
+   <h3 style="margin-top:14px">Alerts</h3>
+   <div class="row">Warn <input class="w-s" type="number" value="${A.catalystDaysAhead}" onchange="setCfg('alerts.catalystDaysAhead',+this.value)"> days before a catalyst · big move ≥ <input class="w-s" type="number" value="${A.bigMovePct}" onchange="setCfg('alerts.bigMovePct',+this.value)">% · runway below <input class="w-s" type="number" value="${A.runwayMonths}" onchange="setCfg('alerts.runwayMonths',+this.value)"> months</div></div>
+  <div class="card"><h3>GitHub connection</h3><p class="small muted">Lets this page save your edits and start an update. The token stays in this browser only.</p>
+   <div class="row"><input placeholder="your GitHub username" value="${esc(GH.owner||'')}" onchange="GH.owner=this.value.trim();LS.set('radar.gh',GH)"><input placeholder="repository name" value="${esc(GH.repo||'')}" onchange="GH.repo=this.value.trim();LS.set('radar.gh',GH)"><input class="w-s" value="${esc(GH.branch||'main')}" onchange="GH.branch=this.value.trim();LS.set('radar.gh',GH)"></div>
+   <div class="row" style="margin-top:6px"><input type="password" style="flex:1" placeholder="fine-grained access token (github_pat_…)" value="${esc(GH.token||'')}" onchange="GH.token=this.value.trim();LS.set('radar.gh',GH);renderBanners()"><button onclick="testGH()">Test</button></div></div>
+  <div class="card"><h3>Robot status</h3><p class="small">Last run: ${st.lastRun?new Date(st.lastRun).toLocaleString('en-AU'):'never'} · new announcements ${st.newAnnouncements??0} · new review items ${st.newProposals??0}</p>
+   ${(st.errors||[]).length?`<ul class="small" style="color:var(--warn)">${st.errors.map(e=>`<li>${esc(e)}</li>`).join('')}</ul><p class="tiny muted">A source can fail now and then. If the same one fails every run, send me this list.</p>`:'<p class="small muted">No warnings.</p>'}
+   <p class="small">Sources: ${Object.entries(st.sources||{}).map(([t,s])=>`${t}: ${Object.values(s).join(', ')}`).join(' · ')||'–'}</p></div>
+  </div>
+  <div class="card"><details><summary>Probability base rates and modifiers (edit in config.json via Advanced)</summary><p class="tiny muted">${esc(S.cfg.pos.source)}</p>
+   <table><tbody>${Object.entries(S.cfg.pos.areas).map(([k,a])=>`<tr><td>${esc(a.label)}</td><td><input class="w-s" type="number" value="${Math.round(a.p*100)}" onchange="setCfg('pos.areas.${k}.p',this.value/100)">%</td></tr>`).join('')}
+   ${Object.entries(S.cfg.pos.mods).map(([k,m])=>`<tr><td>${esc(m.label)}</td><td>odds × <input class="w-s" type="number" step="0.05" value="${m.odds}" onchange="setCfg('pos.mods.${k}.odds',+this.value)"></td></tr>`).join('')}</tbody></table></details>
+   <details><summary>Market reaction base rates</summary><p class="tiny muted">${esc(S.cfg.reactions.source)}</p><table><tbody>${Object.entries(S.cfg.reactions.types).map(([k,t])=>`<tr><td>${esc(t.label)}</td><td>good <input class="w-s" type="number" value="${t.up}" onchange="setCfg('reactions.types.${k}.up',+this.value)">%</td><td>bad <input class="w-s" type="number" value="${t.down}" onchange="setCfg('reactions.types.${k}.down',+this.value)">%</td></tr>`).join('')}</tbody></table></details></div>`;
+}
+
+/* ====================================================== editing helpers */
+function toggleEdit(id){S.edit[id]=!S.edit[id];route()}
+function setPath(o,path,v){const k=path.split('.');let x=o;for(let i=0;i<k.length-1;i++){if(x[k[i]]==null)x[k[i]]=/^\d+$/.test(k[i+1])?[]:{};x=x[k[i]]}x[k[k.length-1]]=v}
+document.addEventListener('change',ev=>{const el=ev.target, p=el.dataset&&el.dataset.p; if(!p)return;
+  const [file,id,path]=p.split(':'); const co=companyById(id); if(!co)return;
+  let v=el.type==='checkbox'?el.checked:el.value; if(el.dataset.t==='n')v=v===''?null:+v; if(el.dataset.t==='b')v=!!el.checked;
+  setPath(co,path,v); markDirty('companies');
+  if(['section','name'].some(k=>path===k))route(); else {const keep=window.scrollY; const h=location.hash; route(); window.scrollTo({top:keep})}});
+function setReviewed(id){const co=companyById(id);co.reviewed=true;markDirty('companies');route()}
+function addItem(id,key,obj){const co=companyById(id);(co[key]=co[key]||[]).push(obj);markDirty('companies');const y=scrollY;route();scrollTo({top:y})}
+function delItem(id,key,i){if(!confirm('Remove this row?'))return;const co=companyById(id);co[key].splice(i,1);markDirty('companies');const y=scrollY;route();scrollTo({top:y})}
+function toggleMod(id,i,k,on){const t=companyById(id).trials[i];t.mods=(t.mods||[]).filter(m=>m!==k);if(on)t.mods.push(k);markDirty('companies');const y=scrollY;route();scrollTo({top:y})}
+function markDone(id,i){const co=companyById(id),c=co.catalysts[i];const r=prompt(`What happened? (“${c.title}”)`,c.result||'');if(r===null)return;c.done=true;c.result=r;(co.history=co.history||[]).push({date:TODAY_ISO,title:c.title,desc:r});markDirty('companies');const y=scrollY;route();scrollTo({top:y})}
+function setFacts(id,t){companyById(id).facts=t.split('\n').map(s=>s.trim()).filter(Boolean);markDirty('companies')}
+function addFin(id){const g=k=>{const v=document.getElementById('f-'+k).value;return v===''?null:+v};const per=document.getElementById('f-period').value;if(!per)return toast('Pick the quarter-end date');
+  const co=companyById(id);co.finance=(co.finance||[]).filter(f=>f.period!==per);co.finance.push({period:per,cash:g('cash'),opcf:g('opcf'),rnd:g('rnd'),staff:g('staff'),admin:g('admin'),shares:g('shares'),profitable:document.getElementById('f-prof').checked,source:'entered by you'});markDirty('companies');route()}
+function addRaise(id){const d=document.getElementById('r-date').value;if(!d)return toast('Pick a date');const co=companyById(id);(co.raises=co.raises||[]).push({date:d,amount:+document.getElementById('r-amt').value||null,price:+document.getElementById('r-px').value||null});markDirty('companies');route()}
+function applyRaw(id){try{const o=JSON.parse(document.getElementById('raw-'+id).value);const i=S.data.companies.findIndex(c=>c.id===id);S.data.companies[i]=o;markDirty('companies');route();toast('Applied')}catch(e){alert('That JSON has an error: '+e.message)}}
+function setCfg(path,v){setPath(S.cfg,path,v);markDirty('config');renderTop()}
+function setPos(t,path,v){const p=S.positions[t]=S.positions[t]||{};setPath(p,path,v);LS.set('radar.positions',S.positions);if(GH.syncPositions)markDirty('positions');renderTop()}
+function addPlan(t){const p=S.positions[t]=S.positions[t]||{};(p.plan=p.plan||[]).push({label:'Step '+(p.plan.length+1),price:null,shares:null,done:false});LS.set('radar.positions',S.positions);if(GH.syncPositions)markDirty('positions');route()}
+function delPlan(t,i){S.positions[t].plan.splice(i,1);LS.set('radar.positions',S.positions);if(GH.syncPositions)markDirty('positions');route()}
+function exportPos(){download('my-positions.json',JSON.stringify(S.positions,null,1))}
+function importPos(f){if(!f)return;f.text().then(t=>{try{S.positions=Object.assign(S.positions,JSON.parse(t));LS.set('radar.positions',S.positions);if(GH.syncPositions)markDirty('positions');toast('Positions imported');route()}catch(e){alert('Not a valid positions file')}})}
+function download(name,text){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'application/json'}));a.download=name;a.click()}
+function addStock(sec){
+  const t=(prompt('ASX code (e.g. PNV):')||'').trim().toUpperCase(); if(!t)return; if(companyById(t))return toast('Already listed');
+  const name=prompt('Company name:',t)||t; const R=S.cfg.rules, y=(R[sec]||R.other).maxYears, hz=new Date(TODAY);hz.setFullYear(hz.getFullYear()+y);
+  S.data.companies.push({id:t.toLowerCase(),ticker:t,name,section:sec,color:Math.floor(Math.random()*8),tagline:'',facts:[],horizon:iso(hz),reviewed:false,
+    scenarios:[{name:'Bear',prob:40,value:null,success:false,note:''},{name:'Base',prob:45,value:null,success:true,note:''},{name:'Bull',prob:15,value:null,success:true,note:''}],
+    trials:[],catalysts:[],history:[],promises:[],reporting:'quarterly',recurring:[],finance:[],raises:[],scorecard:{},scoreNotes:'',keywords:''});
+  markDirty('companies');S.edit[t.toLowerCase()]=true;location.hash='co/'+t;toast('Added. Fill in scenarios, trials and catalysts, then Save. Prices arrive after the next update.')}
+function removeStock(id){if(!confirm('Remove this stock from the radar?'))return;S.data.companies=S.data.companies.filter(c=>c.id!==id);markDirty('companies');location.hash='rare'}
+
+/* ====================================================== GitHub save */
+function b64(s){const b=new TextEncoder().encode(s);let x='';for(let i=0;i<b.length;i+=0x8000)x+=String.fromCharCode.apply(null,b.subarray(i,i+0x8000));return btoa(x)}
+async function gh(path,opt={}){const r=await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/${path}`,{...opt,headers:{Authorization:`Bearer ${GH.token}`,Accept:'application/vnd.github+json',...(opt.headers||{})}});if(!r.ok&&r.status!==404)throw new Error(`${r.status} ${(await r.text()).slice(0,140)}`);return r.status===404?null:(r.status===204?{}:r.json())}
+async function putFile(name,content,msg){const p=`contents/data/${name}`;const cur=await gh(p+`?ref=${GH.branch}`);
+  await gh(p,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg,content:b64(content),branch:GH.branch,sha:cur&&cur.sha})})}
+function fileBody(f){return f==='companies'?JSON.stringify({...S.data,updated:TODAY_ISO},null,1):f==='config'?JSON.stringify(S.cfg,null,1):f==='decisions'?JSON.stringify(S.decisions,null,1):JSON.stringify(S.positions,null,1)}
+async function saveAll(){
+  const files=[...S.dirty];
+  if(!GH.token||!GH.owner||!GH.repo){files.forEach(f=>download(f+'.json',fileBody(f)));toast('No GitHub token: files downloaded — upload them to the data folder on GitHub');return}
+  try{for(const f of files){await putFile(f+'.json',fileBody(f),`Radar: update ${f} from the web page`);S.dirty.delete(f)}renderTop();toast('Saved to GitHub. The site refreshes in about a minute.')}
+  catch(e){alert('Save failed: '+e.message+'\n\nCheck the token has Contents: read and write on this repository.')}}
+async function runNow(){if(!GH.token)return toast('Add a GitHub token in Settings first — or open the Actions tab on GitHub and press “Run workflow”.');
+  try{await gh('actions/workflows/update.yml/dispatches',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ref:GH.branch})});toast('Update started. Refresh this page in 2–3 minutes.')}catch(e){alert('Could not start the update: '+e.message+'\nThe token needs Actions: read and write.')}}
+async function testGH(){try{const r=await gh('');toast(r?`Connected to ${r.full_name}${r.permissions&&r.permissions.push?' with write access':''}`:'Repository not found')}catch(e){alert('Failed: '+e.message)}}
+window.addEventListener('beforeunload',e=>{if(S.dirty.size){e.preventDefault();e.returnValue=''}});
+load();
+</script>
+</body>
+</html>
