@@ -9,7 +9,7 @@
    "color": 0,
    "tagline": "DAYBUE royalties fund the NNZ-2591 rare neurodevelopmental pipeline",
    "facts": [
-    "Q3 2026 DAYBUE net sales US$140m (+39% y/y); 2026 trofinetide income guided US$91\u201393m incl. the US$35m EU milestone (5 Nov 2026).",
+    "Q3 2026 DAYBUE net sales US$140m (+39% y/y); 2026 trofinetide income guided US$91–93m incl. the US$35m EU milestone (5 Nov 2026).",
     "Japan Phase 3 trofinetide results consistent with LAVENDER; Japan NDA planned 2027.",
     "FDA Orphan Drug Designation for NNZ-2591 in HIE (2 Nov 2026). Trofinetide US patents extended to Mar 2041.",
     "Koala Phase 3 (Phelan-McDermid, ~160 children, placebo-controlled) dosing since Feb 2026; top-line timing not yet guided.",
@@ -67,7 +67,7 @@
      "phase": "P3",
      "area": "neuro",
      "readout": "2026-10-20",
-     "readoutWhen": "Sep\u2013Nov 2026",
+     "readoutWhen": "Sep–Nov 2026",
      "posOverride": null
     },
     {
@@ -262,7 +262,7 @@
     {
      "date": "2026-11-05",
      "title": "Japan Phase 3 positive; 2026 guidance upgraded",
-     "desc": "Results consistent with LAVENDER; income guidance US$91\u201393m."
+     "desc": "Results consistent with LAVENDER; income guidance US$91–93m."
     }
    ],
    "promises": [
@@ -324,7 +324,7 @@
     },
     {
      "id": "neu-p8",
-     "text": "Pay dividends of 70\u2013100% of the Available Pool from royalties",
+     "text": "Pay dividends of 70–100% of the Available Pool from royalties",
      "due": "",
      "status": "ontrack",
      "comment": "First 15c interim declared Aug 2026.",
@@ -385,7 +385,7 @@
    "notes": [
     {
      "title": "David Craig's 'Four Walls' audit (from your Neuren exit plan)",
-     "source": "Copied from your Nov 2026 Neuren valuation and exit plan. The 'Four Walls' name and the 1-in-7,300 prevalence study could not be confirmed in public sources \u2014 treat as your thesis, and check against the book.",
+     "source": "Copied from your Nov 2026 Neuren valuation and exit plan. The 'Four Walls' name and the 1-in-7,300 prevalence study could not be confirmed in public sources — treat as your thesis, and check against the book.",
      "head": [
       "Craig's Structural Wall",
       "Industry Failure Mode",
@@ -395,7 +395,7 @@
       [
        "Wall 1: Patient Finding & Diagnostic Opacity",
        "Underestimating true prevalence; failing to locate undiagnosed patients for trials and launch.",
-       "Co-funded a 2026 Mount Sinai / CureSHANK study (180k records) proving PMS occurs in 1 in 7,300 people\u2014more than double prior 1-in-15,000 estimates."
+       "Co-funded a 2026 Mount Sinai / CureSHANK study (180k records) proving PMS occurs in 1 in 7,300 people—more than double prior 1-in-15,000 estimates."
       ],
       [
        "Wall 2: Missing Natural History & Endpoints",
@@ -405,7 +405,7 @@
       [
        "Wall 3: Small-Population Capital & CMC Stack",
        "Dilutive equity raises and unscalable small-batch manufacturing delays.",
-       "Locked in scalable oral liquid CMC early and self-funded Koala (~US$65M) via A$286.5M cash + ~US$91M\u2013$93M 2026 trofinetide income."
+       "Locked in scalable oral liquid CMC early and self-funded Koala (~US$65M) via A$286.5M cash + ~US$91M–$93M 2026 trofinetide income."
       ],
       [
        "Wall 4: Patient-Centered Ecosystem & Access",
@@ -426,7 +426,7 @@
    "facts": [
     "ACTION3 Phase 3: 333 adults dosed across 219 sites in 21 countries; >90% power confirmed in blinded review (Apr 2026).",
     "Shares fell ~36% on 28 Apr 2026 when the early (accelerated approval) readout was dropped; trial runs to final proteinuria endpoint.",
-    "Kidney Week (Oct 2026) human data link CCR2 activity to worse FSGS outcomes \u2014 supports the target, not proof DMX-200 works.",
+    "Kidney Week (Oct 2026) human data link CCR2 activity to worse FSGS outcomes — supports the target, not proof DMX-200 works.",
     "Up to A$34m non-dilutive facility (half drawn by Sep 2026). Bought DMX-652 (AKI) Jul 2026.",
     "Partners: Amicus (US, up to US$560m milestones), Everest (Greater China/SE Asia), FUSO (Japan) and others."
    ],
@@ -443,7 +443,7 @@
     {
      "name": "Base",
      "prob": 33,
-     "value": 1.0,
+     "value": 1,
      "success": true,
      "note": "Success, FDA approval ~2030, Amicus milestones and royalties flow."
     },
@@ -452,7 +452,7 @@
      "prob": 12,
      "value": 1.6,
      "success": true,
-     "note": "Strong data plus buyout. Rare \u2014 don't anchor on it."
+     "note": "Strong data plus buyout. Rare — don't anchor on it."
     }
    ],
    "trials": [
@@ -516,7 +516,7 @@
      "date": "2027-06-15",
      "when": "Ongoing",
      "title": "Adolescent cohort recruitment",
-     "desc": "Patients aged 12\u201317; success could widen the label.",
+     "desc": "Patients aged 12–17; success could widen the label.",
      "big": false,
      "event": "other",
      "done": false,
@@ -549,7 +549,7 @@
     {
      "id": "dxb-c6",
      "date": "2029-01-15",
-     "when": "Late 2028\u201329 (est.)",
+     "when": "Late 2028–29 (est.)",
      "title": "US filing by Amicus",
      "desc": "Unlocks success-based milestones and royalties if approved.",
      "big": true,
@@ -571,7 +571,7 @@
     {
      "id": "dxb-c8",
      "date": "2030-09-01",
-     "when": "2030\u201331 (est.)",
+     "when": "2030–31 (est.)",
      "title": "US launch by Amicus",
      "desc": "Royalties and sales milestones begin.",
      "big": false,
@@ -726,7 +726,7 @@
     {
      "name": "Bull",
      "prob": 15,
-     "value": 4.0,
+     "value": 4,
      "success": true,
      "note": "Clear US stroke-care adoption or takeover by an imaging major."
     }
@@ -839,7 +839,7 @@
     {
      "id": "emv-c8",
      "date": "2029-01-15",
-     "when": "2028\u201329 (est.)",
+     "when": "2028–29 (est.)",
      "title": "First Responder regulatory submission",
      "desc": "Not yet guided; follows production-unit and diagnostic testing.",
      "big": false,
@@ -894,6 +894,11 @@
      "date": "2026-09-16",
      "title": "Mobile Stroke Unit Stage 1",
      "desc": "First Responder trialled in road ambulances; Stroke Alliance MOU."
+    },
+    {
+     "date": "2026-11-20",
+     "title": "New $3m Grant Unlocks Traumatic Brain Injury Opportunity",
+     "desc": ""
     }
    ],
    "promises": [
@@ -979,7 +984,7 @@
     "funding": 1,
     "compete": 1
    },
-   "scoreNotes": "Clear clinical need (no CT in ambulances/regional EDs). De Novo route set but pivotal still enrolling and endpoint being changed. No reimbursement code/coverage yet \u2014 the biggest commercial gap in Mehta's framework. Cash covers ~2 years at current burn, not launch.",
+   "scoreNotes": "Clear clinical need (no CT in ambulances/regional EDs). De Novo route set but pivotal still enrolling and endpoint being changed. No reimbursement code/coverage yet — the biggest commercial gap in Mehta's framework. Cash covers ~2 years at current burn, not launch.",
    "keywords": "pivotal|emu|de novo|first responder|q-sub|pre-submission|regional benefits"
   },
   {
@@ -992,7 +997,7 @@
    "facts": [
     "FDA Breakthrough Therapy designation for 64Cu-SAR-bisPSMA in biochemical recurrence (12 Nov 2026); shares rose ~23% to A$2.05, then fell back to ~A$1.88.",
     "AMPLIFY and CLARIFY recruitment complete; topline for both guided H1 2027.",
-    "Cash A$178m at 30 Jun 2026; net operating outflow ~A$19m a quarter. A$203m placement at A$4.20 (Jul 2025) \u2014 shares now far below that.",
+    "Cash A$178m at 30 Jun 2026; net operating outflow ~A$19m a quarter. A$203m placement at A$4.20 (Jul 2025) — shares now far below that.",
     "Crowded PSMA PET market: several agents already FDA-approved."
    ],
    "horizon": "2029-11-20",
@@ -1015,7 +1020,7 @@
     {
      "name": "Bull",
      "prob": 20,
-     "value": 7.0,
+     "value": 7,
      "success": true,
      "note": "Strong imaging uptake plus working Cu-67 therapy, or a takeover."
     }
@@ -1111,8 +1116,8 @@
      "desc": "Registrational imaging trial in recurrent prostate cancer. Company now guides topline for both Phase IIIs in H1 2027.",
      "big": true,
      "event": "trial",
-     "done": false,
-     "result": "",
+     "done": true,
+     "result": "Follow-up assessments completed in Phase III AMPLIFY trial",
      "upPct": 30,
      "downPct": -50
     },
@@ -1176,7 +1181,7 @@
     {
      "id": "cu6-c7",
      "date": "2029-11-01",
-     "when": "2029\u201330 (est.)",
+     "when": "2029–30 (est.)",
      "title": "Cu-67 therapy Phase III data",
      "desc": "Not guided; would decide whether Clarity is more than an imaging company.",
      "big": false,
@@ -1225,6 +1230,11 @@
      "date": "2026-11-12",
      "title": "Breakthrough Therapy designation",
      "desc": "64Cu-SAR-bisPSMA in biochemical recurrence; shares +23% on the day."
+    },
+    {
+     "date": "2026-11-19",
+     "title": "Follow-up assessments completed in Phase III AMPLIFY trial",
+     "desc": ""
     }
    ],
    "promises": [
@@ -1312,7 +1322,7 @@
    "color": 2,
    "tagline": "SPONTAN rapid-onset nasal vardenafil for erectile dysfunction; ROXUS for US compounding",
    "facts": [
-    "SPONTAN Phase II PK (May 2026): median Tmax 10 min vs 60 min for oral vardenafil; supports a 505(b)(2) US filing. Final results were guided for Q3 CY2026 \u2014 check they were released.",
+    "SPONTAN Phase II PK (May 2026): median Tmax 10 min vs 60 min for oral vardenafil; supports a 505(b)(2) US filing. Final results were guided for Q3 CY2026 — check they were released.",
     "ROXUS: US exclusive pharmacy partner (Jun 2026) under the 503A compounding route for earlier US sales.",
     "147-patient real-world study (Aug 2026): 68% overall reported improvement.",
     "Cash ~A$24m (early 2026); market cap ~A$78m at A$0.43 (Oct 2026). Partners: Aptar (device), Mayne Pharma (manufacturing)."
@@ -1332,7 +1342,7 @@
      "prob": 45,
      "value": 0.55,
      "success": true,
-     "note": "505(b)(2) filed/approved ~2028\u201329, modest ROXUS sales."
+     "note": "505(b)(2) filed/approved ~2028–29, modest ROXUS sales."
     },
     {
      "name": "Bull",
@@ -1438,7 +1448,7 @@
      "text": "Final SPONTAN Phase II results in Q3 CY2026",
      "due": "2026-09-30",
      "status": "unclear",
-     "comment": "Not confirmed in research so far \u2014 check the Oct 2026 4C.",
+     "comment": "Not confirmed in research so far — check the Oct 2026 4C.",
      "checked": "2026-11-20"
     },
     {
