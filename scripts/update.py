@@ -28,6 +28,7 @@ except Exception:  # pragma: no cover
     SYD = timezone(timedelta(hours=10))
 
 ERRORS = []
+NOTES = []
 SOURCES = {}
 
 
@@ -65,29 +66,65 @@ def http(url, binary=False, headers=None, data=None, method=None, timeout=25, tr
 
 
 # ---------------------------------------------------------------- prices
+def _last_trading_day():
+    """Date the latest close belongs to. Before ~10:15 am Sydney the last price is the previous session's close."""
+    now = datetime.now(SYD)
+    d = now.date()
+    if now.hour * 60 + now.minute < 10 * 60 + 15:
+        d -= timedelta(days=1)
+    while d.weekday() >= 5:
+        d -= timedelta(days=1)
+    return d.isoformat()
+
+
+def _yahoo(ticker):
+    for host in ('query2', 'query1'):
+        try:
+            url = f'https://{host}.finance.yahoo.com/v8/finance/chart/{ticker}.AX?range=2y&interval=1d'
+            j = json.loads(http(url, tries=1))
+            res = j['chart']['result'][0]
+            out = []
+            for t, c in zip(res['timestamp'], res['indicators']['quote'][0]['close']):
+                if c is None:
+                    continue
+                d = datetime.fromtimestamp(t, SYD).date().isoformat()
+                if out and out[-1][0] == d:
+                    out[-1][1] = round(c, 4)
+                else:
+                    out.append([d, round(c, 4)])
+            if out:
+                return out
+        except Exception as e:
+            last = e
+    raise last
+
+
+def _stooq(ticker):
+    txt = http(f'https://stooq.com/q/d/l/?s={ticker.lower()}.au&i=d', headers={'Accept': 'text/csv'}, tries=1)
+    out = []
+    for line in txt.splitlines()[1:]:
+        p = line.split(',')
+        if len(p) >= 5 and re.match(r'\d{4}-\d\d-\d\d', p[0]):
+            try:
+                out.append([p[0], round(float(p[4]), 4)])
+            except ValueError:
+                pass
+    if not out:
+        raise ValueError('no rows')
+    return out[-520:]
+
+
 def fetch_prices(ticker):
-    """Daily closes for ~2 years. Returns list of [YYYY-MM-DD, close]."""
-    try:
-        url = f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}.AX?range=2y&interval=1d'
-        j = json.loads(http(url))
-        res = j['chart']['result'][0]
-        ts = res['timestamp']
-        cl = res['indicators']['quote'][0]['close']
-        out = []
-        for t, c in zip(ts, cl):
-            if c is None:
-                continue
-            d = datetime.fromtimestamp(t, SYD).date().isoformat()
-            if out and out[-1][0] == d:
-                out[-1][1] = round(c, 4)
-            else:
-                out.append([d, round(c, 4)])
-        if out:
-            SOURCES.setdefault(ticker, {})['price'] = 'Yahoo Finance'
+    """Daily closes. Tries Yahoo, then Stooq, then the ASX site's last price.
+    The last-price route still builds a history over time because each run's price is kept."""
+    fails = []
+    for name, fn in (('Yahoo Finance', _yahoo), ('Stooq', _stooq)):
+        try:
+            out = fn(ticker)
+            SOURCES.setdefault(ticker, {})['price'] = name
             return out
-    except Exception as e:
-        ERRORS.append(f'{ticker}: Yahoo price failed ({e})')
-    # fallback: last price from the ASX site's data provider
+        except Exception as e:
+            fails.append(f'{name}: {str(e)[:60]}')
     try:
         j = json.loads(http(f'https://asx.api.markitdigital.com/asx-research/1.0/companies/{ticker}/header'))
         d = j.get('data', j)
@@ -96,10 +133,12 @@ def fetch_prices(ticker):
             if isinstance(d, dict) and d.get(k) not in (None, ''):
                 px = float(d[k]); break
         if px:
-            SOURCES.setdefault(ticker, {})['price'] = 'ASX (Markit) last price'
-            return [[datetime.now(SYD).date().isoformat(), px]]
+            SOURCES.setdefault(ticker, {})['price'] = 'ASX last price (history builds up each run)'
+            NOTES.append(f'{ticker}: price history sources busy ({"; ".join(fails)}) - used ASX last price')
+            return [[_last_trading_day(), px]]
     except Exception as e:
-        ERRORS.append(f'{ticker}: ASX price fallback failed ({e})')
+        fails.append(f'ASX: {e}')
+    ERRORS.append(f'{ticker}: no price today ({"; ".join(fails)})')
     return []
 
 
@@ -533,7 +572,7 @@ def main():
     save('proposals.json', props)
     save('reactions.json', reactions)
     save('alerts.json', alerts)
-    save('status.json', {'lastRun': datetime.now(SYD).isoformat(timespec='minutes'), 'errors': ERRORS[:50],
+    save('status.json', {'lastRun': datetime.now(SYD).isoformat(timespec='minutes'), 'errors': ERRORS[:50], 'notes': NOTES[:50],
                          'sources': SOURCES, 'newAnnouncements': len(new_anns), 'newProposals': new_props,
                          'pendingProposals': pending, 'alerts': len(al)})
     log(f'Done. {len(new_anns)} new announcements, {new_props} new review items, {len(al)} alerts, {len(ERRORS)} errors.')
