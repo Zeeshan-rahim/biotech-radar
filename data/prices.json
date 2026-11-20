@@ -3,45 +3,45 @@
   "history": [
    [
     "2026-11-20",
-    21.19
+    20.97
    ]
   ],
-  "last": 21.19,
+  "last": 20.97,
   "lastDate": "2026-11-20",
-  "source": "ASX (Markit) last price"
+  "source": "ASX last price (history builds up each run)"
  },
  "DXB": {
   "history": [
    [
     "2026-11-20",
-    0.18
+    0.185
    ]
   ],
-  "last": 0.18,
+  "last": 0.185,
   "lastDate": "2026-11-20",
-  "source": "ASX (Markit) last price"
+  "source": "ASX last price (history builds up each run)"
  },
  "EMV": {
   "history": [
    [
     "2026-11-20",
-    1.365
+    1.4000000000000001
    ]
   ],
-  "last": 1.365,
+  "last": 1.4000000000000001,
   "lastDate": "2026-11-20",
-  "source": "ASX (Markit) last price"
+  "source": "ASX last price (history builds up each run)"
  },
  "CU6": {
   "history": [
    [
     "2026-11-20",
-    1.8675000000000002
+    1.82
    ]
   ],
-  "last": 1.8675000000000002,
+  "last": 1.82,
   "lastDate": "2026-11-20",
-  "source": "ASX (Markit) last price"
+  "source": "ASX last price (history builds up each run)"
  },
  "LTP": {
   "history": [
@@ -52,6 +52,6 @@
   ],
   "last": 0.39,
   "lastDate": "2026-11-20",
-  "source": "ASX (Markit) last price"
+  "source": "ASX last price (history builds up each run)"
  }
 }
