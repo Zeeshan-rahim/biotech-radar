@@ -1,5 +1,5 @@
 {
- "lastRun": "2026-11-20T13:18+11:00",
+ "lastRun": "2026-11-20T19:25+11:00",
  "errors": [],
  "notes": [
   "NEU: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
@@ -32,6 +32,6 @@
  },
  "newAnnouncements": 0,
  "newProposals": 0,
- "pendingProposals": 11,
+ "pendingProposals": 9,
  "alerts": 0
 }

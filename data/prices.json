@@ -25,10 +25,10 @@
   "history": [
    [
     "2026-11-20",
-    1.4000000000000001
+    1.42
    ]
   ],
-  "last": 1.4000000000000001,
+  "last": 1.42,
   "lastDate": "2026-11-20",
   "source": "ASX last price (history builds up each run)"
  },
@@ -36,10 +36,10 @@
   "history": [
    [
     "2026-11-20",
-    1.82
+    1.77
    ]
   ],
-  "last": 1.82,
+  "last": 1.77,
   "lastDate": "2026-11-20",
   "source": "ASX last price (history builds up each run)"
  },
@@ -47,10 +47,10 @@
   "history": [
    [
     "2026-11-20",
-    0.39
+    0.385
    ]
   ],
-  "last": 0.39,
+  "last": 0.385,
   "lastDate": "2026-11-20",
   "source": "ASX last price (history builds up each run)"
  }
