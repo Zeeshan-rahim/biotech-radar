@@ -527,6 +527,7 @@ function viewSettings(){
    <div class="row" style="margin-top:6px"><input type="password" style="flex:1" placeholder="fine-grained access token (github_pat_…)" value="${esc(GH.token||'')}" onchange="GH.token=this.value.trim();LS.set('radar.gh',GH);renderBanners()"><button onclick="testGH()">Test</button></div></div>
   <div class="card"><h3>Robot status</h3><p class="small">Last run: ${st.lastRun?new Date(st.lastRun).toLocaleString('en-AU'):'never'} · new announcements ${st.newAnnouncements??0} · new review items ${st.newProposals??0}</p>
    ${(st.errors||[]).length?`<ul class="small" style="color:var(--warn)">${st.errors.map(e=>`<li>${esc(e)}</li>`).join('')}</ul><p class="tiny muted">A source can fail now and then. If the same one fails every run, send me this list.</p>`:'<p class="small muted">No warnings.</p>'}
+   ${(st.notes||[]).length?`<details><summary class="small">${st.notes.length} note(s) — backup sources used, prices still fine</summary><ul class="tiny muted">${st.notes.map(e=>`<li>${esc(e)}</li>`).join('')}</ul></details>`:''}
    <p class="small">Sources: ${Object.entries(st.sources||{}).map(([t,s])=>`${t}: ${Object.values(s).join(', ')}`).join(' · ')||'–'}</p></div>
   </div>
   <div class="card"><details><summary>Probability base rates and modifiers (edit in config.json via Advanced)</summary><p class="tiny muted">${esc(S.cfg.pos.source)}</p>
