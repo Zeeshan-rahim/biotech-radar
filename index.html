@@ -82,6 +82,51 @@ aside .grp{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:va
 .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;z-index:9;max-width:90vw}
 svg text{fill:var(--muted);font-size:11px}
 @media (max-width:640px){.hide-s{display:none} th,td{padding:6px 5px}}
+
+/* ===================== Colour theme (Nov 2026) ===================== */
+:root{--sc:#2457C5;--g1:#1F3C88;--g2:#0E8C8C;--g3:#6A3FD6;--bg:#EEF2FA}
+@media (prefers-color-scheme: dark){:root{--bg:#090D1A}}
+body{background:radial-gradient(1200px 500px at 10% -10%,color-mix(in srgb,var(--g3) 14%,transparent),transparent 60%),radial-gradient(900px 500px at 100% 0%,color-mix(in srgb,var(--g2) 14%,transparent),transparent 60%),var(--bg);background-attachment:fixed}
+header{background:linear-gradient(120deg,var(--g1),var(--g3) 55%,var(--g2));color:#fff;border-radius:16px;padding:16px 20px;box-shadow:0 8px 24px -12px color-mix(in srgb,var(--g1) 70%,transparent)}
+header h1{color:#fff;font-weight:750;letter-spacing:-.02em}
+header h1::before{content:"◆ ";color:#FFD166}
+header .muted,header #status{color:rgba(255,255,255,.85)!important}
+header button,header .btn{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.35);color:#fff}
+header button:hover{background:rgba(255,255,255,.24);border-color:#fff}
+header button.primary{background:#FFD166;border-color:#FFD166;color:#1F1A05}
+header .pill{background:rgba(255,255,255,.2);color:#fff}
+nav{border-bottom:none;gap:8px}
+nav a{background:var(--panel);border:1px solid var(--line);box-shadow:0 1px 2px rgba(16,24,64,.05)}
+nav a:hover{border-color:var(--accent)}
+nav a.on{background:linear-gradient(120deg,var(--g1),var(--g3));color:#fff;border-color:transparent}
+.card{border:1px solid color-mix(in srgb,var(--line) 70%,transparent);box-shadow:0 2px 10px -4px rgba(16,24,64,.12);border-radius:14px;position:relative}
+.card>h3:first-child,.card>.row:first-child h3{color:var(--g1)}
+@media (prefers-color-scheme: dark){.card>h3:first-child,.card>.row:first-child h3{color:#C9D6FF}}
+.card.decision{border-left:6px solid var(--hold)}
+.card.decision:has(.p-buy){border-left-color:var(--buy);background:linear-gradient(90deg,var(--buy-soft),var(--panel) 40%)}
+.card.decision:has(.p-sell){border-left-color:var(--sell);background:linear-gradient(90deg,var(--sell-soft),var(--panel) 40%)}
+.card.decision:has(.p-bad){border-left-color:var(--bad)}
+th{background:color-mix(in srgb,var(--g1) 8%,var(--panel));color:var(--g1)}
+@media (prefers-color-scheme: dark){th{color:#C9D6FF}}
+tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--panel2) 60%,transparent)}
+button.primary,.btn.primary{background:linear-gradient(120deg,var(--g1),var(--g3));border-color:transparent;box-shadow:0 4px 12px -6px var(--g3)}
+.pill{box-shadow:inset 0 0 0 1px color-mix(in srgb,currentColor 25%,transparent)}
+.kpi{border-top:4px solid var(--c2);background:linear-gradient(180deg,color-mix(in srgb,var(--c2) 9%,var(--panel)),var(--panel))}
+.kpi:nth-child(5n+2){border-top-color:var(--c1);background:linear-gradient(180deg,color-mix(in srgb,var(--c1) 9%,var(--panel)),var(--panel))}
+.kpi:nth-child(5n+3){border-top-color:var(--c0);background:linear-gradient(180deg,color-mix(in srgb,var(--c0) 9%,var(--panel)),var(--panel))}
+.kpi:nth-child(5n+4){border-top-color:var(--c4);background:linear-gradient(180deg,color-mix(in srgb,var(--c4) 9%,var(--panel)),var(--panel))}
+.kpi:nth-child(5n+5){border-top-color:var(--c3);background:linear-gradient(180deg,color-mix(in srgb,var(--c3) 9%,var(--panel)),var(--panel))}
+.kpi b{color:var(--g1)} @media (prefers-color-scheme: dark){.kpi b{color:#E7ECFF}}
+aside{box-shadow:0 2px 10px -4px rgba(16,24,64,.12);border-radius:14px}
+aside a .sw{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:8px;background:var(--scx);flex:none}
+aside a span:first-child{display:inline-flex;align-items:center}
+aside a.on{background:color-mix(in srgb,var(--scx,var(--accent)) 16%,var(--panel));color:var(--text);box-shadow:inset 3px 0 0 var(--scx,var(--accent))}
+aside .grp{color:var(--g3);font-weight:700}
+.content>#main>.card:first-child{border-top:4px solid var(--sc)}
+.bar i{background:linear-gradient(90deg,var(--g2),var(--g3))}
+.banner{border-left:5px solid currentColor}
+.gate b.ok{background:var(--buy-soft);border-radius:50%;padding:0 4px} .gate b.no{background:var(--bad-soft);border-radius:50%;padding:0 4px}
+.foot{border-top:1px solid var(--line);padding-top:12px}
 </style>
 </head>
 <body>
@@ -281,6 +326,7 @@ function renderNav(v){
   const L=[['home','Home & value'],['calendar','Catalyst calendar'],['review','Review queue'+(n?`<span class="n">${n}</span>`:'')],['alerts','Alerts'],['records','Records'+((typeof reviewsDue==='function'&&reviewsDue().length)?`<span class="n">${reviewsDue().length}</span>`:'')],['settings','Settings & positions']];
   $('#nav').innerHTML=L.map(([k,l])=>`<a href="#${k}" class="${v===k||(!v&&k==='home')?'on':''}">${l}</a>`).join('');
 }
+const SECC={energy:'#E8590C',materials:'#A0522D',industrials:'#5C6BC0',discretionary:'#D6336C',staples:'#2F9E44',health:'#0CA678',financials:'#1C7ED6',it:'#7048E8',comms:'#F08C00',utilities:'#1098AD',realestate:'#AE3EC9'};
 function renderSide(parts){
   let sec=null,sub=null;
   if(parts[0]==='sector'){sec=parts[1];sub=parts[2]}
@@ -288,10 +334,11 @@ function renderSide(parts){
   const cnt=k=>S.data.companies.filter(c=>c.sector===k).length, cs=(k)=>S.data.companies.filter(c=>c.sector==='health'&&c.sub===k).length;
   let h='<div class="grp">ASX sectors</div>';
   for(const [k,l] of S.cfg.sectorList){
-    h+=`<a href="#sector/${k}" class="${sec===k&&!sub?'on':''}"><span>${esc(l)}</span><span class="cnt">${cnt(k)||''}</span></a>`;
-    if(k==='health')for(const [sk,sl] of S.cfg.healthSubs)h+=`<a class="sub ${sec==='health'&&sub===sk?'on':''}" href="#sector/health/${sk}"><span>${esc(sl)}</span><span class="cnt">${cs(sk)||''}</span></a>`;
+    h+=`<a href="#sector/${k}" style="--scx:${SECC[k]||'#2457C5'}" class="${sec===k&&!sub?'on':''}"><span><i class="sw"></i>${esc(l)}</span><span class="cnt">${cnt(k)||''}</span></a>`;
+    if(k==='health')for(const [sk,sl] of S.cfg.healthSubs)h+=`<a style="--scx:${SECC.health}" class="sub ${sec==='health'&&sub===sk?'on':''}" href="#sector/health/${sk}"><span>${esc(sl)}</span><span class="cnt">${cs(sk)||''}</span></a>`;
   }
   $('#side').innerHTML=h;
+  document.documentElement.style.setProperty('--sc',SECC[sec]||'#2457C5');
 }
 function renderTop(){
   const st=S.status||{}; const last=st.lastRun?new Date(st.lastRun):null;
