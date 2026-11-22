@@ -1,5 +1,5 @@
 {
- "lastRun": "2026-11-22T22:51+11:00",
+ "lastRun": "2026-11-23T10:28+11:00",
  "errors": [],
  "notes": [
   "NEU: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
@@ -11,6 +11,12 @@
   "PXA: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
   "BHP: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
   "CLW: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
+  "VNT: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
+  "SOL: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
+  "VHY: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
+  "ASX: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
+  "WTC: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
+  "DRR: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
   "VAS: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price"
  ],
  "sources": {
@@ -50,12 +56,36 @@
    "price": "ASX last price (history builds up each run)",
    "announcements": "ASX (Markit)"
   },
+  "VNT": {
+   "price": "ASX last price (history builds up each run)",
+   "announcements": "ASX (Markit)"
+  },
+  "SOL": {
+   "price": "ASX last price (history builds up each run)",
+   "announcements": "ASX (Markit)"
+  },
+  "VHY": {
+   "price": "ASX last price (history builds up each run)",
+   "announcements": "ASX (Markit)"
+  },
+  "ASX": {
+   "price": "ASX last price (history builds up each run)",
+   "announcements": "ASX (Markit)"
+  },
+  "WTC": {
+   "price": "ASX last price (history builds up each run)",
+   "announcements": "ASX (Markit)"
+  },
+  "DRR": {
+   "price": "ASX last price (history builds up each run)",
+   "announcements": "ASX (Markit)"
+  },
   "VAS": {
    "price": "ASX last price (history builds up each run)"
   }
  },
- "newAnnouncements": 4,
- "newProposals": 3,
- "pendingProposals": 12,
- "alerts": 4
+ "newAnnouncements": 7,
+ "newProposals": 4,
+ "pendingProposals": 4,
+ "alerts": 11
 }

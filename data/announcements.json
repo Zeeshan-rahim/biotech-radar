@@ -157,6 +157,16 @@
  ],
  "CU6": [
   {
+   "id": "2924-03164964-2A1712102",
+   "at": "2026-11-23T09:39:56+11:00",
+   "date": "2026-11-23",
+   "headline": "Michelle Hickey moves to CTOO",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03164964-2A1712102?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "178KB",
+   "ticker": "CU6"
+  },
+  {
    "id": "2924-03163553-2A1711428",
    "at": "2026-11-19T08:33:26+11:00",
    "date": "2026-11-19",
@@ -208,6 +218,16 @@
   }
  ],
  "LTP": [
+  {
+   "id": "2924-03164860-3A707130",
+   "at": "2026-11-23T08:33:50+11:00",
+   "date": "2026-11-23",
+   "headline": "ROXUS U.S. Rollout Reaches 500 Bottles Across 43 States",
+   "sensitive": true,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03164860-3A707130?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "151KB",
+   "ticker": "LTP"
+  },
   {
    "id": "2924-03159362-3A706066",
    "at": "2026-11-09T08:52:01+11:00",
@@ -365,6 +385,16 @@
  ],
  "BHP": [
   {
+   "id": "2924-03164793-3A707123",
+   "at": "2026-11-23T08:24:06+11:00",
+   "date": "2026-11-23",
+   "headline": "BHP Copper South Australia Investor Site Tour",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03164793-3A707123?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "8957KB",
+   "ticker": "BHP"
+  },
+  {
    "id": "2924-03160816-3A706352",
    "at": "2026-11-12T08:36:45+11:00",
    "date": "2026-11-12",
@@ -465,6 +495,318 @@
    "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03157790-2A1708215?access_token=83ff96335c2d45a094df02a206a39ff4",
    "pages": "128KB",
    "ticker": "CLW"
+  }
+ ],
+ "VNT": [
+  {
+   "id": "2924-03164874-2A1712062",
+   "at": "2026-11-23T08:45:45+11:00",
+   "date": "2026-11-23",
+   "headline": "Update - Notification of buy-back - VNT",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03164874-2A1712062?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "11KB",
+   "ticker": "VNT"
+  },
+  {
+   "id": "2924-03164747-2A1712010",
+   "at": "2026-11-23T08:14:45+11:00",
+   "date": "2026-11-23",
+   "headline": "Ceasing to be a substantial holder",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03164747-2A1712010?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "142KB",
+   "ticker": "VNT"
+  },
+  {
+   "id": "2924-03164511-2A1711925",
+   "at": "2026-11-20T16:19:32+11:00",
+   "date": "2026-11-20",
+   "headline": "Change in substantial holding",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03164511-2A1711925?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "62KB",
+   "ticker": "VNT"
+  },
+  {
+   "id": "2924-03164116-2A1711749",
+   "at": "2026-11-20T07:57:21+11:00",
+   "date": "2026-11-20",
+   "headline": "Update - Notification of buy-back - VNT",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03164116-2A1711749?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "11KB",
+   "ticker": "VNT"
+  },
+  {
+   "id": "2924-03163561-2A1711441",
+   "at": "2026-11-19T08:43:21+11:00",
+   "date": "2026-11-19",
+   "headline": "Update - Notification of buy-back - VNT",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03163561-2A1711441?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "11KB",
+   "ticker": "VNT"
+  }
+ ],
+ "SOL": [
+  {
+   "id": "2924-03163390-2A1711371",
+   "at": "2026-11-18T18:08:58+11:00",
+   "date": "2026-11-18",
+   "headline": "Change in substantial holding from SOL",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03163390-2A1711371?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "173KB",
+   "ticker": "SOL"
+  },
+  {
+   "id": "2924-03159522-2A1709497",
+   "at": "2026-11-09T10:24:46+11:00",
+   "date": "2026-11-09",
+   "headline": "Credit webinar presentation",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03159522-2A1709497?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "1538KB",
+   "ticker": "SOL"
+  },
+  {
+   "id": "2924-03158487-2A1708656",
+   "at": "2026-11-05T14:52:21+11:00",
+   "date": "2026-11-05",
+   "headline": "Application for quotation of securities - SOL",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03158487-2A1708656?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "11KB",
+   "ticker": "SOL"
+  },
+  {
+   "id": "2924-03156878-2A1707726",
+   "at": "2026-11-02T09:12:55+11:00",
+   "date": "2026-11-02",
+   "headline": "Final Director's Interest Notice - T Fuller",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03156878-2A1707726?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "199KB",
+   "ticker": "SOL"
+  },
+  {
+   "id": "2924-03156351-2A1707474",
+   "at": "2026-10-30T16:18:01+11:00",
+   "date": "2026-10-30",
+   "headline": "Update - Dividend/Distribution - SOL",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03156351-2A1707474?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "12KB",
+   "ticker": "SOL"
+  }
+ ],
+ "VHY": [
+  {
+   "id": "2924-03158779-2A1708949",
+   "at": "2026-11-06T09:09:45+11:00",
+   "date": "2026-11-06",
+   "headline": "Outstanding ETF Securities and Fund Flows Announcement",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03158779-2A1708949?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "254KB",
+   "ticker": "VHY"
+  },
+  {
+   "id": "2924-03156207-2A1707356",
+   "at": "2026-10-30T13:51:11+11:00",
+   "date": "2026-10-30",
+   "headline": "Tax Residency Reminder",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03156207-2A1707356?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "185KB",
+   "ticker": "VHY"
+  },
+  {
+   "id": "2924-03156198-2A1707355",
+   "at": "2026-10-30T13:44:31+11:00",
+   "date": "2026-10-30",
+   "headline": "Exit Statement",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03156198-2A1707355?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "162KB",
+   "ticker": "VHY"
+  },
+  {
+   "id": "2924-03145462-2A1702520",
+   "at": "2026-10-07T11:56:15+11:00",
+   "date": "2026-10-07",
+   "headline": "Outstanding Securities September 2026",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03145462-2A1702520?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "249KB",
+   "ticker": "VHY"
+  },
+  {
+   "id": "2924-03144364-2A1701787",
+   "at": "2026-10-05T13:48:10+11:00",
+   "date": "2026-10-05",
+   "headline": "Distribution Tax Estimate VHY",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03144364-2A1701787?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "249KB",
+   "ticker": "VHY"
+  }
+ ],
+ "ASX": [
+  {
+   "id": "2924-03158197-2A1708456",
+   "at": "2026-11-05T08:43:40+11:00",
+   "date": "2026-11-05",
+   "headline": "ASX Group monthly activity report - October 2026",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03158197-2A1708456?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "103KB",
+   "ticker": "ASX"
+  },
+  {
+   "id": "2924-03155445-2A1707086",
+   "at": "2026-10-29T18:00:02+11:00",
+   "date": "2026-10-29",
+   "headline": "Notification regarding unquoted securities - ASX",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03155445-2A1707086?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "12KB",
+   "ticker": "ASX"
+  },
+  {
+   "id": "2924-03155444-2A1707085",
+   "at": "2026-10-29T17:59:47+11:00",
+   "date": "2026-10-29",
+   "headline": "Notification regarding unquoted securities - ASX",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03155444-2A1707085?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "12KB",
+   "ticker": "ASX"
+  },
+  {
+   "id": "2924-03155443-2A1707084",
+   "at": "2026-10-29T17:59:27+11:00",
+   "date": "2026-10-29",
+   "headline": "Appendix 3Y - Anthony Attia",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03155443-2A1707084?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "201KB",
+   "ticker": "ASX"
+  },
+  {
+   "id": "2924-03151722-2A1705591",
+   "at": "2026-10-22T13:55:56+11:00",
+   "date": "2026-10-22",
+   "headline": "Results of Annual General Meeting",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03151722-2A1705591?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "95KB",
+   "ticker": "ASX"
+  }
+ ],
+ "WTC": [
+  {
+   "id": "2924-03159264-2A1709340",
+   "at": "2026-11-09T08:21:31+11:00",
+   "date": "2026-11-09",
+   "headline": "WiseTech announces governance and company secretary changes",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03159264-2A1709340?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "66KB",
+   "ticker": "WTC"
+  },
+  {
+   "id": "2924-03157616-2A1708135",
+   "at": "2026-11-03T19:58:03+11:00",
+   "date": "2026-11-03",
+   "headline": "Change in substantial holding",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03157616-2A1708135?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "1095KB",
+   "ticker": "WTC"
+  },
+  {
+   "id": "2924-03154096-2A1706517",
+   "at": "2026-10-28T08:26:40+11:00",
+   "date": "2026-10-28",
+   "headline": "Notification regarding unquoted securities - WTC",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03154096-2A1706517?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "11KB",
+   "ticker": "WTC"
+  },
+  {
+   "id": "2924-03151999-2A1705696",
+   "at": "2026-10-23T08:34:35+11:00",
+   "date": "2026-10-23",
+   "headline": "Notification regarding unquoted securities - WTC",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03151999-2A1705696?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "12KB",
+   "ticker": "WTC"
+  },
+  {
+   "id": "2924-03148628-2A1704164",
+   "at": "2026-10-15T08:48:37+11:00",
+   "date": "2026-10-15",
+   "headline": "Resolution of ASIC matters",
+   "sensitive": true,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03148628-2A1704164?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "202KB",
+   "ticker": "WTC"
+  }
+ ],
+ "DRR": [
+  {
+   "id": "2924-03156647-6A1353090",
+   "at": "2026-10-30T19:40:02+11:00",
+   "date": "2026-10-30",
+   "headline": "Ceasing to be a substantial holder",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03156647-6A1353090?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "566KB",
+   "ticker": "DRR"
+  },
+  {
+   "id": "2924-03155476-6A1352498",
+   "at": "2026-10-29T18:57:27+11:00",
+   "date": "2026-10-29",
+   "headline": "Becoming a substantial holder",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03155476-6A1352498?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "1787KB",
+   "ticker": "DRR"
+  },
+  {
+   "id": "2924-03155374-6A1352442",
+   "at": "2026-10-29T16:58:51+11:00",
+   "date": "2026-10-29",
+   "headline": "Notice of 2026 Annual General Meeting/Proxy Form",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03155374-6A1352442?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "464KB",
+   "ticker": "DRR"
+  },
+  {
+   "id": "2924-03155368-6A1352441",
+   "at": "2026-10-29T16:55:01+11:00",
+   "date": "2026-10-29",
+   "headline": "Portfolio Update - September 2026 Quarter",
+   "sensitive": true,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03155368-6A1352441?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "628KB",
+   "ticker": "DRR"
+  },
+  {
+   "id": "2924-03153264-6A1351439",
+   "at": "2026-10-26T19:12:23+11:00",
+   "date": "2026-10-26",
+   "headline": "Ceasing to be a substantial holder",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03153264-6A1351439?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "702KB",
+   "ticker": "DRR"
   }
  ]
 }

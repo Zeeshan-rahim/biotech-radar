@@ -3,9 +3,26 @@
  "DXB": {},
  "EMV": {},
  "CU6": {},
- "LTP": {},
+ "LTP": {
+  "2924-03164860-3A707130": {
+   "base": 0.385,
+   "day": "2026-11-23",
+   "d1": 2.6,
+   "d5": null,
+   "complete5": false,
+   "headline": "ROXUS U.S. Rollout Reaches 500 Bottles Across 43 States",
+   "date": "2026-11-23",
+   "kind": "info"
+  }
+ },
  "ALL": {},
  "PXA": {},
  "BHP": {},
- "CLW": {}
+ "CLW": {},
+ "VNT": {},
+ "SOL": {},
+ "VHY": {},
+ "ASX": {},
+ "WTC": {},
+ "DRR": {}
 }

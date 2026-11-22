@@ -2,19 +2,84 @@
  "state": {
   "zone:NEU": "Hold",
   "zone:DXB": "Hold",
-  "zone:EMV": "Sell",
-  "zone:CU6": "Unchecked",
+  "zone:EMV": "Buy",
+  "zone:CU6": "Cheap",
   "soon:cu6-c0": 1,
-  "zone:LTP": "Hold",
+  "zone:LTP": "Unchecked",
   "overdue:ltp-c1": 1,
   "ann:2924-03164135-6A1356001": 1,
   "ann:2924-03162945-6A1355517": 1,
   "ann:2924-03163553-2A1711428": 1,
-  "zone:ALL": "Sell",
+  "zone:ALL": "Hold",
   "zone:BHP": "Sell",
-  "zone:CLW": "Unchecked"
+  "zone:CLW": "Hold",
+  "soon:emv-c1": 1,
+  "zone:PXA": "Sell",
+  "zone:VNT": "Cheap",
+  "zone:VHY": "Sell",
+  "ann:2924-03164860-3A707130": 1
  },
  "log": [
+  {
+   "at": "2026-11-23T10:28+11:00",
+   "items": [
+    {
+     "key": "zone:EMV",
+     "text": "**BUY ZONE EMV**: A$1.420 is at or below your buy price A$1.618 (speculative sleeve: judged on the scenarios and success odds) (draft assumptions — review them).",
+     "level": "action"
+    },
+    {
+     "key": "soon:emv-c1",
+     "text": "**EMV** catalyst in 7 day(s): FDA pre-submission meeting (H2 2026).",
+     "level": "action"
+    },
+    {
+     "key": "zone:CU6",
+     "text": "**CU6** is below your buy price A$1.815 but fails: Market value A$50–500m.",
+     "level": "info"
+    },
+    {
+     "key": "zone:LTP",
+     "text": "**LTP** is below your buy price A$0.408, but these checks have no data yet: Earnings/revenue growth ≥ 15% a year, PEG ≤ 1.0, Turnover ≥ A$100k/day. Research before buying.",
+     "level": "info"
+    },
+    {
+     "key": "zone:ALL",
+     "text": "**ALL** is in the hold zone (buy ≤ A$54.321, sell ≥ A$65.917).",
+     "level": "info"
+    },
+    {
+     "key": "zone:PXA",
+     "text": "**PXA** is above its sell price A$6.220 — not one to buy now (draft assumptions — review them).",
+     "level": "info"
+    },
+    {
+     "key": "zone:CLW",
+     "text": "**CLW** is in the hold zone (buy ≤ A$3.424, sell ≥ A$3.896).",
+     "level": "info"
+    },
+    {
+     "key": "zone:VNT",
+     "text": "**VNT** is below your buy price A$4.749 but fails: PEG ≤ 1.2.",
+     "level": "info"
+    },
+    {
+     "key": "zone:VHY",
+     "text": "**VHY** is above its sell price A$80.161 — not one to buy now (draft assumptions — review them).",
+     "level": "info"
+    },
+    {
+     "key": "ann:2924-03164860-3A707130",
+     "text": "**LTP** price-sensitive: ROXUS U.S. Rollout Reaches 500 Bottles Across 43 States (2026-11-23). [PDF](https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03164860-3A707130?access_token=83ff96335c2d45a094df02a206a39ff4)",
+     "level": "info"
+    },
+    {
+     "key": "proposals",
+     "text": "4 new item(s) waiting in your Review queue.",
+     "level": "info"
+    }
+   ]
+  },
   {
    "at": "2026-11-22T22:51+11:00",
    "items": [
