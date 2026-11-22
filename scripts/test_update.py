@@ -40,7 +40,7 @@ def fake_http(url, binary=False, **kw):
         tk = url.split('/companies/')[1].split('/')[0]
         items = [
             {'documentKey': f'{tk}-1', 'date': '2026-10-21T22:15:00.000Z', 'headline': 'Quarterly Activities/Appendix 4C Cash Flow Report', 'isPriceSensitive': True},
-            {'documentKey': f'{tk}-2', 'date': '2026-11-18T21:30:00.000Z', 'headline': 'Trading Halt', 'isPriceSensitive': True},
+            {'documentKey': f'{tk}-2', 'date': (datetime.utcnow() - timedelta(days=1)).strftime('%Y-%m-%dT21:30:00.000Z'), 'headline': 'Trading Halt', 'isPriceSensitive': True},
             {'documentKey': f'{tk}-3', 'date': '2026-11-19T22:00:00.000Z', 'headline': 'AMPLIFY Phase III topline results met primary endpoints', 'isPriceSensitive': True},
             {'documentKey': f'{tk}-4', 'date': '2026-11-10T03:00:00.000Z', 'headline': 'Application for quotation of securities - XYZ', 'isPriceSensitive': False},
             {'documentKey': f'{tk}-5', 'date': '2026-10-02T03:00:00.000Z', 'headline': 'Placement to raise $20 million', 'isPriceSensitive': True},

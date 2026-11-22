@@ -244,6 +244,9 @@ def parse_4c(text):
         'rnd': r'research and development',
         'staff': r'staff costs',
         'admin': r'administration and corporate costs',
+        'receipts': r'receipts from customers',
+        'interest': r'interest received',
+        'grants': r'government grants and tax incentives',
     }
     for k, rx in fields.items():
         v = _after(t, rx)
