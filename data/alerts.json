@@ -3,7 +3,7 @@
   "zone:NEU": "Hold",
   "zone:DXB": "Hold",
   "zone:EMV": "Sell",
-  "zone:CU6": "Buy",
+  "zone:CU6": "Unchecked",
   "soon:cu6-c0": 1,
   "zone:LTP": "Hold",
   "overdue:ltp-c1": 1,
@@ -12,6 +12,16 @@
   "ann:2924-03163553-2A1711428": 1
  },
  "log": [
+  {
+   "at": "2026-11-22T22:15+11:00",
+   "items": [
+    {
+     "key": "zone:CU6",
+     "text": "**CU6** is below your buy price A$2.076, but these checks have no data yet: Earnings/revenue growth ≥ 15% a year, PEG ≤ 1.0, Market value A$50–500m, Turnover ≥ A$100k/day. Research before buying.",
+     "level": "info"
+    }
+   ]
+  },
   {
    "at": "2026-11-20T12:17+11:00",
    "items": [
