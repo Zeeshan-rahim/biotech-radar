@@ -409,6 +409,7 @@ function viewHome(){
   const act=[...sells.map(x=>{const lim=suggestLimit(x.e.signal.includes('thesis')?'thesis':'over',x.lp.v,x.e.sell);return `<li><b>Sell ${x.co.ticker}</b> (${heldReal(x.co.ticker)?'your holding':'paper'}): ${esc(x.e.signal)}. Suggested limit <b>${money(lim.price)}</b> — ${lim.why}.</li>`}),
     ...buys.map(x=>`<li><b>${x.e.signal==='Buy'?'Buy zone':'Cheap but check'}: ${x.co.ticker}</b> ${animalTag(x.co)} at ${money(x.lp.v)} (buy ≤ ${money(x.e.buy)})${x.e.fails&&x.e.fails.length?' — fails: '+x.e.fails.map(g=>esc(g.label)).join(', '):x.e.unknown&&x.e.unknown.length?' — no data yet for: '+x.e.unknown.map(g=>esc(g.label)).join(', '):''}${x.e.draft?' <span class="pill p-warn">draft</span>':''}</li>`)];
   act.push(...fundAttn());
+  act.push(...runwayAttn());
   // plan
   const ps=paperStats(), sl=S.cfg.sleeves||{};
   const planRows=Object.entries(sl).filter(([k,v])=>v.slots>0).map(([k,v])=>{
@@ -455,6 +456,7 @@ function viewCompany(tk){
     <div id="chart" style="margin-top:10px"></div></div>
   ${decisionCard(co,e,lp,pos)}
   ${thesisCard(co)}
+  ${runwayCard(co)}
   ${metricsCard(co,e)}
   ${sheetChecks(co,e)}
   ${partnerCard(co)}
@@ -620,7 +622,7 @@ function mgmtCard(co){
     :`<tr><td>${esc(p.text)}</td><td>${p.due?fmtDate(p.due):'–'}</td><td><span class="pill ${p.status==='kept'?'p-buy':['late','missed'].includes(p.status)?'p-bad':p.status==='unclear'?'p-warn':'p-none'}">${esc(p.status)}</span></td><td class="small muted">${esc(p.comment||'')}</td></tr>`).join('');
   const cardRows=sc.items.map(([id,label,help])=>{const v=(co.scorecard||{})[id];
     return `<tr><td>${esc(label)}<div class="tiny muted">${esc(help)}</div></td><td>${ed?`<select data-p="${P}:scorecard.${id}" data-t="n">${['','0','1','2'].map(o=>`<option ${String(v??'')===o?'selected':''}>${o}</option>`).join('')}</select>`:v==null?'–':['Weak','Partial','Strong'][v]}</td></tr>`}).join('');
-  const finRows=[...(co.finance||[])].sort((a,b)=>(b.period||'').localeCompare(a.period||'')).map(x=>`<tr><td>${fmtDate(x.period)}</td><td class="num">${x.cash??'–'}</td><td class="num">${x.opcf??'–'}</td><td class="num">${x.rnd??'–'}</td><td class="num">${x.staff??'–'}</td><td class="num">${x.admin??'–'}</td><td class="tiny muted">${esc(x.source||'')}</td></tr>`).join('');
+  const finRows=[...(co.finance||[])].sort((a,b)=>(b.period||'').localeCompare(a.period||'')).map(x=>`<tr><td>${fmtDate(x.period)}</td><td class="num">${x.cash??'–'}</td><td class="num">${earnedOf(x)??'–'}</td><td class="num">${x.opcf??'–'}</td><td class="num">${x.rnd??'–'}</td><td class="num">${x.staff??'–'}</td><td class="num">${x.admin??'–'}</td><td class="tiny muted">${esc(x.source||'')}</td></tr>`).join('');
   return `<div class="card"><h3>Management, spending and efficiency</h3>
    <div class="grid g3">${k.map(([a,b,c])=>`<div class="kpi"><span>${a}</span><b>${b}</b><span>${esc(c)}</span></div>`).join('')}</div>
    <h3 style="margin-top:16px">Promise tracker</h3><table><thead><tr><th>What they said</th><th>Due</th><th>Status</th><th>Notes</th></tr></thead><tbody>${promRows}</tbody></table>
@@ -629,8 +631,8 @@ function mgmtCard(co){
    <table><tbody>${cardRows}</tbody></table>${ed?`<textarea data-p="${P}:scoreNotes">${esc(co.scoreNotes||'')}</textarea>`:`<p class="small">${esc(co.scoreNotes||'')}</p>`}</details>${sc.items.length?'':'-->'}
    ${forecastSection(co)}
    <details ${ed?'open':''}><summary>Cash-flow history (A$m, from quarterly 4C reports)</summary>
-   <table><thead><tr><th>Period</th><th class="num">Cash</th><th class="num">Op. cash flow</th><th class="num">R&amp;D</th><th class="num">Staff</th><th class="num">Admin</th><th>Source</th></tr></thead><tbody>${finRows||'<tr><td colspan="7" class="muted">None yet — accepted 4C items from the Review queue land here.</td></tr>'}</tbody></table>
-   ${ed?`<div class="row" style="margin-top:6px"><input type="date" id="f-period"><input type="number" step="0.01" placeholder="cash" id="f-cash"><input type="number" step="0.01" placeholder="op cash flow" id="f-opcf"><input type="number" step="0.01" placeholder="R&D" id="f-rnd"><input type="number" step="0.01" placeholder="staff" id="f-staff"><input type="number" step="0.01" placeholder="admin" id="f-admin"><input type="number" step="0.1" placeholder="shares (m)" id="f-shares"><label class="chk"><input type="checkbox" id="f-prof">profitable</label><button onclick="addFin('${co.id}')">+ Add quarter</button></div>
+   <table><thead><tr><th>Period</th><th class="num">Cash</th><th class="num">Earned</th><th class="num">Op. cash flow</th><th class="num">R&amp;D</th><th class="num">Staff</th><th class="num">Admin</th><th>Source</th></tr></thead><tbody>${finRows||'<tr><td colspan="8" class="muted">None yet — accepted 4C items from the Review queue land here.</td></tr>'}</tbody></table>
+   ${ed?`<div class="row" style="margin-top:6px"><input type="date" id="f-period"><input type="number" step="0.01" placeholder="cash" id="f-cash"><input type="number" step="0.01" placeholder="cash earned (receipts+grants+interest)" id="f-earned" style="width:150px"><input type="number" step="0.01" placeholder="op cash flow" id="f-opcf"><input type="number" step="0.01" placeholder="R&D" id="f-rnd"><input type="number" step="0.01" placeholder="staff" id="f-staff"><input type="number" step="0.01" placeholder="admin" id="f-admin"><input type="number" step="0.1" placeholder="shares (m)" id="f-shares"><label class="chk"><input type="checkbox" id="f-prof">profitable</label><button onclick="addFin('${co.id}')">+ Add quarter</button></div>
    <div class="row" style="margin-top:6px"><input type="date" id="r-date"><input type="number" placeholder="raise A$m" id="r-amt"><input type="number" step="0.001" placeholder="price" id="r-px"><button onclick="addRaise('${co.id}')">+ Add capital raise</button></div>`:''}</details></div>`;
 }
 function posCard(co){
@@ -860,7 +862,7 @@ function toggleMod(id,i,k,on){const t=companyById(id).trials[i];t.mods=(t.mods||
 function markDone(id,i){const co=companyById(id),c=co.catalysts[i];const r=prompt(`What happened? (“${c.title}”)`,c.result||'');if(r===null)return;c.done=true;c.result=r;(co.history=co.history||[]).push({date:TODAY_ISO,title:c.title,desc:r});markDirty('companies');const y=scrollY;route();scrollTo({top:y})}
 function setFacts(id,t){companyById(id).facts=t.split('\n').map(s=>s.trim()).filter(Boolean);markDirty('companies')}
 function addFin(id){const g=k=>{const v=document.getElementById('f-'+k).value;return v===''?null:+v};const per=document.getElementById('f-period').value;if(!per)return toast('Pick the quarter-end date');
-  const co=companyById(id);co.finance=(co.finance||[]).filter(f=>f.period!==per);co.finance.push({period:per,cash:g('cash'),opcf:g('opcf'),rnd:g('rnd'),staff:g('staff'),admin:g('admin'),shares:g('shares'),profitable:document.getElementById('f-prof').checked,source:'entered by you'});markDirty('companies');route()}
+  const co=companyById(id);co.finance=(co.finance||[]).filter(f=>f.period!==per);co.finance.push({period:per,cash:g('cash'),earned:g('earned'),opcf:g('opcf'),rnd:g('rnd'),staff:g('staff'),admin:g('admin'),shares:g('shares'),profitable:document.getElementById('f-prof').checked,source:'entered by you'});markDirty('companies');route()}
 function addRaise(id){const d=document.getElementById('r-date').value;if(!d)return toast('Pick a date');const co=companyById(id);(co.raises=co.raises||[]).push({date:d,amount:+document.getElementById('r-amt').value||null,price:+document.getElementById('r-px').value||null});markDirty('companies');route()}
 function applyRaw(id){try{const o=JSON.parse(document.getElementById('raw-'+id).value);const i=S.data.companies.findIndex(c=>c.id===id);S.data.companies[i]=o;markDirty('companies');route();toast('Applied')}catch(e){alert('That JSON has an error: '+e.message)}}
 function setCfg(path,v){setPath(S.cfg,path,v);markDirty('config');renderTop()}
@@ -1105,11 +1107,11 @@ function forecastSection(co){
   let hit=0,n=0;
   const rows=fs.map(({x,i})=>{const a=act(x.period);let cmp='<span class="tiny muted">waiting for 4C</span>';
     if(a&&a.cash!=null&&x.cash!=null){const err=(a.cash-x.cash)/Math.max(Math.abs(x.cash),.1);n++;if(Math.abs(err)<=.1)hit++;cmp=`actual ${a.cash} (${pct(err,0)})${a.opcf!=null&&x.opcf!=null?` · burn ${a.opcf} vs ${x.opcf}`:''} ${Math.abs(err)<=.1?'<span class="pill p-buy">within 10%</span>':'<span class="pill p-warn">off</span>'}`}
-    if(ed)return `<tr><td><input type="date" value="${x.period||''}" data-p="${P}:forecasts.${i}.period"></td><td><input type="number" step="any" value="${x.receipts??''}" data-p="${P}:forecasts.${i}.receipts" data-t="n"></td><td><input type="number" step="any" value="${x.opcf??''}" data-p="${P}:forecasts.${i}.opcf" data-t="n"></td><td><input type="number" step="any" value="${x.cash??''}" data-p="${P}:forecasts.${i}.cash" data-t="n"></td><td><input class="w-l" value="${esc(x.note||'')}" data-p="${P}:forecasts.${i}.note"></td><td><button class="danger" onclick="delItem('${co.id}','forecasts',${i})">✕</button></td></tr>`;
-    return `<tr><td>${fmtDate(x.period)}</td><td class="num">${x.receipts??'–'}</td><td class="num">${x.opcf??'–'}</td><td class="num">${x.cash??'–'}</td><td class="small">${esc(x.note||'')}<div class="tiny">${cmp}</div></td></tr>`}).join('');
+    if(ed)return `<tr><td><input type="date" value="${x.period||''}" data-p="${P}:forecasts.${i}.period"></td><td><input type="number" step="any" value="${x.earned??x.receipts??''}" data-p="${P}:forecasts.${i}.earned" data-t="n"></td><td><input type="number" step="any" value="${x.staff??''}" data-p="${P}:forecasts.${i}.staff" data-t="n"></td><td><input type="number" step="any" value="${x.rnd??''}" data-p="${P}:forecasts.${i}.rnd" data-t="n"></td><td><input type="number" step="any" value="${x.opcf??''}" data-p="${P}:forecasts.${i}.opcf" data-t="n"></td><td><input type="number" step="any" value="${x.cash??''}" data-p="${P}:forecasts.${i}.cash" data-t="n"></td><td><input class="w-l" value="${esc(x.note||'')}" data-p="${P}:forecasts.${i}.note"></td><td><button class="danger" onclick="delItem('${co.id}','forecasts',${i})">✕</button></td></tr>`;
+    return `<tr><td>${fmtDate(x.period)}</td><td class="num">${x.earned??x.receipts??'–'}</td><td class="num">${x.staff??'–'}</td><td class="num">${x.rnd??'–'}</td><td class="num">${x.opcf??'–'}</td><td class="num">${x.cash??'–'}</td><td class="small">${esc(x.note||'')}<div class="tiny">${cmp}</div></td></tr>`}).join('');
   return `<details ${ed||fs.length?'open':''}><summary>Your quarterly forecasts vs actual 4C (A$m)${n?` — ${hit}/${n} within 10%`:''}</summary>
-   <table><thead><tr><th>Quarter end</th><th class="num">Receipts</th><th class="num">Op. cash flow</th><th class="num">Cash</th><th>Driver / result</th>${ed?'<th></th>':''}</tr></thead><tbody>${rows||`<tr><td colspan="5" class="muted">No forecasts yet. In edit mode, add your next 2–4 quarters (as in your spreadsheet) — the site scores them when each 4C arrives.</td></tr>`}</tbody></table>
-   ${ed?`<button style="margin-top:6px" onclick="addItem('${co.id}','forecasts',{period:'',receipts:null,opcf:null,cash:null,note:''})">+ Forecast quarter</button>
+   <table><thead><tr><th>Quarter end</th><th class="num">Earned</th><th class="num">Staff</th><th class="num">R&amp;D</th><th class="num">Op. cash flow</th><th class="num">Cash</th><th>Driver / result</th>${ed?'<th></th>':''}</tr></thead><tbody>${rows||`<tr><td colspan="7" class="muted">No forecasts yet. In edit mode, add your next 2–4 quarters (as in your spreadsheet) — the site scores them when each 4C arrives.</td></tr>`}</tbody></table>
+   ${ed?`<button style="margin-top:6px" onclick="addItem('${co.id}','forecasts',{period:'',earned:null,staff:null,rnd:null,opcf:null,cash:null,note:''})">+ Forecast quarter</button>
    <div class="row" style="margin-top:8px"><label class="chk">Burn a quarter (your forecast, A$m) <input type="number" step="any" value="${co.burnQ??''}" data-p="${P}:burnQ" data-t="n"></label>
    <label class="chk">Fund until <input value="${esc((co.fundTo||{}).label||'')}" placeholder="e.g. Phase III readout" data-p="${P}:fundTo.label"> <input type="date" value="${(co.fundTo||{}).date||''}" data-p="${P}:fundTo.date"></label>
    <label class="chk">Extra spend before then (A$m) <input type="number" step="any" value="${co.extraSpend??''}" data-p="${P}:extraSpend" data-t="n"></label></div>`:''}</details>`;
@@ -1146,6 +1148,94 @@ function partnerCard(co){
   return `<div class="card"><div class="row"><h3 style="margin:0">Partner lead indicator: ${esc(p.name)}</h3><span class="sp"></span>${p.nextReport?`<span class="small">Next partner report ${fmtDate(p.nextReport)}</span>`:''}</div>
    <table><thead><tr><th>Quarter</th><th class="num">Partner sales (${esc(p.unit||'US$')}m)</th><th class="num">Royalty to ${esc(co.ticker)}</th><th class="num">Royalty %</th><th></th></tr></thead><tbody>${rows||'<tr><td colspan="5" class="muted">No partner quarters yet.</td></tr>'}</tbody></table>
    ${g}${ms}${p.note?`<p class="tiny muted">${esc(p.note)}</p>`:''}</div>`;
+}
+
+/* ====================================================== Quarterly cash runway (rare disease + Insects)
+   Three lines per quarter: cash in hand, cash burned (gross operating spend), cash earned (receipts + grants + interest)
+   plus bars for staff and R&D costs. Actuals from 4Cs (co.finance), then your forecasts (co.forecasts),
+   then an automatic projection to 8 quarters ahead. Predicts when the company must raise. */
+function runwayApplies(co){return co.sleeve==='rare'||co.sleeve==='insect'||co.animal==='insect'}
+function qEnd(d){const x=pd(d);if(!x)return null;const m=x.getMonth(),q=Math.floor(m/3);return iso(new Date(x.getFullYear(),q*3+3,0))}
+function qAdd(isoD,n){const x=pd(isoD);return iso(new Date(x.getFullYear(),x.getMonth()+1+3*n,0))}
+function qLabel(isoD){const x=pd(isoD);return ['Mar','Jun','Sep','Dec'][Math.floor(x.getMonth()/3)]+'-'+String(x.getFullYear()).slice(2)}
+function qReport(isoD){const x=pd(isoD);return new Date(x.getTime()+30*864e5)}   // 4C due within a month of quarter end
+function earnedOf(f){const e=num(f.earned);if(e!=null)return e;const s=[f.receipts,f.grants,f.interest].map(num).filter(v=>v!=null);return s.length?s.reduce((a,b)=>a+b,0):null}
+function runwaySeries(co,ahead=8){
+  const act=(co.finance||[]).filter(f=>f.period&&f.cash!=null).map(f=>({...f,period:qEnd(f.period)})).sort((a,b)=>a.period.localeCompare(b.period));
+  const byQ={};act.forEach(f=>byQ[f.period]=Object.assign({kind:'actual'},f));
+  (co.forecasts||[]).filter(f=>f.period).forEach(f=>{const p=qEnd(f.period);if(!byQ[p]||byQ[p].kind!=='actual')byQ[p]=Object.assign({kind:'forecast'},f,{period:p})});
+  let rows=Object.values(byQ).sort((a,b)=>a.period.localeCompare(b.period));
+  if(!rows.length)return null;
+  rows=rows.slice(-Math.max(6,rows.length));
+  for(const r of rows){r.earned=earnedOf(r);if(r.staff!=null)r.staff=Math.abs(r.staff);if(r.rnd!=null)r.rnd=Math.abs(r.rnd);if(r.opcf!=null&&r.earned!=null)r.burn=r.earned-r.opcf;else if(r.opcf!=null)r.burn=-r.opcf}
+  // automatic projection to `ahead` quarters past today's quarter
+  const lastQ=qAdd(qEnd(TODAY_ISO),ahead), recent=rows.filter(r=>r.opcf!=null).slice(-4);
+  const avg=k=>{const v=recent.map(r=>num(r[k])).filter(v=>v!=null);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};
+  let last=rows[rows.length-1];
+  const base={opcf:last.kind==='forecast'&&last.opcf!=null?last.opcf:(num(co.burnQ)!=null?-co.burnQ:avg('opcf')),staff:last.staff??avg('staff'),rnd:last.rnd??avg('rnd'),earned:last.kind==='forecast'&&last.earned!=null?last.earned:avg('earned')};
+  while(last.period<lastQ&&base.opcf!=null){
+    const p=qAdd(last.period,1),cash=last.cash+base.opcf;
+    last={period:p,kind:'auto',opcf:base.opcf,cash,staff:base.staff,rnd:base.rnd,earned:base.earned,burn:(base.earned??0)-base.opcf};
+    rows.push(last);
+  }
+  return rows;
+}
+function raiseForecast(co,rows){
+  if(!rows)return null;
+  const fut=rows.filter(r=>r.kind!=='actual'), nowQ=qEnd(TODAY_ISO);
+  const netBurn=r=>r.opcf!=null&&r.opcf<0?-r.opcf:null;
+  let open=null,must=null,out=null;
+  for(let i=0;i<rows.length;i++){const r=rows[i];if(r.period<nowQ&&r.kind==='actual')continue;
+    const nb=netBurn(rows[i+1]||r)||netBurn(r); if(!nb)continue; const qLeft=r.cash/nb;
+    if(open==null&&qLeft<3)open=r; if(must==null&&qLeft<2)must=r; if(out==null&&r.cash<=0)out=r}
+  const big=nextBig(co);
+  return {open,must,out,big,rows,lastActual:rows.filter(r=>r.kind==='actual').pop()};
+}
+function raiseText(co,rf){
+  if(!rf)return '';
+  const f=r=>`${qLabel(r.period)} (report ~${fmtDate(iso(qReport(r.period)))})`;
+  if(!rf.open)return `<span class="pill p-buy">No raise needed in the next 2 years</span> <span class="small">Cash stays above 3 quarters of burn across the projection.</span>`;
+  let t=`<span class="pill ${rf.must&&rf.must.period<=qAdd(qEnd(TODAY_ISO),2)?'p-bad':'p-warn'}">Raise expected</span> <span class="small">Raise window opens <b>${f(rf.open)}</b> (cash under 3 quarters of burn)${rf.must?`; very likely by <b>${f(rf.must)}</b> (under 2 quarters)`:''}${rf.out?`; cash runs out <b>${qLabel(rf.out.period)}</b> without a raise`:''}.`;
+  if(rf.big&&pd(rf.big.date)<=pd(rf.open.period)&&pd(rf.big.date)>=pd(qAdd(rf.open.period,-2))&&pd(rf.big.date)>=TODAY)t+=` The big catalyst <b>${esc(rf.big.title)}</b> (${fmtDate(rf.big.date)}) comes first — companies usually raise straight after good news, so expect it then.`;
+  const months=Math.max(0,Math.round(days(TODAY,pd(rf.open.period))/30.4));
+  t+=` That is ~${months} months away; most investors only notice when the 4C shows under 2–3 quarters left.</span>`;
+  return t;
+}
+function runwayChart(rows){
+  const W=760,H=290,L=46,R=12,T=16,B=48,n=rows.length; if(n<2)return '';
+  const vals=rows.flatMap(r=>[r.cash,r.burn,r.earned,r.staff,r.rnd]).filter(v=>v!=null&&isFinite(v));
+  const raw=Math.max(1,...vals)*1.05, rmn=Math.min(0,...vals), step=[1,2,5,10,20,25,50,100,200,500].find(s=>(raw-rmn)/s<=6)||1000, mx=Math.ceil(raw/step)*step, mn=Math.floor(rmn/step)*step;
+  const x=i=>L+(W-L-R)*(i+.5)/n, y=v=>T+(H-T-B)*(1-(v-mn)/(mx-mn)), bw=Math.min(14,(W-L-R)/n/4);
+  const nowI=rows.findIndex(r=>r.period>=qEnd(TODAY_ISO));
+  const line=(k,col,lab)=>{let d='',dd='';rows.forEach((r,i)=>{if(r[k]==null)return;const pt=`${x(i).toFixed(1)},${y(r[k]).toFixed(1)}`;if(r.kind==='actual')d+=(d?' L':'M')+pt;if(r.kind!=='actual'||(rows[i+1]&&rows[i+1].kind!=='actual'))dd+=(dd?' L':'M')+pt});
+    return `<path d="${d}" fill="none" stroke="${col}" stroke-width="2.6"/><path d="${dd}" fill="none" stroke="${col}" stroke-width="2.2" stroke-dasharray="6 5"/>`+rows.map((r,i)=>r[k]==null?'':`<circle cx="${x(i)}" cy="${y(r[k])}" r="3" fill="${col}"><title>${lab} ${qLabel(r.period)}: A$${r[k].toFixed(2)}m (${r.kind})</title></circle>`).join('')};
+  const bars=rows.map((r,i)=>(r.staff!=null?`<rect x="${x(i)-bw-1}" y="${y(Math.max(0,r.staff))}" width="${bw}" height="${Math.abs(y(0)-y(r.staff))}" fill="var(--c4)" opacity=".55"><title>Staff ${qLabel(r.period)}: A$${r.staff.toFixed(2)}m</title></rect>`:'')+(r.rnd!=null?`<rect x="${x(i)+1}" y="${y(Math.max(0,r.rnd))}" width="${bw}" height="${Math.abs(y(0)-y(r.rnd))}" fill="var(--c0)" opacity=".55"><title>R&D ${qLabel(r.period)}: A$${r.rnd.toFixed(2)}m</title></rect>`:'')).join('');
+  const ticks=Array.from({length:Math.round((mx-mn)/step)+1},(_,i)=>mn+i*step).map(v=>`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width=".6"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${v.toFixed(0)}</text>`).join('');
+  const xl=rows.map((r,i)=>`<text x="${x(i)}" y="${H-B+16}" text-anchor="middle" style="font-weight:${r.kind==='actual'?600:400}">${qLabel(r.period)}</text><text x="${x(i)}" y="${H-B+29}" text-anchor="middle" style="font-size:9px">${r.kind==='actual'?'actual':r.kind==='forecast'?'yours':'auto'}</text>`).join('');
+  const now=nowI>0?`<line x1="${(x(nowI-1)+x(nowI))/2}" x2="${(x(nowI-1)+x(nowI))/2}" y1="${T}" y2="${H-B}" stroke="var(--muted)" stroke-dasharray="2 3"/><text x="${(x(nowI-1)+x(nowI))/2+4}" y="${T+10}">today</text>`:'';
+  const zero=`<line x1="${L}" x2="${W-R}" y1="${y(0)}" y2="${y(0)}" stroke="var(--muted)" stroke-width="1"/>`;
+  const leg=[['var(--c2)','Cash in hand'],['var(--bad)','Cash burned'],['var(--buy)','Cash earned'],['var(--c4)','Staff (bar)'],['var(--c0)','R&D (bar)']].map(([c,l],i)=>`<g transform="translate(${L+i*136},${H-8})"><rect width="12" height="4" y="-4" fill="${c}"/><text x="16" y="0">${l}</text></g>`).join('');
+  return `<svg width="100%" viewBox="0 0 ${W} ${H}" role="img" aria-label="Quarterly cash chart">${ticks}${zero}${bars}${line('cash','var(--c2)','Cash')}${line('burn','var(--bad)','Burned')}${line('earned','var(--buy)','Earned')}${now}${xl}${leg}<text x="4" y="${T}" style="font-size:10px">A$m</text></svg>`;
+}
+function costTable(rows){
+  const a=rows.filter(r=>r.kind==='actual').slice(-5), f=rows.filter(r=>r.kind!=='actual').slice(0,4), all=[...a,...f];
+  const g=(r,p,k)=>p&&r[k]!=null&&p[k]?((r[k]/p[k]-1)*100):null;
+  return `<table style="margin-top:8px"><thead><tr><th>Quarter</th><th class="num">Cash</th><th class="num">Earned</th><th class="num">Burned</th><th class="num">Staff</th><th class="num">q/q</th><th class="num">R&D</th><th class="num">q/q</th><th class="num">Staff+R&D % of burn</th><th class="num">Quarters left</th></tr></thead><tbody>${all.map((r,i)=>{const p=all[i-1],sg=g(r,p,'staff'),rg=g(r,p,'rnd'),sr=(r.staff??0)+(r.rnd??0),ql=r.opcf<0?r.cash/-r.opcf:null;
+    const flag=v=>v==null?'–':`<span style="color:${v>15?'var(--bad)':v<-10?'var(--buy)':'inherit'}">${v>0?'+':''}${v.toFixed(0)}%</span>`;
+    return `<tr style="${r.kind!=='actual'?'font-style:italic':''}"><td>${qLabel(r.period)} <span class="tiny muted">${r.kind==='actual'?'actual':r.kind==='forecast'?'your forecast':'auto'}</span></td><td class="num">${r.cash!=null?r.cash.toFixed(1):'–'}</td><td class="num">${r.earned!=null?r.earned.toFixed(2):'–'}</td><td class="num">${r.burn!=null?r.burn.toFixed(2):'–'}</td><td class="num">${r.staff!=null?r.staff.toFixed(2):'–'}</td><td class="num">${flag(sg)}</td><td class="num">${r.rnd!=null?r.rnd.toFixed(2):'–'}</td><td class="num">${flag(rg)}</td><td class="num">${r.burn&&(r.staff!=null||r.rnd!=null)?Math.round(sr/r.burn*100)+'%':'–'}</td><td class="num">${ql!=null?`<b style="color:${ql<2?'var(--bad)':ql<3?'var(--warn)':'inherit'}">${ql.toFixed(1)}</b>`:'funded'}</td></tr>`}).join('')}</tbody></table>
+   <p class="tiny muted">A$m per quarter. Red q/q = cost up more than 15% in a quarter (staff growth before revenue is a warning sign). "Quarters left" = cash ÷ that quarter's net burn; under 3 the raise window opens, under 2 a raise is very likely.</p>`;
+}
+function runwayCard(co){
+  if(!runwayApplies(co))return '';
+  const rows=runwaySeries(co);
+  if(!rows||rows.filter(r=>r.kind==='actual').length===0)return `<div class="card"><h3>Cash runway — when will they raise?</h3><p class="small muted">No quarterly cash data yet. The robot fills this from each new 4C (cash, receipts, grants, staff, R&D). To start now, open <b>Edit this stock</b> and add the last 4C under "Cash-flow history", plus your forecasts below it.</p></div>`;
+  const rf=raiseForecast(co,rows);
+  return `<div class="card"><div class="row"><h3 style="margin:0">Cash runway — when will they raise?</h3><span class="sp"></span><span class="tiny muted">solid = actual 4C · dashed = forecast (yours, then automatic) · 8 quarters ahead</span></div>
+   <p style="margin:8px 0">${raiseText(co,rf)}</p>${runwayChart(rows)}${costTable(rows)}</div>`;
+}
+function runwayAttn(){
+  return S.data.companies.filter(runwayApplies).map(co=>({co,rf:raiseForecast(co,runwaySeries(co))})).filter(x=>x.rf&&x.rf.open&&x.rf.open.period<=qAdd(qEnd(TODAY_ISO),3))
+    .map(x=>`<li><b>Raise ahead: ${x.co.ticker}</b> — window opens ${qLabel(x.rf.open.period)}${x.rf.must?`, very likely by ${qLabel(x.rf.must.period)}`:''}. ${heldReal(x.co.ticker)?'You hold it: plan to trim before, rebuy at the raise.':'Wait for the raise price before buying.'}</li>`);
 }
 
 </script>
