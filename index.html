@@ -270,6 +270,7 @@ function route(){
   else if(view==='review')m.innerHTML=viewReview();
   else if(view==='alerts')m.innerHTML=viewAlerts();
   else if(view==='settings')m.innerHTML=viewSettings();
+  else if(view==='records')m.innerHTML=viewRecords(parts[1]);
   else m.innerHTML=viewHome();
   window.scrollTo({top:0});
   if(view==='co')drawChart(parts[1]);
@@ -277,7 +278,7 @@ function route(){
 function pending(){return S.props.items.filter(p=>!S.decisions[p.id])}
 function renderNav(v){
   const n=pending().length;
-  const L=[['home','Home & value'],['calendar','Catalyst calendar'],['review','Review queue'+(n?`<span class="n">${n}</span>`:'')],['alerts','Alerts'],['settings','Settings & positions']];
+  const L=[['home','Home & value'],['calendar','Catalyst calendar'],['review','Review queue'+(n?`<span class="n">${n}</span>`:'')],['alerts','Alerts'],['records','Records'+((typeof reviewsDue==='function'&&reviewsDue().length)?`<span class="n">${reviewsDue().length}</span>`:'')],['settings','Settings & positions']];
   $('#nav').innerHTML=L.map(([k,l])=>`<a href="#${k}" class="${v===k||(!v&&k==='home')?'on':''}">${l}</a>`).join('');
 }
 function renderSide(parts){
@@ -360,6 +361,7 @@ function viewHome(){
   const sells=ev.filter(x=>x.e.signal.startsWith('Sell')&&(heldReal(x.co.ticker)||heldPaper(x.co.ticker)));
   const act=[...sells.map(x=>{const lim=suggestLimit(x.e.signal.includes('thesis')?'thesis':'over',x.lp.v,x.e.sell);return `<li><b>Sell ${x.co.ticker}</b> (${heldReal(x.co.ticker)?'your holding':'paper'}): ${esc(x.e.signal)}. Suggested limit <b>${money(lim.price)}</b> — ${lim.why}.</li>`}),
     ...buys.map(x=>`<li><b>${x.e.signal==='Buy'?'Buy zone':'Cheap but check'}: ${x.co.ticker}</b> ${animalTag(x.co)} at ${money(x.lp.v)} (buy ≤ ${money(x.e.buy)})${x.e.fails&&x.e.fails.length?' — fails: '+x.e.fails.map(g=>esc(g.label)).join(', '):x.e.unknown&&x.e.unknown.length?' — no data yet for: '+x.e.unknown.map(g=>esc(g.label)).join(', '):''}${x.e.draft?' <span class="pill p-warn">draft</span>':''}</li>`)];
+  act.push(...fundAttn());
   // plan
   const ps=paperStats(), sl=S.cfg.sleeves||{};
   const planRows=Object.entries(sl).filter(([k,v])=>v.slots>0).map(([k,v])=>{
@@ -407,6 +409,7 @@ function viewCompany(tk){
   ${decisionCard(co,e,lp,pos)}
   ${thesisCard(co)}
   ${metricsCard(co,e)}
+  ${sheetChecks(co,e)}
   <div class="grid g2">${posCard(co)}${paperCard(co,e,lp)}</div>
   ${scenarioCard(co,e)}
   ${leversCard(co)}
@@ -414,6 +417,7 @@ function viewCompany(tk){
   ${mgmtCard(co)}
   <div class="grid g2">${reactionCard(co,lp)}${annCard(co)}</div>
   ${catalystCard(co)}
+  ${trialCalcCard(co)}
   ${factsCard(co)}
   ${ed?rawCard(co):''}`;
 }
@@ -445,6 +449,7 @@ function decisionCard(co,e,lp,pos){
     const nx=(pos.plan||[]).find(s=>!s.done); if(nx)lines.push(`Next step in your sell ladder: <b>${esc(nx.label||'')}</b> — ${(+nx.shares).toLocaleString()} shares at ≥ ${money(+nx.price)}${e.price>=nx.price?' <span class="pill p-sell">reached</span>':''}.`);
   }
   const dt=co.sector==='health'&&driverTrial(co); if(dt){const sp=e.psucc, tp=trialPos(dt); if(Math.abs(sp-tp)>.12)lines.push(`<span class="pill p-warn">Check</span> Your scenarios give a ${Math.round(sp*100)}% chance of a good outcome, but the trial model says ${Math.round(tp*100)}% for ${esc(dt.name)}. ${sp<tp?'Fine if commercial risk explains the gap.':'Your scenarios look more optimistic than base rates.'}`)}
+  {const fl=fundLine(co);if(fl)lines.push(fl)}
   return `<div class="card decision"><h3>Decision</h3>${lines.map(l=>`<p style="margin:6px 0">${l}</p>`).join('')}</div>`;
 }
 function ta(P,path,val,ph,rows=3){return `<textarea style="min-height:${rows*22}px" placeholder="${esc(ph||'')}" data-p="${P}:${path}">${esc(val||'')}</textarea>`}
@@ -472,7 +477,7 @@ function thesisCard(co){
    <details ${ed?'open':''}><summary>Lords — honest ${rate(L.honest)}, able ${rate(L.able)}</summary>
     ${ed?`<div class="row small">Honest ${sel('thesis.lords.honest',L.honest)} Able ${sel('thesis.lords.able',L.able)}</div>${ta(P,'thesis.lords.note',L.note,'Insider ownership, director buying/selling, pay vs results, promises kept, capital allocation record…',3)}`:`<p class="small">${esc(L.note||'')}</p>`}</details></div>`;
 }
-const FUND=[['shares','Shares on issue','m'],['eps','EPS (last 12 months)','A$'],['growth','Earnings growth a year','%'],['ebit','EBIT','A$m'],['ebitMid','Mid-cycle EBIT (Bears)','A$m'],['netDebt','Net debt (negative = net cash)','A$m'],['fcf','Free cash flow','A$m'],['investedCapital','Invested capital','A$m'],['roc','Return on capital (if quoted)','%'],['nav','Net asset value / share (Elephants)','A$'],['book','Book value / share','A$']];
+const FUND=[['shares','Shares on issue','m'],['eps','EPS (last 12 months)','A$'],['growth','Earnings growth a year','%'],['ebit','EBIT','A$m'],['ebitMid','Mid-cycle EBIT (Bears)','A$m'],['netDebt','Net debt (negative = net cash)','A$m'],['fcf','Free cash flow','A$m'],['investedCapital','Invested capital','A$m'],['roc','Return on capital (if quoted)','%'],['nav','Net asset value / share (Elephants)','A$'],['book','Book value / share','A$'],['revenue','Revenue (last FY)','A$m'],['pbt','Pre-tax profit','A$m'],['npat','Net profit','A$m'],['equity','Total equity','A$m'],['liabilities','Total liabilities','A$m'],['peAvg10','10-year average P/E','x']];
 function metricsCard(co,e){
   const ed=S.edit[co.id], P=`companies:${co.id}`, f=co.fundamentals||{}, m=e.metrics||{};
   const fx=(v,d=1,suf='x')=>v==null?'–':v.toFixed(d)+suf, pc=v=>v==null?'–':(v*100).toFixed(1)+'%';
@@ -574,6 +579,7 @@ function mgmtCard(co){
    ${ed?`<button style="margin-top:6px" onclick="addItem('${co.id}','promises',{id:'${co.id}-p'+Date.now(),text:'',due:'',status:'open',comment:'',checked:''})">+ Promise</button>`:''}
    ${sc.items.length?'':'<!--'}<details ${ed?'open':''}><summary>${esc(sc.title)} (${m.card!=null?Math.round(m.card*100)+'%':'not scored'})</summary><p class="tiny muted">${esc(sc.source)}</p>
    <table><tbody>${cardRows}</tbody></table>${ed?`<textarea data-p="${P}:scoreNotes">${esc(co.scoreNotes||'')}</textarea>`:`<p class="small">${esc(co.scoreNotes||'')}</p>`}</details>${sc.items.length?'':'-->'}
+   ${forecastSection(co)}
    <details ${ed?'open':''}><summary>Cash-flow history (A$m, from quarterly 4C reports)</summary>
    <table><thead><tr><th>Period</th><th class="num">Cash</th><th class="num">Op. cash flow</th><th class="num">R&amp;D</th><th class="num">Staff</th><th class="num">Admin</th><th>Source</th></tr></thead><tbody>${finRows||'<tr><td colspan="7" class="muted">None yet — accepted 4C items from the Review queue land here.</td></tr>'}</tbody></table>
    ${ed?`<div class="row" style="margin-top:6px"><input type="date" id="f-period"><input type="number" step="0.01" placeholder="cash" id="f-cash"><input type="number" step="0.01" placeholder="op cash flow" id="f-opcf"><input type="number" step="0.01" placeholder="R&D" id="f-rnd"><input type="number" step="0.01" placeholder="staff" id="f-staff"><input type="number" step="0.01" placeholder="admin" id="f-admin"><input type="number" step="0.1" placeholder="shares (m)" id="f-shares"><label class="chk"><input type="checkbox" id="f-prof">profitable</label><button onclick="addFin('${co.id}')">+ Add quarter</button></div>
@@ -582,7 +588,9 @@ function mgmtCard(co){
 function posCard(co){
   const p=S.positions[co.ticker]||{}, lp=lastPrice(co.ticker), T=co.ticker;
   const plan=(p.plan||[]).map((s,i)=>`<tr><td><input value="${esc(s.label||'')}" onchange="setPos('${T}','plan.${i}.label',this.value)"></td><td><input type="number" step="0.01" value="${s.price??''}" onchange="setPos('${T}','plan.${i}.price',+this.value)"></td><td><input type="number" value="${s.shares??''}" onchange="setPos('${T}','plan.${i}.shares',+this.value)"></td><td><input type="checkbox" ${s.done?'checked':''} onchange="setPos('${T}','plan.${i}.done',this.checked)"></td><td>${lp&&s.price&&lp.v>=s.price&&!s.done?'<span class="pill p-sell">reached</span>':''}</td><td><button class="danger" onclick="delPlan('${T}',${i})">✕</button></td></tr>`).join('');
-  return `<div class="card"><h3>Your position</h3>
+  const nT=(typeof R!=='undefined')?R.trades.filter(x=>x.t===T).length:0;
+  return `<div class="card"><div class="row"><h3 style="margin:0">Your position</h3><span class="sp"></span><a class="btn" href="#records/${T}">Record a real trade</a></div>
+   ${nT?`<p class="tiny muted">${nT} trade(s) in Records — shares, cost and first-bought date below are kept in step with the log.</p>`:''}
    <div class="row"><label class="chk">Shares <input type="number" value="${p.shares??''}" onchange="setPos('${T}','shares',+this.value)"></label>
    <label class="chk">Avg cost A$ <input type="number" step="0.001" value="${p.cost??''}" onchange="setPos('${T}','cost',+this.value)"></label>
    <label class="chk">First bought <input type="date" value="${p.bought||''}" onchange="setPos('${T}','bought',this.value)"></label></div>
@@ -778,7 +786,9 @@ function importUpdate(text){
   if(!u||u.kind!=='zrpl-update')return alert('This is not a ZRPL update file.');
   const added=[],changed=[];
   for(const c of u.companies||[]){const ex=companyById(c.ticker);
+    const af=c.addFinance;delete c.addFinance;if(af)(u._af=u._af||[]).push([c.ticker,af]);
     if(ex){deepMerge(ex,c);changed.push(c.ticker)}else{S.data.companies.push(Object.assign({id:c.ticker.toLowerCase(),scenarios:[],trials:[],catalysts:[],history:[],promises:[],finance:[],raises:[],recurring:[],facts:[],thesis:{},fundamentals:{},levers:{},checklist:[],scorecard:{},keywords:'',reporting:'half',thesisBroken:false,reviewed:false,color:Math.floor(Math.random()*8)},c));added.push(c.ticker)}}
+  for(const[tk,af]of u._af||[]){const co=companyById(tk);co.finance=co.finance||[];for(const e of af){co.finance=co.finance.filter(f=>(f.period||'').slice(0,7)!==(e.period||'').slice(0,7));co.finance.push({opcf:null,rnd:null,staff:null,admin:null,shares:null,profitable:false,...e})}}
   migrate(S.data); if(added.length||changed.length)markDirty('companies');
   if(u.value){S.value=u.value;markDirty('value')}
   route();alert(`Imported ${u.label||'update'}.\nAdded: ${added.join(', ')||'none'}\nUpdated: ${changed.join(', ')||'none'}${u.value?'\nWhere-the-value-is panel updated.':''}\n\nPress Save changes to keep it.`);
@@ -842,6 +852,234 @@ async function runNow(){if(!GH.token)return toast('Add a GitHub token in Setting
 async function testGH(){try{const r=await gh('');toast(r?`Connected to ${r.full_name}${r.permissions&&r.permissions.push?' with write access':''}`:'Repository not found')}catch(e){alert('Failed: '+e.message)}}
 window.addEventListener('beforeunload',e=>{if(S.dirty.size){e.preventDefault();e.returnValue=''}});
 load();
+/* ====================================================== Stage 2: records (this browser only)
+   Trade log + decision journal, FIFO parcels, dividends & franking, FY (1 Jul–30 Jun) summary for the company.
+   Nothing here is sent to GitHub. Back up with "Download backup". */
+const RK='zrpl.records';
+const R=Object.assign({trades:[],divs:[],lastBackup:null},LS.get(RK,{}));
+function rSave(){LS.set(RK,R);renderNav((location.hash||'#home').slice(1).split('/')[0])}
+const r2=v=>Math.round((+v||0)*100)/100;
+function rid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function fyOf(d){const x=pd(d);if(!x)return null;return x.getMonth()>=6?x.getFullYear()+1:x.getFullYear()}   // FY2027 = 1 Jul 2026–30 Jun 2027
+function fyLabel(y){return `FY${y} (1 Jul ${y-1} – 30 Jun ${y})`}
+function stakeFee(value){return value<=30000?3:r2(value*0.0001)}
+
+/* FIFO: rebuild parcels and realised gains from the trade list */
+function ledger(){
+  const open={}, realised=[];
+  const ts=[...R.trades].sort((a,b)=>a.date.localeCompare(b.date)||(a.side==='buy'?-1:1));
+  for(const t of ts){
+    const q=+t.qty,px=+t.price,fee=+t.fee||0;
+    if(t.side==='buy'){(open[t.t]=open[t.t]||[]).push({id:t.id,date:t.date,qty:q,left:q,unit:(q*px+fee)/q});continue}
+    let left=q, proceedsUnit=(q*px-fee)/q; const ps=open[t.t]||[];
+    while(left>1e-9&&ps.length){const p=ps[0],take=Math.min(left,p.left);
+      realised.push({sellId:t.id,t:t.t,buyDate:p.date,sellDate:t.date,qty:take,cost:r2(take*p.unit),proceeds:r2(take*proceedsUnit),gain:r2(take*(proceedsUnit-p.unit)),fy:fyOf(t.date),days:days(pd(p.date),pd(t.date))});
+      p.left-=take;left-=take;if(p.left<=1e-9)ps.shift()}
+    if(left>1e-9)realised.push({sellId:t.id,t:t.t,buyDate:null,sellDate:t.date,qty:left,cost:0,proceeds:r2(left*proceedsUnit),gain:r2(left*proceedsUnit),fy:fyOf(t.date),days:0,error:'Sold more shares than the log holds — add the missing buy.'});
+  }
+  return {open,realised};
+}
+/* keep "Your position" (used by the ladder alerts) in step with the log */
+function syncPositionFromLog(t){
+  const ps=(ledger().open[t]||[]);const sh=ps.reduce((a,p)=>a+p.left,0);
+  const cost=sh?ps.reduce((a,p)=>a+p.left*p.unit,0)/sh:null;
+  setPos(t,'shares',Math.round(sh*1e6)/1e6);setPos(t,'cost',cost?Math.round(cost*1e4)/1e4:null);setPos(t,'bought',ps.length?ps[0].date:'');
+}
+function reviewsDue(){return R.trades.filter(t=>t.reviewOn&&!t.review&&t.reviewOn<=TODAY_ISO)}
+
+/* ---------- actions */
+function rFeeAuto(){const q=+$('#t-qty').value,p=+$('#t-px').value;if(q&&p)$('#t-fee').value=stakeFee(q*p)}
+function addTrade(){
+  const g=id=>$('#'+id).value.trim();
+  const t={id:rid(),date:g('t-date'),t:g('t-tk').toUpperCase(),side:g('t-side'),qty:+g('t-qty'),price:+g('t-px'),fee:+g('t-fee')||0,
+    why:g('t-why'),expect:g('t-expect'),wrong:g('t-wrong'),reviewOn:g('t-rev'),created:new Date().toISOString()};
+  if(!t.date||!t.t||!(t.qty>0)||!(t.price>0))return alert('Date, ticker, shares and price are needed.');
+  if(!t.why)return alert('Write one line on why — the journal is the point of this log.');
+  if(t.side==='sell'){const held=(ledger().open[t.t]||[]).reduce((a,p)=>a+p.left,0);if(t.qty>held+1e-9&&!confirm(`The log only holds ${held} ${t.t}. Record anyway?`))return}
+  const co=companyById(t.t);
+  if(co){const lp=lastPrice(co.ticker);const e=co.scenarios?evaluate(co,t.price):null;
+    t.snap={signal:e&&e.signal,buy:e&&e.buy,sell:e&&e.sell,ev:e&&e.ev,animal:co.animal,sleeve:co.sleeve,reviewed:!!co.reviewed,lastClose:lp&&lp.v};}
+  R.trades.push(t);rSave();syncPositionFromLog(t.t);toast('Trade recorded');route();
+}
+function delTrade(id){const t=R.trades.find(x=>x.id===id);if(!t||!confirm(`Delete the ${t.side} of ${t.qty} ${t.t} on ${fmtDate(t.date)}?`))return;R.trades=R.trades.filter(x=>x.id!==id);rSave();syncPositionFromLog(t.t);route()}
+function saveReview(id){const t=R.trades.find(x=>x.id===id);if(!t)return;
+  const v=k=>($('#rv-'+k+'-'+id)||{}).value||'';
+  if(!v('what').trim())return alert('Write what happened.');
+  t.review={date:TODAY_ISO,what:v('what'),verdict:v('verdict'),lesson:v('lesson')};rSave();toast('Review saved');route()}
+function frankAuto(){const c=+$('#d-cash').value,f=+$('#d-fpct').value;if(c>=0&&f>=0)$('#d-cred').value=r2(c*f/100*30/70)}
+function addDiv(){
+  const g=id=>$('#'+id).value.trim();
+  const d={id:rid(),date:g('d-date'),t:g('d-tk').toUpperCase(),cash:+g('d-cash'),frankedPct:+g('d-fpct')||0,credit:+g('d-cred')||0,drp:$('#d-drp').checked,note:g('d-note')};
+  if(!d.date||!d.t||!(d.cash>0))return alert('Payment date, ticker and cash amount are needed.');
+  R.divs.push(d);rSave();toast('Dividend recorded');route();
+}
+function delDiv(id){if(!confirm('Delete this dividend?'))return;R.divs=R.divs.filter(x=>x.id!==id);rSave();route()}
+function backupRecords(){R.lastBackup=TODAY_ISO;LS.set(RK,R);download(`ZRPL-records-backup-${TODAY_ISO}.json`,JSON.stringify({kind:'zrpl-records',saved:new Date().toISOString(),trades:R.trades,divs:R.divs},null,1));route()}
+function restoreRecords(f){if(!f)return;f.text().then(x=>{try{const j=JSON.parse(x);if(j.kind!=='zrpl-records')throw 0;
+  const have=new Set(R.trades.map(t=>t.id)),hd=new Set(R.divs.map(d=>d.id));let n=0;
+  (j.trades||[]).forEach(t=>{if(!have.has(t.id)){R.trades.push(t);n++}});(j.divs||[]).forEach(d=>{if(!hd.has(d.id)){R.divs.push(d);n++}});
+  rSave();new Set(R.trades.map(t=>t.t)).forEach(syncPositionFromLog);toast(n+' record(s) restored (existing ones kept)');route()}catch(e){alert('Not a ZRPL records backup file')}})}
+function csv(rows){return rows.map(r=>r.map(v=>{const s=String(v??'');return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}).join(',')).join('\n')}
+function dlCsv(name,rows){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv(rows)],{type:'text/csv'}));a.download=name;a.click()}
+function exportFY(y){
+  y=+y;const L=ledger();
+  dlCsv(`ZRPL-FY${y}-trades.csv`,[['Date','Ticker','Buy/Sell','Shares','Price A$','Brokerage A$','Consideration A$','Why']].concat(
+    R.trades.filter(t=>fyOf(t.date)===y).sort((a,b)=>a.date.localeCompare(b.date)).map(t=>[t.date,t.t,t.side,t.qty,t.price,t.fee,r2(t.side==='buy'?t.qty*t.price+t.fee:t.qty*t.price-t.fee),t.why])));
+  dlCsv(`ZRPL-FY${y}-realised-gains.csv`,[['Ticker','Bought','Sold','Shares','Cost base A$ (incl. brokerage)','Proceeds A$ (net of brokerage)','Gain/(loss) A$','Days held','Note']].concat(
+    L.realised.filter(r=>r.fy===y).map(r=>[r.t,r.buyDate||'',r.sellDate,r.qty,r.cost,r.proceeds,r.gain,r.days,r.error||'FIFO parcel; no CGT discount (company)'])));
+  dlCsv(`ZRPL-FY${y}-dividends.csv`,[['Paid','Ticker','Cash A$','Franked %','Franking credit A$','Grossed-up A$','DRP','Note']].concat(
+    R.divs.filter(d=>fyOf(d.date)===y).sort((a,b)=>a.date.localeCompare(b.date)).map(d=>[d.date,d.t,d.cash,d.frankedPct,d.credit,r2(d.cash+d.credit),d.drp?'yes':'',d.note||''])));
+  const open=Object.entries(L.open).flatMap(([t,ps])=>ps.map(p=>[t,p.date,r2(p.left),r2(p.unit),r2(p.left*p.unit)]));
+  dlCsv(`ZRPL-parcels-held-${TODAY_ISO}.csv`,[['Ticker','Bought','Shares','Cost per share A$ (incl. brokerage)','Cost base A$']].concat(open));
+}
+
+/* ---------- view */
+function viewRecords(pre){
+  const L=ledger(), fy=+(($('#fy-sel')||{}).value||0)||fyOf(TODAY_ISO), coOpts=S.data.companies.map(c=>`<option value="${c.ticker}">`).join('');
+  const due=reviewsDue();
+  const backupAge=R.lastBackup?days(pd(R.lastBackup),TODAY):null, nrec=R.trades.length+R.divs.length;
+  const warn=nrec&&(backupAge==null||backupAge>30)?`<div class="banner b-warn"><b>Back up your records.</b> They live only in this browser — clearing site data or a new computer loses them. ${R.lastBackup?'Last backup '+fmtDate(R.lastBackup)+'.':'No backup yet.'} <button onclick="backupRecords()">Download backup now</button></div>`:'';
+  // holdings from parcels
+  const hold=Object.entries(L.open).filter(([t,ps])=>ps.length).map(([t,ps])=>{const sh=ps.reduce((a,p)=>a+p.left,0),cb=ps.reduce((a,p)=>a+p.left*p.unit,0),lp=lastPrice(t);
+    return `<tr><td><a href="#co/${t}">${t}</a></td><td class="num">${sh.toLocaleString()}</td><td class="num">${ps.length}</td><td class="num">${money(cb/sh)}</td><td class="num">${money(cb,0)}</td><td class="num">${lp?money(sh*lp.v,0):'–'}</td><td class="num">${lp?pct(sh*lp.v/cb-1,1):'–'}</td></tr>`}).join('');
+  // FY summary
+  const rl=L.realised.filter(r=>r.fy===fy), dv=R.divs.filter(d=>fyOf(d.date)===fy), tr=R.trades.filter(t=>fyOf(t.date)===fy);
+  const gains=rl.filter(r=>r.gain>0).reduce((a,r)=>a+r.gain,0), losses=rl.filter(r=>r.gain<0).reduce((a,r)=>a+r.gain,0);
+  const cash=dv.reduce((a,d)=>a+d.cash,0), cred=dv.reduce((a,d)=>a+d.credit,0), fees=tr.reduce((a,t)=>a+(+t.fee||0),0);
+  const fys=[...new Set([fyOf(TODAY_ISO),...R.trades.map(t=>fyOf(t.date)),...R.divs.map(d=>fyOf(d.date))])].filter(Boolean).sort((a,b)=>b-a);
+  const trows=[...R.trades].sort((a,b)=>b.date.localeCompare(a.date)).map(t=>{
+    const isDue=t.reviewOn&&!t.review&&t.reviewOn<=TODAY_ISO;
+    return `<tr><td>${fmtDate(t.date)}</td><td><a href="#co/${t.t}">${t.t}</a></td><td><span class="pill ${t.side==='buy'?'p-buy':'p-sell'}">${t.side}</span></td><td class="num">${(+t.qty).toLocaleString()}</td><td class="num">${money(t.price)}</td><td class="num">${money(t.fee)}</td>
+     <td class="small"><details ${isDue?'open':''}><summary>${esc(t.why)}${t.snap&&t.snap.signal?` <span class="tiny muted">(site said: ${esc(t.snap.signal)}${t.snap.buy?', buy ≤ '+money(t.snap.buy):''}${t.snap.sell?', sell ≥ '+money(t.snap.sell):''}${t.snap.reviewed===false?', DRAFT research':''})</span>`:''}</summary>
+       ${t.expect?`<div><b>Expected:</b> ${esc(t.expect)}</div>`:''}${t.wrong?`<div><b>I'm wrong if:</b> ${esc(t.wrong)}</div>`:''}
+       ${t.review?`<div style="margin-top:4px"><b>Review ${fmtDate(t.review.date)}:</b> ${esc(t.review.verdict)} — ${esc(t.review.what)}${t.review.lesson?` <i>Lesson: ${esc(t.review.lesson)}</i>`:''}</div>`:
+        t.reviewOn?`<div style="margin-top:6px">${isDue?'<span class="pill p-warn">review due</span>':`<span class="tiny muted">Review on ${fmtDate(t.reviewOn)}</span>`}
+        ${isDue?`<textarea id="rv-what-${t.id}" placeholder="What actually happened?"></textarea>
+        <div class="row"><select id="rv-verdict-${t.id}"><option>Right for the right reasons</option><option>Right but lucky</option><option>Wrong but unlucky</option><option>Wrong — my reasoning was off</option></select>
+        <input id="rv-lesson-${t.id}" placeholder="Lesson (optional)" style="flex:1"><button class="primary" onclick="saveReview('${t.id}')">Save review</button></div>`:''}</div>`:''}
+     </details></td><td><button class="danger" onclick="delTrade('${t.id}')">✕</button></td></tr>`}).join('');
+  const drows=[...R.divs].sort((a,b)=>b.date.localeCompare(a.date)).map(d=>`<tr><td>${fmtDate(d.date)}</td><td>${d.t}</td><td class="num">${money(d.cash)}</td><td class="num">${d.frankedPct}%</td><td class="num">${money(d.credit)}</td><td>${d.drp?'DRP':''} <span class="tiny muted">${esc(d.note||'')}</span></td><td><button class="danger" onclick="delDiv('${d.id}')">✕</button></td></tr>`).join('');
+  const t0=pre&&companyById(pre)?pre:'';
+  return `${warn}
+  <div class="card"><div class="row"><h3 style="margin:0">Records — Z Rahim Pty Ltd</h3><span class="sp"></span>
+   <button onclick="backupRecords()">Download backup</button><label class="btn">Restore backup<input type="file" accept=".json" hidden onchange="restoreRecords(this.files[0])"></label></div>
+   <p class="small muted">Real trades only (the paper portfolio stays on the Home page). Stored only in this browser — never sent to GitHub. Recording a trade also updates "Your position" on the stock page, so the sell-ladder alerts stay right.</p></div>
+  ${due.length?`<div class="card"><h3>Journal reviews due (${due.length})</h3><p class="small">Open each trade below and write what happened. This is how the method gets better.</p></div>`:''}
+  <div class="card"><h3>Record a trade (after it fills on Stake)</h3>
+   <div class="row"><input type="date" id="t-date" value="${TODAY_ISO}"><input id="t-tk" list="t-cos" placeholder="Ticker" value="${t0}" style="width:90px"><datalist id="t-cos">${coOpts}</datalist>
+   <select id="t-side"><option value="buy">Buy</option><option value="sell">Sell</option></select>
+   <input type="number" id="t-qty" placeholder="Shares" oninput="rFeeAuto()" style="width:110px"><input type="number" step="0.001" id="t-px" placeholder="Price A$" oninput="rFeeAuto()" style="width:110px">
+   <input type="number" step="0.01" id="t-fee" placeholder="Brokerage A$" style="width:120px" title="Filled with Stake's ASX fee (A$3 up to A$30k, then 0.01%) — check your contract note"></div>
+   <input id="t-why" placeholder="Why (one line) — e.g. 'Site says Buy, research reviewed, PEG 0.9, trigger: cost-out'" style="width:100%;margin-top:6px">
+   <div class="row" style="margin-top:6px"><input id="t-expect" placeholder="What I expect, and by when" style="flex:1"><input id="t-wrong" placeholder="I'm wrong if…" style="flex:1"></div>
+   <div class="row" style="margin-top:6px"><label class="chk">Review on <input type="date" id="t-rev" value="${iso(new Date(TODAY.getTime()+182*864e5))}"></label><span class="sp"></span><button class="primary" onclick="addTrade()">Record trade</button></div>
+   <p class="tiny muted">Cost base includes brokerage. Sells are matched to the oldest parcel first (FIFO). If you chose specific parcels when selling, tell your accountant.</p></div>
+  <div class="card"><h3>Parcels held (from the log)</h3><table><thead><tr><th>Stock</th><th class="num">Shares</th><th class="num">Parcels</th><th class="num">Avg cost</th><th class="num">Cost base</th><th class="num">Value</th><th class="num">Gain</th></tr></thead><tbody>${hold||'<tr><td colspan="7" class="muted">No trades recorded yet.</td></tr>'}</tbody></table></div>
+  <div class="card"><h3>Trade log and decision journal</h3><table><thead><tr><th>Date</th><th>Stock</th><th></th><th class="num">Shares</th><th class="num">Price</th><th class="num">Fee</th><th>Why / review</th><th></th></tr></thead><tbody>${trows||'<tr><td colspan="8" class="muted">None yet.</td></tr>'}</tbody></table></div>
+  <div class="card"><h3>Dividends received</h3>
+   <div class="row"><input type="date" id="d-date" value="${TODAY_ISO}" title="Payment date"><input id="d-tk" list="t-cos" placeholder="Ticker" style="width:90px"><input type="number" step="0.01" id="d-cash" placeholder="Cash A$" oninput="frankAuto()" style="width:110px">
+   <input type="number" id="d-fpct" value="100" oninput="frankAuto()" style="width:80px" title="Franked %"> <span class="small">% franked</span>
+   <input type="number" step="0.01" id="d-cred" placeholder="Franking credit A$" style="width:150px" title="Auto: cash × franked% × 30/70. Use the amount on the dividend statement if different (e.g. a 25% company)">
+   <label class="chk"><input type="checkbox" id="d-drp"> DRP</label><input id="d-note" placeholder="Note" style="flex:1"><button class="primary" onclick="addDiv()">Record dividend</button></div>
+   <p class="tiny muted">Use the figures on the dividend statement. If you took shares under a DRP, also record them as a buy at the DRP price (with brokerage 0).</p>
+   <table style="margin-top:6px"><thead><tr><th>Paid</th><th>Stock</th><th class="num">Cash</th><th class="num">Franked</th><th class="num">Credit</th><th></th><th></th></tr></thead><tbody>${drows||'<tr><td colspan="7" class="muted">None yet.</td></tr>'}</tbody></table></div>
+  <div class="card"><div class="row"><h3 style="margin:0">Financial year summary</h3><span class="sp"></span>
+   <select id="fy-sel" onchange="route()">${fys.map(y=>`<option value="${y}" ${y===fy?'selected':''}>${fyLabel(y)}</option>`).join('')}</select>
+   <button onclick="exportFY($('#fy-sel').value)">Export for accountant (CSV)</button></div>
+   <table><tbody>
+    <tr><td>Capital gains (company: no 50% discount)</td><td class="num">${money(gains,2)}</td></tr>
+    <tr><td>Capital losses</td><td class="num">${money(losses,2)}</td></tr>
+    <tr><td><b>Net capital gain/(loss) this year</b> <span class="tiny muted">before any carried-forward losses</span></td><td class="num"><b>${money(gains+losses,2)}</b></td></tr>
+    <tr><td>Dividends — cash received</td><td class="num">${money(cash,2)}</td></tr>
+    <tr><td>Franking credits</td><td class="num">${money(cred,2)}</td></tr>
+    <tr><td><b>Dividends grossed up (assessable)</b></td><td class="num"><b>${money(cash+cred,2)}</b></td></tr>
+    <tr><td>Brokerage paid <span class="tiny muted">(already inside cost base / proceeds)</span></td><td class="num">${money(fees,2)}</td></tr>
+   </tbody></table>
+   ${rl.some(r=>r.error)?'<p class="small" style="color:var(--bad)">Some sells have no matching buy — add the missing buy trades.</p>':''}
+   <p class="tiny muted">A record-keeping aid, not tax advice. Franking credits received also go into the company's franking account (useful when it pays franked dividends to you). Confirm treatment with your accountant.</p></div>`;
+}
+
+/* ====================================================== ZHWA spreadsheet methods (Nov 2026)
+   1) Funding gap: will cash last until the next big catalyst? (quarterly burn x quarters to catalyst + planned extra spend)
+   2) Spreadsheet checks: cash/share x 5 anchor (pre-revenue); margins, ROE, gearing, P/E vs 10-yr average (profitable)
+   3) Quarterly forecasts vs actual 4C — your prediction track record
+   4) Trial timing calculator (sites x patients/site/month) */
+function fundingGap(co){
+  const f=latestFin(co); if(!f||f.profitable)return null;
+  const burn=num(co.burnQ)!=null?+co.burnQ:(f.opcf!=null&&f.opcf<0?-f.opcf:null); if(!burn)return null;
+  let tgt=co.fundTo&&pd(co.fundTo.date)?{label:co.fundTo.label||'target',date:co.fundTo.date}:null;
+  if(!tgt){const nb=nextBig(co);if(nb)tgt={label:nb.title,date:nb.date}}
+  const runQ=f.cash/burn;
+  if(!tgt)return {runQ,burn,f,cash:f.cash};
+  const q=Math.max(0,days(pd(f.period||TODAY_ISO),pd(tgt.date))/91.31), extra=+co.extraSpend||0;
+  const need=burn*q+extra, left=f.cash-need, cushion=left/burn;
+  const status=left<0?'short':cushion<2?'tight':'ok';
+  return {runQ,burn,f,cash:f.cash,tgt,q,extra,need,left,cushion,status};
+}
+function fundLine(co){
+  const g=fundingGap(co); if(!g)return '';
+  const base=`Cash ${money(g.cash,1)}m at ${fmtDate(g.f.period)}, burn ~${money(g.burn,1)}m a quarter${num(co.burnQ)!=null?' (your forecast)':''} → ${g.runQ.toFixed(1)} quarters of runway.`;
+  if(!g.tgt)return `<span class="pill p-none">Funding</span> <span class="small">${base} Add a big catalyst (or "Fund until") to test whether cash lasts.</span>`;
+  const t=`${base} To reach <b>${esc(g.tgt.label)}</b> (${fmtDate(g.tgt.date)}, ~${g.q.toFixed(1)} quarters)${g.extra?` plus ${money(g.extra,1)}m planned extra spend`:''} it needs ~${money(g.need,1)}m.`;
+  if(g.status==='short')return `<span class="pill p-bad">Raise likely before catalyst</span> <span class="small">${t} Short by <b>${money(-g.left,1)}m</b>. Your rule: don't buy ahead of the raise — buy at or after it; if held, consider trimming before it.</span>`;
+  if(g.status==='tight')return `<span class="pill p-warn">Funding tight</span> <span class="small">${t} Only ${g.cushion.toFixed(1)} quarters spare — a raise around the catalyst is likely.</span>`;
+  return `<span class="pill p-buy">Funded</span> <span class="small">${t} ${g.cushion.toFixed(1)} quarters spare.</span>`;
+}
+function fundAttn(){
+  return S.data.companies.filter(co=>heldReal(co.ticker)||heldPaper(co.ticker)||co.sleeve&&co.sleeve!=='watch').map(co=>({co,g:fundingGap(co)}))
+    .filter(x=>x.g&&x.g.tgt&&x.g.status!=='ok').map(x=>`<li><b>${x.g.status==='short'?'Raise likely':'Funding tight'}: ${x.co.ticker}</b> — cash may not last to ${esc(x.g.tgt.label)} (${fmtDate(x.g.tgt.date)}). ${heldReal(x.co.ticker)?'You hold it: consider trimming before the raise.':'Wait for the raise before buying.'}</li>`);
+}
+function sheetChecks(co,e){
+  const f=co.fundamentals||{}, lp=lastPrice(co.ticker), px=lp&&lp.v, fin=latestFin(co), sh=num(f.shares)||([...(co.finance||[])].filter(x=>x.shares).pop()||{}).shares;
+  const rows=[];
+  const ok=(v,pass)=>v==null?'<b class="unk">?</b>':pass?'<b class="ok">✓</b>':'<b class="no">✕</b>';
+  const rev=num(f.revenue), pbt=num(f.pbt), npat=num(f.npat), eq=num(f.equity), li=num(f.liabilities), pe=e.metrics&&e.metrics.pe, pea=num(f.peAvg10);
+  if(rev||pbt||npat){
+    const m1=rev&&pbt!=null?pbt/rev:null, m2=rev&&npat!=null?npat/rev:null, roe=eq&&pbt!=null?pbt/eq:null, gr=eq&&li!=null?li/eq:null, disc=pe&&pea?1-pe/pea:null;
+    rows.push([ok(m1,m1>.25),'Pre-tax profit ≥ 25% of revenue',m1!=null?pct(m1,1).replace('+',''):'enter revenue & pre-tax profit']);
+    rows.push([ok(m2,m2>.18),'Net profit ≥ 18% of revenue',m2!=null?pct(m2,1).replace('+',''):'enter net profit']);
+    rows.push([ok(roe,roe>.15),'ROE ≥ 15% (pre-tax ÷ equity)',roe!=null?pct(roe,1).replace('+',''):'enter equity']);
+    rows.push([ok(gr,gr<.5),'Liabilities ÷ equity < 50%',gr!=null?pct(gr,0).replace('+',''):'enter liabilities']);
+    rows.push([ok(disc,disc>=.25),'P/E ≥ 25% below its 10-year average',disc!=null?`P/E ${pe.toFixed(1)} vs ${pea} avg (${pct(disc,0).replace('+','')} below)`:'enter 10-yr average P/E']);
+  }
+  let anchor='';
+  if(fin&&sh&&px){const cps=fin.cash/sh, tp=cps*5;
+    anchor=`<p class="small" style="margin:8px 0 0">Cash per share <b>${money(cps)}</b> (${fmtDate(fin.period)}) · price is <b>${(px/cps).toFixed(1)}x</b> cash · your "cash × 5" anchor <b>${money(tp)}</b> (${px<=tp?'price below anchor':'price above anchor'}). ${co.sector==='health'&&!fin.profitable?'Use it as a cross-check on the scenarios, not instead of them.':''}</p>`}
+  if(!rows.length&&!anchor)return '';
+  return `<div class="card"><h3>Your spreadsheet checks</h3>${rows.length?rows.map(r=>`<div class="gate">${r[0]}<span>${r[1]} <span class="tiny muted">${esc(r[2])}</span></span></div>`).join(''):''}${anchor}
+   <p class="tiny muted">From your ZHWA workbook. Shown alongside the agreed checks; they don't change the signal.</p></div>`;
+}
+function forecastSection(co){
+  const ed=S.edit[co.id], P=`companies:${co.id}`, fs=(co.forecasts||[]).map((x,i)=>({x,i})).sort((a,b)=>(a.x.period||'').localeCompare(b.x.period||''));
+  const act=per=>(co.finance||[]).find(f=>f.period&&per&&f.period.slice(0,7)===per.slice(0,7));
+  let hit=0,n=0;
+  const rows=fs.map(({x,i})=>{const a=act(x.period);let cmp='<span class="tiny muted">waiting for 4C</span>';
+    if(a&&a.cash!=null&&x.cash!=null){const err=(a.cash-x.cash)/Math.max(Math.abs(x.cash),.1);n++;if(Math.abs(err)<=.1)hit++;cmp=`actual ${a.cash} (${pct(err,0)})${a.opcf!=null&&x.opcf!=null?` · burn ${a.opcf} vs ${x.opcf}`:''} ${Math.abs(err)<=.1?'<span class="pill p-buy">within 10%</span>':'<span class="pill p-warn">off</span>'}`}
+    if(ed)return `<tr><td><input type="date" value="${x.period||''}" data-p="${P}:forecasts.${i}.period"></td><td><input type="number" step="any" value="${x.receipts??''}" data-p="${P}:forecasts.${i}.receipts" data-t="n"></td><td><input type="number" step="any" value="${x.opcf??''}" data-p="${P}:forecasts.${i}.opcf" data-t="n"></td><td><input type="number" step="any" value="${x.cash??''}" data-p="${P}:forecasts.${i}.cash" data-t="n"></td><td><input class="w-l" value="${esc(x.note||'')}" data-p="${P}:forecasts.${i}.note"></td><td><button class="danger" onclick="delItem('${co.id}','forecasts',${i})">✕</button></td></tr>`;
+    return `<tr><td>${fmtDate(x.period)}</td><td class="num">${x.receipts??'–'}</td><td class="num">${x.opcf??'–'}</td><td class="num">${x.cash??'–'}</td><td class="small">${esc(x.note||'')}<div class="tiny">${cmp}</div></td></tr>`}).join('');
+  return `<details ${ed||fs.length?'open':''}><summary>Your quarterly forecasts vs actual 4C (A$m)${n?` — ${hit}/${n} within 10%`:''}</summary>
+   <table><thead><tr><th>Quarter end</th><th class="num">Receipts</th><th class="num">Op. cash flow</th><th class="num">Cash</th><th>Driver / result</th>${ed?'<th></th>':''}</tr></thead><tbody>${rows||`<tr><td colspan="5" class="muted">No forecasts yet. In edit mode, add your next 2–4 quarters (as in your spreadsheet) — the site scores them when each 4C arrives.</td></tr>`}</tbody></table>
+   ${ed?`<button style="margin-top:6px" onclick="addItem('${co.id}','forecasts',{period:'',receipts:null,opcf:null,cash:null,note:''})">+ Forecast quarter</button>
+   <div class="row" style="margin-top:8px"><label class="chk">Burn a quarter (your forecast, A$m) <input type="number" step="any" value="${co.burnQ??''}" data-p="${P}:burnQ" data-t="n"></label>
+   <label class="chk">Fund until <input value="${esc((co.fundTo||{}).label||'')}" placeholder="e.g. Phase III readout" data-p="${P}:fundTo.label"> <input type="date" value="${(co.fundTo||{}).date||''}" data-p="${P}:fundTo.date"></label>
+   <label class="chk">Extra spend before then (A$m) <input type="number" step="any" value="${co.extraSpend??''}" data-p="${P}:extraSpend" data-t="n"></label></div>`:''}</details>`;
+}
+function trialCalc(){
+  const g=id=>+($('#tc-'+id)||{}).value||0, out=$('#tc-out'); if(!out)return;
+  const need=g('need')-g('enr'), rate=g('sites')*g('rate'); if(!(need>0)||!(rate>0)){out.textContent='';return}
+  const mEnrol=need/rate, last=new Date(TODAY.getTime()+mEnrol*30.44*864e5), rd=new Date(last.getTime()+(g('treat')+g('anal'))*30.44*864e5);
+  out.innerHTML=`Last patient in ≈ <b>${fmtDate(iso(last))}</b> (${mEnrol.toFixed(1)} months) → results ≈ <b>${fmtDate(iso(rd))}</b>.`;
+}
+function trialCalcCard(co){
+  if(co.sector!=='health')return '';
+  return `<div class="card"><details><summary><b>Trial timing calculator</b> <span class="tiny muted">(your Koala method: active sites × patients per site per month)</span></summary>
+   <div class="row" style="margin-top:6px" oninput="trialCalc()">
+   <label class="chk">Patients needed <input id="tc-need" type="number" style="width:80px"></label><label class="chk">Enrolled now <input id="tc-enr" type="number" style="width:80px"></label>
+   <label class="chk">Active sites <input id="tc-sites" type="number" style="width:70px"></label><label class="chk">Patients/site/month <input id="tc-rate" type="number" step="0.1" value="1" style="width:70px"></label>
+   <label class="chk">Treatment (months) <input id="tc-treat" type="number" step="0.5" value="3" style="width:70px"></label><label class="chk">Analysis (months) <input id="tc-anal" type="number" step="0.5" value="3" style="width:70px"></label></div>
+   <p class="small" id="tc-out"></p><p class="tiny muted">Compare with the company's guided date in the catalyst list; a big gap is an early warning of a delay.</p></details></div>`;
+}
+
 </script>
 </body>
 </html>
