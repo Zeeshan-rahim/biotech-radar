@@ -148,8 +148,8 @@
      "desc": "Opens the ~1,000-patient Japanese Rett market.",
      "big": false,
      "event": "filing",
-     "done": false,
-     "result": ""
+     "done": true,
+     "result": "Acadia enters DAYBUE STIX distribution agreement in Japan"
     },
     {
      "id": "neu-c4",
@@ -263,6 +263,16 @@
      "date": "2026-11-05",
      "title": "Japan Phase 3 positive; 2026 guidance upgraded",
      "desc": "Results consistent with LAVENDER; income guidance US$91–93m."
+    },
+    {
+     "date": "2026-11-17",
+     "title": "Acadia enters DAYBUE STIX distribution agreement in Japan",
+     "desc": ""
+    },
+    {
+     "date": "2026-11-05",
+     "title": "Q3 2026 DAYBUE net sales up 39%, full year guidance upgraded",
+     "desc": ""
     }
    ],
    "promises": [
@@ -641,6 +651,16 @@
      "date": "2026-06-16",
      "title": "Everest Medicines licence",
      "desc": "US$10m upfront for Greater China, Korea and SE Asia."
+    },
+    {
+     "date": "2026-10-29",
+     "title": "Dimerix Quarterly Activities Report and Appendix 4C",
+     "desc": ""
+    },
+    {
+     "date": "2026-10-23",
+     "title": "New Data Supports Biological Rationale for DMX-200 in FSGS",
+     "desc": ""
     }
    ],
    "promises": [
@@ -794,8 +814,8 @@
      "desc": "First study of emu's benefit in real use, at remote SA emergency departments without CT.",
      "big": false,
      "event": "launch",
-     "done": false,
-     "result": ""
+     "done": true,
+     "result": "Emu Regional Benefits CRCP Progress Payment Received"
     },
     {
      "id": "emv-c3",
@@ -916,6 +936,16 @@
     {
      "date": "2026-11-20",
      "title": "New $3m Grant Unlocks Traumatic Brain Injury Opportunity",
+     "desc": ""
+    },
+    {
+     "date": "2026-11-18",
+     "title": "Emu Regional Benefits CRCP Progress Payment Received",
+     "desc": ""
+    },
+    {
+     "date": "2026-10-26",
+     "title": "Quarterly Activities/Appendix 4C Cash Flow Report",
      "desc": ""
     }
    ],
@@ -1262,6 +1292,16 @@
      "date": "2026-11-19",
      "title": "Follow-up assessments completed in Phase III AMPLIFY trial",
      "desc": ""
+    },
+    {
+     "date": "2026-11-12",
+     "title": "First FDA Breakthrough Therapy designation in PSMA PET",
+     "desc": ""
+    },
+    {
+     "date": "2026-11-11",
+     "title": "Trading Halt",
+     "desc": ""
     }
    ],
    "promises": [
@@ -1422,8 +1462,8 @@
      "desc": "Final statistics to support the 505(b)(2) filing. Check whether released.",
      "big": true,
      "event": "trial",
-     "done": false,
-     "result": "",
+     "done": true,
+     "result": "LTR Secures Indian Patent Supporting SPONTAN and ROXUS",
      "upPct": 15,
      "downPct": -25
     },
@@ -1435,8 +1475,8 @@
      "desc": "Confirms 505(b)(2) data package.",
      "big": true,
      "event": "meeting",
-     "done": false,
-     "result": ""
+     "done": true,
+     "result": "LTR Secures Indian Patent Supporting SPONTAN and ROXUS"
     },
     {
      "id": "ltp-c3",
@@ -1446,8 +1486,8 @@
      "desc": "First evidence of US revenue.",
      "big": false,
      "event": "launch",
-     "done": false,
-     "result": ""
+     "done": true,
+     "result": "LTR Secures Indian Patent Supporting SPONTAN and ROXUS"
     },
     {
      "id": "ltp-c4",
@@ -1475,6 +1515,11 @@
     {
      "date": "2026-08-11",
      "title": "147-patient real-world study",
+     "desc": ""
+    },
+    {
+     "date": "2026-11-09",
+     "title": "LTR Secures Indian Patent Supporting SPONTAN and ROXUS",
      "desc": ""
     }
    ],
@@ -1680,7 +1725,23 @@
      "result": ""
     }
    ],
-   "history": [],
+   "history": [
+    {
+     "date": "2026-11-18",
+     "title": "Release of IPART Final Report",
+     "desc": ""
+    },
+    {
+     "date": "2026-11-11",
+     "title": "Results of 2026 PEXA AGM",
+     "desc": ""
+    },
+    {
+     "date": "2026-11-11",
+     "title": "PEXA 2026 AGM Presentation",
+     "desc": ""
+    }
+   ],
    "promises": [],
    "finance": [],
    "raises": [],
