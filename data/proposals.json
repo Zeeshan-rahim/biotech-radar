@@ -288,6 +288,75 @@
     }
    ],
    "created": "2026-11-20"
+  },
+  {
+   "id": "PXA:2924-03162905-3A706771",
+   "ticker": "PXA",
+   "company": "pxa",
+   "date": "2026-11-18",
+   "at": "2026-11-18T08:24:56+11:00",
+   "headline": "Release of IPART Final Report",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03162905-3A706771?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": true,
+   "kind": "info",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-11-18",
+      "title": "Release of IPART Final Report",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-22"
+  },
+  {
+   "id": "PXA:2924-03160537-3A706306",
+   "ticker": "PXA",
+   "company": "pxa",
+   "date": "2026-11-11",
+   "at": "2026-11-11T13:10:12+11:00",
+   "headline": "Results of 2026 PEXA AGM",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03160537-3A706306?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": false,
+   "kind": "trial",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-11-11",
+      "title": "Results of 2026 PEXA AGM",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-22"
+  },
+  {
+   "id": "PXA:2924-03160368-3A706271",
+   "ticker": "PXA",
+   "company": "pxa",
+   "date": "2026-11-11",
+   "at": "2026-11-11T09:11:11+11:00",
+   "headline": "PEXA 2026 AGM Presentation",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03160368-3A706271?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": true,
+   "kind": "info",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-11-11",
+      "title": "PEXA 2026 AGM Presentation",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-22"
   }
  ]
 }

@@ -9,9 +9,37 @@
   "overdue:ltp-c1": 1,
   "ann:2924-03164135-6A1356001": 1,
   "ann:2924-03162945-6A1355517": 1,
-  "ann:2924-03163553-2A1711428": 1
+  "ann:2924-03163553-2A1711428": 1,
+  "zone:ALL": "Sell",
+  "zone:BHP": "Sell",
+  "zone:CLW": "Unchecked"
  },
  "log": [
+  {
+   "at": "2026-11-22T22:51+11:00",
+   "items": [
+    {
+     "key": "zone:ALL",
+     "text": "**ALL** is above its sell price A$63.317 — not one to buy now (draft assumptions — review them).",
+     "level": "info"
+    },
+    {
+     "key": "zone:BHP",
+     "text": "**BHP** is above its sell price A$47.078 — not one to buy now (draft assumptions — review them).",
+     "level": "info"
+    },
+    {
+     "key": "zone:CLW",
+     "text": "**CLW** is below your buy price A$3.647, but these checks have no data yet: A trigger to unlock value is identified, Turnover ≥ A$300k/day. Research before buying.",
+     "level": "info"
+    },
+    {
+     "key": "proposals",
+     "text": "3 new item(s) waiting in your Review queue.",
+     "level": "info"
+    }
+   ]
+  },
   {
    "at": "2026-11-22T22:15+11:00",
    "items": [

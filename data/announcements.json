@@ -258,5 +258,213 @@
    "pages": "662KB",
    "ticker": "LTP"
   }
+ ],
+ "ALL": [
+  {
+   "id": "2924-03164191-2A1711765",
+   "at": "2026-11-20T08:36:27+11:00",
+   "date": "2026-11-20",
+   "headline": "Update - Notification of buy-back - ALL",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03164191-2A1711765?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "11KB",
+   "ticker": "ALL"
+  },
+  {
+   "id": "2924-03164066-2A1711712",
+   "at": "2026-11-19T18:04:18+11:00",
+   "date": "2026-11-19",
+   "headline": "Change of Director's Interest Notice - N Chand",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03164066-2A1711712?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "386KB",
+   "ticker": "ALL"
+  },
+  {
+   "id": "2924-03162919-2A1711136",
+   "at": "2026-11-18T08:29:41+11:00",
+   "date": "2026-11-18",
+   "headline": "Update - Notification of buy-back - ALL",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03162919-2A1711136?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "11KB",
+   "ticker": "ALL"
+  },
+  {
+   "id": "2924-03161800-2A1710612",
+   "at": "2026-11-16T08:52:27+11:00",
+   "date": "2026-11-16",
+   "headline": "Update - Notification of buy-back - ALL",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03161800-2A1710612?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "11KB",
+   "ticker": "ALL"
+  },
+  {
+   "id": "2924-03161403-2A1710426",
+   "at": "2026-11-13T09:46:01+11:00",
+   "date": "2026-11-13",
+   "headline": "Change in substantial holding",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03161403-2A1710426?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "2283KB",
+   "ticker": "ALL"
+  }
+ ],
+ "PXA": [
+  {
+   "id": "2924-03164683-3A707099",
+   "at": "2026-11-20T19:20:18+11:00",
+   "date": "2026-11-20",
+   "headline": "Becoming a substantial holder",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03164683-3A707099?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "429KB",
+   "ticker": "PXA"
+  },
+  {
+   "id": "2924-03164379-3A707057",
+   "at": "2026-11-20T12:18:42+11:00",
+   "date": "2026-11-20",
+   "headline": "Notification regarding unquoted securities - PXA",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03164379-3A707057?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "10KB",
+   "ticker": "PXA"
+  },
+  {
+   "id": "2924-03162905-3A706771",
+   "at": "2026-11-18T08:24:56+11:00",
+   "date": "2026-11-18",
+   "headline": "Release of IPART Final Report",
+   "sensitive": true,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03162905-3A706771?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "167KB",
+   "ticker": "PXA"
+  },
+  {
+   "id": "2924-03160537-3A706306",
+   "at": "2026-11-11T13:10:12+11:00",
+   "date": "2026-11-11",
+   "headline": "Results of 2026 PEXA AGM",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03160537-3A706306?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "304KB",
+   "ticker": "PXA"
+  },
+  {
+   "id": "2924-03160368-3A706271",
+   "at": "2026-11-11T09:11:11+11:00",
+   "date": "2026-11-11",
+   "headline": "PEXA 2026 AGM Presentation",
+   "sensitive": true,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03160368-3A706271?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "9892KB",
+   "ticker": "PXA"
+  }
+ ],
+ "BHP": [
+  {
+   "id": "2924-03160816-3A706352",
+   "at": "2026-11-12T08:36:45+11:00",
+   "date": "2026-11-12",
+   "headline": "CFO Update",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03160816-3A706352?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "106KB",
+   "ticker": "BHP"
+  },
+  {
+   "id": "2924-03160473-3A706291",
+   "at": "2026-11-11T10:34:56+11:00",
+   "date": "2026-11-11",
+   "headline": "Change of Director's Interest Notice",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03160473-3A706291?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "261KB",
+   "ticker": "BHP"
+  },
+  {
+   "id": "2924-03160472-3A706290",
+   "at": "2026-11-11T10:31:01+11:00",
+   "date": "2026-11-11",
+   "headline": "Notification regarding unquoted securities - BHP",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03160472-3A706290?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "12KB",
+   "ticker": "BHP"
+  },
+  {
+   "id": "2924-03151740-3A704697",
+   "at": "2026-10-22T14:38:31+11:00",
+   "date": "2026-10-22",
+   "headline": "Results of 2026 Annual General Meeting",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03151740-3A704697?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "217KB",
+   "ticker": "BHP"
+  },
+  {
+   "id": "2924-03151588-3A704674",
+   "at": "2026-10-22T09:45:40+11:00",
+   "date": "2026-10-22",
+   "headline": "BHP 2026 AGM Addresses",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03151588-3A704674?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "138KB",
+   "ticker": "BHP"
+  }
+ ],
+ "CLW": [
+  {
+   "id": "2924-03162924-2A1711138",
+   "at": "2026-11-18T08:31:52+11:00",
+   "date": "2026-11-18",
+   "headline": "Change of Director's Interest Notice",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03162924-2A1711138?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "381KB",
+   "ticker": "CLW"
+  },
+  {
+   "id": "2924-03160330-2A1709930",
+   "at": "2026-11-11T08:47:46+11:00",
+   "date": "2026-11-11",
+   "headline": "CLW AMIT Notice re 30 September 2026 Distribution",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03160330-2A1709930?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "285KB",
+   "ticker": "CLW"
+  },
+  {
+   "id": "2924-03160323-2A1709928",
+   "at": "2026-11-11T08:45:41+11:00",
+   "date": "2026-11-11",
+   "headline": "Application for quotation of securities - CLW",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03160323-2A1709928?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "11KB",
+   "ticker": "CLW"
+  },
+  {
+   "id": "2924-03158372-2A1708549",
+   "at": "2026-11-05T11:37:10+11:00",
+   "date": "2026-11-05",
+   "headline": "CLW ASX Release - David Jones Administration",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03158372-2A1708549?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "124KB",
+   "ticker": "CLW"
+  },
+  {
+   "id": "2924-03157790-2A1708215",
+   "at": "2026-11-04T09:31:35+11:00",
+   "date": "2026-11-04",
+   "headline": "CLW Portfolio Leasing Update",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03157790-2A1708215?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "128KB",
+   "ticker": "CLW"
+  }
  ]
 }

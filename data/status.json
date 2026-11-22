@@ -1,5 +1,5 @@
 {
- "lastRun": "2026-11-22T22:15+11:00",
+ "lastRun": "2026-11-22T22:51+11:00",
  "errors": [],
  "notes": [
   "NEU: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
@@ -7,6 +7,10 @@
   "EMV: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
   "CU6: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
   "LTP: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
+  "ALL: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
+  "PXA: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
+  "BHP: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
+  "CLW: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price",
   "VAS: price history sources busy (Yahoo Finance: HTTP Error 429: Too Many Requests; Stooq: no rows) - used ASX last price"
  ],
  "sources": {
@@ -30,12 +34,28 @@
    "price": "ASX last price (history builds up each run)",
    "announcements": "ASX (Markit)"
   },
+  "ALL": {
+   "price": "ASX last price (history builds up each run)",
+   "announcements": "ASX (Markit)"
+  },
+  "PXA": {
+   "price": "ASX last price (history builds up each run)",
+   "announcements": "ASX (Markit)"
+  },
+  "BHP": {
+   "price": "ASX last price (history builds up each run)",
+   "announcements": "ASX (Markit)"
+  },
+  "CLW": {
+   "price": "ASX last price (history builds up each run)",
+   "announcements": "ASX (Markit)"
+  },
   "VAS": {
    "price": "ASX last price (history builds up each run)"
   }
  },
- "newAnnouncements": 0,
- "newProposals": 0,
- "pendingProposals": 9,
- "alerts": 1
+ "newAnnouncements": 4,
+ "newProposals": 3,
+ "pendingProposals": 12,
+ "alerts": 4
 }

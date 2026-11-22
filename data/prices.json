@@ -70,5 +70,53 @@
   "last": 106.53,
   "lastDate": "2026-11-20",
   "source": "ASX last price (history builds up each run)"
+ },
+ "ALL": {
+  "history": [
+   [
+    "2026-11-20",
+    64.66,
+    1537736
+   ]
+  ],
+  "last": 64.66,
+  "lastDate": "2026-11-20",
+  "source": "ASX last price (history builds up each run)"
+ },
+ "PXA": {
+  "history": [
+   [
+    "2026-11-20",
+    6.76,
+    774618
+   ]
+  ],
+  "last": 6.76,
+  "lastDate": "2026-11-20",
+  "source": "ASX last price (history builds up each run)"
+ },
+ "BHP": {
+  "history": [
+   [
+    "2026-11-20",
+    51.4,
+    12482999
+   ]
+  ],
+  "last": 51.4,
+  "lastDate": "2026-11-20",
+  "source": "ASX last price (history builds up each run)"
+ },
+ "CLW": {
+  "history": [
+   [
+    "2026-11-20",
+    3.5300000000000002,
+    1440300
+   ]
+  ],
+  "last": 3.5300000000000002,
+  "lastDate": "2026-11-20",
+  "source": "ASX last price (history builds up each run)"
  }
 }
