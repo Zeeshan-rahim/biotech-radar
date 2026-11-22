@@ -1094,15 +1094,52 @@
    "recurring": [],
    "finance": [
     {
-     "opcf": -1.3,
-     "rnd": null,
-     "staff": null,
-     "admin": null,
+     "opcf": -3.49,
+     "rnd": -1.3,
+     "staff": -1.8,
+     "admin": -0.74,
+     "shares": null,
+     "profitable": false,
+     "period": "2025-09-30",
+     "cash": 18.35,
+     "earned": 0.47,
+     "source": "Your ZHWA sheet (from the 4C) — A$11.4m placement this quarter"
+    },
+    {
+     "opcf": -2.57,
+     "rnd": -0.58,
+     "staff": -1.92,
+     "admin": -0.61,
+     "shares": null,
+     "profitable": false,
+     "period": "2025-12-31",
+     "cash": 17.55,
+     "earned": 0.54,
+     "source": "Your ZHWA sheet (from the 4C)"
+    },
+    {
+     "opcf": 0.93,
+     "rnd": -1.08,
+     "staff": -1.84,
+     "admin": -0.5,
+     "shares": null,
+     "profitable": false,
+     "period": "2026-03-31",
+     "cash": 18.41,
+     "earned": 4.36,
+     "source": "Your ZHWA sheet (from the 4C) — R&D refund A$3.8m"
+    },
+    {
+     "opcf": -1.27,
+     "rnd": -1.03,
+     "staff": -1.87,
+     "admin": -0.72,
      "shares": 92.94,
      "profitable": false,
      "period": "2026-06-30",
      "cash": 17.1,
-     "source": "Jun-26 4C (ZHWA sheet: net of A$2.3m grants)"
+     "earned": 2.34,
+     "source": "EMV 4C 15 Jul 2026"
     }
    ],
    "raises": [
@@ -1159,38 +1196,48 @@
    "forecasts": [
     {
      "period": "2026-09-30",
-     "receipts": 0,
-     "opcf": -3.1,
-     "cash": 13.9,
-     "note": "Your sheet: CRC-P A$0.36m only; costs ~A$3.7m."
+     "earned": 0.51,
+     "staff": 1.91,
+     "rnd": 1.1,
+     "opcf": -3.15,
+     "cash": 13.93,
+     "note": "YOUR JUL-26 FORECAST — the Sep-26 4C is out: enter the actual under Cash-flow history."
     },
     {
      "period": "2026-12-31",
-     "receipts": 0,
-     "opcf": -2.7,
-     "cash": 11.2,
-     "note": "IGP grant ~A$0.93m."
+     "earned": 1.06,
+     "staff": 1.95,
+     "rnd": 1.15,
+     "opcf": -2.69,
+     "cash": 11.21,
+     "note": "IGP grant tranche."
     },
     {
      "period": "2027-03-31",
-     "receipts": 0,
+     "earned": 4.28,
+     "staff": 1.99,
+     "rnd": 1.25,
      "opcf": 0.4,
-     "cash": 11.6,
-     "note": "R&D tax refund ~A$3.8m (April quarter)."
+     "cash": 11.58,
+     "note": "R&D refund ~A$3.8m."
     },
     {
      "period": "2027-06-30",
-     "receipts": 0,
-     "opcf": -3,
-     "cash": 8.6,
-     "note": "De Novo submission mid-2027."
+     "earned": 1.04,
+     "staff": 2.03,
+     "rnd": 1.3,
+     "opcf": -2.99,
+     "cash": 8.57,
+     "note": "De Novo submission."
     },
     {
-     "period": "2027-12-31",
-     "receipts": 0,
-     "opcf": -3.8,
-     "cash": 1.7,
-     "note": "Your sheet: ~A$1.7m left at the approval target — raise near-certain around approval."
+     "period": "2027-09-30",
+     "earned": 1.01,
+     "staff": 2.07,
+     "rnd": 1.35,
+     "opcf": -3.13,
+     "cash": 5.42,
+     "note": "FDA review."
     }
    ]
   },
@@ -1700,26 +1747,52 @@
    "recurring": [],
    "finance": [
     {
-     "period": "2026-03-31",
-     "cash": 24.1,
-     "opcf": null,
-     "rnd": null,
-     "staff": null,
-     "admin": null,
-     "shares": 181,
-     "source": "May 2026 investor presentation; shares estimated from market cap",
-     "profitable": false
+     "opcf": -2.03,
+     "rnd": -1.16,
+     "staff": -0.64,
+     "admin": -0.3,
+     "shares": null,
+     "profitable": false,
+     "period": "2025-09-30",
+     "cash": 29.73,
+     "earned": 0.23,
+     "source": "Your ZHWA sheet (from the 4C)"
     },
     {
-     "opcf": -4.4,
-     "rnd": null,
-     "staff": null,
-     "admin": null,
+     "opcf": -4.92,
+     "rnd": -2.57,
+     "staff": -1.39,
+     "admin": -0.52,
+     "shares": null,
+     "profitable": false,
+     "period": "2025-12-31",
+     "cash": 25.78,
+     "earned": 0.59,
+     "source": "Your ZHWA sheet (from the 4C)"
+    },
+    {
+     "opcf": -1.84,
+     "rnd": -0.84,
+     "staff": -0.72,
+     "admin": -0.35,
+     "shares": null,
+     "profitable": false,
+     "period": "2026-03-31",
+     "cash": 24.07,
+     "earned": 0.23,
+     "source": "Your ZHWA sheet (from the 4C)"
+    },
+    {
+     "opcf": -4.42,
+     "rnd": -3.83,
+     "staff": -0.62,
+     "admin": -0.51,
      "shares": null,
      "profitable": false,
      "period": "2026-06-30",
-     "cash": 19.6,
-     "source": "Jun-26 4C (ZHWA sheet)"
+     "cash": 19.64,
+     "earned": 0.85,
+     "source": "Your ZHWA sheet (from the 4C)"
     },
     {
      "opcf": -1.6,
@@ -1730,7 +1803,7 @@
      "profitable": false,
      "period": "2026-09-30",
      "cash": 18.2,
-     "source": "Sep-26 4C (company: A$18.2m; Stockhead quotes A$18.82m)"
+     "source": "Sep-26 4C (company: A$18.2m; Stockhead A$18.82m). Enter staff/R&D from the 4C."
     }
    ],
    "raises": [],
@@ -1858,32 +1931,40 @@
    },
    "forecasts": [
     {
-     "period": "2026-09-30",
-     "receipts": 0.13,
-     "opcf": -5,
-     "cash": 13.6,
-     "note": "Your sheet (made Jul-26): Phase III R&D starting. Actual: Phase III slipped to 1H CY2027, so spend was lower."
-    },
-    {
      "period": "2026-12-31",
-     "receipts": 0.2,
-     "opcf": -2,
-     "cash": 16.2,
-     "note": "Re-forecast: ROXUS US launch costs, Phase III preparation. Watch US script numbers."
+     "earned": 1.33,
+     "staff": 0.7,
+     "rnd": 1.2,
+     "opcf": -1.37,
+     "cash": 16.83,
+     "note": "ROXUS US launch; R&D refund assumed A$1.0m."
     },
     {
      "period": "2027-03-31",
-     "receipts": 0.3,
-     "opcf": -2.5,
-     "cash": 13.7,
-     "note": "Phase III set-up; a raise likely around here."
+     "earned": 0.44,
+     "staff": 0.71,
+     "rnd": 2.5,
+     "opcf": -3.62,
+     "cash": 13.21,
+     "note": "Phase III set-up."
     },
     {
      "period": "2027-06-30",
-     "receipts": 0.4,
-     "opcf": -5,
-     "cash": 8.7,
-     "note": "Phase III starts (your sheet: ~A$5m a quarter R&D)."
+     "earned": 0.54,
+     "staff": 0.73,
+     "rnd": 5,
+     "opcf": -6.09,
+     "cash": 7.12,
+     "note": "Phase III starts (~A$5m a quarter)."
+    },
+    {
+     "period": "2027-09-30",
+     "earned": 0.64,
+     "staff": 0.74,
+     "rnd": 5,
+     "opcf": -6,
+     "cash": 1.12,
+     "note": "Cash nearly gone without a raise."
     }
    ]
   },
@@ -3005,6 +3086,277 @@
    "animal": "turtle",
    "tagline": "ETF of ~90 high-dividend ASX shares — mostly big banks, miners, Telstra, Woodside",
    "section": "financials"
+  },
+  {
+   "id": "asx",
+   "scenarios": [
+    {
+     "name": "De-rate",
+     "prob": 25,
+     "value": 62,
+     "success": false,
+     "note": "EPS ~A$2.80, P/E 20x + A$6 dividends."
+    },
+    {
+     "name": "Base",
+     "prob": 55,
+     "value": 80.6,
+     "success": true,
+     "note": "EPS ~A$3.10 by FY29, P/E 24x + A$6.2 dividends."
+    },
+    {
+     "name": "Bull",
+     "prob": 20,
+     "value": 98.7,
+     "success": true,
+     "note": "Costs normalise, EPS ~A$3.30, P/E 28x."
+    }
+   ],
+   "trials": [],
+   "catalysts": [],
+   "history": [],
+   "promises": [],
+   "finance": [],
+   "raises": [],
+   "recurring": [],
+   "facts": [
+    "FY26 (to 30 Jun 2026): underlying NPAT A$536.4m (+5.2%); underlying ROE 13.7%; total dividend 206.5c (−7.5%), fully franked — payout cut to build a A$150m extra capital charge imposed after the ASIC Inquiry (must be held by 30 Jun 2027).",
+    "FY27 guidance: total expenses +18–21% (technology modernisation, the Accelerate program), capex A$180–200m — earnings growth will be flat to low in FY27.",
+    "Settled ASIC proceedings over the abandoned CHESS project (A$20.5m penalty); CHESS Release 1 shipped. RBA said in Sep 2026 ASX still falls short in some areas.",
+    "Price ~A$67.3 (12 Nov 2026); ~194m shares; market value ~A$13bn; ~24x underlying earnings; ~3.1% fully franked yield.",
+    "Your sheet: target = EPS × (10-yr average P/E 29 + wide-moat premium 10). At EPS A$2.76 that gives ~A$108 — but it assumes the old growth rate returns."
+   ],
+   "thesis": {
+    "paragraph": "Castle: the national exchange — listings, trading, clearing and settlement — with a licence nobody else can easily get. Moat: regulatory licence, network effects and efficient scale; wide. Lords: honest, but 'able' is in question — ten years of CHESS failure, an ASIC Inquiry and a regulator-imposed A$150m capital buffer. Growth is now slow: FY27 costs rise 18–21% while revenue grows mid-single digits, and the dividend was cut to fund the capital charge. At ~24x earnings for ~0–5% growth it is a Turtle — a quality monopoly at a full price, outside your plan. It becomes interesting only if a failure (CHESS delay, outage) knocks it to ~18x earnings.",
+    "misperception": "None useful today; the market already prices the monopoly and discounts the cost blowout fairly.",
+    "wrong": "N/A for a watch item.",
+    "premortem": "CHESS replacement slips again, costs keep rising faster than revenue, P/E de-rates from 24x to 18x.",
+    "moats": [
+     "licence",
+     "network",
+     "scale"
+    ],
+    "moatRating": 2,
+    "castleRating": 2
+   },
+   "fundamentals": {
+    "asOf": "2026-11-23",
+    "source": "FY26 results (13 Aug 2026); FY27 guidance. EPS = underlying NPAT ÷ 194.3m shares. Growth 4% = my estimate (FY27 cost growth 18–21% vs revenue growth ~5–7%). FCF ~A$450m = NPAT less net capex (estimate).",
+    "url": "https://announcements.asx.com.au/asxpdf/20260813/pdf/072q3x4njszbc3.pdf",
+    "shares": 194.3,
+    "eps": 2.76,
+    "growth": 0.04,
+    "fcf": 450,
+    "roc": 0.137,
+    "book": 20.1
+   },
+   "levers": {},
+   "checklist": [],
+   "scorecard": {},
+   "keywords": "chess|asic|accelerate|result|guidance|dividend|capital charge",
+   "reporting": "half",
+   "thesisBroken": false,
+   "reviewed": false,
+   "color": 4,
+   "ticker": "ASX",
+   "name": "ASX Limited",
+   "sector": "financials",
+   "sub": "",
+   "horizon": "2029-11-23",
+   "sleeve": "watch",
+   "animal": "turtle",
+   "tagline": "Australia's stock exchange, clearing house and settlement system — a regulated near-monopoly",
+   "section": "financials"
+  },
+  {
+   "id": "wtc",
+   "scenarios": [
+    {
+     "name": "Bear",
+     "prob": 30,
+     "value": 35,
+     "success": false,
+     "note": "EPS ~A$1.60, P/E 22x (governance/integration problems)."
+    },
+    {
+     "name": "Base",
+     "prob": 50,
+     "value": 66,
+     "success": true,
+     "note": "EPS ~A$2.20 by FY29, P/E 30x."
+    },
+    {
+     "name": "Bull",
+     "prob": 20,
+     "value": 95,
+     "success": true,
+     "note": "EPS ~A$2.50, P/E 38x — growth premium returns."
+    }
+   ],
+   "trials": [],
+   "catalysts": [],
+   "history": [],
+   "promises": [],
+   "finance": [],
+   "raises": [],
+   "recurring": [],
+   "facts": [
+    "FY26 (to 30 Jun 2026): revenue US$1,395.9m (+79%, e2open 11 months = US$541.2m); underlying EBITDA US$644.5m (+56%); underlying EPS US$0.94 (+28%); statutory NPAT fell 11% to US$178.7m on higher interest costs; free cash flow US$410.7m (+43%).",
+    "FY27 guidance: revenue US$1.48–1.54bn (+6–10%), underlying EBITDA US$725–780m (+12–21%), margin 49–51%. e2open cost synergies US$64m run-rate already (target US$50m), ~US$115m total savings; plan to replace ~2,000 roles with AI agents over two years (your sheet).",
+    "Net debt 2.7x EBITDA at 30 Jun 2026 (from the debt-funded e2open deal); target ~2.2x by end FY27, <2.0x in FY28.",
+    "Price ~A$47.3 (12 Nov 2026), up ~37% in a month but down ~50–60% from its high; ~336m shares; market value ~A$16bn. Founder Richard White's vehicle Realwise owns ~34.6%. AGM 27 Nov 2026 (director elections).",
+    "Governance: the board and founder conduct issues of 2024–25 plus regulatory investigations remain the main Lords question. Your sheet: CEO Zubin Appoo bought 20,020 shares at ~A$49.90."
+   ],
+   "thesis": {
+    "paragraph": "Castle: CargoWise is embedded in the daily operations of the world's freight forwarders; e2open adds supply-chain planning. Moat: very high switching costs and network effects (customs/compliance in 100+ countries), now also scale. Lords: CEO Zubin Appoo is executing well (synergies early, insider buying), but founder Richard White still owns ~35% after the 2024–25 governance scandals — 'honest' is the open question. Misperception: after a ~55% fall the market prices WTC like a slowing, indebted roll-up; the bull view is that FY27 margins (49–51%) and deleveraging lift EPS ~20% a year even with revenue growth of 6–10%. At ~33x underlying earnings and PEG ~2.2 it is not cheap enough for a Monkey yet, and the governance risk argues for a margin of safety. Watch for a fall toward ~A$40 or a clean AGM/governance outcome.",
+    "misperception": "Market treats it as a broken growth story; cost-out and deleveraging could compound EPS at ~20% for 3 years.",
+    "wrong": "e2open integration stalls, customers churn on the new commercial model, or new governance/regulatory findings involve the founder.",
+    "premortem": "Debt-funded e2open underdelivers, revenue growth falls to ~5%, a new governance issue surfaces and the P/E halves.",
+    "moats": [
+     "switching",
+     "network",
+     "scale"
+    ],
+    "moatRating": 2,
+    "castleRating": 2,
+    "lords": {
+     "honest": 0,
+     "able": 2,
+     "note": "Able: synergies 18 months early, margin targets. Honest: founder conduct issues and regulatory investigations not fully resolved; founder holds ~35%."
+    }
+   },
+   "fundamentals": {
+    "asOf": "2026-11-23",
+    "source": "FY26 results & annual report (Aug/Oct 2026). Converted at AUD/USD 0.65 (my assumption). EPS A$1.44 (underlying). Growth 15% = my estimate (EBITDA +12–21% and falling interest; revenue only +6–10%). Net debt ≈ 2.7 × US$644.5m = US$1.74bn = A$2.68bn. EBIT ≈ US$480m underlying (estimate). FCF A$632m.",
+    "url": "https://kalkine.com.au/news/technology/wisetech-global-asxwtc-adds-usd-541-million-in-fy26-revenue-from-e2open-why-did-statutory-profit-fall",
+    "shares": 336,
+    "eps": 1.44,
+    "growth": 0.15,
+    "ebit": 738,
+    "netDebt": 2680,
+    "fcf": 632,
+    "roc": 0.135
+   },
+   "levers": {
+    "price": {
+     "near": "New commercial model (value-based pricing).",
+     "far": ""
+    },
+    "cost": {
+     "near": "~US$115m savings; AI replacing ~2,000 roles.",
+     "far": ""
+    },
+    "expand": {
+     "near": "e2open cross-sell into CargoWise base.",
+     "far": ""
+    },
+    "more": {
+     "near": "Large global forwarder rollouts.",
+     "far": ""
+    },
+    "revitalise": {
+     "near": "AI-driven products.",
+     "far": ""
+    },
+    "close": {
+     "near": "Low-margin e2open products.",
+     "far": ""
+    }
+   },
+   "checklist": [],
+   "scorecard": {},
+   "keywords": "cargowise|e2open|guidance|result|agm|white|governance|acquisition",
+   "reporting": "half",
+   "thesisBroken": false,
+   "reviewed": false,
+   "color": 6,
+   "ticker": "WTC",
+   "name": "WiseTech Global",
+   "sector": "it",
+   "sub": "",
+   "horizon": "2029-11-23",
+   "sleeve": "watch",
+   "animal": "monkey",
+   "tagline": "CargoWise — the operating system of global freight forwarding — plus e2open (bought 2025)",
+   "section": "it"
+  },
+  {
+   "id": "drr",
+   "scenarios": [
+    {
+     "name": "Iron ore slump",
+     "prob": 30,
+     "value": 3.24,
+     "success": false,
+     "note": "EPS ~22c, P/E 12x + ~60c dividends."
+    },
+    {
+     "name": "Base",
+     "prob": 50,
+     "value": 4.58,
+     "success": true,
+     "note": "EPS ~28c, P/E 14x + ~66c dividends."
+    },
+    {
+     "name": "Bull",
+     "prob": 20,
+     "value": 6.1,
+     "success": true,
+     "note": "Iron ore US$110 + Thacker Pass royalties from 2028."
+    }
+   ],
+   "trials": [],
+   "catalysts": [],
+   "history": [],
+   "promises": [],
+   "finance": [],
+   "raises": [],
+   "recurring": [],
+   "facts": [
+    "FY26 (to 30 Jun 2026): Mining Area C royalty revenue A$234.4m on record 140.1Mt; underlying NPAT A$151.7m; statutory NPAT ~A$164m; basic EPS 31.0c; final dividend 10.8c fully franked (FY25 final 13.0c). Net debt roughly halved during FY26.",
+    "Royalty = 1.232% of A$ iron-ore revenue from MAC (operated by BHP) — ~90% margin, no capex, but fully exposed to the iron-ore price and AUD.",
+    "Thacker Pass (Nevada) lithium royalty: >95% engineering done, but on 11 Nov 2026 Lithium Americas raised the Phase 1 capex estimate to ~US$3.83bn from US$2.93bn — timing risk for the growth royalty. Added a copper royalty (Santa Cruz, Arizona).",
+    "Price ~A$3.76 (17 Nov 2026), down from ~A$4.42 in Aug as iron ore eased; ~529m shares; market value ~A$2.0bn; trailing yield ~6% fully franked.",
+    "Your sheet: target = EPS × 12 (market P/E − 1) + cash/share; moat wide; expected FY26 dividend ~22c."
+   ],
+   "thesis": {
+    "paragraph": "Castle: a toll on one of the world's lowest-cost, longest-life iron-ore hubs (BHP's Mining Area C) — no costs, no capex, ~90% margins, fully franked dividends. Moat: the royalty contract itself (a 'licence' nobody can compete with) on a tier-1 asset. Lords: a small, disciplined team; the Trident/Thacker diversification is sensible but the lithium royalty now faces a US$0.9bn capex blowout at the operator. It is a Bear because earnings move with the iron-ore price: buy when iron ore is depressed and the market extrapolates it, sell when it booms. At ~11x mid-cycle EV/EBIT it is fair, not cheap; the Bear buy zone is roughly A$2.95–3.00 (≈8x).",
+    "misperception": "Iron-ore pessimism (Simandou supply) is pushing the price down; the market may over-extrapolate a cyclical dip in a royalty that BHP keeps expanding.",
+    "wrong": "Iron ore falls below ~US$75/t for years, MAC volumes drop, or Thacker Pass is delayed past 2029.",
+    "premortem": "Simandou floods the market, iron ore drops to US$70, the dividend falls 30% and the shares go to A$2.80.",
+    "moats": [
+     "licence"
+    ],
+    "moatRating": 2,
+    "castleRating": 2
+   },
+   "fundamentals": {
+    "asOf": "2026-11-23",
+    "source": "FY26 results (Aug 2026), Sep-26 quarter. EPS = underlying NPAT ÷ 529m. Net debt ~A$200m and mid-cycle EBIT ~A$195m (iron ore ~US$90/t) are my estimates. Book value is tiny (royalty held near historical cost), so price/book is not meaningful here.",
+    "url": "https://kalkine.com.au/news/financial/deterra-royalties-asxdrr-what-record-mining-area-c-sales-mean-for-its-earnings-base",
+    "shares": 529,
+    "eps": 0.287,
+    "netDebt": 200,
+    "ebitMid": 195,
+    "book": 0.26
+   },
+   "levers": {},
+   "checklist": [],
+   "scorecard": {},
+   "keywords": "royalty|mining area c|thacker|quarterly|dividend|acquisition|iron ore",
+   "reporting": "half",
+   "thesisBroken": false,
+   "reviewed": false,
+   "color": 6,
+   "ticker": "DRR",
+   "name": "Deterra Royalties",
+   "sector": "materials",
+   "sub": "",
+   "horizon": "2029-11-23",
+   "sleeve": "watch",
+   "animal": "bear",
+   "tagline": "1.232% royalty on BHP's Mining Area C iron ore, plus Thacker Pass lithium and other royalties",
+   "section": "materials"
   }
  ]
 }
