@@ -16,31 +16,33 @@
     "Broker targets: Ord Minnett A$27.80 (6 Nov 2026), Canaccord A$24.76 (1 Sep 2026).",
     "Partner check (Acadia, Q3 2026): DAYBUE sales US$140m (+39%), guidance raised a third time to US$505–520m; Neuren Q3 royalty US$16.4m (+51%).",
     "Your Koala estimate (sites × ~1 patient/site/month, 13-week dosing + analysis): last patient ~mid-2027, results ~Dec 2027 — earlier than the mid-2028 date in the catalyst list. Re-run it with the trial timing calculator when Neuren updates site and enrolment numbers.",
-    "Your sheet's target-price method: EPS × (20 for DAYBUE + 15 premium for NNZ-2591) + cash per share + franking credits per share (~A$0.60) + dividend add-on."
+    "Your sheet's target-price method: EPS × (20 for DAYBUE + 15 premium for NNZ-2591) + cash per share + franking credits per share (~A$0.60) + dividend add-on.",
+    "Memo (Nov 2026): SOTP A$37.82/share; Craig operator/M&A A$44.90–55.25; Koala miss ~A$8–15; win ~A$52–70.",
+    "PMS prevalence ~1 in 7,300 (2026 Mount Sinai/CureSHANK, 180k records) — about double earlier estimates."
    ],
    "horizon": "2034-11-20",
    "reviewed": false,
    "scenarios": [
     {
-     "name": "Bear",
-     "prob": 55,
-     "value": 16,
+     "name": "Koala misses",
+     "prob": 47.5,
+     "value": 12,
      "success": false,
-     "note": "Koala fails. Value = DAYBUE royalties + cash + dividends to 2034."
+     "note": "Cash + DAYBUE floor (memo A$8–15)."
     },
     {
-     "name": "Base",
-     "prob": 33,
-     "value": 55,
+     "name": "Koala wins (SOTP re-rate)",
+     "prob": 37.5,
+     "value": 54,
      "success": true,
-     "note": "Koala succeeds ~2028, approval ~2030, PMS sales ramping or partnered."
+     "note": "PMS POS → 90%; SOTP ~A$52–56."
     },
     {
-     "name": "Bull",
-     "prob": 12,
-     "value": 90,
+     "name": "Win + pharma auction",
+     "prob": 15,
+     "value": 65,
      "success": true,
-     "note": "Several NNZ-2591 indications work and/or a takeover at a premium."
+     "note": "Craig M&A A$55–70+."
     }
    ],
    "trials": [
@@ -519,6 +521,202 @@
      }
     ],
     "note": "Your spreadsheet method: Acadia reports ~3 weeks before Neuren and moves first. Royalty % rises with sales because royalties are tiered. Acadia's 2028 ambition: ~US$700m DAYBUE sales."
+   },
+   "memo": {
+    "title": "NNZ-2591 (Koala Phase 3) — dual valuation and 38,000-share exit plan",
+    "source": "Your memo (Nov 2026)",
+    "date": "2026-11-23",
+    "refPrice": 23.04,
+    "summary": "Neuren pairs a self-funding DAYBUE royalty stream (US$91–93m of 2026 trofinetide income) with 100% of NNZ-2591, now in the Koala Phase 3 for Phelan-McDermid syndrome (N=160, ages 3–12, 13 weeks, co-primary PMSA-C and VABS-3). Two lenses: Wall Street sum-of-the-parts A$37.82 a share, and David Craig's operator/M&A view A$44.90–55.25. A Koala miss re-rates to cash + DAYBUE (~A$8–15); a win lifts SOTP to ~A$52–56 and an auction to A$55–70+.",
+    "valuations": [
+     {
+      "name": "Wall Street SOTP",
+      "perShare": 37.82,
+      "method": "DCF + rNPV, 52.5% PMS POS"
+     },
+     {
+      "name": "Craig operator / M&A",
+      "low": 44.9,
+      "high": 55.25,
+      "perShare": 50,
+      "method": "3.0–4.5x peak sales"
+     },
+     {
+      "name": "If Koala misses",
+      "low": 8.18,
+      "high": 15,
+      "perShare": 11.5,
+      "method": "cash + DAYBUE floor"
+     },
+     {
+      "name": "If Koala wins",
+      "low": 52,
+      "high": 70,
+      "perShare": 60,
+      "method": "SOTP re-rate / auction"
+     },
+     {
+      "name": "SOTP at 42% POS (Claude)",
+      "perShare": 33.9,
+      "method": "same model, more conservative POS"
+     }
+    ],
+    "pos": 0.525,
+    "posNote": "Memo base case (range 50–55%): strong open-label Phase 2 (16/18 improved on the clinician scale, 10 of 14 endpoints significant), identical age band, duration and dosing in Phase 3, clean tolerability. Residual risks: placebo response from caregiver expectancy; both co-primaries must hit p<0.05.",
+    "fourWalls": [
+     {
+      "wall": "1. Patient finding",
+      "failure": "Underestimating prevalence; can't find undiagnosed patients",
+      "solution": "Co-funded 2026 Mount Sinai/CureSHANK study (180k records): PMS ~1 in 7,300 — double prior estimates",
+      "score": 2
+     },
+     {
+      "wall": "2. Natural history & endpoints",
+      "failure": "Generic scales fail FDA review or drown the signal",
+      "solution": "FDA Type C alignment on two bespoke co-primaries (PMSA-C, VABS-3 receptive communication)",
+      "score": 2
+     },
+     {
+      "wall": "3. Capital & CMC",
+      "failure": "Dilutive raises; small-batch manufacturing delays",
+      "solution": "Scalable oral liquid CMC locked early; Koala (~US$65m) self-funded from A$286.5m cash + royalties",
+      "score": 2
+     },
+     {
+      "wall": "4. Patient ecosystem & access",
+      "failure": "Slow enrolment, payer pushback",
+      "solution": "Presenting sponsor of the PMSF family conference; Koala referral waitlists",
+      "score": 2
+     }
+    ],
+    "sotp": [
+     {
+      "part": "Net cash + near milestones",
+      "method": "A$286.5m cash + US$35m German launch milestone",
+      "perShare": 2.69
+     },
+     {
+      "part": "DAYBUE royalty stream",
+      "method": "12-yr post-tax DCF at 9.5% + NA/Japan milestones",
+      "perShare": 6.42
+     },
+     {
+      "part": "NNZ-2591 PMS (Phase 3)",
+      "method": "15-yr rNPV at 52.5% POS, launch 2029",
+      "perShare": 19.67
+     },
+     {
+      "part": "NNZ-2591 Pitt Hopkins",
+      "method": "rNPV at 40% POS, ~US$650m peak, 2030",
+      "perShare": 4.87
+     },
+     {
+      "part": "NNZ-2591 Angelman",
+      "method": "rNPV at 30% POS, ~US$800m peak, 2031",
+      "perShare": 3.64
+     },
+     {
+      "part": "HIE / SYNGAP1 option",
+      "method": "Early pipeline; HIE orphan status Nov 2026",
+      "perShare": 1.46
+     },
+     {
+      "part": "Corporate overhead",
+      "method": "NPV of ~A$15m/yr G&A",
+      "perShare": -0.93
+     },
+     {
+      "part": "Total (126.7m shares, AUD/USD 0.65)",
+      "method": "",
+      "perShare": 37.82
+     }
+    ],
+    "commercial": [
+     {
+      "layer": "US genetic prevalence",
+      "assumption": "340m ÷ 7,300",
+      "figure": "46,575"
+     },
+     {
+      "layer": "Diagnosed pool",
+      "assumption": "25% identified at peak",
+      "figure": "11,644"
+     },
+     {
+      "layer": "Treated at peak",
+      "assumption": "35% share, first-in-class",
+      "figure": "4,075"
+     },
+     {
+      "layer": "List price (WAC)",
+      "assumption": "Just below DAYBUE (~US$590k)",
+      "figure": "US$550k/yr"
+     },
+     {
+      "layer": "Net price",
+      "assumption": "28% gross-to-net",
+      "figure": "US$396k/yr"
+     },
+     {
+      "layer": "Effective revenue/patient",
+      "assumption": "80% persistency",
+      "figure": "US$316.8k/yr"
+     },
+     {
+      "layer": "Peak US net sales",
+      "assumption": "4,075 × US$316.8k",
+      "figure": "US$1,291m"
+     },
+     {
+      "layer": "Peak US EBIT",
+      "assumption": "COGS 7%, field force 14%, RWE & G&A 9%",
+      "figure": "US$900m (69.7%)"
+     }
+    ],
+    "planTitle": "Your 4-tranche exit plan (personal holding: 38,000 @ A$15.40)",
+    "plan": [
+     {
+      "tranche": "T1 De-risk now",
+      "size": "9,500 (25%)",
+      "price": "A$23.00–25.50",
+      "timing": "Q4 2026–Q1 2027",
+      "why": "Locks ~A$84k gain; recovers ~39% of capital"
+     },
+     {
+      "tranche": "T2 Pre-readout run",
+      "size": "11,500 (30%)",
+      "price": "A$31.00–34.00",
+      "timing": "3–6 months before Koala topline",
+      "why": "With T1 returns 100%+ of the A$585k cost"
+     },
+     {
+      "tranche": "T3 SOTP target",
+      "size": "10,000 (26%)",
+      "price": "A$38.00–44.00",
+      "timing": "1–4 weeks after a positive readout",
+      "why": "Sells into the SOTP re-rating"
+     },
+     {
+      "tranche": "T4 M&A runner",
+      "size": "7,000 (19%)",
+      "price": "A$48.00–55.00+",
+      "timing": "NDA filing / pharma auction, 6–18 months after readout",
+      "why": "House-money runner for a buyout"
+     }
+    ],
+    "rules": [
+     "Tranches 1+2 (21,000 shares) return ~A$604k — the whole cost base — before Koala unblinds.",
+     "If Koala misses after T1+T2, the remaining 17,000 shares (~A$187k at A$11) are pure profit; hold for Pitt Hopkins/Angelman.",
+     "If a cash takeover above A$45 arrives before T3/T4, accept it.",
+     "Personal holding: check purchase dates — 12 months+ gets the 50% CGT discount (this does NOT apply to Z Rahim Pty Ltd)."
+    ],
+    "critique": [
+     "POS 52.5% sits above the memo's own 35–45% base rate for neurodevelopmental Phase 3s. Open-label Phase 2 signals usually shrink against placebo (caregiver-rated scales especially). At 42% POS the same SOTP falls to ~A$33.9 — still ~47% above A$23.04, so the conclusion holds with less margin.",
+     "Peak sales of US$1.29bn stack four optimistic inputs: prevalence 1 in 7,300 (double older estimates), 25% diagnosed, 35% share and US$550k list price. With the older 1 in 15,000 prevalence, peak sales roughly halve to ~US$630m — DAYBUE itself is ~US$500m after 3.5 years in a better-diagnosed disease.",
+     "The Craig A$44.90–55.25 range leans on un-risked platform value that buyers usually pay only after Phase 3 data. Before Koala reads out, treat the SOTP (A$34–38) as fair value today and the Craig range as the post-win target.",
+     "The plan has no readout date. Your trial-timing estimate is ~Dec 2027; the company will guide at ~50% enrolment. T2 should be timed 3–6 months before that.",
+     "Your ladder already matches the site's sell-ladder alerts (A$23, 31, 38, 48), so the robot will email each step."
+    ]
    }
   },
   {
@@ -527,37 +725,37 @@
    "name": "Dimerix",
    "section": "rare",
    "color": 5,
-   "tagline": "DMX-200 for the rare kidney disease FSGS, partnered in the US with Amicus",
+   "tagline": "DMX-200 (CCR2 blocker, add-on pill) for FSGS kidney disease — Phase 3 ACTION3, partnered in most regions",
    "facts": [
-    "ACTION3 Phase 3: 333 adults dosed across 219 sites in 21 countries; >90% power confirmed in blinded review (Apr 2026).",
-    "Shares fell ~36% on 28 Apr 2026 when the early (accelerated approval) readout was dropped; trial runs to final proteinuria endpoint.",
-    "Kidney Week (Oct 2026) human data link CCR2 activity to worse FSGS outcomes — supports the target, not proof DMX-200 works.",
-    "Up to A$34m non-dilutive facility (half drawn by Sep 2026). Bought DMX-652 (AKI) Jul 2026.",
-    "Partners: Amicus (US, up to US$560m milestones), Everest (Greater China/SE Asia), FUSO (Japan) and others."
+    "ACTION3 Phase 3 fully recruited (333 patients); external blinded review confirmed it remains powered (>90%) for the proteinuria endpoint; study concludes ~Mar 2028 (traditional FDA approval path).",
+    "Five regional licences for DMX-200 (Amicus US, Advanz Europe, Taiba MENA, Japan partner, Everest Greater China/Korea/SE Asia) — total deal value up to ~A$1.9bn; DXB keeps milestones + royalties.",
+    "Cash A$34.8m at 30 Sep 2026 after a A$14.1m Everest upfront and a first A$17m drawdown of a A$34m non-dilutive (debt) facility; was A$16.2m at 30 Jun 2026.",
+    "Acquired DMX-652 (Phase 2-ready, first indication acute kidney injury).",
+    "Price ~A$0.20 (15 Nov 2026), down ~56% in 2026; ~600m shares; market value ~A$120m; turnover ~1–3m shares a day (~A$0.3–0.6m)."
    ],
-   "horizon": "2034-11-20",
+   "horizon": "2031-12-31",
    "reviewed": false,
    "scenarios": [
     {
-     "name": "Bear",
-     "prob": 55,
+     "name": "ACTION3 fails / dilution",
+     "prob": 45,
      "value": 0.05,
      "success": false,
-     "note": "ACTION3 misses in 2028; cash-strapped, shares collapse."
+     "note": "Cash minus debt after raises."
     },
     {
-     "name": "Base",
-     "prob": 33,
-     "value": 1,
+     "name": "Positive, slow launch",
+     "prob": 35,
+     "value": 0.9,
      "success": true,
-     "note": "Success, FDA approval ~2030, Amicus milestones and royalties flow."
+     "note": "Royalties + milestones; partners launch 2029."
     },
     {
-     "name": "Bull",
-     "prob": 12,
-     "value": 1.6,
+     "name": "Positive + takeover",
+     "prob": 20,
+     "value": 1.8,
      "success": true,
-     "note": "Strong data plus buyout. Rare — don't anchor on it."
+     "note": "Partner (e.g. Amicus) or pharma buys DXB; analyst target ~A$1.90."
     }
    ],
    "trials": [
@@ -793,7 +991,53 @@
    ],
    "reporting": "quarterly",
    "recurring": [],
-   "finance": [],
+   "finance": [
+    {
+     "opcf": null,
+     "rnd": null,
+     "staff": null,
+     "admin": null,
+     "shares": null,
+     "profitable": false,
+     "period": "2025-09-30",
+     "cash": 49.2,
+     "source": "DXB 4C Sep-25"
+    },
+    {
+     "opcf": -11.1,
+     "rnd": null,
+     "staff": null,
+     "admin": null,
+     "shares": null,
+     "profitable": false,
+     "period": "2025-12-31",
+     "cash": 38.5,
+     "source": "DXB 4C Dec-25"
+    },
+    {
+     "opcf": null,
+     "rnd": null,
+     "staff": null,
+     "admin": null,
+     "shares": null,
+     "profitable": false,
+     "period": "2026-06-30",
+     "cash": 16.2,
+     "source": "DXB 4C Jun-26"
+    },
+    {
+     "opcf": 1.6,
+     "rnd": null,
+     "staff": null,
+     "admin": null,
+     "shares": null,
+     "profitable": false,
+     "period": "2026-09-30",
+     "cash": 34.8,
+     "earned": 14.1,
+     "source": "DXB 4C Sep-26: +A$14.1m Everest upfront, +A$17m debt drawdown (opcf derived — check the 4C)"
+    }
+   ],
    "raises": [],
    "scorecard": {
     "endpoint": 2,
@@ -811,11 +1055,190 @@
    "sub": "rare",
    "sleeve": "rare",
    "animal": "insect",
-   "thesis": {},
-   "fundamentals": {},
+   "thesis": {
+    "paragraph": "Castle: a late-stage, partnered rare kidney drug — DMX-200 is an add-on pill to standard blood-pressure therapy in FSGS, a disease with no approved specific treatment. Moat: patents/orphan exclusivity plus five regional partners who carry commercial cost. Lords: capital-efficient deal-makers (A$1.9bn of deal value, non-dilutive money), but the endpoint has been reworked (proteinuria at 104 weeks, supported by PARASOL) and timelines have stretched to 2028. Misperception: the market prices DXB near cash-plus-a-little (~A$120m) despite partners having paid real upfronts after due diligence. Odds against us: cash covers ~3–4 quarters, so a raise or more debt comes before the 2028 readout.",
+    "misperception": "Priced as if ACTION3 will fail; partners' upfront payments after diligence argue otherwise.",
+    "wrong": "Blinded/interim analyses weaken, the FDA rejects proteinuria as the approval endpoint, or a deeply discounted raise.",
+    "premortem": "A dilutive raise at A$0.12, then a 2028 miss — the share price goes to cash (~A$0.03).",
+    "moats": [
+     "patent",
+     "licence"
+    ],
+    "moatRating": 1,
+    "castleRating": 1
+   },
+   "fundamentals": {
+    "asOf": "2026-11-23",
+    "source": "Sep-26 quarterly (29 Oct 2026), Stockhead wrap; price Investing.com 15 Nov 2026.",
+    "shares": 600.4,
+    "netDebt": -17.8
+   },
    "levers": {},
    "checklist": [],
-   "thesisBroken": false
+   "thesisBroken": false,
+   "forecasts": [
+    {
+     "period": "2026-12-31",
+     "earned": 0.2,
+     "staff": 0.7,
+     "rnd": 7.5,
+     "opcf": -9,
+     "cash": 25.8,
+     "note": "ACTION3 costs falling as patients finish (company guidance)."
+    },
+    {
+     "period": "2027-03-31",
+     "earned": 0.2,
+     "staff": 0.7,
+     "rnd": 6.5,
+     "opcf": -8,
+     "cash": 17.8,
+     "note": "Excludes the second A$17m facility tranche."
+    },
+    {
+     "period": "2027-06-30",
+     "earned": 0.2,
+     "staff": 0.7,
+     "rnd": 5.5,
+     "opcf": -7,
+     "cash": 10.8,
+     "note": "R&D refund not modelled (small)."
+    },
+    {
+     "period": "2027-09-30",
+     "earned": 0.2,
+     "staff": 0.7,
+     "rnd": 5.5,
+     "opcf": -7,
+     "cash": 3.8,
+     "note": "Raise or second tranche needed before here."
+    }
+   ],
+   "memo": {
+    "title": "DMX-200 (ACTION3, FSGS) — dual valuation and entry plan",
+    "source": "Claude, same method as your Neuren memo",
+    "date": "2026-11-23",
+    "refPrice": 0.2,
+    "summary": "A partnered Phase 3 rare-kidney asset trading near ~4x its cash. Value hinges on one readout (~2028). Because cash runs ~3–4 quarters, a capital raise (or the second debt tranche) comes first — the entry point by your rule.",
+    "valuations": [
+     {
+      "name": "Wall Street SOTP (rough)",
+      "low": 0.55,
+      "high": 0.85,
+      "perShare": 0.7,
+      "method": "risked royalties + milestones, 50% POS"
+     },
+     {
+      "name": "Craig operator / M&A",
+      "low": 1.5,
+      "high": 2,
+      "perShare": 1.75,
+      "method": "buyout after positive data"
+     },
+     {
+      "name": "If ACTION3 fails",
+      "perShare": 0.05,
+      "method": "cash less debt"
+     },
+     {
+      "name": "10-bagger test",
+      "perShare": 2,
+      "method": "needed from A$0.20 — only the M&A case gets there"
+     }
+    ],
+    "pos": 0.5,
+    "posNote": "Passed an efficacy interim (2024) and a blinded power check (>90%); FSGS trials have a mixed record (sparsentan hit proteinuria but missed eGFR). Endpoint changes add regulatory risk.",
+    "fourWalls": [
+     {
+      "wall": "1. Patient finding",
+      "failure": "Can't recruit rare patients",
+      "solution": "FSGS is biopsy-diagnosed and nephrologist-managed; ACTION3 over-recruited (333)",
+      "score": 2
+     },
+     {
+      "wall": "2. Endpoints",
+      "failure": "Endpoint fails FDA review",
+      "solution": "Moved to proteinuria at 104 weeks with PARASOL support; traditional approval path — but the change itself is a risk",
+      "score": 1
+     },
+     {
+      "wall": "3. Capital & CMC",
+      "failure": "Dilutive raises",
+      "solution": "Non-dilutive licences and a A$34m facility, yet only ~3–4 quarters of cash and new debt",
+      "score": 1
+     },
+     {
+      "wall": "4. Access",
+      "failure": "Payer/launch failure",
+      "solution": "Partners in every major region carry the launch",
+      "score": 2
+     }
+    ],
+    "sotp": [
+     {
+      "part": "Net cash (Sep-26)",
+      "method": "A$34.8m less A$17m debt",
+      "perShare": 0.03
+     },
+     {
+      "part": "DMX-200 royalties (risked)",
+      "method": "~US$600m peak global sales × ~15% blended royalty, 50% POS, launch 2029, 12% discount",
+      "perShare": 0.45
+     },
+     {
+      "part": "Milestones (risked)",
+      "method": "Share of ~A$1.9bn deal value still to come, 50% POS",
+      "perShare": 0.2
+     },
+     {
+      "part": "DMX-652 option",
+      "method": "Phase 2-ready AKI asset",
+      "perShare": 0.03
+     },
+     {
+      "part": "Total (~600m shares, before any raise)",
+      "method": "",
+      "perShare": 0.71
+     }
+    ],
+    "raise": "Cash A$34.8m + A$17m undrawn facility vs ~A$7–9m a quarter burn: the raise window opens around Mar–Jun 2027 (earlier without the second tranche). Expect another regional licence first if possible.",
+    "planTitle": "Entry plan (not held)",
+    "plan": [
+     {
+      "tranche": "E1",
+      "size": "40% of slot",
+      "price": "at the next raise/placement (est. A$0.15–0.18)",
+      "timing": "Mar–Jun 2027",
+      "why": "Your rule: the raise is the entry"
+     },
+     {
+      "tranche": "E2",
+      "size": "40%",
+      "price": "≤ A$0.30",
+      "timing": "after the blinded/Part-2 analysis confirms power",
+      "why": "Pay up a little for de-risking"
+     },
+     {
+      "tranche": "E3",
+      "size": "20%",
+      "price": "hold cash",
+      "timing": "keep for a 2nd raise or a dip",
+      "why": "Biotechs often raise twice before data"
+     },
+     {
+      "tranche": "Exit",
+      "size": "⅓ / ⅓ / ⅓",
+      "price": "A$0.60 / A$1.20 / A$1.80+",
+      "timing": "pre-readout run / topline / M&A",
+      "why": "Same shape as your Neuren ladder"
+     }
+    ],
+    "critique": [
+     "Royalty rates and remaining milestones are not fully disclosed; the SOTP is a rough estimate (± 50%).",
+     "The 104-week proteinuria endpoint is the key regulatory risk; watch for FDA written agreement.",
+     "Debt in a pre-revenue biotech can force a raise at a bad time — check facility covenants."
+    ]
+   }
   },
   {
    "id": "emv",
@@ -1239,7 +1662,97 @@
      "cash": 5.42,
      "note": "FDA review."
     }
-   ]
+   ],
+   "memo": {
+    "title": "emu bedside brain scanner — dual valuation and entry plan",
+    "source": "Claude, same method as your Neuren memo",
+    "date": "2026-11-23",
+    "refPrice": 1.67,
+    "summary": "A first-of-kind portable stroke scanner with a US pivotal trial ~80% enrolled. De Novo clearance is the value step; your forecasts show cash running thin around approval.",
+    "valuations": [
+     {
+      "name": "Wall Street SOTP (rough)",
+      "low": 2,
+      "high": 2.8,
+      "perShare": 2.46,
+      "method": "risked De Novo + First Responder"
+     },
+     {
+      "name": "Medtech M&A",
+      "low": 4,
+      "high": 6,
+      "perShare": 5,
+      "method": "4–6x revenue for novel imaging"
+     },
+     {
+      "name": "If trial fails",
+      "perShare": 0.6,
+      "method": "cash + grants"
+     },
+     {
+      "name": "Your cash × 5",
+      "perShare": 0.92,
+      "method": "Jun-26 cash"
+     }
+    ],
+    "pos": 0.65,
+    "posNote": "Strong earlier sensitivity/specificity (haemorrhage 92%/85%); risk is the added ischaemia endpoint and FDA Q-Sub feedback.",
+    "fourWalls": [
+     {
+      "wall": "1. Patients",
+      "failure": "Slow trial enrolment",
+      "solution": "Top US stroke centres (Mayo, Mount Sinai, UCLA); >230 of 300 enrolled",
+      "score": 2
+     },
+     {
+      "wall": "2. Endpoints",
+      "failure": "Regulatory mismatch",
+      "solution": "Sensitivity/specificity vs CT; ischaemia endpoint pending FDA feedback",
+      "score": 1
+     },
+     {
+      "wall": "3. Capital & manufacturing",
+      "failure": "Dilution",
+      "solution": "Grant-funded and frugal, but ~A$1.7m left at your approval target",
+      "score": 1
+     },
+     {
+      "wall": "4. Access",
+      "failure": "Hospital purchasing & reimbursement",
+      "solution": "New device category; reimbursement path not yet set",
+      "score": 1
+     }
+    ],
+    "raise": "Your forecasts: window opens Jun-27, very likely by Sep-27; cash ~A$1.7m at the Dec-27 approval target.",
+    "planTitle": "Entry plan (device slot)",
+    "plan": [
+     {
+      "tranche": "E1",
+      "size": "50%",
+      "price": "≤ A$1.30 or at a raise",
+      "timing": "before/at the raise",
+      "why": "Price is at fair value now"
+     },
+     {
+      "tranche": "E2",
+      "size": "50%",
+      "price": "≤ A$1.80",
+      "timing": "after De Novo submission",
+      "why": "De-risked"
+     },
+     {
+      "tranche": "Exit",
+      "size": "⅓ / ⅓ / ⅓",
+      "price": "A$2.50 / A$4.00 / A$5.00+",
+      "timing": "clearance / first sales / M&A",
+      "why": ""
+     }
+    ],
+    "critique": [
+     "Device sleeve, not a rare disease — Four Walls adapted.",
+     "Break-even needs ~70–80 units (your sheet); hospital capital budgets are slow."
+    ]
+   }
   },
   {
    "id": "cu6",
@@ -1247,36 +1760,37 @@
    "name": "Clarity Pharmaceuticals",
    "section": "other",
    "color": 3,
-   "tagline": "Copper-based radiopharmaceuticals for prostate cancer imaging and therapy",
+   "tagline": "Copper-64 SAR-bisPSMA prostate cancer PET imaging (two Phase 3s) + copper theranostics",
    "facts": [
-    "FDA Breakthrough Therapy designation for 64Cu-SAR-bisPSMA in biochemical recurrence (12 Nov 2026); shares rose ~23% to A$2.05, then fell back to ~A$1.88.",
-    "AMPLIFY and CLARIFY recruitment complete; topline for both guided H1 2027.",
-    "Cash A$178m at 30 Jun 2026; net operating outflow ~A$19m a quarter. A$203m placement at A$4.20 (Jul 2025) — shares now far below that.",
-    "Crowded PSMA PET market: several agents already FDA-approved."
+    "Phase 3 AMPLIFY and CLARIFY (383 enrolled) completed recruitment; topline data expected H1 2027 to support a US approval application.",
+    "FDA Breakthrough Therapy designation for 64Cu-SAR-bisPSMA in suspected prostate cancer recurrence (12 Nov 2026).",
+    "Cash A$152.9m at 30 Sep 2026 (A$178.3m Jun, A$197.8m Mar); net operating outflow ~A$19–26m a quarter; FY26 net loss A$107.2m (R&D A$91.1m).",
+    "Price ~A$1.85 (16 Nov 2026), far below the A$4.20 July-2025 placement and the A$8.98 2024 high; market value ~A$690m — above your A$500m Insect cap.",
+    "Competition: Pylarify, Illuccix, Posluma (established PSMA PET agents); Clarity argues approved agents have 27–40% sensitivity."
    ],
-   "horizon": "2029-11-20",
+   "horizon": "2029-11-23",
    "reviewed": false,
    "scenarios": [
     {
-     "name": "Bear",
-     "prob": 35,
-     "value": 0.9,
+     "name": "Phase 3 miss / delay",
+     "prob": 30,
+     "value": 0.7,
      "success": false,
-     "note": "Data/FDA setback or weak uptake in a crowded market, plus dilution."
+     "note": "Cash + pipeline."
     },
     {
-     "name": "Base",
-     "prob": 45,
-     "value": 3.2,
+     "name": "Approved, slow uptake",
+     "prob": 30,
+     "value": 2.5,
      "success": true,
-     "note": "Approval ~2028, gradual share gains, at least one more raise."
+     "note": "One indication; competitive market."
     },
     {
-     "name": "Bull",
-     "prob": 20,
-     "value": 7,
+     "name": "Both positive + strong launch / M&A",
+     "prob": 40,
+     "value": 4.5,
      "success": true,
-     "note": "Strong imaging uptake plus working Cu-67 therapy, or a takeover."
+     "note": "Radiopharma M&A comps."
     }
    ],
    "trials": [
@@ -1547,15 +2061,38 @@
    "recurring": [],
    "finance": [
     {
-     "period": "2026-06-30",
-     "cash": 178.3,
-     "opcf": -19,
+     "opcf": -25.5,
+     "rnd": -17.3,
+     "staff": null,
+     "admin": null,
+     "shares": null,
+     "profitable": false,
+     "period": "2026-03-31",
+     "cash": 197.8,
+     "source": "CU6 4C Mar-26"
+    },
+    {
+     "opcf": -19.3,
      "rnd": null,
      "staff": null,
      "admin": null,
      "shares": null,
-     "source": "Jun 2026 4C",
-     "profitable": false
+     "profitable": false,
+     "period": "2026-06-30",
+     "cash": 178.3,
+     "earned": 9.7,
+     "source": "CU6 4C Jun-26 (incl. A$9.7m R&D refund)"
+    },
+    {
+     "opcf": -25.4,
+     "rnd": null,
+     "staff": null,
+     "admin": null,
+     "shares": null,
+     "profitable": false,
+     "period": "2026-09-30",
+     "cash": 152.9,
+     "source": "CU6 4C Sep-26 (opcf derived from cash change — check)"
     }
    ],
    "raises": [
@@ -1581,11 +2118,172 @@
    "sub": "other",
    "sleeve": "watch",
    "animal": "insect",
-   "thesis": {},
-   "fundamentals": {},
+   "thesis": {
+    "paragraph": "Castle: a next-generation PSMA PET agent (copper-64, longer shelf life, centralised supply, later imaging) heading into two Phase 3 readouts, plus theranostic follow-ons. Moat: patents and Breakthrough status; manufacturing/supply network if approved. Lords: experienced, well-funded (raised A$203m in 2025), insiders sold some stock in April 2026. Misperception: priced at ~A$690m, far below the A$4.20 placement, as if the Phase 3s are coin-flips in a crowded market. Odds against us: established competitors, copper-64 logistics, and launch spending that will need more capital after data.",
+    "misperception": "Market treats it as a me-too PSMA agent; Breakthrough status suggests the FDA sees a meaningful sensitivity advantage.",
+    "wrong": "Phase 3 sensitivity/specificity misses, FDA asks for more data, or launch uptake against Pylarify is slow.",
+    "premortem": "Mixed topline, a discounted raise to fund launch, shares halve to ~A$0.90.",
+    "moats": [
+     "patent",
+     "licence"
+    ],
+    "moatRating": 1,
+    "castleRating": 2
+   },
+   "fundamentals": {
+    "asOf": "2026-11-23",
+    "source": "Sep-26 quarterly (30 Oct 2026), FY26 report. Shares ~373m (Google Finance) — confirm.",
+    "shares": 373,
+    "netDebt": -152.9
+   },
    "levers": {},
    "checklist": [],
-   "thesisBroken": false
+   "thesisBroken": false,
+   "forecasts": [
+    {
+     "period": "2026-12-31",
+     "earned": 0.5,
+     "staff": 4,
+     "rnd": 18,
+     "opcf": -27,
+     "cash": 125.9,
+     "note": "Phase 3 close-out, manufacturing readiness."
+    },
+    {
+     "period": "2027-03-31",
+     "earned": 0.5,
+     "staff": 4.2,
+     "rnd": 18,
+     "opcf": -28,
+     "cash": 97.9,
+     "note": "Topline data (H1 2027)."
+    },
+    {
+     "period": "2027-06-30",
+     "earned": 10,
+     "staff": 4.4,
+     "rnd": 16,
+     "opcf": -20,
+     "cash": 77.9,
+     "note": "R&D refund ~A$10m; NDA preparation."
+    },
+    {
+     "period": "2027-09-30",
+     "earned": 0.5,
+     "staff": 5,
+     "rnd": 15,
+     "opcf": -32,
+     "cash": 45.9,
+     "note": "Launch build-out."
+    }
+   ],
+   "memo": {
+    "title": "64Cu-SAR-bisPSMA — dual valuation and entry plan",
+    "source": "Claude, same method as your Neuren memo",
+    "date": "2026-11-23",
+    "refPrice": 1.85,
+    "summary": "Two registrational Phase 3 readouts in H1 2027 with Breakthrough designation, A$153m cash. The main question is not cash today but the raise that typically follows positive data to fund launch.",
+    "valuations": [
+     {
+      "name": "Wall Street SOTP (rough)",
+      "low": 2.4,
+      "high": 3,
+      "perShare": 2.7,
+      "method": "risked diagnostic sales + pipeline"
+     },
+     {
+      "name": "Craig operator / M&A",
+      "low": 5,
+      "high": 7,
+      "perShare": 6,
+      "method": "radiopharma buyout after approval"
+     },
+     {
+      "name": "If Phase 3s miss",
+      "perShare": 0.7,
+      "method": "cash + pipeline"
+     }
+    ],
+    "pos": 0.7,
+    "posNote": "Diagnostic Phase 3s succeed more often than therapeutic ones; Breakthrough designation and consistent Phase 2 data support ~70%.",
+    "fourWalls": [
+     {
+      "wall": "1. Patients",
+      "failure": "Can't find patients",
+      "solution": "Prostate cancer is common; both Phase 3s fully enrolled",
+      "score": 2
+     },
+     {
+      "wall": "2. Endpoints",
+      "failure": "Regulator rejects endpoints",
+      "solution": "Sensitivity/specificity vs pathology; Breakthrough designation",
+      "score": 2
+     },
+     {
+      "wall": "3. Capital & manufacturing",
+      "failure": "Raises; supply chain",
+      "solution": "A$153m cash; commercial copper-64 supply agreements signed — launch still needs money",
+      "score": 1
+     },
+     {
+      "wall": "4. Access",
+      "failure": "Adoption, reimbursement",
+      "solution": "Must displace entrenched PSMA agents; pass-through reimbursement needed",
+      "score": 1
+     }
+    ],
+    "sotp": [
+     {
+      "part": "Net cash",
+      "method": "A$152.9m",
+      "perShare": 0.41
+     },
+     {
+      "part": "SAR-bisPSMA US diagnostic",
+      "method": "15–25% of a ~US$1.5–2bn PSMA PET market, 3x sales, 70% POS",
+      "perShare": 1.9
+     },
+     {
+      "part": "Theranostic pipeline (SAR-bisPSMA therapy, SARTATE, others)",
+      "method": "Option value",
+      "perShare": 0.4
+     },
+     {
+      "part": "Total",
+      "method": "",
+      "perShare": 2.7
+     }
+    ],
+    "raise": "Cash A$152.9m vs ~A$25–30m a quarter: ~5–6 quarters. Expect a raise right after positive topline (H1 2027) to fund launch — the window opens ~Jun-27.",
+    "planTitle": "Entry plan (watch list — above your Insect A$500m cap)",
+    "plan": [
+     {
+      "tranche": "E1",
+      "size": "50%",
+      "price": "at the post-data raise",
+      "timing": "H1–mid 2027",
+      "why": "Buy the raise, not the run-up"
+     },
+     {
+      "tranche": "E2",
+      "size": "50%",
+      "price": "≤ A$2.50",
+      "timing": "after FDA filing accepted",
+      "why": "De-risked"
+     },
+     {
+      "tranche": "Exit",
+      "size": "⅓ / ⅓ / ⅓",
+      "price": "A$3.50 / A$5.00 / A$6.50+",
+      "timing": "approval / launch / M&A",
+      "why": ""
+     }
+    ],
+    "critique": [
+     "Market value (~A$690m) breaks your Insect rule (A$50–500m) — keep it on the watch list unless you change the rule.",
+     "Competitive PSMA market: sensitivity advantage must translate into reimbursement and habits."
+    ]
+   }
   },
   {
    "id": "ltp",
@@ -1966,7 +2664,120 @@
      "cash": 1.12,
      "note": "Cash nearly gone without a raise."
     }
-   ]
+   ],
+   "memo": {
+    "title": "SPONTAN / ROXUS — dual valuation and entry plan",
+    "source": "Claude, same method as your Neuren memo",
+    "date": "2026-11-23",
+    "refPrice": 0.43,
+    "summary": "Fast-acting nasal vardenafil: cash-pay sales started (Australia SAS, US compounded ROXUS) while one Phase 3 (505(b)(2)) targets FDA approval. Value is real but small until US scripts scale; cash forces a raise in 1H 2027.",
+    "valuations": [
+     {
+      "name": "Wall Street SOTP (rough)",
+      "low": 0.55,
+      "high": 0.85,
+      "perShare": 0.7,
+      "method": "risked US approval + cash-pay sales"
+     },
+     {
+      "name": "Specialty-pharma M&A",
+      "low": 1.6,
+      "high": 2.4,
+      "perShare": 2,
+      "method": "2–3x peak sales after approval, dilution-adjusted"
+     },
+     {
+      "name": "If US sales stall",
+      "perShare": 0.2,
+      "method": "cash + Australian sales"
+     }
+    ],
+    "pos": 0.6,
+    "posNote": "505(b)(2) on an approved molecule; ED efficacy endpoints are standard; PK bridge done. Risks: nasal tolerability, FDA asking for more than one Phase 3.",
+    "fourWalls": [
+     {
+      "wall": "1. Patients",
+      "failure": "Can't reach patients",
+      "solution": "ED is common; telehealth (Shed/Mavrox) and Australian GPs/urologists",
+      "score": 2
+     },
+     {
+      "wall": "2. Endpoints",
+      "failure": "Regulatory path unclear",
+      "solution": "FDA-agreed PK dataset; single Phase 3 under 505(b)(2)",
+      "score": 2
+     },
+     {
+      "wall": "3. Capital & manufacturing",
+      "failure": "Dilution",
+      "solution": "Mayne/Aptar manufacturing; but ~A$18m cash vs a ~A$15–20m Phase 3 → raise needed",
+      "score": 0
+     },
+     {
+      "wall": "4. Access",
+      "failure": "Payers/compounding rules",
+      "solution": "Cash-pay avoids payers; compounding (503A) rules and cheap generic pills are the risks",
+      "score": 1
+     }
+    ],
+    "sotp": [
+     {
+      "part": "Net cash",
+      "method": "A$18.2m",
+      "perShare": 0.1
+     },
+     {
+      "part": "US ROXUS (cash-pay)",
+      "method": "Risked telehealth sales",
+      "perShare": 0.2
+     },
+     {
+      "part": "SPONTAN FDA approval",
+      "method": "60% POS, launch ~2029, partner economics",
+      "perShare": 0.35
+     },
+     {
+      "part": "Australia + other",
+      "method": "SAS sales, KYZATREX option",
+      "perShare": 0.05
+     },
+     {
+      "part": "Total",
+      "method": "",
+      "perShare": 0.7
+     }
+    ],
+    "raise": "Your forecasts: window opens Mar-27, very likely by Jun-27 (Phase III start). Buy at the raise.",
+    "planTitle": "Entry plan (not held)",
+    "plan": [
+     {
+      "tranche": "E1",
+      "size": "50%",
+      "price": "at the Phase III raise",
+      "timing": "1H 2027",
+      "why": "Your Neuren-style rule: the raise is the entry"
+     },
+     {
+      "tranche": "E2",
+      "size": "50%",
+      "price": "≤ A$0.45",
+      "timing": "when US scripts pass ~10k a quarter",
+      "why": "Proof the channel works"
+     },
+     {
+      "tranche": "Exit",
+      "size": "⅓ / ⅓ / ⅓",
+      "price": "A$0.90 / A$1.50 / A$2.00+",
+      "timing": "script growth / Phase 3 data / M&A",
+      "why": ""
+     }
+    ],
+    "critique": [
+     "Not a rare disease — the Four Walls are adapted.",
+     "ROXUS economics per script are not disclosed; my A$40 net is an assumption.",
+     "Chairman pay rose ~50% + bonus before revenue."
+    ]
+   }
   },
   {
    "id": "all",
