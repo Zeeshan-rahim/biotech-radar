@@ -739,34 +739,36 @@
    "color": 1,
    "tagline": "Portable brain scanners for stroke at the bedside and in ambulances",
    "facts": [
-    "Cash A$17.1m at 30 Jun 2026 after a A$14m raise (Sep 2025); FY26 quarterly burn averaged ~A$1.6m net of grants; A$4.6m grants still to come.",
-    "Pivotal (validation) trial enrolment slipped from H1 2026 to late 2026 / early 2027.",
-    "Ischaemia endpoint being added, subject to an FDA pre-submission meeting (H2 2026).",
-    "First Responder: RFDS aeromedical study (May 2026) and Mobile Stroke Unit Stage 1 (Sep 2026)."
+    "Pivotal (validation) trial for FDA De Novo of the emu bedside brain scanner: >230 enrolled by early Oct 2026 of a 300-patient primary cohort; full enrolment late CY2026 to early CY2027. Sites include Mayo Clinic, Mount Sinai, UCLA and Memorial Hermann.",
+    "Acute ischaemia endpoint being added to the trial (could save up to two years for a second indication); depends on FDA feedback (Q-Sub) — adds regulatory uncertainty.",
+    "Earlier data: haemorrhage 92% sensitivity / 85% specificity; ischaemia 95% / 80%.",
+    "Cash A$17.1m at 30 Jun 2026; FY26 net burn ~A$1.6m a quarter after grants and R&D refund; ~A$6.6m more non-dilutive grants available. FY26 loss A$8.3m.",
+    "De Novo for emu would be the predicate for a 510(k) for the First Responder (ambulance) device.",
+    "Market value ~A$155m (~93m shares, ~A$1.65–1.75). Thin turnover (~30k shares a day)."
    ],
-   "horizon": "2029-11-20",
+   "horizon": "2029-11-22",
    "reviewed": false,
    "scenarios": [
     {
-     "name": "Bear",
-     "prob": 45,
-     "value": 0.5,
+     "name": "Fails / delayed",
+     "prob": 35,
+     "value": 0.6,
      "success": false,
-     "note": "Clearance slips or misses; raises at low prices dilute holders."
+     "note": "Endpoint miss or FDA delay; dilution."
     },
     {
-     "name": "Base",
+     "name": "Approved, slow uptake",
      "prob": 40,
-     "value": 1.8,
+     "value": 2.5,
      "success": true,
-     "note": "De Novo clearance ~2028, slow hospital uptake, ~30% dilution."
+     "note": "De Novo ~2027–28; small early sales."
     },
     {
-     "name": "Bull",
-     "prob": 15,
-     "value": 4,
+     "name": "Approved + First Responder/partner",
+     "prob": 25,
+     "value": 5,
      "success": true,
-     "note": "Clear US stroke-care adoption or takeover by an imaging major."
+     "note": "Partner or acquirer interest."
     }
    ],
    "trials": [
@@ -1038,8 +1040,24 @@
    "sub": "device",
    "sleeve": "device",
    "animal": "insect",
-   "thesis": {},
-   "fundamentals": {},
+   "thesis": {
+    "paragraph": "Castle: a portable, low-cost brain scanner that can tell a bleed from a clot at the bedside or in an ambulance, where CT is not available — a genuinely new category. Moat: patents and know-how in electromagnetic imaging plus FDA De Novo status (first-of-kind clearance makes it the reference device). Lords: steady, grant-funded and frugal (~A$1.6m quarterly burn); raised A$14m in 2025 without heavy discounting. Misperception: the market treats it as a perennial 'next year' story; the pivotal trial is now ~80% enrolled at top US stroke centres. Odds against us: a medical-device adoption curve is slow and a further raise before revenue is likely. Device sleeve, not Insect: no earnings, so it cannot pass the Insect rules (PEG, 15% growth).",
+    "misperception": "Trial will never finish. Evidence against: >230 of 300 enrolled at major US centres.",
+    "wrong": "Trial misses its endpoints, FDA asks for a new study, or enrolment slips past mid-2027.",
+    "premortem": "De Novo granted but hospitals don't buy (reimbursement), cash runs out, and a deep discounted raise follows.",
+    "moats": [
+     "patent",
+     "licence"
+    ],
+    "moatRating": 1,
+    "castleRating": 1
+   },
+   "fundamentals": {
+    "asOf": "2026-10-09",
+    "source": "FY26 annual report (Aug 2026), quarterlies. Price at 9 Oct 2026. No earnings, so PEG and growth do not apply.",
+    "url": "https://quartr.com/events/emvision-medical-devices-ltd-emv-h2-2026_FYkBqCQP",
+    "shares": 93
+   },
    "levers": {},
    "checklist": [],
    "thesisBroken": false
@@ -1396,36 +1414,38 @@
    "name": "LTR Pharma",
    "section": "other",
    "color": 2,
-   "tagline": "SPONTAN rapid-onset nasal vardenafil for erectile dysfunction; ROXUS for US compounding",
+   "tagline": "Fast-acting nasal-spray vardenafil for erectile dysfunction (SPONTAN in Australia, ROXUS in the US)",
    "facts": [
-    "SPONTAN Phase II PK (May 2026): median Tmax 10 min vs 60 min for oral vardenafil; supports a 505(b)(2) US filing. Final results were guided for Q3 CY2026 — check they were released.",
-    "ROXUS: US exclusive pharmacy partner (Jun 2026) under the 503A compounding route for earlier US sales.",
-    "147-patient real-world study (Aug 2026): 68% overall reported improvement.",
-    "Cash ~A$24m (early 2026); market cap ~A$78m at A$0.43 (Oct 2026). Partners: Aptar (device), Mayne Pharma (manufacturing)."
+    "Sep 2026 quarter: first ROXUS prescriptions fulfilled in the US (via Shed's Mavrox telehealth platform and Strive Pharmacy) less than three months after the agreements; >2,000 bottles of SPONTAN dispensed in Australia (TGA Special Access Scheme).",
+    "Final Phase II report: absorbed about six times faster than oral vardenafil tablets; completes the pharmacokinetic dataset agreed with the FDA. Single pivotal Phase III (505(b)(2) pathway) targeted for 1H CY2027.",
+    "ROXUS is a compounded medicine (US 503A pathway) — not FDA-approved; the full approval rests on SPONTAN's Phase III.",
+    "Cash ~A$18.2–18.8m, no debt at 30 Sep 2026; net operating outflow ~A$1.6m in the quarter (A$4.4m in the June quarter). A raise is likely before or during Phase III.",
+    "Price ~A$0.43 (17 Nov 2026), ~182m shares, market value ~A$78m; enterprise value ~A$60m. Average volume ~150k shares (~A$65k a day) — below our A$100k Insect liquidity rule.",
+    "Partners: Aptar Pharma (nasal device), Mayne Pharma, EBOS/Symbion (Australian distribution). LTR Medical Pty Ltd holds ~25%."
    ],
-   "horizon": "2029-11-20",
+   "horizon": "2029-11-22",
    "reviewed": false,
    "scenarios": [
     {
-     "name": "Bear",
-     "prob": 40,
-     "value": 0.15,
+     "name": "Stalls / dilutes",
+     "prob": 35,
+     "value": 0.2,
      "success": false,
-     "note": "Slow US progress, ED drugs mostly cash-pay, repeated raises."
+     "note": "US sales tiny; Phase III raise at a deep discount."
     },
     {
-     "name": "Base",
+     "name": "Steady progress",
      "prob": 45,
-     "value": 0.55,
+     "value": 0.7,
      "success": true,
-     "note": "505(b)(2) filed/approved ~2028–29, modest ROXUS sales."
+     "note": "Growing US prescriptions; Phase III under way; modest dilution."
     },
     {
-     "name": "Bull",
-     "prob": 15,
-     "value": 1.4,
+     "name": "Partner / Phase III win",
+     "prob": 20,
+     "value": 1.6,
      "success": true,
-     "note": "US approval plus a commercial partner or acquisition."
+     "note": "Licensing deal or Phase III success; NDA filed ~2028–29."
     }
    ],
    "trials": [
@@ -1568,15 +1588,110 @@
     "model": 1
    },
    "scoreNotes": "Low technical risk (approved molecule, 505(b)(2)). Mehta's reimbursement chapter is the weak point: ED treatments are often not covered, so this is a cash-pay convenience product competing with cheap generic tablets.",
-   "keywords": "spontan|roxus|505|fda|pre-ind|ind|aptar|mayne",
+   "keywords": "quarterly|spontan|roxus|fda|phase iii|ind|prescriptions|placement|raising",
    "sector": "health",
    "sub": "other",
-   "sleeve": "watch",
+   "sleeve": "insect",
    "animal": "insect",
-   "thesis": {},
-   "fundamentals": {},
-   "levers": {},
-   "checklist": [],
+   "thesis": {
+    "paragraph": "Castle: a faster version of a proven, generic drug — vardenafil as a nasal spray that is absorbed in ~10 minutes instead of ~60 — sold first through cash-pay channels (Australian Special Access, US telehealth) while it heads for full FDA approval on the cheaper 505(b)(2) route. Moat: formulation patents and know-how plus Aptar's device; full FDA approval would add a regulatory moat the compounded version lacks. Lords: founder-aligned (LTR Medical ~25%), frugal (A$1.6m quarterly burn), and quick at turning agreements into prescriptions; one ASX 'aware letter' in June 2026 is a governance point to watch. Misperception: the market prices it like a failed biotech (~A$60m EV) even though the drug is already approved molecule-wise, already selling in two countries, and the Phase III is a single study. Odds against us: ED is dominated by cheap generic pills, telehealth uptake is unproven, compounding rules could tighten, and a dilutive raise is likely in 2027.",
+    "misperception": "Priced as a failed biotech, but the molecule is approved and the product is already being sold in Australia and the US.",
+    "wrong": "US ROXUS prescriptions stay tiny through mid-2027, the FDA asks for more than one Phase III, or compounding rules shut the 503A channel.",
+    "premortem": "Telehealth sales never take off, cash runs low, and a deeply discounted raise to fund Phase III halves the share price.",
+    "moats": [
+     "patent",
+     "licence"
+    ],
+    "moatRating": 1,
+    "castleRating": 1,
+    "castle": {
+     "company": "SPONTAN (Australia, Special Access), ROXUS (US compounded, cash-pay), Phase III for full FDA approval; evaluating KYZATREX (testosterone) for Australia; small LevOmega investment.",
+     "collaborators": "Aptar (device), Shed/Mavrox (US telehealth), Strive Pharmacy (US compounding), Mayne Pharma, EBOS/Symbion (Australia).",
+     "customers": "Men with ED seeking fast onset, mostly cash-pay via telehealth; GPs and urologists in Australia.",
+     "competitors": "Generic sildenafil/tadalafil pills (very cheap), Hims & Hers and other telehealth brands, other fast-acting formulations (films, sprays).",
+     "climate": "US FDA stance on compounding, telehealth regulation, TGA scheduling, men's-health stigma falling."
+    },
+    "lords": {
+     "honest": 1,
+     "able": 2,
+     "note": "Executive chairman Lee Rodne; founder vehicle LTR Medical owns ~25%. Fast execution in the US. ASX aware letter (Jun 2026) on disclosure timing — watch. New strategic adviser Nick Bell (Nov 2026)."
+    }
+   },
+   "fundamentals": {
+    "asOf": "2026-11-17",
+    "source": "Sep 2026 quarterly (28 Oct 2026), FY26 annual report. Not yet profitable, so EPS, PEG and growth are blank (the site will show 'needs checking'). Revenue is tiny (FY26 revenue and other income A$1.6m).",
+    "url": "https://kalkine.com.au/stock-analysis/healthcare/how-ltr-pharma-asxltp-moved-from-us-commercial-agreements-to-first-roxus-prescriptions-in-under-three-months",
+    "shares": 182.3,
+    "netDebt": -18.5
+   },
+   "levers": {
+    "price": {
+     "near": "Premium cash-pay pricing for speed of onset.",
+     "far": ""
+    },
+    "cost": {
+     "near": "Low burn; partners carry distribution and manufacturing.",
+     "far": ""
+    },
+    "expand": {
+     "near": "US launch via telehealth (ROXUS) now; full FDA approval (SPONTAN) later.",
+     "far": "Other countries via partners; KYZATREX in Australia."
+    },
+    "more": {
+     "near": "More telehealth platforms and pharmacies; repeat prescriptions.",
+     "far": ""
+    },
+    "revitalise": {
+     "near": "Same nasal platform for other drugs (long term).",
+     "far": ""
+    },
+    "close": {
+     "near": "—",
+     "far": ""
+    }
+   },
+   "checklist": [
+    {
+     "rating": "yes",
+     "answer": "ED is a large, growing market; speed of onset is a real unmet want."
+    },
+    {
+     "rating": "partly",
+     "answer": "Plan clear (US launch + Phase III), but sales numbers not yet shown."
+    },
+    {
+     "rating": "unknown",
+     "answer": "No meaningful margins yet."
+    },
+    {
+     "rating": "yes",
+     "answer": "Phase III and device work funded so far."
+    },
+    {
+     "rating": "partly",
+     "answer": "Uses partners' sales channels (telehealth, Symbion)."
+    },
+    {
+     "rating": "partly",
+     "answer": "Partner model keeps costs low."
+    },
+    {
+     "rating": "unknown",
+     "answer": "Small team; not known."
+    },
+    {
+     "rating": "partly",
+     "answer": "Founder-led; adviser hires."
+    },
+    {
+     "rating": "unknown",
+     "answer": "Thin bench below the chairman."
+    },
+    {
+     "rating": "partly",
+     "answer": "Quarterly cash reports only."
+    }
+   ],
    "thesisBroken": false
   },
   {
@@ -2308,6 +2423,166 @@
    "horizon": "2028-11-22",
    "tagline": "Long-lease property trust (pubs, service stations, offices, industrial) trading well below its asset value",
    "section": "realestate"
+  },
+  {
+   "id": "vnt",
+   "scenarios": [
+    {
+     "name": "Bear",
+     "prob": 25,
+     "value": 4.6,
+     "success": false,
+     "note": "EPS stuck ~33c, P/E 12x, plus ~A$0.65 dividends."
+    },
+    {
+     "name": "Base",
+     "prob": 55,
+     "value": 6.8,
+     "success": true,
+     "note": "Cost-out + buy-backs lift EPS to ~42c by FY29; P/E 14.5x; plus ~A$0.70 dividends."
+    },
+    {
+     "name": "Bull",
+     "prob": 20,
+     "value": 8.9,
+     "success": true,
+     "note": "EPS ~48c, P/E 17x; defence growth; plus dividends."
+    }
+   ],
+   "trials": [],
+   "catalysts": [],
+   "history": [],
+   "promises": [],
+   "finance": [],
+   "raises": [],
+   "recurring": [],
+   "facts": [
+    "HY26 (to 30 Jun 2026): revenue A$2.89bn (−4.7%, Defence contract transition); EBITDA A$273.3m (+8.2%, record 9.4% margin); NPATA A$128.2m (+7.4%); EPS +14.4% helped by buy-backs.",
+    "Work in hand ~A$21bn; customer renewal rate ~98%; interim dividend 11.76c fully franked (~75% of NPATA).",
+    "9 Nov 2026: new CEO Mark Ralston (started 1 Sep) announced a simplification aiming for at least A$60m a year of cost savings by Dec 2027, ~A$30m one-off costs, and a weaker second-half revenue (telecoms and energy work deferred). FY26 NPATA growth guidance of 7–10% kept. Shares fell ~16% to a 52-week low.",
+    "Buy-back upsized to A$300m (2025–27); still buying daily at ~A$4.85–5.12 in mid-November.",
+    "Analyst targets ~A$6.10–6.60 (Macquarie Outperform A$6.60, Aug 2026)."
+   ],
+   "thesis": {
+    "paragraph": "Castle: the maintenance contractor that keeps Australia's and New Zealand's defence bases, telecoms networks, water and roads running — boring, essential, recurring work on 5–10 year contracts with a 98% renewal rate. Moat: efficient scale and switching costs (customers rarely change who maintains critical assets mid-contract), plus defence security clearances that act like a licence. Lords: a brand-new CEO who did a 10-week review and came back with a cost-out plan, not an acquisition — a good sign of ability; capital returned through a large buy-back and fully franked dividends. Misperception: the market sold it 16% on a second-half revenue warning, but profit guidance was kept and the cost savings (A$60m a year ≈ 15% of NPATA) are not in anyone's numbers yet. At ~14.5x earnings with a ~4.7% fully franked yield, it is a Monkey at a fair-to-cheap price. Plain PEG (~1.45) fails our 1.2 rule; with the dividend added (Lynch's version) it is ~1.0.",
+    "misperception": "A revenue dip in telecoms/energy means the business is shrinking. Evidence against: profit guidance kept, margins at a record, buy-back continuing, A$21bn work in hand.",
+    "wrong": "FY26 NPATA misses the 7–10% guidance (Feb 2027), a major contract (Defence, Telstra) is lost, or cost savings slip past Dec 2027.",
+    "premortem": "The new CEO's restructure disrupts operations, telecoms work stays deferred for years, and the P/E falls to ~11x while debt-funded acquisitions (e.g. Programmed) dilute returns.",
+    "moats": [
+     "scale",
+     "switching",
+     "licence"
+    ],
+    "moatRating": 1,
+    "castleRating": 2,
+    "castle": {
+     "company": "Four sectors from 1 Dec 2026: Defence & National Resilience, Telecommunications & Energy, Infrastructure Services (water, environment), Transport.",
+     "collaborators": "Subcontractors and labour; joint ventures on large bids; technology partners for asset data.",
+     "customers": "Governments (Defence, state transport and water agencies) and utilities/telcos (Telstra, NBN). Long contracts; 98% renewal.",
+     "competitors": "Downer, Service Stream, Programmed (for sale — both Ventia and Service Stream reportedly interested), CIMIC's UGL.",
+     "climate": "Government infrastructure and defence spending (tailwind), telco capex cycles (headwind now), wage inflation, interest rates."
+    },
+    "lords": {
+     "honest": 2,
+     "able": 1,
+     "note": "New CEO Mark Ralston since 1 Sep 2026 — able is 'unproven' until the cost-out shows up. Previous CEO Dean Banks left on good terms after strong growth. Watch any large acquisition."
+    }
+   },
+   "fundamentals": {
+    "asOf": "2026-11-22",
+    "source": "HY26 report and 9 Nov 2026 strategy update. Shares ≈ 815m (A$3.83bn ÷ A$4.70). EPS = my FY26 estimate: FY25 NPATA A$257.6m × 1.085 ≈ A$280m ÷ ~830m average shares ≈ 33.7c. Growth 10% = my estimate (NPATA growth + ~2–3% buy-back + cost-out). EBIT ~A$420m, net debt ~A$750m and FCF ~A$280m (cash conversion >90%) are my estimates — confirm in the FY26 annual report (Feb 2027). ROC ~20% estimated on equity + net debt.",
+    "url": "https://announcements.asx.com.au/asxpdf/20261109/pdf/076cflvj33brgs.pdf",
+    "shares": 815,
+    "eps": 0.337,
+    "growth": 0.1,
+    "ebit": 420,
+    "netDebt": 750,
+    "fcf": 280,
+    "roc": 0.2
+   },
+   "levers": {
+    "price": {
+     "near": "Contract indexation and scope variations.",
+     "far": "Higher-margin asset-management and data services."
+    },
+    "cost": {
+     "near": "At least A$60m a year of savings by Dec 2027 (simplification, shared services).",
+     "far": "Technology and automation in field work."
+    },
+    "expand": {
+     "near": "Defence spending growth (new Defence & National Resilience sector).",
+     "far": "New states/agencies; possible acquisition (watch price)."
+    },
+    "more": {
+     "near": "Cross-sell across the four sectors to the same government customers.",
+     "far": ""
+    },
+    "revitalise": {
+     "near": "Re-tender wins on renewed terms; digital asset services.",
+     "far": ""
+    },
+    "close": {
+     "near": "Exit low-margin or discontinued projects (part of the ~A$30m one-off costs).",
+     "far": ""
+    }
+   },
+   "checklist": [
+    {
+     "rating": "yes",
+     "answer": "Infrastructure must be maintained whatever the economy does; demand is structural."
+    },
+    {
+     "rating": "yes",
+     "answer": "A$21bn of work in hand and a renewal rate of ~98%."
+    },
+    {
+     "rating": "yes",
+     "answer": "Record 9.4% EBITDA margin and A$60m of new cost savings planned."
+    },
+    {
+     "rating": "partly",
+     "answer": "Investment mostly in technology and bid capability; not a heavy R&D business."
+    },
+    {
+     "rating": "yes",
+     "answer": "Strong bidding record: seven major contracts secured in HY26."
+    },
+    {
+     "rating": "yes",
+     "answer": "Productivity programme and new cost-out plan."
+    },
+    {
+     "rating": "unknown",
+     "answer": "Not known — check employee reviews (35,000 staff) and safety record."
+    },
+    {
+     "rating": "partly",
+     "answer": "Smooth handover, but the new CEO is unproven at Ventia."
+    },
+    {
+     "rating": "partly",
+     "answer": "New CEO came from outside the company; executive depth still to be seen."
+    },
+    {
+     "rating": "yes",
+     "answer": "Sector-level margins reported; clear cost discipline."
+    }
+   ],
+   "scorecard": {},
+   "keywords": "result|guidance|contract|buy-back|restructure|ceo",
+   "reporting": "half",
+   "thesisBroken": false,
+   "reviewed": false,
+   "color": 3,
+   "ticker": "VNT",
+   "name": "Ventia Services Group",
+   "sector": "industrials",
+   "sub": "",
+   "horizon": "2029-11-22",
+   "sleeve": "monkey",
+   "animal": "monkey",
+   "tagline": "Essential infrastructure maintenance (defence, telecoms, water, roads) on long contracts",
+   "section": "industrials"
   }
  ]
 }
