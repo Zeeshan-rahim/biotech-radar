@@ -13,7 +13,10 @@
     "Japan Phase 3 trofinetide results consistent with LAVENDER; Japan NDA planned 2027.",
     "FDA Orphan Drug Designation for NNZ-2591 in HIE (2 Nov 2026). Trofinetide US patents extended to Mar 2041.",
     "Koala Phase 3 (Phelan-McDermid, ~160 children, placebo-controlled) dosing since Feb 2026; top-line timing not yet guided.",
-    "Broker targets: Ord Minnett A$27.80 (6 Nov 2026), Canaccord A$24.76 (1 Sep 2026)."
+    "Broker targets: Ord Minnett A$27.80 (6 Nov 2026), Canaccord A$24.76 (1 Sep 2026).",
+    "Partner check (Acadia, Q3 2026): DAYBUE sales US$140m (+39%), guidance raised a third time to US$505–520m; Neuren Q3 royalty US$16.4m (+51%).",
+    "Your Koala estimate (sites × ~1 patient/site/month, 13-week dosing + analysis): last patient ~mid-2027, results ~Dec 2027 — earlier than the mid-2028 date in the catalyst list. Re-run it with the trial timing calculator when Neuren updates site and enrolment numbers.",
+    "Your sheet's target-price method: EPS × (20 for DAYBUE + 15 premium for NNZ-2591) + cash per share + franking credits per share (~A$0.60) + dividend add-on."
    ],
    "horizon": "2034-11-20",
    "reviewed": false,
@@ -194,6 +197,39 @@
      "desc": "Only if Koala succeeds; could earn a Priority Review Voucher.",
      "big": true,
      "event": "approval",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "neu-acad-q4-26",
+     "date": "2027-02-24",
+     "when": "~24 Feb 2027 (Acadia Q4)",
+     "title": "Acadia Q4/FY2026 DAYBUE sales — US$50m milestone test",
+     "desc": "If North American 2026 net sales exceed US$500m, Neuren earns US$50m (~A$75m). Also 2027 DAYBUE guidance, which sets Neuren's 2027 royalty.",
+     "big": true,
+     "event": "report",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "neu-fy26",
+     "date": "2027-02-26",
+     "when": "late Feb 2027",
+     "title": "Neuren FY2026 results and dividend",
+     "desc": "Royalty income, cash (~A$300m), Koala enrolment update.",
+     "big": false,
+     "event": "report",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "neu-koala-zhwa",
+     "date": "2027-12-15",
+     "when": "your estimate",
+     "title": "Koala top-line (your sites × rate estimate)",
+     "desc": "Your spreadsheet estimate; the company has not guided yet. Compare with the formal guidance at ~50% enrolled.",
+     "big": false,
+     "event": "trial",
      "done": false,
      "result": ""
     }
@@ -433,7 +469,57 @@
    "fundamentals": {},
    "levers": {},
    "checklist": [],
-   "thesisBroken": false
+   "thesisBroken": false,
+   "partner": {
+    "name": "Acadia (DAYBUE / trofinetide)",
+    "unit": "US$",
+    "nextReport": "2027-02-24",
+    "quarters": [
+     {
+      "period": "2026-03-31",
+      "sales": 101.1,
+      "royalty": 10.4,
+      "note": "STIX launch quarter"
+     },
+     {
+      "period": "2026-06-30",
+      "sales": 125,
+      "royalty": 12.9,
+      "note": "+30% y/y; STIX ~40% of US patients"
+     },
+     {
+      "period": "2026-09-30",
+      "sales": 140,
+      "royalty": 16.4,
+      "note": "+39% y/y; STIX >50% of US patients; first EU sale (Germany)"
+     }
+    ],
+    "guidance": {
+     "year": 2026,
+     "low": 505,
+     "high": 520
+    },
+    "milestones": [
+     {
+      "label": "US$35m on first commercial sale in Europe",
+      "done": true,
+      "note": "Earned Q4 2026 (Germany launch)."
+     },
+     {
+      "label": "US$50m when North American annual net sales first exceed US$500m",
+      "threshold": 500,
+      "progress": 366,
+      "done": false,
+      "note": "Progress uses global sales year to date (~US$366m); North America alone is a little lower. Q4 needs ~US$134m+ in North America. Neuren's 2026 income guidance (US$91–93m) does not appear to include it — a possible upside surprise when Acadia reports Q4 (~24 Feb 2027)."
+     },
+     {
+      "label": "US$15m on first sale in Japan",
+      "done": false,
+      "note": "After Japan approval (NDA planned 2027)."
+     }
+    ],
+    "note": "Your spreadsheet method: Acadia reports ~3 weeks before Neuren and moves first. Royalty % rises with sales because royalties are tiered. Acadia's 2028 ambition: ~US$700m DAYBUE sales."
+   }
   },
   {
    "id": "dxb",
@@ -744,7 +830,10 @@
     "Earlier data: haemorrhage 92% sensitivity / 85% specificity; ischaemia 95% / 80%.",
     "Cash A$17.1m at 30 Jun 2026; FY26 net burn ~A$1.6m a quarter after grants and R&D refund; ~A$6.6m more non-dilutive grants available. FY26 loss A$8.3m.",
     "De Novo for emu would be the predicate for a 510(k) for the First Responder (ambulance) device.",
-    "Market value ~A$155m (~93m shares, ~A$1.65–1.75). Thin turnover (~30k shares a day)."
+    "Market value ~A$155m (~93m shares, ~A$1.65–1.75). Thin turnover (~30k shares a day).",
+    "Your sheet: break-even needs ~70–80 emu units sold; device gross margin ~65–70%, single-use parts ~90%; corporate break-even late 2028 / early 2029.",
+    "Remaining non-dilutive funding (your sheet): IGP ~A$2.8m + CRC-P ~A$1.8m, plus an annual R&D refund (~A$3.8m in Apr-26). The R&D refund stops once revenue/turnover rises — a reason a raise follows approval.",
+    "Your 'cash × 5' anchor at Jun-26: A$17.1m ÷ 92.9m × 5 ≈ A$0.92 a share, well below the ~A$1.65 price — the market is paying for the trial outcome."
    ],
    "horizon": "2029-11-22",
    "reviewed": false,
@@ -1005,15 +1094,15 @@
    "recurring": [],
    "finance": [
     {
-     "period": "2026-06-30",
-     "cash": 17.1,
-     "opcf": -1.6,
+     "opcf": -1.3,
      "rnd": null,
      "staff": null,
      "admin": null,
-     "shares": null,
-     "source": "Jun 2026 4C / FY26 results (burn is FY26 average net of grants)",
-     "profitable": false
+     "shares": 92.94,
+     "profitable": false,
+     "period": "2026-06-30",
+     "cash": 17.1,
+     "source": "Jun-26 4C (ZHWA sheet: net of A$2.3m grants)"
     }
    ],
    "raises": [
@@ -1044,7 +1133,7 @@
     "paragraph": "Castle: a portable, low-cost brain scanner that can tell a bleed from a clot at the bedside or in an ambulance, where CT is not available — a genuinely new category. Moat: patents and know-how in electromagnetic imaging plus FDA De Novo status (first-of-kind clearance makes it the reference device). Lords: steady, grant-funded and frugal (~A$1.6m quarterly burn); raised A$14m in 2025 without heavy discounting. Misperception: the market treats it as a perennial 'next year' story; the pivotal trial is now ~80% enrolled at top US stroke centres. Odds against us: a medical-device adoption curve is slow and a further raise before revenue is likely. Device sleeve, not Insect: no earnings, so it cannot pass the Insect rules (PEG, 15% growth).",
     "misperception": "Trial will never finish. Evidence against: >230 of 300 enrolled at major US centres.",
     "wrong": "Trial misses its endpoints, FDA asks for a new study, or enrolment slips past mid-2027.",
-    "premortem": "De Novo granted but hospitals don't buy (reimbursement), cash runs out, and a deep discounted raise follows.",
+    "premortem": "De Novo granted but hospitals don't buy (reimbursement), cash runs out, and a deep discounted raise follows. Your sheet: very high chance of a capital raise even if approved; sell if dilution looks imminent.",
     "moats": [
      "patent",
      "licence"
@@ -1060,7 +1149,50 @@
    },
    "levers": {},
    "checklist": [],
-   "thesisBroken": false
+   "thesisBroken": false,
+   "burnQ": 2.55,
+   "extraSpend": 0,
+   "fundTo": {
+    "label": "FDA De Novo decision (your target)",
+    "date": "2027-12-31"
+   },
+   "forecasts": [
+    {
+     "period": "2026-09-30",
+     "receipts": 0,
+     "opcf": -3.1,
+     "cash": 13.9,
+     "note": "Your sheet: CRC-P A$0.36m only; costs ~A$3.7m."
+    },
+    {
+     "period": "2026-12-31",
+     "receipts": 0,
+     "opcf": -2.7,
+     "cash": 11.2,
+     "note": "IGP grant ~A$0.93m."
+    },
+    {
+     "period": "2027-03-31",
+     "receipts": 0,
+     "opcf": 0.4,
+     "cash": 11.6,
+     "note": "R&D tax refund ~A$3.8m (April quarter)."
+    },
+    {
+     "period": "2027-06-30",
+     "receipts": 0,
+     "opcf": -3,
+     "cash": 8.6,
+     "note": "De Novo submission mid-2027."
+    },
+    {
+     "period": "2027-12-31",
+     "receipts": 0,
+     "opcf": -3.8,
+     "cash": 1.7,
+     "note": "Your sheet: ~A$1.7m left at the approval target — raise near-certain around approval."
+    }
+   ]
   },
   {
    "id": "cu6",
@@ -1421,7 +1553,10 @@
     "ROXUS is a compounded medicine (US 503A pathway) — not FDA-approved; the full approval rests on SPONTAN's Phase III.",
     "Cash ~A$18.2–18.8m, no debt at 30 Sep 2026; net operating outflow ~A$1.6m in the quarter (A$4.4m in the June quarter). A raise is likely before or during Phase III.",
     "Price ~A$0.43 (17 Nov 2026), ~182m shares, market value ~A$78m; enterprise value ~A$60m. Average volume ~150k shares (~A$65k a day) — below our A$100k Insect liquidity rule.",
-    "Partners: Aptar Pharma (nasal device), Mayne Pharma, EBOS/Symbion (Australian distribution). LTR Medical Pty Ltd holds ~25%."
+    "Partners: Aptar Pharma (nasal device), Mayne Pharma, EBOS/Symbion (Australian distribution). LTR Medical Pty Ltd holds ~25%.",
+    "Unit economics (your sheet): retail ~A$253 a script; LTP receives ~16.5% after pharmacy/telehealth margins ≈ A$42 a script; break-even roughly 17,000 patients.",
+    "Shed's commitment: minimum 150,000 prescription units for the 2-year US exclusivity — the KPI to track each quarter.",
+    "Executive chairman Lee Rodne: salary A$250k → A$376k plus A$100k bonus (Jun 2026) while pre-revenue; holds ~52.7m shares (~29%) directly and indirectly."
    ],
    "horizon": "2029-11-22",
    "reviewed": false,
@@ -1574,6 +1709,28 @@
      "shares": 181,
      "source": "May 2026 investor presentation; shares estimated from market cap",
      "profitable": false
+    },
+    {
+     "opcf": -4.4,
+     "rnd": null,
+     "staff": null,
+     "admin": null,
+     "shares": null,
+     "profitable": false,
+     "period": "2026-06-30",
+     "cash": 19.6,
+     "source": "Jun-26 4C (ZHWA sheet)"
+    },
+    {
+     "opcf": -1.6,
+     "rnd": null,
+     "staff": null,
+     "admin": null,
+     "shares": 181.7,
+     "profitable": false,
+     "period": "2026-09-30",
+     "cash": 18.2,
+     "source": "Sep-26 4C (company: A$18.2m; Stockhead quotes A$18.82m)"
     }
    ],
    "raises": [],
@@ -1594,10 +1751,10 @@
    "sleeve": "insect",
    "animal": "insect",
    "thesis": {
-    "paragraph": "Castle: a faster version of a proven, generic drug — vardenafil as a nasal spray that is absorbed in ~10 minutes instead of ~60 — sold first through cash-pay channels (Australian Special Access, US telehealth) while it heads for full FDA approval on the cheaper 505(b)(2) route. Moat: formulation patents and know-how plus Aptar's device; full FDA approval would add a regulatory moat the compounded version lacks. Lords: founder-aligned (LTR Medical ~25%), frugal (A$1.6m quarterly burn), and quick at turning agreements into prescriptions; one ASX 'aware letter' in June 2026 is a governance point to watch. Misperception: the market prices it like a failed biotech (~A$60m EV) even though the drug is already approved molecule-wise, already selling in two countries, and the Phase III is a single study. Odds against us: ED is dominated by cheap generic pills, telehealth uptake is unproven, compounding rules could tighten, and a dilutive raise is likely in 2027.",
+    "paragraph": "Castle: a faster version of a proven, generic drug — vardenafil as a nasal spray that is absorbed in ~10 minutes instead of ~60 — sold first through cash-pay channels (Australian Special Access, US telehealth) while it heads for full FDA approval on the cheaper 505(b)(2) route. Moat: formulation patents and know-how plus Aptar's device; full FDA approval would add a regulatory moat the compounded version lacks. Lords: founder-aligned (LTR Medical ~25%), frugal (A$1.6m quarterly burn), and quick at turning agreements into prescriptions; one ASX 'aware letter' in June 2026 is a governance point to watch. Misperception: the market prices it like a failed biotech (~A$60m EV) even though the drug is already approved molecule-wise, already selling in two countries, and the Phase III is a single study. Odds against us: ED is dominated by cheap generic pills, telehealth uptake is unproven, compounding rules could tighten, and a dilutive raise is likely in 2027. Trading plan from your sheet: the raise is the entry — buy at or after the Phase III capital raise, sell into strength on good ROXUS sales news.",
     "misperception": "Priced as a failed biotech, but the molecule is approved and the product is already being sold in Australia and the US.",
     "wrong": "US ROXUS prescriptions stay tiny through mid-2027, the FDA asks for more than one Phase III, or compounding rules shut the 503A channel.",
-    "premortem": "Telehealth sales never take off, cash runs low, and a deeply discounted raise to fund Phase III halves the share price.",
+    "premortem": "Telehealth sales never take off, cash runs low, and a deeply discounted raise to fund Phase III halves the share price. Your sheet's own forecast (Jul 2026) had cash near A$5m by Dec 2026 if Phase III had started on time — a raise is a matter of when, not if.",
     "moats": [
      "patent",
      "licence"
@@ -1614,7 +1771,7 @@
     "lords": {
      "honest": 1,
      "able": 2,
-     "note": "Executive chairman Lee Rodne; founder vehicle LTR Medical owns ~25%. Fast execution in the US. ASX aware letter (Jun 2026) on disclosure timing — watch. New strategic adviser Nick Bell (Nov 2026)."
+     "note": "Executive chairman Lee Rodne; founder vehicle LTR Medical owns ~25%. Fast execution in the US. ASX aware letter (Jun 2026) on disclosure timing — watch. New strategic adviser Nick Bell (Nov 2026). Pay jumped ~50% plus a bonus in June 2026 before revenue — skin in the game is high (~29%), but watch pay vs results."
     }
    },
    "fundamentals": {
@@ -1692,7 +1849,43 @@
      "answer": "Quarterly cash reports only."
     }
    ],
-   "thesisBroken": false
+   "thesisBroken": false,
+   "burnQ": 2,
+   "extraSpend": 15,
+   "fundTo": {
+    "label": "Phase III results (single pivotal, start 1H CY2027)",
+    "date": "2028-06-30"
+   },
+   "forecasts": [
+    {
+     "period": "2026-09-30",
+     "receipts": 0.13,
+     "opcf": -5,
+     "cash": 13.6,
+     "note": "Your sheet (made Jul-26): Phase III R&D starting. Actual: Phase III slipped to 1H CY2027, so spend was lower."
+    },
+    {
+     "period": "2026-12-31",
+     "receipts": 0.2,
+     "opcf": -2,
+     "cash": 16.2,
+     "note": "Re-forecast: ROXUS US launch costs, Phase III preparation. Watch US script numbers."
+    },
+    {
+     "period": "2027-03-31",
+     "receipts": 0.3,
+     "opcf": -2.5,
+     "cash": 13.7,
+     "note": "Phase III set-up; a raise likely around here."
+    },
+    {
+     "period": "2027-06-30",
+     "receipts": 0.4,
+     "opcf": -5,
+     "cash": 8.7,
+     "note": "Phase III starts (your sheet: ~A$5m a quarter R&D)."
+    }
+   ]
   },
   {
    "id": "all",
