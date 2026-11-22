@@ -1,0 +1,51 @@
+{
+ "asOf": "2026-11-22",
+ "headline": "The ASX is expensive at the index level (big banks especially), but the average stock is cheaper than the index. The clearest value is in real estate, technology and healthcare. Materials has just started falling hard — a Bear to watch, not to buy yet. Rates are at 4.85%, the highest since 2008, with a pause now expected.",
+ "method": "My written judgement from published research (Morningstar, broker and fund-manager outlooks, RBA) as of the date shown — not a calculation. Refreshed each Monday.",
+ "sectors": {
+  "energy": {
+   "view": "mixed",
+   "note": "Screens cheap (Morningstar has rated it among the cheapest sectors), but oil is near US$95 — a cyclical earning near its peak looks cheap on P/E. Not a Bear buy at the top of the cycle."
+  },
+  "materials": {
+   "view": "mixed",
+   "note": "Down about 12% in the week to 20 Nov as iron ore, copper and gold fell; Simandou supply is pressuring iron ore. Was one of the most expensive sectors after the commodity run. Bear watch: wait for the cycle low."
+  },
+  "industrials": {
+   "view": "fair",
+   "note": "Toll roads and selected industrials have been called cheap by some analysts; UBS favours industrials. Look for Monkeys with pricing power."
+  },
+  "discretionary": {
+   "view": "mixed",
+   "note": "Some consumer names screen cheap, but rising rates squeeze households. Prefer businesses with a moat over pure rate-cut bets."
+  },
+  "staples": {
+   "view": "fair",
+   "note": "Defensive. Isolated value (e.g. Endeavour was rated well below fair value in July)."
+  },
+  "health": {
+   "view": "cheap",
+   "note": "Fell about 37% in FY26 after CSL, Cochlear and ResMed disappointed; fund managers call valuations undemanding. Your area of edge — but the sector rebounds on results, so check each thesis."
+  },
+  "financials": {
+   "view": "expensive",
+   "note": "Big banks are the most expensive part of the market (CBA ~25x forward earnings). Strategists are mostly underweight banks."
+  },
+  "it": {
+   "view": "cheap",
+   "note": "Tech valuations are near three-year lows after a ~37% fall in FY26; several moat companies trade well below analyst fair values. Monkey hunting ground."
+  },
+  "comms": {
+   "view": "cheap",
+   "note": "Near its cheapest in three years on Morningstar's measures."
+  },
+  "utilities": {
+   "view": "fair",
+   "note": "Not reviewed in depth yet. Rate-sensitive; high rates weigh on valuations."
+  },
+  "realestate": {
+   "view": "cheap",
+   "note": "The most attractively priced sector on Morningstar's measures, with most REITs undervalued — prime Elephant ground (trusts trading below net asset value). High rates are the risk."
+  }
+ }
+}

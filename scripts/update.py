@@ -15,7 +15,7 @@ import json, os, re, sys, time, urllib.request, urllib.error, io
 from datetime import date, datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.dirname(__file__))
-from model import evaluate, trial_pos, parse_date  # noqa: E402
+from model import evaluate, trial_pos, parse_date, suggest_limit, sleeve_rules  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 DATA = os.path.join(ROOT, 'data')
@@ -84,14 +84,17 @@ def _yahoo(ticker):
             j = json.loads(http(url, tries=1))
             res = j['chart']['result'][0]
             out = []
-            for t, c in zip(res['timestamp'], res['indicators']['quote'][0]['close']):
+            q = res['indicators']['quote'][0]
+            vols = q.get('volume') or [None] * len(q['close'])
+            for t, c, v in zip(res['timestamp'], q['close'], vols):
                 if c is None:
                     continue
                 d = datetime.fromtimestamp(t, SYD).date().isoformat()
+                row = [d, round(c, 4), int(v) if v else None]
                 if out and out[-1][0] == d:
-                    out[-1][1] = round(c, 4)
+                    out[-1] = row
                 else:
-                    out.append([d, round(c, 4)])
+                    out.append(row)
             if out:
                 return out
         except Exception as e:
@@ -106,7 +109,8 @@ def _stooq(ticker):
         p = line.split(',')
         if len(p) >= 5 and re.match(r'\d{4}-\d\d-\d\d', p[0]):
             try:
-                out.append([p[0], round(float(p[4]), 4)])
+                vol = int(float(p[5])) if len(p) > 5 and p[5].strip() else None
+                out.append([p[0], round(float(p[4]), 4), vol])
             except ValueError:
                 pass
     if not out:
@@ -135,7 +139,14 @@ def fetch_prices(ticker):
         if px:
             SOURCES.setdefault(ticker, {})['price'] = 'ASX last price (history builds up each run)'
             NOTES.append(f'{ticker}: price history sources busy ({"; ".join(fails)}) - used ASX last price')
-            return [[_last_trading_day(), px]]
+            vol = None
+            for k in ('volume', 'volumeToday', 'tradedVolume'):
+                if isinstance(d, dict) and d.get(k) not in (None, ''):
+                    try:
+                        vol = int(float(d[k])); break
+                    except (TypeError, ValueError):
+                        pass
+            return [[_last_trading_day(), px, vol]]
     except Exception as e:
         fails.append(f'ASX: {e}')
     ERRORS.append(f'{ticker}: no price today ({"; ".join(fails)})')
@@ -367,7 +378,8 @@ def latest_finance(co):
     return sorted(f, key=lambda x: x.get('period', ''))[-1] if f else None
 
 
-def build_alerts(cfg, companies, prices, positions, new_anns, new_props, state, today, first_run):
+def build_alerts(cfg, companies, prices, positions, new_anns, new_props, state, today, first_run, paper=None):
+    paper = paper or {}
     A = cfg.get('alerts', {})
     out = []
 
@@ -381,19 +393,34 @@ def build_alerts(cfg, companies, prices, positions, new_anns, new_props, state, 
         t = co['ticker']
         px = prices.get(t, {}).get('history') or []
         last = px[-1][1] if px else None
-        # levels
+        # levels and sell rules
+        held_real = bool(positions.get(t, {}).get('held') or positions.get(t, {}).get('shares'))
+        held_paper = t in (paper.get('holdings') or {})
+        held = held_real or held_paper
+        who = 'your holding' if held_real else ('paper portfolio' if held_paper else '')
         if last:
-            ev = evaluate(co, last, cfg, today)
-            if ev['signal'] in ('Buy', 'Sell / trim', 'Hold'):
-                tag = ' (draft assumptions — review them)' if ev.get('draft') else ''
-                if ev['signal'] == 'Buy':
-                    fire(f'zone:{t}', 'Buy', f"**{t}** is at A${last:.3f}, at or below your buy price A${ev['buy']:.3f}{tag}.", 'action')
-                elif ev['signal'] == 'Sell / trim':
-                    fire(f'zone:{t}', 'Sell', f"**{t}** is at A${last:.3f}, at or above your sell/trim price A${ev['sell']:.3f}{tag}.", 'action')
+            ev = evaluate(co, last, cfg, today, px)
+            tag = ' (draft assumptions — review them)' if ev.get('draft') else ''
+            sig = ev['signal']
+            if sig == 'Sell — thesis broken' and held:
+                lim, why = suggest_limit('thesis', last, None, cfg)
+                fire(f'zone:{t}', 'Thesis', f"**SELL {t}** ({who}): thesis marked broken. Place a sell limit at **A${lim:g}** for the next session ({why}). Last close A${last:.3f}.", 'action')
+            elif sig == 'Sell / trim':
+                if held:
+                    lim, why = suggest_limit('over', last, ev['sell'], cfg)
+                    fire(f'zone:{t}', 'Sell', f"**SELL / TRIM {t}** ({who}): A${last:.3f} is at or above your sell price A${ev['sell']:.3f}{tag}. Suggested sell limit **A${lim:g}** ({why}).", 'action')
                 else:
-                    if state.get(f'zone:{t}') in ('Buy', 'Sell') or first_run:
-                        fire(f'zone:{t}', 'Hold', f"**{t}** is in the hold zone (buy ≤ A${ev['buy']:.3f}, sell ≥ A${ev['sell']:.3f}).")
-            # big move
+                    fire(f'zone:{t}', 'Sell', f"**{t}** is above its sell price A${ev['sell']:.3f} — not one to buy now{tag}.")
+            elif sig == 'Buy':
+                chk = f"passes the {co.get('animal','')} checks" if ev['gates'] else 'speculative sleeve: judged on the scenarios and success odds'
+                fire(f'zone:{t}', 'Buy', f"**BUY ZONE {t}**: A${last:.3f} is at or below your buy price A${ev['buy']:.3f} ({chk}){tag}.", 'action')
+            elif sig == 'Cheap — needs checking':
+                fire(f'zone:{t}', 'Unchecked', f"**{t}** is below your buy price A${ev['buy']:.3f}, but these checks have no data yet: {', '.join(g['label'] for g in ev['unknown'])}. Research before buying.")
+            elif sig == 'Cheap — fails checks':
+                fire(f'zone:{t}', 'Cheap', f"**{t}** is below your buy price A${ev['buy']:.3f} but fails: {', '.join(g['label'] for g in ev['fails'])}.")
+            elif sig == 'Hold' and (state.get(f'zone:{t}') in ('Buy', 'Sell', 'Thesis', 'Cheap', 'Unchecked') or first_run):
+                fire(f'zone:{t}', 'Hold', f"**{t}** is in the hold zone (buy ≤ A${ev['buy']:.3f}, sell ≥ A${ev['sell']:.3f}).")
+        # big move
             if len(px) >= 2:
                 mv = (px[-1][1] / px[-2][1] - 1) * 100
                 if abs(mv) >= A.get('bigMovePct', 10):
@@ -404,10 +431,12 @@ def build_alerts(cfg, companies, prices, positions, new_anns, new_props, state, 
             for i, tr in enumerate(pos['plan']):
                 if not tr.get('done') and tr.get('price') and last >= float(tr['price']):
                     amt = f"{tr['shares']:,} shares" if tr.get('shares') else 'your planned amount'
-                    fire(f'ladder:{t}:{i}', 1, f"**{t}** is at A${last:.2f} and reached your sell-ladder step '{tr.get('label','')}' (≥ A${float(tr['price']):.2f}) — sell {amt}.", 'action')
-        if pos.get('bought'):
-            b = parse_date(pos['bought'])
-            maxy = cfg['rules'].get(co['section'], cfg['rules']['other']).get('maxYears', 3)
+                    lim, why = suggest_limit('ladder', last, float(tr['price']), cfg)
+                    fire(f'ladder:{t}:{i}', 1, f"**SELL {t}** — sell-ladder step '{tr.get('label','')}' reached (≥ A${float(tr['price']):.2f}). Sell {amt} with a limit at **A${lim:g}** ({why}).", 'action')
+        bought = pos.get('bought') or (paper.get('holdings') or {}).get(t, {}).get('date')
+        if bought:
+            b = parse_date(bought)
+            maxy = sleeve_rules(co, cfg).get('maxYears', 3)
             if b and today >= b + timedelta(days=int(maxy * 365.25) - 30):
                 fire(f'time:{t}', 1, f"**{t}**: your {maxy}-year maximum holding period ends {(b + timedelta(days=int(maxy*365.25))).isoformat()}.", 'action')
         # catalysts
@@ -448,7 +477,7 @@ def deliver(alerts, today):
     if not alerts:
         return
     action = [a for a in alerts if a['level'] == 'action']
-    title = f"Radar: {len(action)} action, {len(alerts)-len(action)} info — {today.isoformat()}"
+    title = f"ZRPL: {len(action)} action, {len(alerts)-len(action)} info — {today.isoformat()}"
     owner = os.environ.get('GITHUB_REPOSITORY_OWNER', '')
     repo = os.environ.get('GITHUB_REPOSITORY', '')
     body = '\n'.join(['### Needs a look'] + [f'- {a["text"]}' for a in action] +
@@ -475,11 +504,30 @@ def deliver(alerts, today):
             ERRORS.append(f'ntfy push failed ({e})')
 
 
+def update_prices(prices, t):
+    hist = fetch_prices(t)
+    if not hist:
+        return
+    old = {h[0]: list(h[1:]) for h in prices.get(t, {}).get('history', [])}
+    for h in hist:
+        prev = old.get(h[0])
+        vol = h[2] if len(h) > 2 and h[2] else (prev[1] if prev and len(prev) > 1 else None)
+        old[h[0]] = [h[1], vol]
+    merged = sorted(old.items())[-800:]
+    prices[t] = {'history': [[d, v[0], v[1] if len(v) > 1 else None] for d, v in merged], 'last': merged[-1][1][0],
+                 'lastDate': merged[-1][0], 'source': SOURCES.get(t, {}).get('price', '')}
+
+
 # ---------------------------------------------------------------- main
 def main():
     today = datetime.now(SYD).date()
     cfg = load('config.json', {})
     companies = load('companies.json', {'companies': []})['companies']
+    for co in companies:  # older files from the Medical catalyst radar
+        co.setdefault('sector', 'health')
+        co.setdefault('sub', co.get('section', 'other'))
+        co.setdefault('sleeve', {'neu': 'rare', 'dxb': 'rare', 'emv': 'device'}.get(co.get('id'), 'watch'))
+        co.setdefault('animal', 'insect' if co['sector'] == 'health' else 'monkey')
     prices = load('prices.json', {})
     anns = load('announcements.json', {})
     props = load('proposals.json', {'items': []})
@@ -487,6 +535,7 @@ def main():
     reactions = load('reactions.json', {})
     alerts = load('alerts.json', {'state': {}, 'log': []})
     positions = load('positions.json', {})
+    paper = load('paper.json', {})
     first_run = not alerts.get('state')
     seen_props = {p['id'] for p in props['items']}
     new_anns, new_props = [], 0
@@ -494,13 +543,7 @@ def main():
     for co in companies:
         t = co['ticker']
         log(f'== {t}')
-        hist = fetch_prices(t)
-        if hist:
-            old = {d: v for d, v in prices.get(t, {}).get('history', [])}
-            old.update({d: v for d, v in hist})
-            merged = sorted(old.items())[-800:]
-            prices[t] = {'history': [[d, v] for d, v in merged], 'last': merged[-1][1], 'lastDate': merged[-1][0],
-                         'source': SOURCES.get(t, {}).get('price', '')}
+        update_prices(prices, t)
         got = fetch_announcements(t)
         known = {a['id'] for a in anns.get(t, [])}
         brand_new = t not in anns
@@ -559,7 +602,10 @@ def main():
     props['items'] = [p for p in props['items'] if not (p['id'] in decisions and p['created'] < cutoff)][-400:]
 
     pending = sum(1 for p in props['items'] if p['id'] not in decisions)
-    al = build_alerts(cfg, companies, prices, positions, new_anns, new_props, alerts['state'], today, first_run)
+    bm = (cfg.get('portfolio') or {}).get('benchmark')
+    if bm:
+        update_prices(prices, bm)
+    al = build_alerts(cfg, companies, prices, positions, new_anns, new_props, alerts['state'], today, first_run, paper)
     if first_run and al:
         al.insert(0, {'key': 'first', 'text': 'First run of your radar: this shows where everything stands today.', 'level': 'info'})
     if al:

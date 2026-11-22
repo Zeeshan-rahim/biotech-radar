@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Medical catalyst radar</title>
+<title>ZRPL Investing</title>
 <style>
 :root{
   --bg:#F3F5FA; --panel:#FFFFFF; --panel2:#F7F8FC; --line:#D5DBEA; --text:#111A33; --muted:#5A6485;
@@ -66,6 +66,18 @@ textarea{width:100%;min-height:80px}
 details{margin-top:8px} summary{cursor:pointer;color:var(--muted);font-size:13.5px}
 .chk{display:inline-flex;gap:4px;align-items:center;margin:2px 10px 2px 0;font-size:13.5px}
 .big{font-weight:650}
+.layout{display:grid;grid-template-columns:210px 1fr;gap:18px;align-items:start}
+.content{min-width:0}
+aside{position:sticky;top:10px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px}
+aside a{display:flex;justify-content:space-between;gap:6px;padding:6px 9px;border-radius:7px;text-decoration:none;color:var(--text);font-size:14px}
+aside a:hover{background:var(--panel2)} aside a.on{background:var(--hold-soft);color:var(--hold);font-weight:650}
+aside a.sub{padding-left:22px;font-size:13px} aside .cnt{color:var(--muted);font-size:12px}
+aside .grp{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:8px 9px 2px}
+.ani{font-size:16px;line-height:1}
+.gate{display:flex;gap:8px;align-items:baseline;font-size:13.5px;padding:3px 0}
+.ok{color:var(--buy)} .no{color:var(--bad)} .unk{color:var(--muted)}
+.fund input{width:110px}
+@media (max-width:860px){.layout{grid-template-columns:1fr} aside{position:static;display:flex;flex-wrap:wrap;gap:2px} aside .grp{width:100%} aside a.sub{padding-left:9px}}
 .foot{margin-top:30px;font-size:12.5px;color:var(--muted)}
 .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;z-index:9;max-width:90vw}
 svg text{fill:var(--muted);font-size:11px}
@@ -75,13 +87,12 @@ svg text{fill:var(--muted);font-size:11px}
 <body>
 <div class="wrap">
 <header>
-  <div><h1>Medical catalyst radar</h1><div class="small muted" id="status">Loading…</div></div>
+  <div><h1>ZRPL Investing</h1><div class="small muted" id="status">Loading…</div></div>
   <div class="row" id="topbtns"></div>
 </header>
 <nav id="nav"></nav>
-<div id="banners"></div>
-<main id="main"></main>
-<div class="foot">Decision support built on your own assumptions, not financial advice. Probabilities and price levels move whenever you change the inputs — check them before acting, and consider tax (e.g. the 12-month CGT discount) and a licensed adviser for big decisions.</div>
+<div class="layout"><aside id="side"></aside><div class="content"><div id="banners"></div><main id="main"></main></div></div>
+<div class="foot">Decision support built on your own assumptions, not financial advice. Probabilities and price levels move whenever you change the inputs — check them before acting. Z Rahim Pty Ltd pays company tax on gains (no CGT discount) and can use franking credits — confirm tax with your accountant.</div>
 </div>
 <script>
 'use strict';
@@ -111,8 +122,12 @@ async function load(){
     getJSON('config.json',null),getJSON('companies.json',null),getJSON('prices.json',{}),getJSON('announcements.json',{}),
     getJSON('proposals.json',{items:[]}),getJSON('decisions.json',{}),getJSON('reactions.json',{}),getJSON('alerts.json',{log:[]}),
     getJSON('status.json',{}),getJSON('positions.json',null)]);
+  const [paper,value]=await Promise.all([getJSON('paper.json',null),getJSON('value.json',{})]);
   if(!cfg||!data){$('#main').innerHTML='<div class="card"><h3>Data not found</h3><p>This page needs to be opened from your GitHub Pages address (or a local web server), so it can read the <code>data</code> folder. Opening the file directly from your computer won\'t work.</p></div>';$('#status').textContent='';return}
-  Object.assign(S,{cfg,data,prices,anns,props,decisions:dec,reactions:rx,alerts:al,status:st});
+  migrate(data);
+  Object.assign(S,{cfg,data,prices,anns,props,decisions:dec,reactions:rx,alerts:al,status:st,value,
+    paper:paper||{capital:(cfg.portfolio||{}).paperCapital||500000,start:null,cash:(cfg.portfolio||{}).paperCapital||500000,holdings:{},trades:[],benchStart:null}});
+  document.title=cfg.appName||'ZRPL Investing';
   const local=LS.get('radar.positions',null);
   S.positions = local || posRepo || {};
   if(!local && posRepo) LS.set('radar.positions',posRepo);
@@ -120,6 +135,19 @@ async function load(){
 }
 window.addEventListener('hashchange',route);
 
+/* converts companies saved by the old Medical catalyst radar (idempotent; saved next time you Save) */
+function migrate(data){
+  const SL={neu:'rare',dxb:'rare',emv:'device'};
+  for(const co of data.companies||[]){
+    if(!co.sector){co.sector='health';co.sub=co.section||'other'}
+    if(co.sector==='health'&&!co.sub)co.sub=co.section||'other';
+    co.section=co.sector==='health'?co.sub:co.sector;
+    if(!co.sleeve)co.sleeve=SL[co.id]||(co.sub==='rare'?'rare':co.sub==='device'?'device':'watch');
+    if(!co.animal)co.animal=co.sector==='health'?'insect':'monkey';
+    co.thesis=co.thesis||{};co.fundamentals=co.fundamentals||{};co.levers=co.levers||{};co.checklist=co.checklist||[];
+    if(co.thesisBroken==null)co.thesisBroken=false;
+  }
+}
 /* ====================================================== model (mirror of scripts/model.py) */
 function trialPos(t){
   if(t.status==='positive')return 1; if(t.status==='negative')return 0;
@@ -136,26 +164,66 @@ function posSteps(t){
   return s;
 }
 function lastPrice(t){const p=S.prices[t];return p&&p.history&&p.history.length?{v:p.history[p.history.length-1][1],d:p.history[p.history.length-1][0]}:null}
+const num=v=>v==null||v===''||isNaN(+v)?null:+v;
+function hist(t){return (S.prices[t]||{}).history||[]}
+function liquidity(h){const r=(h||[]).slice(-30).filter(x=>x.length>2&&x[2]).slice(-20);return r.length<5?null:r.reduce((a,x)=>a+x[1]*x[2],0)/r.length}
+function metrics(co,price){
+  const f=co.fundamentals||{}, sh=num(f.shares), eps=num(f.eps), g=num(f.growth), o={};
+  if(price&&sh)o.mcap=price*sh;
+  if(price&&eps>0){o.pe=price/eps;if(g>0)o.peg=o.pe/(g*100)}
+  if(g!=null)o.growth=g;
+  const nd=num(f.netDebt);
+  if(o.mcap!=null){o.ev=o.mcap+(nd||0);const e=num(f.ebit),em=num(f.ebitMid),fcf=num(f.fcf);
+    if(e>0)o.evEbit=o.ev/e; if(em>0)o.evEbitMid=o.ev/em; if(fcf!=null&&o.mcap>0)o.fcfYield=fcf/o.mcap}
+  let roc=num(f.roc); if(roc==null){const e=num(f.ebit),ic=num(f.investedCapital);if(e!=null&&ic>0)roc=e/ic}
+  if(roc!=null)o.roc=roc;
+  const b=num(f.book),nav=num(f.nav); if(price&&b>0)o.pb=price/b; if(price&&nav>0)o.pNav=price/nav;
+  const lq=liquidity(hist(co.ticker)); if(lq!=null)o.liquidity=lq;
+  if((co.thesis||{}).trigger)o.trigger=true;
+  return o;
+}
+function checkGates(co,m){
+  if(['rare','device'].includes(co.sleeve))return [];
+  const pf=S.cfg.portfolio||{};
+  return ((S.cfg.gates||{})[co.animal]||[]).map(([key,op,val,label])=>{
+    if(typeof val==='string')val=pf[val]; const v=m[key]; let ok=null;
+    if(op==='present')ok=v?true:null; else if(v==null)ok=null;
+    else if(op==='<=')ok=v<=val; else if(op==='>=')ok=v>=val; else if(op==='between')ok=v>=val[0]&&v<=val[1];
+    return {key,label,ok,value:v}});
+}
+function sleeveRules(co){const sl=S.cfg.sleeves||{};return sl[co.sleeve||'watch']||sl.watch||{targetReturn:.15,maxYears:3}}
 function evaluate(co,price){
-  const out={signal:'No data',price};
+  const m=metrics(co,price), gates=checkGates(co,m), out={signal:'No data',price,metrics:m,gates};
   const sc=(co.scenarios||[]).filter(s=>(+s.prob||0)>0&&s.value!=null&&s.value!=='');
   if(!sc.length||!price)return out;
   const tot=sc.reduce((a,s)=>a+ +s.prob,0), ev=sc.reduce((a,s)=>a+ s.prob*s.value,0)/tot;
   const hz=pd(co.horizon)||TODAY, T=Math.max(.25,(hz-TODAY)/(365.25*864e5));
-  const R=S.cfg.rules, floor=R.sellFloorReturn??.05, sell=ev/Math.pow(1+floor,T);
+  const floor=S.cfg.rules.sellFloorReturn??.05; let sell=ev/Math.pow(1+floor,T);
   const succ=sc.filter(s=>s.success), ps=succ.reduce((a,s)=>a+ +s.prob,0);
   const sv=ps?succ.reduce((a,s)=>a+s.prob*s.value,0)/ps:null, bear=Math.min(...sc.map(s=>+s.value));
-  let buy,rule;
-  if(co.section==='rare'){const m=R.rare.targetMultiple??10;buy=Math.min(sv?sv/m:0,ev);rule=`${m}x if it works`}
-  else{const r=(R[co.section]||R.other).targetReturn??.15;buy=ev/Math.pow(1+r,T);rule=`${Math.round(r*100)}% a year`}
+  const r=sleeveRules(co); let buy,rule;
+  if(r.targetMultiple){const mu=r.targetMultiple;buy=Math.min(sv?sv/mu:0,ev);rule=`${mu}x if it works`}
+  else{const tr=r.targetReturn??.15;buy=ev/Math.pow(1+tr,T);rule=`${Math.round(tr*100)}% a year`}
   buy=Math.min(buy,sell);
-  const mB=+co.buyOverride>0, mS=+co.sellOverride>0; let sell2=sell;
-  if(mB)buy=+co.buyOverride; if(mS)sell2=+co.sellOverride;
+  const mB=+co.buyOverride>0, mS=+co.sellOverride>0;
+  if(mB)buy=+co.buyOverride; if(mS)sell=+co.sellOverride;
   const expRet=Math.pow(ev/price,1/T)-1;
-  const signal=price<=buy?'Buy':price>=sell2?'Sell / trim':'Hold';
-  return {...out,signal,ev,buy,sell:sell2,modelBuy:mB?null:buy,manualBuy:mB,manualSell:mS,T,expRet,psucc:ps/tot,sv,upIfWorks:sv?sv/price:null,downIfFails:bear/price-1,rule,draft:!co.reviewed,floor};
+  const fails=gates.filter(g=>g.ok===false), unknown=gates.filter(g=>g.ok==null);
+  const signal=co.thesisBroken?'Sell — thesis broken':price>=sell?'Sell / trim':price<=buy?(fails.length?'Cheap — fails checks':unknown.length?'Cheap — needs checking':'Buy'):'Hold';
+  return {...out,signal,ev,buy,sell,manualBuy:mB,manualSell:mS,T,expRet,psucc:ps/tot,sv,upIfWorks:sv?sv/price:null,downIfFails:bear/price-1,rule,draft:!co.reviewed,floor,fails,unknown};
 }
-function pillClass(sig){return sig==='Buy'?'p-buy':sig==='Sell / trim'?'p-sell':sig==='Hold'?'p-hold':'p-none'}
+function tick(p){return p<.1?.001:p<2?.005:.01}
+function roundTick(p,up=true){const t=tick(p),n=p/t;return +((up?Math.ceil(n-1e-9):Math.floor(n+1e-9))*t).toFixed(3)}
+function suggestLimit(reason,last,level){
+  if(reason==='thesis')return {price:roundTick(last*(1+((S.cfg.sellRules||{}).thesisLimitPct??-2)/100),false),why:'near the market: getting out matters more than the last cent'};
+  return {price:roundTick(Math.max(last,level||last),true),why:'at or above the last close: no rush, leave it in for a few days'};
+}
+function animalTag(co){const a=(S.cfg.animals||{})[co.animal];return a?`<span class="ani" title="${esc(a.label+' — '+a.type)}">${a.icon}</span>`:''}
+function sectorLabel(k){const x=(S.cfg.sectorList||[]).find(s=>s[0]===k);return x?x[1]:k}
+function subLabel(k){const x=(S.cfg.healthSubs||[]).find(s=>s[0]===k);return x?x[1]:k}
+function heldReal(t){const p=S.positions[t];return !!(p&&+p.shares>0)}
+function heldPaper(t){return !!(S.paper.holdings||{})[t]}
+function pillClass(sig){return sig==='Buy'?'p-buy':sig.startsWith('Sell')?'p-sell':sig==='Hold'?'p-hold':sig.startsWith('Cheap')?'p-warn':'p-none'}
 function latestFin(co){const f=(co.finance||[]).filter(x=>x.cash!=null).sort((a,b)=>(a.period||'').localeCompare(b.period||''));return f[f.length-1]||null}
 function runway(co){const f=latestFin(co);if(!f)return null;if(f.profitable)return {self:true,f};if(f.opcf==null||f.opcf>=0)return {f};return {months:f.cash/(-f.opcf)*3,f}}
 function mgmt(co){
@@ -166,7 +234,7 @@ function mgmt(co){
   if(rw){cap=rw.self?1:rw.months==null?null:rw.months>=24?1:rw.months>=12?.6:rw.months>=6?.3:0}
   const recentRaises=(co.raises||[]).filter(r=>{const d=pd(r.date);return d&&days(d,TODAY)<730}).length;
   if(cap!=null&&recentRaises>1)cap=Math.max(0,cap-.2);
-  const items=(S.cfg.scorecards[co.section]||S.cfg.scorecards.other).items, sco=co.scorecard||{};
+  const scd=co.sector==='health'?(S.cfg.scorecards[co.sub]||S.cfg.scorecards.other):null, items=scd?scd.items:[], sco=co.scorecard||{};
   const scored=items.filter(i=>sco[i[0]]!=null&&sco[i[0]]!==''), card=scored.length?scored.reduce((a,i)=>a+ +sco[i[0]],0)/(2*scored.length):null;
   const parts=[[prom,.4],[cap,.3],[card,.3]].filter(x=>x[0]!=null), tw=parts.reduce((a,x)=>a+x[1],0);
   const score=tw?parts.reduce((a,x)=>a+x[0]*x[1],0)/tw:null;
@@ -192,25 +260,37 @@ function markDirty(f){S.dirty.add(f);renderTop()}
 
 /* ====================================================== routing / chrome */
 function route(){
-  const h=(location.hash||'#rare').slice(1); const [view,arg]=h.split('/');
-  renderTop(); renderNav(view); renderBanners();
+  const h=(location.hash||'#home').slice(1); const parts=h.split('/'), view=parts[0];
+  renderTop(); renderNav(view); renderSide(parts); renderBanners();
   const m=$('#main');
-  if(view==='co'&&arg)m.innerHTML=viewCompany(arg);
-  else if(['rare','device','other'].includes(view))m.innerHTML=viewSection(view);
+  if(view==='co'&&parts[1])m.innerHTML=viewCompany(parts[1]);
+  else if(view==='sector')m.innerHTML=viewGroup(parts[1],parts[2]);
+  else if(['rare','device','other'].includes(view))m.innerHTML=viewGroup('health',view);
   else if(view==='calendar')m.innerHTML=viewCalendar();
   else if(view==='review')m.innerHTML=viewReview();
   else if(view==='alerts')m.innerHTML=viewAlerts();
   else if(view==='settings')m.innerHTML=viewSettings();
-  else m.innerHTML=viewSection('rare');
+  else m.innerHTML=viewHome();
   window.scrollTo({top:0});
-  if(view==='co')drawChart(arg);
+  if(view==='co')drawChart(parts[1]);
 }
 function pending(){return S.props.items.filter(p=>!S.decisions[p.id])}
 function renderNav(v){
-  const n=pending().length, sec=S.cfg.sections;
-  const L=[['rare',sec.rare],['device',sec.device],['other',sec.other],['calendar','Catalyst calendar'],['review','Review queue'+(n?`<span class="n">${n}</span>`:'')],['alerts','Alerts'],['settings','Settings & positions']];
-  const cur=v==='co'?(companyById(location.hash.split('/')[1])||{}).section:v;
-  $('#nav').innerHTML=L.map(([k,l])=>`<a href="#${k}" class="${cur===k?'on':''}">${l}</a>`).join('');
+  const n=pending().length;
+  const L=[['home','Home & value'],['calendar','Catalyst calendar'],['review','Review queue'+(n?`<span class="n">${n}</span>`:'')],['alerts','Alerts'],['settings','Settings & positions']];
+  $('#nav').innerHTML=L.map(([k,l])=>`<a href="#${k}" class="${v===k||(!v&&k==='home')?'on':''}">${l}</a>`).join('');
+}
+function renderSide(parts){
+  let sec=null,sub=null;
+  if(parts[0]==='sector'){sec=parts[1];sub=parts[2]}
+  else if(parts[0]==='co'){const c=companyById(parts[1]);if(c){sec=c.sector;sub=c.sector==='health'?c.sub:null}}
+  const cnt=k=>S.data.companies.filter(c=>c.sector===k).length, cs=(k)=>S.data.companies.filter(c=>c.sector==='health'&&c.sub===k).length;
+  let h='<div class="grp">ASX sectors</div>';
+  for(const [k,l] of S.cfg.sectorList){
+    h+=`<a href="#sector/${k}" class="${sec===k&&!sub?'on':''}"><span>${esc(l)}</span><span class="cnt">${cnt(k)||''}</span></a>`;
+    if(k==='health')for(const [sk,sl] of S.cfg.healthSubs)h+=`<a class="sub ${sec==='health'&&sub===sk?'on':''}" href="#sector/health/${sk}"><span>${esc(sl)}</span><span class="cnt">${cs(sk)||''}</span></a>`;
+  }
+  $('#side').innerHTML=h;
 }
 function renderTop(){
   const st=S.status||{}; const last=st.lastRun?new Date(st.lastRun):null;
@@ -221,62 +301,133 @@ function renderTop(){
 }
 function renderBanners(){
   const b=[];
-  if(S.data.companies.some(c=>!c.reviewed))b.push(`<div class="banner b-warn"><b>Draft assumptions.</b> Buy/sell levels for stocks marked with a dashed outline come from starting estimates I set from your old radar and Nov 2026 research. Open each stock, check the scenarios, then tick “I've reviewed these”.</div>`);
+  if(S.data.companies.some(c=>!c.reviewed))b.push(`<div class="banner b-warn"><b>Draft assumptions.</b> Buy/sell levels with a dashed outline come from starting estimates, not reviewed research. Open the stock, check the scenarios and metrics, then tick “I've reviewed these”.</div>`);
   if(!GH.token)b.push(`<div class="banner b-info">Read-only mode: to save edits and accept review items from this page, add a GitHub access token in <a href="#settings">Settings</a>. Until then, changes can be downloaded as files.</div>`);
   $('#banners').innerHTML=b.join('');
 }
 
-/* ====================================================== section view */
-function viewSection(sec){
-  const R=S.cfg.rules, rule=sec==='rare'?`Rule: buy only if it can return at least <b>${R.rare.targetMultiple}x</b> when the main bet works, and hold at most <b>${R.rare.maxYears} years</b>.`:`Rule: aim for <b>${Math.round((R[sec]||R.other).targetReturn*100)}% a year</b>, hold at most <b>${(R[sec]||R.other).maxYears} years</b>.`;
-  const cos=S.data.companies.filter(c=>c.section===sec);
-  const rows=cos.map(co=>{
-    const lp=lastPrice(co.ticker), e=evaluate(co,lp&&lp.v), dt=driverTrial(co), m=mgmt(co), nb=nextBig(co), pos=S.positions[co.ticker];
-    const pl=pos&&pos.shares&&lp?(lp.v-pos.cost)*pos.shares:null;
-    return `<tr class="click" onclick="location.hash='co/${co.ticker}'">
-      <td><span class="tk"><i class="dot" style="background:var(--c${co.color??7})"></i>${esc(co.ticker)}</span><div class="tiny muted">${esc(co.name)}</div></td>
-      <td class="num">${lp?money(lp.v):'–'}<div class="tiny muted">${lp?fmtDate(lp.d):''}</div></td>
-      <td><span class="pill ${pillClass(e.signal)} ${e.draft?'draft':''}">${e.signal}</span></td>
-      <td class="num">${money(e.buy)}</td><td class="num">${money(e.sell)}</td>
-      <td class="num hide-s">${e.expRet!=null?pct(e.expRet,1)+'/yr':'–'}</td>
-      <td class="num hide-s">${e.upIfWorks?e.upIfWorks.toFixed(1)+'x':'–'} / ${e.downIfFails!=null?pct(e.downIfFails):'–'}</td>
-      <td class="num">${dt?Math.round(trialPos(dt)*100)+'%':'–'}<div class="tiny muted">${dt?esc(dt.name.split(' (')[0]):''}</div></td>
-      <td><span class="pill ${m.grade==='A'?'p-buy':m.grade==='B'?'p-hold':m.grade==='C'?'p-warn':m.grade==='D'?'p-bad':'p-none'}">${m.grade}</span></td>
-      <td class="hide-s">${nb?`${esc(nb.title)}<div class="tiny muted">${esc(nb.when||fmtDate(nb.date))} · ${days(TODAY,pd(nb.date))} days</div>`:'–'}</td>
-      <td class="num hide-s">${pl!=null?`<span style="color:var(--${pl>=0?'buy':'bad'})">${pl>=0?'+':''}${money(pl,0)}</span>`:''}</td></tr>`}).join('');
-  return `<div class="row"><p class="small" style="margin:0">${rule} <span class="muted">Change in Settings.</span></p><span class="sp"></span><button onclick="addStock('${sec}')">+ Add stock</button></div>
-  <div class="card" style="padding:6px 8px;margin-top:10px;overflow:auto"><table>
-  <thead><tr><th>Stock</th><th class="num">Price</th><th>Signal</th><th class="num">Buy ≤</th><th class="num">Sell ≥</th><th class="num hide-s">Expected</th><th class="num hide-s">If works / fails</th><th class="num">Success odds</th><th>Mgmt</th><th class="hide-s">Next big catalyst</th><th class="num hide-s">Your P/L</th></tr></thead>
-  <tbody>${rows||'<tr><td colspan="11" class="muted">No stocks in this section yet.</td></tr>'}</tbody></table></div>
-  <p class="tiny muted">Expected = average return a year to the scenario horizon if your probabilities are right. “If works / fails” compares the success-case and worst-case values with today's price. Success odds = chance the lead trial succeeds (base rates × modifiers).</p>`;
+/* ====================================================== home & sector views */
+const VIEWCLS={cheap:'p-buy',fair:'p-hold',expensive:'p-sell',mixed:'p-warn'};
+function keyMetric(co,e){
+  const m=e.metrics||{};
+  if(['rare','device'].includes(co.sleeve)){const dt=driverTrial(co);return dt?['Success odds',Math.round(trialPos(dt)*100)+'%']:['Success odds','–']}
+  if(co.animal==='bear')return ['EV / mid-cycle EBIT',m.evEbitMid!=null?m.evEbitMid.toFixed(1)+'x':'–'];
+  if(co.animal==='elephant')return ['Price / NAV',m.pNav!=null?(m.pNav*100).toFixed(0)+'%':'–'];
+  return ['PEG',m.peg!=null?m.peg.toFixed(2):'–'];
+}
+function gateSummary(e){const g=e.gates||[];if(!g.length)return '<span class="tiny muted">scenarios</span>';const ok=g.filter(x=>x.ok===true).length,no=g.filter(x=>x.ok===false).length;
+  return `<span class="${no?'no':ok===g.length?'ok':'unk'}">${ok}/${g.length}</span>${no?` <span class="tiny no">${no} fail</span>`:''}`}
+function heldTag(t){return `${heldReal(t)?'<span class="pill p-buy" title="You hold this">held</span> ':''}${heldPaper(t)?'<span class="pill p-hold" title="In the paper portfolio">paper</span>':''}`}
+function companyRow(co){
+  const lp=lastPrice(co.ticker), e=evaluate(co,lp&&lp.v), km=keyMetric(co,e), nb=nextBig(co), sl=sleeveRules(co);
+  return `<tr class="click" onclick="location.hash='co/${co.ticker}'">
+   <td><span class="tk">${animalTag(co)} ${esc(co.ticker)}</span><div class="tiny muted">${esc(co.name)}</div></td>
+   <td class="small">${esc((sl.label||'').split(' —')[0].split(' (')[0])}</td>
+   <td class="num">${lp?money(lp.v):'–'}<div class="tiny muted">${lp?fmtDate(lp.d):''}</div></td>
+   <td><span class="pill ${pillClass(e.signal)} ${e.draft?'draft':''}">${e.signal}</span></td>
+   <td class="num">${money(e.buy)}</td><td class="num">${money(e.sell)}</td>
+   <td class="num"><span class="tiny muted">${km[0]}</span><br>${km[1]}</td>
+   <td class="num">${gateSummary(e)}</td>
+   <td class="num hide-s">${e.expRet!=null?pct(e.expRet,1)+'/yr':'–'}</td>
+   <td class="hide-s">${heldTag(co.ticker)}${nb?`<div class="tiny">${esc(nb.title)}<br><span class="muted">${esc(nb.when||fmtDate(nb.date))}</span></div>`:''}</td></tr>`;
+}
+const ROWHEAD=`<thead><tr><th>Stock</th><th>Sleeve</th><th class="num">Price</th><th>Signal</th><th class="num">Buy ≤</th><th class="num">Sell ≥</th><th class="num">Key metric</th><th class="num">Checks</th><th class="num hide-s">Expected</th><th class="hide-s">Held · next catalyst</th></tr></thead>`;
+function viewGroup(sec,sub){
+  sec=sec||'health';
+  const cos=S.data.companies.filter(c=>c.sector===sec&&(!sub||c.sub===sub));
+  const v=((S.value||{}).sectors||{})[sec];
+  const title=sectorLabel(sec)+(sub?' — '+subLabel(sub):'');
+  return `<div class="row"><h2 style="margin:0">${esc(title)}</h2><span class="sp"></span><button onclick="addStock('${sec}','${sub||''}')">+ Add stock</button></div>
+  ${v?`<div class="card" style="margin-top:10px"><span class="pill ${VIEWCLS[v.view]||'p-none'}">${esc(v.view||'')}</span> <span class="small">${esc(v.note||'')}</span><div class="tiny muted">My view as of ${fmtDate(S.value.asOf)} — commentary, not a calculation.</div></div>`:''}
+  <div class="card" style="padding:6px 8px;margin-top:10px;overflow:auto"><table>${ROWHEAD}<tbody>${cos.map(companyRow).join('')||'<tr><td colspan="10" class="muted">No stocks here yet. Use + Add stock.</td></tr>'}</tbody></table></div>
+  <p class="tiny muted">Checks = the rule checks for each animal (e.g. PEG, return on capital, liquidity); “–” means no data entered yet. Rare-disease and device stocks are judged on scenarios and success odds instead.</p>`;
+}
+function paperStats(){
+  const P=S.paper, cap=+P.capital||500000; let val=+P.cash||0; const rows=[];
+  for(const [t,h] of Object.entries(P.holdings||{})){const lp=lastPrice(t), px=lp?lp.v:h.cost, v=h.shares*px; val+=v; rows.push({t,h,px,v})}
+  const bm=(S.cfg.portfolio||{}).benchmark, bl=bm&&lastPrice(bm);
+  let b0=P.benchStart; if(!b0&&P.start&&bm){const h=hist(bm).find(x=>x[0]>=P.start);if(h)b0=h[1]}
+  const bret=b0&&bl?bl.v/b0-1:null;
+  return {cap,val,ret:val/cap-1,bret,rows,cash:+P.cash||0};
+}
+function viewHome(){
+  const V=S.value||{}, cos=S.data.companies, pf=S.cfg.portfolio||{};
+  const sectorRows=(S.cfg.sectorList||[]).map(([k,l])=>{const v=(V.sectors||{})[k]||{};const n=cos.filter(c=>c.sector===k).length;
+    return `<tr class="click" onclick="location.hash='sector/${k}'"><td><b>${esc(l)}</b><div class="tiny muted">${n?n+' stock(s) tracked':''}</div></td><td><span class="pill ${VIEWCLS[v.view]||'p-none'}">${esc(v.view||'not reviewed')}</span></td><td class="small">${esc(v.note||'')}</td></tr>`}).join('');
+  // opportunities and actions
+  const ev=cos.map(co=>{const lp=lastPrice(co.ticker);return {co,lp,e:evaluate(co,lp&&lp.v)}});
+  const buys=ev.filter(x=>x.e.signal==='Buy'||x.e.signal.startsWith('Cheap'));
+  const sells=ev.filter(x=>x.e.signal.startsWith('Sell')&&(heldReal(x.co.ticker)||heldPaper(x.co.ticker)));
+  const act=[...sells.map(x=>{const lim=suggestLimit(x.e.signal.includes('thesis')?'thesis':'over',x.lp.v,x.e.sell);return `<li><b>Sell ${x.co.ticker}</b> (${heldReal(x.co.ticker)?'your holding':'paper'}): ${esc(x.e.signal)}. Suggested limit <b>${money(lim.price)}</b> — ${lim.why}.</li>`}),
+    ...buys.map(x=>`<li><b>${x.e.signal==='Buy'?'Buy zone':'Cheap but check'}: ${x.co.ticker}</b> ${animalTag(x.co)} at ${money(x.lp.v)} (buy ≤ ${money(x.e.buy)})${x.e.fails&&x.e.fails.length?' — fails: '+x.e.fails.map(g=>esc(g.label)).join(', '):x.e.unknown&&x.e.unknown.length?' — no data yet for: '+x.e.unknown.map(g=>esc(g.label)).join(', '):''}${x.e.draft?' <span class="pill p-warn">draft</span>':''}</li>`)];
+  // plan
+  const ps=paperStats(), sl=S.cfg.sleeves||{};
+  const planRows=Object.entries(sl).filter(([k,v])=>v.slots>0).map(([k,v])=>{
+    const members=cos.filter(c=>c.sleeve===k);
+    const inPaper=members.filter(c=>heldPaper(c.ticker)), w=inPaper.reduce((a,c)=>{const r=ps.rows.find(x=>x.t===c.ticker);return a+(r?r.v:0)},0)/ps.val;
+    return `<tr><td><b>${esc(v.label)}</b><div class="tiny muted">${esc(v.note||'')}</div></td><td class="num">${v.slots} × ${v.weight}%</td><td class="num">${v.slots*v.weight}%</td>
+      <td class="num">${inPaper.length}/${v.slots} · ${(w*100||0).toFixed(1)}%</td><td class="small">${members.map(c=>`<a href="#co/${c.ticker}">${c.ticker}</a>`).join(', ')||'<span class="muted">none yet</span>'}</td></tr>`}).join('');
+  const totalW=Object.values(sl).reduce((a,v)=>a+v.slots*v.weight,0)+(pf.cashWeight||0);
+  // checks
+  const health=ps.rows.filter(r=>(companyById(r.t)||{}).sector==='health').reduce((a,r)=>a+r.v,0)/ps.val;
+  const warn=[];
+  if(ps.rows.length>10)warn.push(`More than 10 holdings (${ps.rows.length}).`);
+  ps.rows.forEach(r=>{const w=r.v/ps.val*100;if(w>pf.maxWeight)warn.push(`${r.t} is ${w.toFixed(1)}% of the paper portfolio (max ${pf.maxWeight}%).`);if(w<pf.minWeight)warn.push(`${r.t} is only ${w.toFixed(1)}% (min ${pf.minWeight}%).`)});
+  if(health*100>pf.healthCap)warn.push(`Health Care is ${(health*100).toFixed(0)}% (cap ${pf.healthCap}%).`);
+  const holdRows=ps.rows.map(r=>{const co=companyById(r.t)||{ticker:r.t};const e=co.scenarios?evaluate(co,r.px):{signal:'–'};return `<tr class="click" onclick="location.hash='co/${r.t}'"><td>${co.animal?animalTag(co):''} <b>${r.t}</b></td><td class="num">${r.h.shares.toLocaleString()}</td><td class="num">${money(r.h.cost)}</td><td class="num">${money(r.px)}</td><td class="num">${money(r.v,0)}</td><td class="num">${(r.v/ps.val*100).toFixed(1)}%</td><td class="num" style="color:var(--${r.px>=r.h.cost?'buy':'bad'})">${pct(r.px/r.h.cost-1,1)}</td><td><span class="pill ${pillClass(e.signal)}">${e.signal}</span></td></tr>`}).join('');
+  return `<div class="card"><div class="row"><h3 style="margin:0">Where the value is</h3><span class="sp"></span><span class="tiny muted">${V.asOf?'My view as of '+fmtDate(V.asOf)+' — updated each Monday':'Not written yet'}</span></div>
+   ${V.headline?`<p class="decision" style="margin:8px 0">${esc(V.headline)}</p>`:''}
+   <table><tbody>${sectorRows}</tbody></table>
+   ${V.method?`<p class="tiny muted">${esc(V.method)}</p>`:''}</div>
+  <div class="card"><h3>What needs attention</h3>${act.length?`<ul class="small">${act.join('')}</ul>`:'<p class="small muted">Nothing to do today — no buy-zone stocks and no sell rules triggered on holdings.</p>'}</div>
+  <div class="card"><h3>The plan: 10 stocks</h3><table><thead><tr><th>Sleeve</th><th class="num">Slots × size</th><th class="num">Target</th><th class="num">Paper now</th><th>Stocks in this sleeve</th></tr></thead><tbody>${planRows}
+   <tr><td><b>Cash</b></td><td></td><td class="num">${pf.cashWeight}%</td><td class="num">${(ps.cash/ps.val*100).toFixed(1)}%</td><td class="tiny muted">Sleeves are maximums — cash waits when nothing is cheap.</td></tr></tbody></table>
+   <p class="tiny muted">Total ${totalW}%. Each stock ${pf.minWeight}–${pf.maxWeight}%, Health Care ≤ ${pf.healthCap}%, at most 10 stocks. Liquidity ≥ A$${(pf.liquidityMin/1000).toFixed(0)}k a day (Insects ≥ A$${(pf.insectLiquidityMin/1000).toFixed(0)}k, market value A$${pf.insectMcapMin}–${pf.insectMcapMax}m).</p></div>
+  <div class="card"><div class="row"><h3 style="margin:0">Paper portfolio (A$${(ps.cap/1000).toFixed(0)}k model)</h3><span class="sp"></span><span class="small">${S.paper.start?'Since '+fmtDate(S.paper.start):'Not started — buy from a stock page'}</span></div>
+   <div class="grid g3" style="margin-top:10px"><div class="kpi"><span>Value</span><b>${money(ps.val,0)}</b><span>cash ${money(ps.cash,0)}</span></div>
+   <div class="kpi"><span>Return</span><b style="color:var(--${ps.ret>=0?'buy':'bad'})">${pct(ps.ret,1)}</b><span>price only; dividends from Stage 2</span></div>
+   <div class="kpi"><span>Benchmark (${esc(pf.benchmark||'')})</span><b>${ps.bret!=null?pct(ps.bret,1):'–'}</b><span>${esc(pf.benchmarkLabel||'')}</span></div></div>
+   ${holdRows?`<div style="overflow:auto"><table style="margin-top:10px"><thead><tr><th>Stock</th><th class="num">Shares</th><th class="num">Cost</th><th class="num">Price</th><th class="num">Value</th><th class="num">Weight</th><th class="num">P/L</th><th>Signal</th></tr></thead><tbody>${holdRows}</tbody></table></div>`:''}
+   ${warn.length?`<div class="banner b-warn" style="margin-top:10px">${warn.map(esc).join('<br>')}</div>`:''}</div>`;
 }
 
 /* ====================================================== company view */
 function viewCompany(tk){
   const co=companyById(tk); if(!co)return '<div class="card">Stock not found.</div>';
   const ed=S.edit[co.id]; const lp=lastPrice(co.ticker), e=evaluate(co,lp&&lp.v), pos=S.positions[co.ticker]||{};
-  return `<div class="row" style="margin-bottom:10px"><a href="#${co.section}">← ${esc(S.cfg.sections[co.section])}</a><span class="sp"></span>
+  const back=co.sector==='health'?`#sector/health/${co.sub}`:`#sector/${co.sector}`, a=(S.cfg.animals||{})[co.animal]||{}, sl=sleeveRules(co);
+  const isHealth=co.sector==='health';
+  return `<div class="row" style="margin-bottom:10px"><a href="${back}">← ${esc(sectorLabel(co.sector)+(isHealth?' — '+subLabel(co.sub):''))}</a><span class="sp"></span>
     <button onclick="toggleEdit('${co.id}')">${ed?'Done editing':'Edit this stock'}</button></div>
-  <div class="card"><div class="row"><div><h2 style="margin:0">${esc(co.name)} <span class="muted">(${esc(co.ticker)})</span></h2><div class="muted small">${esc(co.tagline||'')}</div></div><span class="sp"></span>
+  <div class="card"><div class="row"><div><h2 style="margin:0">${animalTag(co)} ${esc(co.name)} <span class="muted">(${esc(co.ticker)})</span></h2>
+    <div class="muted small">${esc(a.label?a.label+' — '+a.type:'')} · ${esc(sl.label||'')} ${heldTag(co.ticker)}</div><div class="muted small">${esc(co.tagline||'')}</div></div><span class="sp"></span>
     <div style="text-align:right"><b style="font-size:22px">${lp?money(lp.v):'–'}</b><div class="tiny muted">${lp?'close '+fmtDate(lp.d):'no price yet'}</div></div></div>
     ${ed?basicsEditor(co):''}
     <div id="chart" style="margin-top:10px"></div></div>
   ${decisionCard(co,e,lp,pos)}
-  <div class="grid g2">${posCard(co)}${reactionCard(co,lp)}</div>
+  ${thesisCard(co)}
+  ${metricsCard(co,e)}
+  <div class="grid g2">${posCard(co)}${paperCard(co,e,lp)}</div>
   ${scenarioCard(co,e)}
+  ${leversCard(co)}
+  ${checklistCard(co)}
   ${mgmtCard(co)}
+  <div class="grid g2">${reactionCard(co,lp)}${annCard(co)}</div>
   ${catalystCard(co)}
   ${factsCard(co)}
-  ${annCard(co)}
   ${ed?rawCard(co):''}`;
 }
 function decisionCard(co,e,lp,pos){
   if(e.signal==='No data')return `<div class="card"><h3>Decision</h3><p class="muted">Needs a price (after the first automatic update) and scenario values with probabilities.</p></div>`;
-  const hz=fmtDate(co.horizon), R=S.cfg.rules, maxY=(R[co.section]||R.other).maxYears;
+  const hz=fmtDate(co.horizon), maxY=sleeveRules(co).maxYears||3;
   const held=pos.shares>0; let lines=[];
+  if((held||heldPaper(co.ticker))&&e.signal.startsWith('Sell')){const lim=suggestLimit(e.signal.includes('thesis')?'thesis':'over',e.price,e.sell);
+    lines.push(`<div class="banner b-bad" style="margin:4px 0"><b>Sell order:</b> place a limit sell at <b>${money(lim.price)}</b> for the next session (${lim.why}).</div>`)}
+  if(e.fails&&e.fails.length)lines.push(`<span class="pill p-warn">Fails</span> ${e.fails.map(g=>esc(g.label)).join(' · ')}`);
+  if(e.unknown&&e.unknown.length)lines.push(`<span class="pill p-none">No data yet</span> <span class="small">${e.unknown.map(g=>esc(g.label)).join(' · ')}</span>`);
   lines.push(`<span class="pill ${pillClass(e.signal)} ${e.draft?'draft':''}" style="font-size:15px">${e.signal}${e.draft?' (draft)':''}</span>`);
   lines.push(`At <b>${money(e.price)}</b>, your scenarios average <b>${money(e.ev)}</b> a share by ${hz} — about <b>${pct(e.expRet,1)} a year</b>.`);
-  if(co.section==='rare'){
+  if(sleeveRules(co).targetMultiple){
     lines.push(`Your rule (${e.rule}): the success case is worth <b>${money(e.sv)}</b>, so a 10-bagger needs a buy price of <b>${money(e.buy)}</b> or less. Today it would return <b>${e.upIfWorks.toFixed(1)}x</b> if it works and <b>${pct(e.downIfFails)}</b> if it fails.`);
   } else {
     lines.push(`Your rule (${e.rule}): buy at <b>${money(e.buy)}</b> or less. Success case is <b>${e.upIfWorks?e.upIfWorks.toFixed(1)+'x':'–'}</b> today's price; worst case <b>${pct(e.downIfFails)}</b>.`);
@@ -284,6 +435,8 @@ function decisionCard(co,e,lp,pos){
   lines.push(e.manualSell?`Sell or trim at <b>${money(e.sell)}</b> or more <span class="pill p-warn">your price</span>.`:`Sell or trim at <b>${money(e.sell)}</b> or more — above that the expected return drops below ${Math.round(e.floor*100)}% a year.`);
   if(e.manualBuy)lines.push(`<span class="pill p-warn">your price</span> Buy price set by you at <b>${money(e.buy)}</b> (overrides the rule above).`);
   lines.push(`<span class="row small" style="margin-top:4px">Set your own: buy ≤ <input type="number" step="0.001" value="${co.buyOverride??''}" placeholder="auto" data-p="companies:${co.id}:buyOverride" data-t="n"> sell ≥ <input type="number" step="0.001" value="${co.sellOverride??''}" placeholder="auto" data-p="companies:${co.id}:sellOverride" data-t="n"><span class="tiny muted">Leave blank to use your rules. Then Save changes.</span></span>`);
+  const cap=+LS.get('zrpl.capital',0), w=sleeveRules(co).weight;
+  if(w&&!held)lines.push(`<span class="small">Plan size: ${w}% of capital${cap?` = <b>${money(cap*w/100,0)}</b> of your ${money(cap,0)} (about ${Math.floor(cap*w/100/e.price).toLocaleString()} shares)`:' (set your real capital in Settings)'}.</span>`);
   if(held){
     const val=pos.shares*e.price, gain=(e.price-pos.cost)*pos.shares;
     let t=`You hold <b>${(+pos.shares).toLocaleString()}</b> shares at ${money(pos.cost)}: worth ${money(val,0)}, ${gain>=0?'up':'down'} ${money(Math.abs(gain),0)}.`;
@@ -291,8 +444,72 @@ function decisionCard(co,e,lp,pos){
     lines.push(t);
     const nx=(pos.plan||[]).find(s=>!s.done); if(nx)lines.push(`Next step in your sell ladder: <b>${esc(nx.label||'')}</b> — ${(+nx.shares).toLocaleString()} shares at ≥ ${money(+nx.price)}${e.price>=nx.price?' <span class="pill p-sell">reached</span>':''}.`);
   }
-  const dt=driverTrial(co); if(dt){const sp=e.psucc, tp=trialPos(dt); if(Math.abs(sp-tp)>.12)lines.push(`<span class="pill p-warn">Check</span> Your scenarios give a ${Math.round(sp*100)}% chance of a good outcome, but the trial model says ${Math.round(tp*100)}% for ${esc(dt.name)}. ${sp<tp?'Fine if commercial risk explains the gap.':'Your scenarios look more optimistic than base rates.'}`)}
+  const dt=co.sector==='health'&&driverTrial(co); if(dt){const sp=e.psucc, tp=trialPos(dt); if(Math.abs(sp-tp)>.12)lines.push(`<span class="pill p-warn">Check</span> Your scenarios give a ${Math.round(sp*100)}% chance of a good outcome, but the trial model says ${Math.round(tp*100)}% for ${esc(dt.name)}. ${sp<tp?'Fine if commercial risk explains the gap.':'Your scenarios look more optimistic than base rates.'}`)}
   return `<div class="card decision"><h3>Decision</h3>${lines.map(l=>`<p style="margin:6px 0">${l}</p>`).join('')}</div>`;
+}
+function ta(P,path,val,ph,rows=3){return `<textarea style="min-height:${rows*22}px" placeholder="${esc(ph||'')}" data-p="${P}:${path}">${esc(val||'')}</textarea>`}
+function thesisCard(co){
+  const ed=S.edit[co.id], P=`companies:${co.id}`, T=co.thesis||{}, C=T.castle||{}, L=T.lords||{}, moats=T.moats||[];
+  const C5=[['company','Company — products and goals'],['collaborators','Collaborators — partners, suppliers, distributors, service providers'],['customers','Customers — audience, perception, channels, behaviour'],['competitors','Competitors — established and emerging, their SWOT and tactics'],['climate','Climate — laws, social trends, technology']];
+  const rate=v=>v==null||v===''?'–':['Weak','Mixed','Strong'][v];
+  const sel=(path,v)=>`<select data-p="${P}:${path}" data-t="n">${['','0','1','2'].map(o=>`<option value="${o}" ${String(v??'')===o?'selected':''}>${o===''?'–':['Weak','Mixed','Strong'][o]}</option>`).join('')}</select>`;
+  const moatList=(S.cfg.moatTypes||[]).map(([k,l])=>ed?`<label class="chk"><input type="checkbox" ${moats.includes(k)?'checked':''} onchange="toggleMoat('${co.id}','${k}',this.checked)">${esc(l)}</label>`:(moats.includes(k)?`<span class="pill p-hold" style="margin:2px">${esc(l)}</span>`:'')).join('');
+  const elephant=co.animal==='elephant';
+  return `<div class="card"><div class="row"><h3 style="margin:0">Thesis: castle → moat → lords</h3><span class="sp"></span>
+   <button class="${co.thesisBroken?'primary':'danger'}" onclick="toggleThesis('${co.id}')">${co.thesisBroken?'Thesis marked broken — undo':'Mark thesis broken'}</button></div>
+   ${ed?ta(P,'thesis.paragraph',T.paragraph,'One paragraph: the castle first, then the moat, then the lords — and the misperception.',5):`<p class="decision">${T.paragraph?esc(T.paragraph):'<span class="muted">No thesis written yet.</span>'}</p>`}
+   <div class="grid g3">
+    <div class="kpi"><span>The misperception (what the market believes)</span>${ed?ta(P,'thesis.misperception',T.misperception,'Market thinks…'):`<div class="small">${esc(T.misperception||'–')}</div>`}</div>
+    <div class="kpi"><span>What would prove us wrong</span>${ed?ta(P,'thesis.wrong',T.wrong,'Sell if…'):`<div class="small">${esc(T.wrong||'–')}</div>`}</div>
+    <div class="kpi"><span>Pre-mortem: two years on it lost 50% — why?</span>${ed?ta(P,'thesis.premortem',T.premortem,'Most likely reasons…'):`<div class="small">${esc(T.premortem||'–')}</div>`}</div>
+    ${elephant?`<div class="kpi"><span>Trigger that unlocks the value (needed within ~2 years)</span>${ed?ta(P,'thesis.trigger',T.trigger,'Asset sale, buyback, takeover, activist…'):`<div class="small">${esc(T.trigger||'– none identified (fails the Elephant check)')}</div>`}</div>`:''}
+   </div>
+   <details ${ed?'open':''}><summary>Castle — the 5 C's (rating: ${rate(T.castleRating)})</summary>
+    <table><tbody>${C5.map(([k,l])=>`<tr><td style="width:34%" class="small"><b>${esc(l.split(' — ')[0])}</b><div class="tiny muted">${esc(l.split(' — ')[1])}</div></td><td>${ed?ta(P,'thesis.castle.'+k,C[k],'',2):`<span class="small">${esc(C[k]||'–')}</span>`}</td></tr>`).join('')}</tbody></table>
+    ${ed?`<div class="row small">Castle overall: ${sel('thesis.castleRating',T.castleRating)} <span class="tiny muted">Will it stand for 10–20 years?</span></div>`:''}</details>
+   <details ${ed||moats.length?'open':''}><summary>Moats (rating: ${rate(T.moatRating)})</summary><div style="margin:6px 0">${moatList||'<span class="muted small">None identified.</span>'}</div>
+    ${ed?ta(P,'thesis.moatNote',T.moatNote,'Evidence: return on capital, pricing power, market share…',2)+`<div class="row small">Moat overall: ${sel('thesis.moatRating',T.moatRating)}</div>`:`<p class="small">${esc(T.moatNote||'')}</p>`}</details>
+   <details ${ed?'open':''}><summary>Lords — honest ${rate(L.honest)}, able ${rate(L.able)}</summary>
+    ${ed?`<div class="row small">Honest ${sel('thesis.lords.honest',L.honest)} Able ${sel('thesis.lords.able',L.able)}</div>${ta(P,'thesis.lords.note',L.note,'Insider ownership, director buying/selling, pay vs results, promises kept, capital allocation record…',3)}`:`<p class="small">${esc(L.note||'')}</p>`}</details></div>`;
+}
+const FUND=[['shares','Shares on issue','m'],['eps','EPS (last 12 months)','A$'],['growth','Earnings growth a year','%'],['ebit','EBIT','A$m'],['ebitMid','Mid-cycle EBIT (Bears)','A$m'],['netDebt','Net debt (negative = net cash)','A$m'],['fcf','Free cash flow','A$m'],['investedCapital','Invested capital','A$m'],['roc','Return on capital (if quoted)','%'],['nav','Net asset value / share (Elephants)','A$'],['book','Book value / share','A$']];
+function metricsCard(co,e){
+  const ed=S.edit[co.id], P=`companies:${co.id}`, f=co.fundamentals||{}, m=e.metrics||{};
+  const fx=(v,d=1,suf='x')=>v==null?'–':v.toFixed(d)+suf, pc=v=>v==null?'–':(v*100).toFixed(1)+'%';
+  const comp=[['Market value',m.mcap!=null?'A$'+m.mcap.toFixed(0)+'m':'–'],['P/E',fx(m.pe)],['PEG',fx(m.peg,2,'')],['EV / EBIT',fx(m.evEbit)],['EV / mid-cycle EBIT',fx(m.evEbitMid)],['FCF yield',pc(m.fcfYield)],['Return on capital',pc(m.roc)],['Price / book',fx(m.pb,2)],['Price / NAV',m.pNav!=null?(m.pNav*100).toFixed(0)+'%':'–'],['Turnover / day',m.liquidity!=null?'A$'+(m.liquidity/1000).toFixed(0)+'k':'–']];
+  const gates=(e.gates||[]).map(g=>`<div class="gate"><b class="${g.ok===true?'ok':g.ok===false?'no':'unk'}">${g.ok===true?'✓':g.ok===false?'✕':'?'}</b><span>${esc(g.label)}</span></div>`).join('');
+  const inputs=FUND.map(([k,l,u])=>{const v=f[k];const shown=u==='%'&&v!=null&&v!==''?+(v*100).toFixed(2):(v??'');
+    return `<label class="chk fund">${esc(l)} (${u}) <input type="number" step="any" value="${shown}" data-p="${P}:fundamentals.${k}" data-t="${u==='%'?'pct':'n'}"></label>`}).join('');
+  return `<div class="card"><h3>Value metrics and ${esc(((S.cfg.animals||{})[co.animal]||{}).label||'')} checks</h3>
+   <div class="grid g3">${comp.map(([a,b])=>`<div class="kpi"><span>${a}</span><b>${b}</b></div>`).join('')}</div>
+   <div style="margin-top:10px">${gates||'<p class="small muted">No metric checks for this sleeve — judged on scenarios and success odds.</p>'}</div>
+   <p class="tiny muted">Figures ${f.asOf?'as of '+fmtDate(f.asOf):'not entered yet'}${f.source?' · '+esc(f.source):''}${f.url?` · <a href="${esc(f.url)}" target="_blank" rel="noopener">source</a>`:''}. Price-based ratios update every day; the rest after each result.</p>
+   ${ed?`<div style="margin-top:8px">${inputs}</div><div class="row" style="margin-top:6px"><label class="chk">As of <input type="date" value="${f.asOf||''}" data-p="${P}:fundamentals.asOf"></label><input style="flex:1" placeholder="source (e.g. FY26 annual report p.45)" value="${esc(f.source||'')}" data-p="${P}:fundamentals.source"><input style="flex:1" placeholder="link" value="${esc(f.url||'')}" data-p="${P}:fundamentals.url"></div>`:''}</div>`;
+}
+function leversCard(co){
+  const ed=S.edit[co.id], P=`companies:${co.id}`, L=co.levers||{};
+  const rows=(S.cfg.levers||[]).map(([k,l])=>{const x=L[k]||{};return `<tr><td class="small"><b>${esc(l)}</b></td><td>${ed?`<input class="w-l" value="${esc(x.near||'')}" data-p="${P}:levers.${k}.near">`:`<span class="small">${esc(x.near||'–')}</span>`}</td><td>${ed?`<input class="w-l" value="${esc(x.far||'')}" data-p="${P}:levers.${k}.far">`:`<span class="small">${esc(x.far||'–')}</span>`}</td></tr>`}).join('');
+  const any=Object.values(L).some(x=>x&&(x.near||x.far));
+  return `<div class="card"><details ${ed||any?'open':''}><summary><b>How it will grow revenue and profit</b></summary><table><thead><tr><th>Lever</th><th>Near (3–12 months)</th><th>Far (1–10 years)</th></tr></thead><tbody>${rows}</tbody></table></details></div>`;
+}
+function checklistCard(co){
+  const ed=S.edit[co.id], P=`companies:${co.id}`, A=co.checklist||[];
+  const done=A.filter(a=>a&&a.rating).length;
+  const RT={yes:['p-buy','Yes'],partly:['p-warn','Partly'],no:['p-bad','No'],unknown:['p-none','Can\'t tell']};
+  const rows=(S.cfg.checklist||[]).map((q,i)=>{const a=A[i]||{};return `<tr><td class="small" style="width:36%"><b>${i+1}.</b> ${esc(q)}</td>
+    <td>${ed?`<select data-p="${P}:checklist.${i}.rating"><option value=""></option>${Object.entries(RT).map(([k,[c,l]])=>`<option value="${k}" ${a.rating===k?'selected':''}>${l}</option>`).join('')}</select>`:(a.rating?`<span class="pill ${RT[a.rating][0]}">${RT[a.rating][1]}</span>`:'')}</td>
+    <td>${ed?`<input class="w-l" value="${esc(a.answer||'')}" data-p="${P}:checklist.${i}.answer">`:`<span class="small">${esc(a.answer||'')}</span>`}</td></tr>`}).join('');
+  return `<div class="card"><details ${ed?'open':''}><summary><b>Ten-question checklist</b> (${done}/10 answered)</summary><table><tbody>${rows}</tbody></table>
+   <p class="tiny muted">"Can't tell" is an honest answer: labour relations, succession and cost analysis are often not public. Ask at the AGM or investor relations.</p></details></div>`;
+}
+function paperCard(co,e,lp){
+  const h=(S.paper.holdings||{})[co.ticker], w=sleeveRules(co).weight||0, cap=+S.paper.capital||500000;
+  if(!lp)return `<div class="card"><h3>Paper portfolio</h3><p class="small muted">Needs a price first.</p></div>`;
+  const sh=Math.floor(cap*w/100/lp.v);
+  return `<div class="card"><h3>Paper portfolio</h3>${h?`<p class="small">${h.shares.toLocaleString()} shares bought ${fmtDate(h.date)} at ${money(h.cost)} → ${money(h.shares*lp.v,0)} (${pct(lp.v/h.cost-1,1)}).</p><button onclick="paperSell('${co.ticker}')">Paper sell all at ${money(lp.v)}</button>`
+   :w?`<p class="small">Plan size ${w}% of the A$${(cap/1000).toFixed(0)}k model = ${sh.toLocaleString()} shares at ${money(lp.v)}.</p><button onclick="paperBuy('${co.ticker}')">Paper buy at ${money(lp.v)}</button>`
+   :'<p class="small muted">On the watch list — give it a sleeve (Edit) to paper-buy it.</p>'}
+   <p class="tiny muted">Paper trades use the last close and are saved to GitHub (it's a model, not your money).</p></div>`;
 }
 function scenarioCard(co,e){
   const ed=S.edit[co.id], P=`companies:${co.id}`;
@@ -311,7 +528,7 @@ function scenarioCard(co,e){
     <label class="chk">Horizon <input type="date" value="${co.horizon||''}" data-p="${P}:horizon"></label>
     <label class="chk"><input type="checkbox" ${co.reviewed?'checked':''} data-p="${P}:reviewed" data-t="b"> I've reviewed these</label></div>`:
     `<div class="row" style="margin-top:8px"><button onclick="toggleEdit('${co.id}')">Edit scenarios</button>${!co.reviewed?`<button onclick="setReviewed('${co.id}')">Looks right — mark reviewed</button>`:''}</div>`}
-  ${trialsBlock(co)}</div>`;
+  ${co.sector==='health'||(co.trials||[]).length?trialsBlock(co):''}</div>`;
 }
 function trialsBlock(co){
   const ed=S.edit[co.id], P=`companies:${co.id}`, pc=S.cfg.pos;
@@ -334,10 +551,10 @@ function trialsBlock(co){
    ${ed?`<button style="margin-top:6px" onclick="addItem('${co.id}','trials',{id:'${co.id}-t'+Date.now(),name:'New trial',area:'other',phase:'P3',mods:[],status:'ongoing',driver:false,keys:'',readout:'',readoutWhen:'',posOverride:null})">+ Trial</button>`:''}`;
 }
 function mgmtCard(co){
-  const ed=S.edit[co.id], P=`companies:${co.id}`, m=mgmt(co), sc=S.cfg.scorecards[co.section]||S.cfg.scorecards.other, lp=lastPrice(co.ticker);
+  const ed=S.edit[co.id], P=`companies:${co.id}`, m=mgmt(co), sc=co.sector==='health'?(S.cfg.scorecards[co.sub]||S.cfg.scorecards.other):{title:'',source:'',items:[]}, lp=lastPrice(co.ticker);
   const f=m.rw&&m.rw.f, shares=[...(co.finance||[])].filter(x=>x.shares).pop();
   const k=[
-    ['Management grade',m.grade,'Promises 40% · capital 30% · scorecard 30%'],
+    ['Management grade',m.grade,co.sector==='health'?'Promises 40% · capital 30% · scorecard 30%':'Promises and capital (lords rated in the thesis)'],
     ['Promises kept',m.prom!=null?Math.round(m.prom*100)+'%':'–',`${m.res} resolved promise(s)`],
     ['Cash',f?`A$${f.cash}m`:'–',f?`at ${fmtDate(f.period)}`:'enter from 4C'],
     ['Runway',m.rw?(m.rw.self?'Self-funding':m.rw.months!=null?Math.round(m.rw.months)+' months':'–'):'–',f&&f.opcf!=null?`burn A$${-f.opcf}m a quarter`:''],
@@ -355,8 +572,8 @@ function mgmtCard(co){
    <div class="grid g3">${k.map(([a,b,c])=>`<div class="kpi"><span>${a}</span><b>${b}</b><span>${esc(c)}</span></div>`).join('')}</div>
    <h3 style="margin-top:16px">Promise tracker</h3><table><thead><tr><th>What they said</th><th>Due</th><th>Status</th><th>Notes</th></tr></thead><tbody>${promRows}</tbody></table>
    ${ed?`<button style="margin-top:6px" onclick="addItem('${co.id}','promises',{id:'${co.id}-p'+Date.now(),text:'',due:'',status:'open',comment:'',checked:''})">+ Promise</button>`:''}
-   <details ${ed?'open':''}><summary>${esc(sc.title)} (${m.card!=null?Math.round(m.card*100)+'%':'not scored'})</summary><p class="tiny muted">${esc(sc.source)}</p>
-   <table><tbody>${cardRows}</tbody></table>${ed?`<textarea data-p="${P}:scoreNotes">${esc(co.scoreNotes||'')}</textarea>`:`<p class="small">${esc(co.scoreNotes||'')}</p>`}</details>
+   ${sc.items.length?'':'<!--'}<details ${ed?'open':''}><summary>${esc(sc.title)} (${m.card!=null?Math.round(m.card*100)+'%':'not scored'})</summary><p class="tiny muted">${esc(sc.source)}</p>
+   <table><tbody>${cardRows}</tbody></table>${ed?`<textarea data-p="${P}:scoreNotes">${esc(co.scoreNotes||'')}</textarea>`:`<p class="small">${esc(co.scoreNotes||'')}</p>`}</details>${sc.items.length?'':'-->'}
    <details ${ed?'open':''}><summary>Cash-flow history (A$m, from quarterly 4C reports)</summary>
    <table><thead><tr><th>Period</th><th class="num">Cash</th><th class="num">Op. cash flow</th><th class="num">R&amp;D</th><th class="num">Staff</th><th class="num">Admin</th><th>Source</th></tr></thead><tbody>${finRows||'<tr><td colspan="7" class="muted">None yet — accepted 4C items from the Review queue land here.</td></tr>'}</tbody></table>
    ${ed?`<div class="row" style="margin-top:6px"><input type="date" id="f-period"><input type="number" step="0.01" placeholder="cash" id="f-cash"><input type="number" step="0.01" placeholder="op cash flow" id="f-opcf"><input type="number" step="0.01" placeholder="R&D" id="f-rnd"><input type="number" step="0.01" placeholder="staff" id="f-staff"><input type="number" step="0.01" placeholder="admin" id="f-admin"><input type="number" step="0.1" placeholder="shares (m)" id="f-shares"><label class="chk"><input type="checkbox" id="f-prof">profitable</label><button onclick="addFin('${co.id}')">+ Add quarter</button></div>
@@ -373,7 +590,7 @@ function posCard(co){
    <details ${p.plan&&p.plan.length?'open':''}><summary>Sell ladder (alerts when a step's price is reached)</summary>
    <table><thead><tr><th>Step</th><th>Price ≥</th><th>Shares</th><th>Done</th><th></th><th></th></tr></thead><tbody>${plan}</tbody></table>
    <button style="margin-top:6px" onclick="addPlan('${T}')">+ Step</button></details>
-   <p class="tiny muted">Stored on this device. ${GH.sync==='full'?'Shares, cost and ladder are also saved to GitHub (public if the repo is public).':GH.sync==='ladder'?'Only the ladder prices go to GitHub for email/phone alerts — your shares and cost stay on this device.':'Nothing is sent to GitHub; ladder alerts only show here.'}</p></div>`;
+   <p class="tiny muted">Stored on this device. ${GH.sync==='full'?'Shares, cost and ladder are also saved to GitHub (public if the repo is public).':GH.sync==='ladder'?'GitHub only learns that you hold it, the first-bought date and ladder prices — for email alerts. Share counts and costs stay here.':'Nothing is sent to GitHub; alerts for this holding only show here.'}</p></div>`;
 }
 function reactionCard(co,lp){
   const ups=(co.catalysts||[]).filter(c=>!c.done&&c.big&&pd(c.date)>=new Date(TODAY.getTime()-30*864e5)).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,4);
@@ -417,9 +634,14 @@ function annCard(co){
   const a=(S.anns[co.ticker]||[]).slice(0,15);
   return `<div class="card"><h3>Latest ASX announcements</h3>${a.length?`<table><tbody>${a.map(x=>`<tr><td class="small">${fmtDate(x.date)}</td><td class="small">${x.sensitive?'<span class="pill p-sell">$</span> ':''}<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.headline)}</a></td></tr>`).join('')}</tbody></table>`:'<p class="muted small">Appear after the first automatic update.</p>'}</div>`;
 }
-function basicsEditor(co){const P=`companies:${co.id}`;
-  return `<div class="row" style="margin-top:10px"><input value="${esc(co.name)}" data-p="${P}:name"><select data-p="${P}:section">${Object.entries(S.cfg.sections).map(([k,l])=>`<option value="${k}" ${co.section===k?'selected':''}>${esc(l)}</option>`).join('')}</select>
-   <input style="flex:1;min-width:240px" value="${esc(co.tagline||'')}" data-p="${P}:tagline"><input style="min-width:240px" value="${esc(co.keywords||'')}" placeholder="announcement keywords a|b|c" data-p="${P}:keywords">
+function basicsEditor(co){const P=`companies:${co.id}`, cfg=S.cfg;
+  const opt=(arr,v)=>arr.map(([k,l])=>`<option value="${k}" ${v===k?'selected':''}>${esc(l)}</option>`).join('');
+  return `<div class="row" style="margin-top:10px"><input value="${esc(co.name)}" data-p="${P}:name">
+   <select data-p="${P}:sector">${opt(cfg.sectorList,co.sector)}</select>
+   ${co.sector==='health'?`<select data-p="${P}:sub">${opt(cfg.healthSubs,co.sub)}</select>`:''}
+   <select data-p="${P}:animal">${opt(Object.entries(cfg.animals).map(([k,a])=>[k,a.icon+' '+a.label+' — '+a.type]),co.animal)}</select>
+   <select data-p="${P}:sleeve">${opt(Object.entries(cfg.sleeves).map(([k,s])=>[k,s.label]),co.sleeve)}</select></div>
+   <div class="row" style="margin-top:6px"><input style="flex:1;min-width:240px" placeholder="one-line description" value="${esc(co.tagline||'')}" data-p="${P}:tagline"><input style="min-width:240px" value="${esc(co.keywords||'')}" placeholder="announcement keywords a|b|c" data-p="${P}:keywords">
    <button class="danger" onclick="removeStock('${co.id}')">Remove stock</button></div>`}
 function rawCard(co){return `<div class="card"><details><summary>Advanced: edit everything as JSON</summary><textarea id="raw-${co.id}" style="min-height:300px;font-family:ui-monospace,monospace;font-size:12px">${esc(JSON.stringify(co,null,1))}</textarea><button onclick="applyRaw('${co.id}')">Apply JSON</button></details></div>`}
 
@@ -442,7 +664,7 @@ function drawChart(tk){
 /* ====================================================== calendar */
 function viewCalendar(){
   const f=S.filter; let all=[];
-  for(const co of S.data.companies){if(f!=='all'&&co.section!==f)continue;
+  for(const co of S.data.companies){if(f!=='all'&&co.sector!==f)continue;
     (co.catalysts||[]).forEach((c,i)=>all.push({co,c,i})); expandRecurring(co,12).forEach(c=>all.push({co,c,i:-1}));}
   const lp=t=>lastPrice(t);
   const over=all.filter(x=>!x.c.done&&!x.c.recurring&&pd(x.c.date)&&days(TODAY,pd(x.c.date))<-3);
@@ -452,7 +674,7 @@ function viewCalendar(){
     <td><span class="${c.big?'big':''}">${esc(c.title)}</span><div class="tiny muted">${esc(c.when||'')} ${esc(c.desc||'')}</div></td>
     <td class="num small">${c.big&&p?`<span style="color:var(--buy)">${pct(r.up)}</span> / <span style="color:var(--bad)">${pct(r.down)}</span>`:''}</td>
     <td>${i>=0?`<button onclick="markDone('${co.id}',${i})">Done</button>`:''}</td></tr>`};
-  return `<div class="row"><select onchange="S.filter=this.value;route()"><option value="all">All sections</option>${Object.entries(S.cfg.sections).map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${esc(l)}</option>`).join('')}</select>
+  return `<div class="row"><select onchange="S.filter=this.value;route()"><option value="all">All sections</option>${S.cfg.sectorList.map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${esc(l)}</option>`).join('')}</select>
    <span class="sp"></span><span class="small muted">Big catalysts in bold. Reaction = your estimate or the base rate.</span></div>
    ${over.length?`<div class="card" style="margin-top:10px"><h3 style="color:var(--warn)">Overdue — date passed, not marked done (${over.length})</h3><table><tbody>${over.map(row).join('')}</tbody></table><p class="tiny muted">Either it happened (mark done, add the result) or it slipped (edit the date — a slip is worth noting in the promise tracker).</p></div>`:''}
    <div class="card" style="margin-top:10px"><h3>Coming up</h3><table><thead><tr><th>Date</th><th>Stock</th><th>Event</th><th class="num">Reaction</th><th></th></tr></thead><tbody>${up.map(row).join('')}</tbody></table></div>`;
@@ -510,15 +732,15 @@ function viewSettings(){
   return `<div class="grid g2">
   <div class="card"><h3>Your positions</h3><div style="overflow:auto"><table><thead><tr><th>Stock</th><th>Shares</th><th>Avg cost</th><th>First bought</th><th class="num">Value</th></tr></thead><tbody>${posRows}</tbody></table></div>
    <p class="small">Total ${money(tot,0)}. ${S.data.companies.map(co=>{const p=S.positions[co.ticker],lp=lastPrice(co.ticker);return p&&p.shares&&lp&&tot?`${co.ticker} ${Math.round(p.shares*lp.v/tot*100)}%`:''}).filter(Boolean).join(' · ')}</p>
-   <div class="small"><b>What goes to GitHub</b> (for email/phone alerts):<br>
-   <label class="chk"><input type="radio" name="sync" ${GH.sync==='ladder'?'checked':''} onchange="GH.sync='ladder';LS.set('radar.gh',GH);markDirty('positions');route()"> Ladder prices only — recommended. Gets sell-ladder alerts; shares, cost and dates stay private.</label><br>
+   <div class="row small" style="margin:8px 0">Real money for this test (A$) <input type="number" value="${LS.get('zrpl.capital','')}" onchange="LS.set('zrpl.capital',+this.value);toast('Saved on this device')"><span class="tiny muted">Used to size suggested buys. Kept on this device only.</span></div>
+   <div class="small"><b>What goes to GitHub</b> (for email alerts):<br>
+   <label class="chk"><input type="radio" name="sync" ${GH.sync==='ladder'?'checked':''} onchange="GH.sync='ladder';LS.set('radar.gh',GH);markDirty('positions');route()"> Which stocks you hold, first-bought date and ladder prices — recommended. Gets sell-rule, ladder and time-limit emails; share counts and costs stay private.</label><br>
    <label class="chk"><input type="radio" name="sync" ${GH.sync==='off'?'checked':''} onchange="GH.sync='off';LS.set('radar.gh',GH);route()"> Nothing — ladder alerts only on this page.</label><br>
-   <label class="chk"><input type="radio" name="sync" ${GH.sync==='full'?'checked':''} onchange="GH.sync='full';LS.set('radar.gh',GH);markDirty('positions');route()"> Everything — adds holding-time alerts. <b>Anyone can read a public repo.</b></label></div>
+   <label class="chk"><input type="radio" name="sync" ${GH.sync==='full'?'checked':''} onchange="GH.sync='full';LS.set('radar.gh',GH);markDirty('positions');route()"> Everything, including share counts and costs. <b>Anyone can read a public repo.</b></label></div>
    <div class="row" style="margin-top:8px"><button onclick="exportPos()">Download positions file</button><label class="btn">Import positions file<input type="file" accept=".json" style="display:none" onchange="importPos(this.files[0])"></label></div></div>
   <div class="card"><h3>Your rules</h3>
-   <div class="row">Rare disease: at least <input class="w-s" type="number" value="${R.rare.targetMultiple}" onchange="setCfg('rules.rare.targetMultiple',+this.value)">x, max <input class="w-s" type="number" value="${R.rare.maxYears}" onchange="setCfg('rules.rare.maxYears',+this.value)"> years</div>
-   <div class="row" style="margin-top:6px">Devices: <input class="w-s" type="number" value="${R.device.targetReturn*100}" onchange="setCfg('rules.device.targetReturn',this.value/100)">% a year, max <input class="w-s" type="number" value="${R.device.maxYears}" onchange="setCfg('rules.device.maxYears',+this.value)"> years</div>
-   <div class="row" style="margin-top:6px">Other: <input class="w-s" type="number" value="${R.other.targetReturn*100}" onchange="setCfg('rules.other.targetReturn',this.value/100)">% a year, max <input class="w-s" type="number" value="${R.other.maxYears}" onchange="setCfg('rules.other.maxYears',+this.value)"> years</div>
+   <table><thead><tr><th>Sleeve</th><th>Slots</th><th>Size %</th><th>Target</th><th>Max years</th></tr></thead><tbody>${Object.entries(S.cfg.sleeves).filter(([k,v])=>k!=='watch').map(([k,v])=>`<tr><td class="small">${esc(v.label)}</td><td><input class="w-s" type="number" value="${v.slots}" onchange="setCfg('sleeves.${k}.slots',+this.value)"></td><td><input class="w-s" type="number" value="${v.weight}" onchange="setCfg('sleeves.${k}.weight',+this.value)"></td><td>${v.targetMultiple!=null?`<input class="w-s" type="number" value="${v.targetMultiple}" onchange="setCfg('sleeves.${k}.targetMultiple',+this.value)">x`:`<input class="w-s" type="number" value="${Math.round(v.targetReturn*100)}" onchange="setCfg('sleeves.${k}.targetReturn',this.value/100)">%/yr`}</td><td><input class="w-s" type="number" value="${v.maxYears}" onchange="setCfg('sleeves.${k}.maxYears',+this.value)"></td></tr>`).join('')}</tbody></table>
+   <div class="row" style="margin-top:6px">Per stock <input class="w-s" type="number" value="${S.cfg.portfolio.minWeight}" onchange="setCfg('portfolio.minWeight',+this.value)">–<input class="w-s" type="number" value="${S.cfg.portfolio.maxWeight}" onchange="setCfg('portfolio.maxWeight',+this.value)">% · Health Care cap <input class="w-s" type="number" value="${S.cfg.portfolio.healthCap}" onchange="setCfg('portfolio.healthCap',+this.value)">% · cash <input class="w-s" type="number" value="${S.cfg.portfolio.cashWeight}" onchange="setCfg('portfolio.cashWeight',+this.value)">%</div>
    <div class="row" style="margin-top:6px">Sell/trim when expected return falls below <input class="w-s" type="number" value="${R.sellFloorReturn*100}" onchange="setCfg('rules.sellFloorReturn',this.value/100)">% a year</div>
    <h3 style="margin-top:14px">Alerts</h3>
    <div class="row">Warn <input class="w-s" type="number" value="${A.catalystDaysAhead}" onchange="setCfg('alerts.catalystDaysAhead',+this.value)"> days before a catalyst · big move ≥ <input class="w-s" type="number" value="${A.bigMovePct}" onchange="setCfg('alerts.bigMovePct',+this.value)">% · runway below <input class="w-s" type="number" value="${A.runwayMonths}" onchange="setCfg('alerts.runwayMonths',+this.value)"> months</div></div>
@@ -541,9 +763,21 @@ function toggleEdit(id){S.edit[id]=!S.edit[id];route()}
 function setPath(o,path,v){const k=path.split('.');let x=o;for(let i=0;i<k.length-1;i++){if(x[k[i]]==null)x[k[i]]=/^\d+$/.test(k[i+1])?[]:{};x=x[k[i]]}x[k[k.length-1]]=v}
 document.addEventListener('change',ev=>{const el=ev.target, p=el.dataset&&el.dataset.p; if(!p)return;
   const [file,id,path]=p.split(':'); const co=companyById(id); if(!co)return;
-  let v=el.type==='checkbox'?el.checked:el.value; if(el.dataset.t==='n')v=v===''?null:+v; if(el.dataset.t==='b')v=!!el.checked;
-  setPath(co,path,v); markDirty('companies');
-  if(['section','name'].some(k=>path===k))route(); else {const keep=window.scrollY; const h=location.hash; route(); window.scrollTo({top:keep})}});
+  let v=el.type==='checkbox'?el.checked:el.value; if(el.dataset.t==='n')v=v===''?null:+v; if(el.dataset.t==='pct')v=v===''?null:+v/100; if(el.dataset.t==='b')v=!!el.checked;
+  setPath(co,path,v); if(path==='sector'||path==='sub')co.section=co.sector==='health'?co.sub:co.sector;
+  if(path==='sector'&&v==='health'&&!co.sub){co.sub='other';co.section='other'}
+  markDirty('companies');
+  if(['sector','sub','name','animal','sleeve'].some(k=>path===k))route(); else {const keep=window.scrollY; const h=location.hash; route(); window.scrollTo({top:keep})}});
+function toggleMoat(id,k,on){const co=companyById(id);co.thesis=co.thesis||{};co.thesis.moats=(co.thesis.moats||[]).filter(x=>x!==k);if(on)co.thesis.moats.push(k);markDirty('companies')}
+function toggleThesis(id){const co=companyById(id);if(!co.thesisBroken&&!confirm('Mark the thesis as broken? Holdings will get a sell alert with a near-market limit price.'))return;co.thesisBroken=!co.thesisBroken;(co.history=co.history||[]).push({date:TODAY_ISO,title:co.thesisBroken?'Thesis marked broken':'Thesis restored',desc:''});markDirty('companies');route()}
+function paperBuy(t){const co=companyById(t),lp=lastPrice(t);if(!lp)return;const P=S.paper,cap=+P.capital||500000,w=sleeveRules(co).weight||0;
+  const n=Object.keys(P.holdings||{}).length;if(n>=10)return toast('The paper portfolio already has 10 stocks.');
+  const sh=Math.floor(cap*w/100/lp.v), cost=sh*lp.v; if(cost>P.cash)return toast('Not enough paper cash.');
+  if(!P.start){P.start=TODAY_ISO;const bm=lastPrice((S.cfg.portfolio||{}).benchmark);P.benchStart=bm?bm.v:null}
+  P.holdings=P.holdings||{};P.holdings[t]={shares:sh,cost:lp.v,date:TODAY_ISO};P.cash=+(P.cash-cost).toFixed(2);(P.trades=P.trades||[]).push({date:TODAY_ISO,t,side:'buy',shares:sh,price:lp.v});
+  markDirty('paper');route();toast(`Paper bought ${sh.toLocaleString()} ${t}. Save changes to keep it.`)}
+function paperSell(t){const P=S.paper,h=P.holdings[t],lp=lastPrice(t);if(!h||!lp||!confirm(`Paper sell ${h.shares} ${t} at ${money(lp.v)}?`))return;
+  P.cash=+(P.cash+h.shares*lp.v).toFixed(2);P.trades.push({date:TODAY_ISO,t,side:'sell',shares:h.shares,price:lp.v,cost:h.cost});delete P.holdings[t];markDirty('paper');route()}
 function setReviewed(id){const co=companyById(id);co.reviewed=true;markDirty('companies');route()}
 function addItem(id,key,obj){const co=companyById(id);(co[key]=co[key]||[]).push(obj);markDirty('companies');const y=scrollY;route();scrollTo({top:y})}
 function delItem(id,key,i){if(!confirm('Remove this row?'))return;const co=companyById(id);co[key].splice(i,1);markDirty('companies');const y=scrollY;route();scrollTo({top:y})}
@@ -555,21 +789,23 @@ function addFin(id){const g=k=>{const v=document.getElementById('f-'+k).value;re
 function addRaise(id){const d=document.getElementById('r-date').value;if(!d)return toast('Pick a date');const co=companyById(id);(co.raises=co.raises||[]).push({date:d,amount:+document.getElementById('r-amt').value||null,price:+document.getElementById('r-px').value||null});markDirty('companies');route()}
 function applyRaw(id){try{const o=JSON.parse(document.getElementById('raw-'+id).value);const i=S.data.companies.findIndex(c=>c.id===id);S.data.companies[i]=o;markDirty('companies');route();toast('Applied')}catch(e){alert('That JSON has an error: '+e.message)}}
 function setCfg(path,v){setPath(S.cfg,path,v);markDirty('config');renderTop()}
-function syncDirty(path){if(GH.sync==='full'||(GH.sync==='ladder'&&String(path).startsWith('plan')))markDirty('positions')}
+function syncDirty(path){if(GH.sync==='full'||(GH.sync==='ladder'&&/^(plan|shares|bought)/.test(String(path))))markDirty('positions')}
 function setPos(t,path,v){const p=S.positions[t]=S.positions[t]||{};setPath(p,path,v);LS.set('radar.positions',S.positions);syncDirty(path);renderTop()}
 function addPlan(t){const p=S.positions[t]=S.positions[t]||{};(p.plan=p.plan||[]).push({label:'Step '+(p.plan.length+1),price:null,shares:null,done:false});LS.set('radar.positions',S.positions);syncDirty('plan');route()}
 function delPlan(t,i){S.positions[t].plan.splice(i,1);LS.set('radar.positions',S.positions);syncDirty('plan');route()}
 function exportPos(){download('my-positions.json',JSON.stringify(S.positions,null,1))}
 function importPos(f){if(!f)return;f.text().then(t=>{try{S.positions=Object.assign(S.positions,JSON.parse(t));LS.set('radar.positions',S.positions);syncDirty('plan');toast('Positions imported');route()}catch(e){alert('Not a valid positions file')}})}
 function download(name,text){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'application/json'}));a.download=name;a.click()}
-function addStock(sec){
+function addStock(sec,sub){
   const t=(prompt('ASX code (e.g. PNV):')||'').trim().toUpperCase(); if(!t)return; if(companyById(t))return toast('Already listed');
-  const name=prompt('Company name:',t)||t; const R=S.cfg.rules, y=(R[sec]||R.other).maxYears, hz=new Date(TODAY);hz.setFullYear(hz.getFullYear()+y);
-  S.data.companies.push({id:t.toLowerCase(),ticker:t,name,section:sec,color:Math.floor(Math.random()*8),tagline:'',facts:[],horizon:iso(hz),reviewed:false,
-    scenarios:[{name:'Bear',prob:40,value:null,success:false,note:''},{name:'Base',prob:45,value:null,success:true,note:''},{name:'Bull',prob:15,value:null,success:true,note:''}],
-    trials:[],catalysts:[],history:[],promises:[],reporting:'quarterly',recurring:[],finance:[],raises:[],scorecard:{},scoreNotes:'',keywords:''});
-  markDirty('companies');S.edit[t.toLowerCase()]=true;location.hash='co/'+t;toast('Added. Fill in scenarios, trials and catalysts, then Save. Prices arrive after the next update.')}
-function removeStock(id){if(!confirm('Remove this stock from the radar?'))return;S.data.companies=S.data.companies.filter(c=>c.id!==id);markDirty('companies');location.hash='rare'}
+  const name=prompt('Company name:',t)||t; sub=sec==='health'?(sub||'other'):'';
+  const sleeve='watch', hz=new Date(TODAY);hz.setFullYear(hz.getFullYear()+3);
+  S.data.companies.push({id:t.toLowerCase(),ticker:t,name,sector:sec,sub,section:sub||sec,animal:sec==='health'&&sub!=='other'?'insect':'monkey',sleeve,color:Math.floor(Math.random()*8),tagline:'',facts:[],horizon:iso(hz),reviewed:false,
+    scenarios:[{name:'Bear',prob:30,value:null,success:false,note:''},{name:'Base',prob:50,value:null,success:true,note:''},{name:'Bull',prob:20,value:null,success:true,note:''}],
+    thesis:{},fundamentals:{},levers:{},checklist:[],thesisBroken:false,
+    trials:[],catalysts:[],history:[],promises:[],reporting:'half',recurring:[],finance:[],raises:[],scorecard:{},scoreNotes:'',keywords:''});
+  markDirty('companies');S.edit[t.toLowerCase()]=true;location.hash='co/'+t;toast('Added to the watch list. Set its animal and sleeve, fill in the thesis, metrics and scenarios, then Save. Prices arrive at the next update.')}
+function removeStock(id){if(!confirm('Remove this stock?'))return;S.data.companies=S.data.companies.filter(c=>c.id!==id);markDirty('companies');location.hash='home'}
 
 /* ====================================================== GitHub save */
 function b64(s){const b=new TextEncoder().encode(s);let x='';for(let i=0;i<b.length;i+=0x8000)x+=String.fromCharCode.apply(null,b.subarray(i,i+0x8000));return btoa(x)}
@@ -579,8 +815,8 @@ async function gh(path,opt={}){let r;const url=`https://api.github.com/repos/${e
   if(!r.ok&&r.status!==404)throw new Error(`${r.status} ${(await r.text()).slice(0,140)}`);return r.status===404?null:(r.status===204?{}:r.json())}
 async function putFile(name,content,msg){const p=`contents/data/${name}`;const cur=await gh(p+`?ref=${GH.branch}`);
   await gh(p,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg,content:b64(content),branch:GH.branch,sha:cur&&cur.sha})})}
-function fileBody(f){return f==='companies'?JSON.stringify({...S.data,updated:TODAY_ISO},null,1):f==='config'?JSON.stringify(S.cfg,null,1):f==='decisions'?JSON.stringify(S.decisions,null,1):JSON.stringify(positionsForRepo(),null,1)}
-function positionsForRepo(){if(GH.sync==='full')return S.positions;const o={};for(const[t,p]of Object.entries(S.positions))if(p.plan&&p.plan.length)o[t]={plan:p.plan.map(s=>({label:s.label,price:s.price,done:!!s.done}))};return o}
+function fileBody(f){return f==='paper'?JSON.stringify(S.paper,null,1):f==='companies'?JSON.stringify({...S.data,updated:TODAY_ISO},null,1):f==='config'?JSON.stringify(S.cfg,null,1):f==='decisions'?JSON.stringify(S.decisions,null,1):JSON.stringify(positionsForRepo(),null,1)}
+function positionsForRepo(){if(GH.sync==='full')return S.positions;const o={};for(const[t,p]of Object.entries(S.positions)){const held=+p.shares>0;if(!held&&!(p.plan&&p.plan.length))continue;o[t]={held,bought:p.bought||'',plan:(p.plan||[]).map(s=>({label:s.label,price:s.price,done:!!s.done}))}}return o}
 async function saveAll(){
   const files=[...S.dirty];
   if(!GH.token||!GH.owner||!GH.repo){files.forEach(f=>download(f+'.json',fileBody(f)));toast('No GitHub token: files downloaded — upload them to the data folder on GitHub');return}

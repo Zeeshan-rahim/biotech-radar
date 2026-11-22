@@ -111,3 +111,32 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+def test_model():
+    import model
+    cfg = json.load(open(os.path.join(HERE, '..', 'data', 'config.json')))
+    co = {'ticker': 'TST', 'sleeve': 'monkey', 'animal': 'monkey', 'reviewed': True, 'horizon': '2029-11-20',
+          'scenarios': [{'name': 'B', 'prob': 50, 'value': 10, 'success': False}, {'name': 'G', 'prob': 50, 'value': 20, 'success': True}],
+          'fundamentals': {'shares': 100, 'eps': 0.5, 'growth': 0.12, 'ebit': 80, 'netDebt': 100, 'fcf': 40, 'investedCapital': 400}}
+    hist = [['2026-11-%02d' % d, 5.0, 100000] for d in range(1, 21)]
+    m = model.metrics(co, 5.0, hist)
+    assert abs(m['pe'] - 10) < 1e-9 and abs(m['peg'] - 10 / 12) < 1e-9, m
+    assert abs(m['ev'] - 600) < 1e-9 and abs(m['evEbit'] - 7.5) < 1e-9 and abs(m['fcfYield'] - 0.08) < 1e-9, m
+    assert abs(m['roc'] - 0.2) < 1e-9 and abs(m['liquidity'] - 500000) < 1e-6, m
+    e = model.evaluate(co, 5.0, cfg, model.date(2026, 11, 22), hist)
+    assert e['signal'] == 'Buy', (e['signal'], e['gates'])
+    co['fundamentals']['growth'] = 0.30  # outside the Monkey 8-15% band
+    e = model.evaluate(co, 5.0, cfg, model.date(2026, 11, 22), hist)
+    assert e['signal'] == 'Cheap — fails checks', e['signal']
+    co['thesisBroken'] = True
+    e = model.evaluate(co, 5.0, cfg, model.date(2026, 11, 22), hist)
+    assert e['signal'] == 'Sell — thesis broken'
+    assert model.suggest_limit('thesis', 1.234, None, cfg)[0] == 1.205  # 1.209 rounded down to 0.005 tick
+    assert model.suggest_limit('over', 2.503, 2.5, cfg)[0] == 2.51
+    assert model.suggest_limit('over', 0.0512, 0.05, cfg)[0] == 0.052
+    print('model tests ok')
+
+
+if __name__ == '__main__':
+    test_model()

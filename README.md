@@ -1,6 +1,8 @@
-# Medical catalyst radar
+# ZRPL Investing
 
-A free, self-updating website for tracking ASX biotech, medical-device and pharma stocks. It runs on your own GitHub account and doesn't need Claude.
+*(Formerly the Medical catalyst radar. The repository keeps its old name, so the web address doesn't change.)*
+
+A free, self-updating website for running Z Rahim Pty Ltd's value portfolio across all 11 ASX sectors, using the Castles, Moats and Lords method. It runs on your own GitHub account and doesn't need Claude.
 
 - **Three sections:** Rare disease · Medical devices · Other pharma, biotech & medical
 - **For each stock:** probability of success, management and spending efficiency, anticipated market reaction, and buy/sell prices from your own rules
@@ -84,3 +86,17 @@ To check the robot logic offline, run `python scripts/test_update.py`.
 - `data/prices.json`, `announcements.json`, `proposals.json`, `reactions.json`, `alerts.json`, `status.json`: written by the robot
 
 *Decision support built on your own assumptions, not financial advice.*
+
+
+---
+
+## What's new in ZRPL Investing (Stage 1)
+- **Sector sidebar:** all 11 ASX sectors. Health Care keeps its three sub-sections.
+- **Home & value:** my dated view of where value is (refreshed each Monday), what needs attention, the 10-stock plan, and the A$500k paper portfolio against the VAS benchmark.
+- **Animal rulebooks:** each stock has an animal (🐻 🐘 🐍 🐢 🐒 🐜) and a sleeve. The checks and buy rule change with the animal: PEG, EV/EBIT, FCF yield, return on capital, price/NAV and liquidity.
+- **Thesis card:** castle (5 C's), moats, lords, the one-paragraph thesis, the misperception, what would prove us wrong, and a pre-mortem. **Mark thesis broken** triggers a sell alert.
+- **Sell alerts with a limit price** for holdings (real or paper), by email.
+- **Positions privacy:** by default GitHub only learns *which* stocks you hold, the first-bought date and ladder prices. Share counts and costs stay on your device.
+- **Your data:** company records saved by the old radar are converted automatically the first time the new page opens. Nothing you entered is lost.
+
+Coming next: Stage 2 (trade log, decision journal, dividends and franking, encrypted) and Stage 3 (Monday research by Claude).

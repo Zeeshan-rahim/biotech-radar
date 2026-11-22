@@ -5,21 +5,6 @@
   "other": "Other pharma, biotech & medical"
  },
  "rules": {
-  "rare": {
-   "targetMultiple": 10,
-   "maxYears": 8,
-   "note": "At least a 10-bagger if the main bet works; hold up to 8 years."
-  },
-  "device": {
-   "targetReturn": 0.15,
-   "maxYears": 3,
-   "note": "15% a year expected return; hold up to 3 years."
-  },
-  "other": {
-   "targetReturn": 0.15,
-   "maxYears": 3,
-   "note": "15% a year expected return; hold up to 3 years."
-  },
   "sellFloorReturn": 0.05,
   "sellFloorNote": "Sell or trim when the expected return from today's price falls below this (it pays better elsewhere)."
  },
@@ -32,7 +17,7 @@
   "githubIssue": true
  },
  "pos": {
-  "source": "Approximate Phase 3 (or pivotal) success rates, rounded from published industry studies (BIO/Informa/QLS 2011\u20132020 and similar). Rough starting points \u2014 edit freely.",
+  "source": "Approximate Phase 3 (or pivotal) success rates, rounded from published industry studies (BIO/Informa/QLS 2011–2020 and similar). Rough starting points — edit freely.",
   "areas": {
    "neuro": {
     "label": "Neurology / neurodevelopment",
@@ -139,7 +124,7 @@
   "cap": 0.97
  },
  "reactions": {
-  "source": "Rough rules of thumb for ASX small/mid-cap healthcare stocks, not one study. The app shows each stock's own measured moves as they build up \u2014 trust those more over time.",
+  "source": "Rough rules of thumb for ASX small/mid-cap healthcare stocks, not one study. The app shows each stock's own measured moves as they build up — trust those more over time.",
   "types": {
    "trial": {
     "label": "Trial readout",
@@ -258,7 +243,7 @@
     [
      "evidence",
      "Stage-gate position",
-     "Feasibility \u2192 optimisation \u2192 demonstration (pivotal) \u2192 production \u2192 launch."
+     "Feasibility → optimisation → demonstration (pivotal) → production → launch."
     ],
     [
      "reimb",
@@ -338,5 +323,360 @@
     ]
    ]
   }
- }
+ },
+ "appName": "ZRPL Investing",
+ "sectorList": [
+  [
+   "energy",
+   "Energy"
+  ],
+  [
+   "materials",
+   "Materials"
+  ],
+  [
+   "industrials",
+   "Industrials"
+  ],
+  [
+   "discretionary",
+   "Consumer Discretionary"
+  ],
+  [
+   "staples",
+   "Consumer Staples"
+  ],
+  [
+   "health",
+   "Health Care"
+  ],
+  [
+   "financials",
+   "Financials"
+  ],
+  [
+   "it",
+   "Information Technology"
+  ],
+  [
+   "comms",
+   "Communication Services"
+  ],
+  [
+   "utilities",
+   "Utilities"
+  ],
+  [
+   "realestate",
+   "Real Estate"
+  ]
+ ],
+ "healthSubs": [
+  [
+   "rare",
+   "Rare disease"
+  ],
+  [
+   "device",
+   "Medical devices"
+  ],
+  [
+   "other",
+   "Other pharma, biotech & medical"
+  ]
+ ],
+ "animals": {
+  "bear": {
+   "icon": "🐻",
+   "label": "Bear",
+   "type": "Cyclical"
+  },
+  "elephant": {
+   "icon": "🐘",
+   "label": "Elephant",
+   "type": "Asset play"
+  },
+  "snake": {
+   "icon": "🐍",
+   "label": "Snake",
+   "type": "Turnaround"
+  },
+  "turtle": {
+   "icon": "🐢",
+   "label": "Turtle",
+   "type": "Slow grower (<8%)"
+  },
+  "monkey": {
+   "icon": "🐒",
+   "label": "Monkey",
+   "type": "Medium grower (8–15%)"
+  },
+  "insect": {
+   "icon": "🐜",
+   "label": "Insect",
+   "type": "Fast grower (15%+)"
+  }
+ },
+ "sleeves": {
+  "rare": {
+   "label": "Rare disease (speculative)",
+   "slots": 2,
+   "weight": 5,
+   "targetMultiple": 10,
+   "maxYears": 8,
+   "note": "At least 10x if the main bet works; up to 8 years."
+  },
+  "device": {
+   "label": "Medical device (speculative)",
+   "slots": 1,
+   "weight": 4,
+   "targetReturn": 0.15,
+   "maxYears": 3,
+   "note": "15% a year; review at 3 years."
+  },
+  "insect": {
+   "label": "Insects — healthcare fast growers",
+   "slots": 2,
+   "weight": 7,
+   "targetReturn": 0.2,
+   "maxYears": 3,
+   "note": "20% a year; review at 3 years."
+  },
+  "monkey": {
+   "label": "Monkeys — medium growers",
+   "slots": 3,
+   "weight": 12,
+   "targetReturn": 0.12,
+   "maxYears": 3,
+   "note": "12% a year; review at 3 years."
+  },
+  "bear": {
+   "label": "Bear — cyclical",
+   "slots": 1,
+   "weight": 15,
+   "targetReturn": 0.15,
+   "maxYears": 3,
+   "note": "Buy low in the cycle; sell near the top or after ~3 years."
+  },
+  "elephant": {
+   "label": "Elephant — asset play",
+   "slots": 1,
+   "weight": 15,
+   "targetReturn": 0.12,
+   "maxYears": 2,
+   "note": "Needs a trigger to unlock value within ~2 years."
+  },
+  "watch": {
+   "label": "Watch list (not in the plan)",
+   "slots": 0,
+   "weight": 0,
+   "targetReturn": 0.15,
+   "maxYears": 3,
+   "note": "Tracked, not a portfolio slot."
+  }
+ },
+ "portfolio": {
+  "paperCapital": 500000,
+  "cashWeight": 6,
+  "minWeight": 2,
+  "maxWeight": 18,
+  "healthCap": 30,
+  "liquidityMin": 300000,
+  "insectLiquidityMin": 100000,
+  "insectMcapMin": 50,
+  "insectMcapMax": 500,
+  "benchmark": "VAS",
+  "benchmarkLabel": "Vanguard Australian Shares ETF (ASX 300)"
+ },
+ "gates": {
+  "monkey": [
+   [
+    "growth",
+    "between",
+    [
+     0.08,
+     0.15
+    ],
+    "Earnings growth 8–15% a year"
+   ],
+   [
+    "peg",
+    "<=",
+    1.2,
+    "PEG ≤ 1.2"
+   ],
+   [
+    "roc",
+    ">=",
+    0.15,
+    "Return on capital ≥ 15%"
+   ],
+   [
+    "fcfYield",
+    ">=",
+    0.03,
+    "FCF yield ≥ 3%"
+   ],
+   [
+    "liquidity",
+    ">=",
+    "liquidityMin",
+    "Turnover ≥ A$300k/day"
+   ]
+  ],
+  "insect": [
+   [
+    "growth",
+    ">=",
+    0.15,
+    "Earnings/revenue growth ≥ 15% a year"
+   ],
+   [
+    "peg",
+    "<=",
+    1.0,
+    "PEG ≤ 1.0"
+   ],
+   [
+    "mcap",
+    "between",
+    [
+     50,
+     500
+    ],
+    "Market value A$50–500m"
+   ],
+   [
+    "liquidity",
+    ">=",
+    "insectLiquidityMin",
+    "Turnover ≥ A$100k/day"
+   ]
+  ],
+  "bear": [
+   [
+    "evEbitMid",
+    "<=",
+    8,
+    "EV / mid-cycle EBIT ≤ 8"
+   ],
+   [
+    "pb",
+    "<=",
+    1.5,
+    "Price / book ≤ 1.5"
+   ],
+   [
+    "liquidity",
+    ">=",
+    "liquidityMin",
+    "Turnover ≥ A$300k/day"
+   ]
+  ],
+  "elephant": [
+   [
+    "pNav",
+    "<=",
+    0.75,
+    "Price ≤ 75% of net asset value"
+   ],
+   [
+    "trigger",
+    "present",
+    null,
+    "A trigger to unlock value is identified"
+   ],
+   [
+    "liquidity",
+    ">=",
+    "liquidityMin",
+    "Turnover ≥ A$300k/day"
+   ]
+  ]
+ },
+ "sellRules": {
+  "overvaluedLimit": "At or slightly above the last close (no rush)",
+  "thesisLimitPct": -2,
+  "note": "Thesis broken: sell near market (last close minus 2%). Overvalued / ladder step / time limit: limit at or above the close."
+ },
+ "moatTypes": [
+  [
+   "lowcost",
+   "Low cost"
+  ],
+  [
+   "printer",
+   "Printer / cartridge"
+  ],
+  [
+   "patent",
+   "Patent / technology"
+  ],
+  [
+   "servicing",
+   "Servicing / financing"
+  ],
+  [
+   "spawning",
+   "Spawning"
+  ],
+  [
+   "network",
+   "Network effects"
+  ],
+  [
+   "switching",
+   "Switching costs"
+  ],
+  [
+   "brand",
+   "Brand"
+  ],
+  [
+   "licence",
+   "Regulatory licence"
+  ],
+  [
+   "scale",
+   "Efficient scale"
+  ]
+ ],
+ "checklist": [
+  "Future demand: will its product or service be in demand in future?",
+  "Growth management: does management have a growth attitude and the ability to grow?",
+  "Profit margins: gross and net margins now, and how will they change?",
+  "R&D: always improving? What is in the R&D expense, and how much is needed to keep selling?",
+  "Sales effort: how strong is the sales team's effort?",
+  "Protecting margins: what is it doing to improve and maintain margins?",
+  "Labour relations: outstanding?",
+  "Executive relations: outstanding?",
+  "Succession: is a plan in place?",
+  "Cost analysis: how detailed is it?"
+ ],
+ "levers": [
+  [
+   "price",
+   "Raise prices"
+  ],
+  [
+   "cost",
+   "Reduce costs"
+  ],
+  [
+   "expand",
+   "Expand into new markets / good acquisitions"
+  ],
+  [
+   "more",
+   "Sell more in existing markets"
+  ],
+  [
+   "revitalise",
+   "Revitalise"
+  ],
+  [
+   "close",
+   "Close or dispose of a losing operation"
+  ]
+ ]
 }
