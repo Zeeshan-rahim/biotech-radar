@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-20",
+ "updated": "2026-11-22",
  "companies": [
   {
    "id": "neu",
@@ -414,7 +414,16 @@
       ]
      ]
     }
-   ]
+   ],
+   "sector": "health",
+   "sub": "rare",
+   "sleeve": "rare",
+   "animal": "insect",
+   "thesis": {},
+   "fundamentals": {},
+   "levers": {},
+   "checklist": [],
+   "thesisBroken": false
   },
   {
    "id": "dxb",
@@ -691,7 +700,16 @@
     "focus": 1
    },
    "scoreNotes": "FDA agreed proteinuria supports full approval; strong regional licensing (non-dilutive cash). Funding through 2028 readout depends on facility draws; DMX-652 adds spend outside the core readout.",
-   "keywords": "action3|action 3|dmx-200|dmx-652|fsgs|amicus|idmc"
+   "keywords": "action3|action 3|dmx-200|dmx-652|fsgs|amicus|idmc",
+   "sector": "health",
+   "sub": "rare",
+   "sleeve": "rare",
+   "animal": "insect",
+   "thesis": {},
+   "fundamentals": {},
+   "levers": {},
+   "checklist": [],
+   "thesisBroken": false
   },
   {
    "id": "emv",
@@ -985,7 +1003,16 @@
     "compete": 1
    },
    "scoreNotes": "Clear clinical need (no CT in ambulances/regional EDs). De Novo route set but pivotal still enrolling and endpoint being changed. No reimbursement code/coverage yet — the biggest commercial gap in Mehta's framework. Cash covers ~2 years at current burn, not launch.",
-   "keywords": "pivotal|emu|de novo|first responder|q-sub|pre-submission|regional benefits"
+   "keywords": "pivotal|emu|de novo|first responder|q-sub|pre-submission|regional benefits",
+   "sector": "health",
+   "sub": "device",
+   "sleeve": "device",
+   "animal": "insect",
+   "thesis": {},
+   "fundamentals": {},
+   "levers": {},
+   "checklist": [],
+   "thesisBroken": false
   },
   {
    "id": "cu6",
@@ -1312,7 +1339,16 @@
     "model": 1
    },
    "scoreNotes": "Strong Phase II data and Breakthrough designation; commercial Cu-64 supply deals signed. Risk is commercial: payers and sites already use approved PSMA PET agents (Mehta: the \"so-what\" test for diagnostics).",
-   "keywords": "amplify|clarify|secure|sar-bispsma|cobra|breakthrough|nda"
+   "keywords": "amplify|clarify|secure|sar-bispsma|cobra|breakthrough|nda",
+   "sector": "health",
+   "sub": "other",
+   "sleeve": "watch",
+   "animal": "insect",
+   "thesis": {},
+   "fundamentals": {},
+   "levers": {},
+   "checklist": [],
+   "thesisBroken": false
   },
   {
    "id": "ltp",
@@ -1487,7 +1523,423 @@
     "model": 1
    },
    "scoreNotes": "Low technical risk (approved molecule, 505(b)(2)). Mehta's reimbursement chapter is the weak point: ED treatments are often not covered, so this is a cash-pay convenience product competing with cheap generic tablets.",
-   "keywords": "spontan|roxus|505|fda|pre-ind|ind|aptar|mayne"
+   "keywords": "spontan|roxus|505|fda|pre-ind|ind|aptar|mayne",
+   "sector": "health",
+   "sub": "other",
+   "sleeve": "watch",
+   "animal": "insect",
+   "thesis": {},
+   "fundamentals": {},
+   "levers": {},
+   "checklist": [],
+   "thesisBroken": false
+  },
+  {
+   "id": "all",
+   "scenarios": [
+    {
+     "name": "Bear",
+     "prob": 25,
+     "value": 50,
+     "success": false,
+     "note": "AI and regulation fears play out; multiple compresses."
+    },
+    {
+     "name": "Base",
+     "prob": 55,
+     "value": 76,
+     "success": true,
+     "note": "~10% earnings growth continues; trades near Morningstar fair value."
+    },
+    {
+     "name": "Bull",
+     "prob": 20,
+     "value": 95,
+     "success": true,
+     "note": "Interactive hits targets and the market re-rates it."
+    }
+   ],
+   "trials": [],
+   "catalysts": [
+    {
+     "id": "all-c1",
+     "date": "2027-04-30",
+     "when": "Apr 2027",
+     "title": "CEO handover to Dafne Guisard",
+     "desc": "",
+     "big": false,
+     "event": "other",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "all-c2",
+     "date": "2027-05-20",
+     "when": "May 2027",
+     "title": "Half-year result (H1 FY27)",
+     "desc": "Watch constant-currency growth and interactive margins.",
+     "big": true,
+     "event": "report",
+     "done": false,
+     "result": ""
+    }
+   ],
+   "history": [],
+   "promises": [],
+   "finance": [],
+   "raises": [],
+   "recurring": [],
+   "facts": [
+    "FY26 (to 30 Sep): normalised NPATA +9.7% in constant currency to A$1.58bn; EPS before amortisation +13% (constant currency) to A$2.59.",
+    "Shares fell ~6.7% to about A$61.8 on result day (12 Nov 2026).",
+    "Morningstar: wide moat, fair value A$76; market worried about AI disruption.",
+    "CEO Trevor Croker retires April 2027; successor Dafne Guisard named (succession plan in place).",
+    "Interactive division targets US$1bn revenue by FY29; FY27 guidance: constant-currency profit growth (no number)."
+   ],
+   "thesis": {
+    "paragraph": "DRAFT. Castle: the global leader in casino gaming machines and game content, gaining share in every key segment. Moat: content/technology and a large installed base earning recurring fees (printer/cartridge), plus brand with casino operators. Lords: long-serving CEO handing over to a named internal successor — orderly. Misperception: the market fears AI will erode its game-content edge; results so far show share gains.",
+    "misperception": "Market thinks AI-made content will commoditise slot games.",
+    "wrong": "Two consecutive halves of market-share loss in North America, or interactive losses widening.",
+    "premortem": "Regulators tighten gambling (social casino / online), or the new CEO stumbles.",
+    "moats": [
+     "printer",
+     "patent",
+     "brand",
+     "switching"
+    ],
+    "moatRating": 2,
+    "castleRating": 2,
+    "lords": {
+     "honest": 2,
+     "able": 2,
+     "note": "Orderly succession announced with the result. Check pay and buy-back discipline in deep research."
+    }
+   },
+   "fundamentals": {
+    "asOf": "2026-11-22",
+    "source": "FY26 result; Google Finance share count (Jul 2026). EPS = EPS before amortisation (constant currency). Net debt, FCF and invested capital still to enter.",
+    "url": "",
+    "shares": 599.45,
+    "eps": 2.59,
+    "growth": 0.1
+   },
+   "levers": {},
+   "checklist": [],
+   "scorecard": {},
+   "keywords": "result|guidance|interactive|ceo|buy-back",
+   "reporting": "half",
+   "thesisBroken": false,
+   "reviewed": false,
+   "color": 5,
+   "ticker": "ALL",
+   "name": "Aristocrat Leisure",
+   "sector": "discretionary",
+   "sub": "",
+   "animal": "monkey",
+   "sleeve": "monkey",
+   "horizon": "2029-11-22",
+   "tagline": "World-leading gaming machines and content, plus a growing interactive (online) division",
+   "section": "discretionary"
+  },
+  {
+   "id": "pxa",
+   "scenarios": [
+    {
+     "name": "Bear",
+     "prob": 30,
+     "value": 4.5,
+     "success": false,
+     "note": "Fee cuts plus UK write-offs; growth stalls."
+    },
+    {
+     "name": "Base",
+     "prob": 50,
+     "value": 10.5,
+     "success": true,
+     "note": "Australian core grows, UK losses contained; near Morningstar fair value."
+    },
+    {
+     "name": "Bull",
+     "prob": 20,
+     "value": 14,
+     "success": true,
+     "note": "UK exited or fixed; re-rating towards past highs."
+    }
+   ],
+   "trials": [],
+   "catalysts": [
+    {
+     "id": "pxa-c1",
+     "date": "2027-02-25",
+     "when": "Feb 2027",
+     "title": "Half-year result",
+     "desc": "Watch UK losses and the final IPART decision.",
+     "big": true,
+     "event": "report",
+     "done": false,
+     "result": ""
+    }
+   ],
+   "history": [],
+   "promises": [],
+   "finance": [],
+   "raises": [],
+   "recurring": [],
+   "facts": [
+    "FY26 continuing-operations EBITDA +12% to A$152m; shares fell 17% on the result (Aug 2026).",
+    "Morningstar: wide moat (network effects, switching costs), a natural monopoly; fair value A$10.50.",
+    "Price about A$6.70 (19 Nov 2026); 52-week range about A$6.15–16; down ~51% this year.",
+    "Headwinds: regulated fee decrease (IPART), lower property transfer volumes, struggling UK business.",
+    "Director Janelle Hopkins bought 4,000 shares on market (31 Aug 2026). CBA owns ~24%."
+   ],
+   "thesis": {
+    "paragraph": "DRAFT. Castle: the only electronic conveyancing network in Australia — almost every property settlement runs through it. Moat: network effects and switching costs (banks, lawyers and conveyancers are all on it), plus a regulatory position. Lords: to be assessed — the UK expansion has destroyed value so far. Misperception: the market is pricing the whole company off UK losses and a fee cut, while the Australian monopoly keeps growing.",
+    "misperception": "Market treats PEXA as broken because of UK losses and a regulated fee cut.",
+    "wrong": "Regulation opens Australia to real competition (interoperability) or fees are cut deeply again.",
+    "premortem": "UK keeps burning cash, management doubles down, and the Australian fee cut is worse than expected.",
+    "moats": [
+     "network",
+     "switching",
+     "licence"
+    ],
+    "moatRating": 2,
+    "castleRating": 1,
+    "lords": {
+     "honest": null,
+     "able": 1,
+     "note": "UK capital allocation is the question. One director bought on market in Aug 2026."
+    }
+   },
+   "fundamentals": {
+    "asOf": "2026-11-22",
+    "source": "Fool/Morningstar data Nov 2026. Reported EPS is depressed by UK losses; growth uses EBITDA growth as a placeholder.",
+    "url": "",
+    "shares": 175.94,
+    "eps": 0.109,
+    "growth": 0.12
+   },
+   "levers": {},
+   "checklist": [],
+   "scorecard": {},
+   "keywords": "ipart|uk|guidance|result|transactions",
+   "reporting": "half",
+   "thesisBroken": false,
+   "reviewed": false,
+   "color": 7,
+   "ticker": "PXA",
+   "name": "PEXA Group",
+   "sector": "realestate",
+   "sub": "",
+   "animal": "monkey",
+   "sleeve": "monkey",
+   "horizon": "2029-11-22",
+   "tagline": "Australia's electronic property-settlement network, expanding into the UK",
+   "section": "realestate"
+  },
+  {
+   "id": "bhp",
+   "scenarios": [
+    {
+     "name": "Bear",
+     "prob": 35,
+     "value": 40,
+     "success": false,
+     "note": "Iron ore falls further as Simandou ramps; earnings trough lasts."
+    },
+    {
+     "name": "Base",
+     "prob": 45,
+     "value": 58,
+     "success": true,
+     "note": "Iron ore stabilises, copper and potash grow."
+    },
+    {
+     "name": "Bull",
+     "prob": 20,
+     "value": 72,
+     "success": true,
+     "note": "Copper shortage and China stimulus."
+    }
+   ],
+   "trials": [],
+   "catalysts": [
+    {
+     "id": "bhp-c1",
+     "date": "2027-01-20",
+     "when": "Jan 2027",
+     "title": "Quarterly operational review",
+     "desc": "",
+     "big": false,
+     "event": "report",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "bhp-c2",
+     "date": "2027-02-17",
+     "when": "Feb 2027",
+     "title": "Half-year result",
+     "desc": "",
+     "big": true,
+     "event": "report",
+     "done": false,
+     "result": ""
+    },
+    {
+     "id": "bhp-c3",
+     "date": "2027-06-30",
+     "when": "Mid 2027",
+     "title": "Jansen potash first production",
+     "desc": "",
+     "big": true,
+     "event": "launch",
+     "done": false,
+     "result": ""
+    }
+   ],
+   "history": [],
+   "promises": [],
+   "finance": [],
+   "raises": [],
+   "recurring": [],
+   "facts": [
+    "Closed at A$51.40 on 20 Nov 2026, a seven-month low; CBA overtook it as the ASX's largest company.",
+    "Iron ore pressured by Simandou (Guinea) supply ramping up faster than expected.",
+    "Low-cost, high-quality assets: likely to stay profitable through the commodity cycle (Morningstar).",
+    "Jansen Stage 1 potash about 75% complete; first production targeted mid-2027.",
+    "Analyst views range widely: consensus target about A$61; some DCF valuations A$39–48."
+   ],
+   "thesis": {
+    "paragraph": "DRAFT — Bear watch. Castle: some of the world's lowest-cost iron ore and copper mines. Moat: low cost (bottom of the cost curve) and scale. Lords: generally disciplined capital allocation; CFO changing. Misperception to wait for: when iron ore panic peaks and the market prices the cycle low as permanent. We are not there yet — the sell-off has only just started.",
+    "misperception": "Not yet — wait until the market extrapolates depressed earnings forever.",
+    "wrong": "Structural collapse in Chinese steel demand plus Simandou at full rate keeps iron ore below cost for years.",
+    "premortem": "Bought too early in a long down-cycle; copper also falls.",
+    "moats": [
+     "lowcost",
+     "scale"
+    ],
+    "moatRating": 2,
+    "castleRating": 2,
+    "lords": {
+     "honest": 2,
+     "able": 2,
+     "note": ""
+    }
+   },
+   "fundamentals": {
+    "asOf": "2026-11-22",
+    "source": "Research 22 Nov 2026. Mid-cycle EBIT, net debt and book value to enter in deep research.",
+    "url": "",
+    "shares": null
+   },
+   "levers": {},
+   "checklist": [],
+   "scorecard": {},
+   "keywords": "iron ore|copper|jansen|production|guidance",
+   "reporting": "half",
+   "thesisBroken": false,
+   "reviewed": false,
+   "color": 1,
+   "ticker": "BHP",
+   "name": "BHP Group",
+   "sector": "materials",
+   "sub": "",
+   "animal": "bear",
+   "sleeve": "bear",
+   "horizon": "2029-11-22",
+   "tagline": "Low-cost iron ore and copper giant; Jansen potash from mid-2027",
+   "section": "materials"
+  },
+  {
+   "id": "clw",
+   "scenarios": [
+    {
+     "name": "Bear",
+     "prob": 30,
+     "value": 3.65,
+     "success": false,
+     "note": "NTA falls; price ~A$2.90 plus ~A$0.75 distributions."
+    },
+    {
+     "name": "Base",
+     "prob": 50,
+     "value": 4.77,
+     "success": true,
+     "note": "Discount narrows to ~15% as rates fall; plus distributions."
+    },
+    {
+     "name": "Bull",
+     "prob": 20,
+     "value": 5.48,
+     "success": true,
+     "note": "Trigger (asset sales / buy-back / bid) closes the gap to NTA."
+    }
+   ],
+   "trials": [],
+   "catalysts": [
+    {
+     "id": "clw-c1",
+     "date": "2027-02-12",
+     "when": "Feb 2027",
+     "title": "Half-year result and NTA update",
+     "desc": "",
+     "big": true,
+     "event": "report",
+     "done": false,
+     "result": ""
+    }
+   ],
+   "history": [],
+   "promises": [],
+   "finance": [],
+   "raises": [],
+   "recurring": [],
+   "facts": [
+    "NTA A$4.71 per security at 30 Jun 2026; recent unit price about A$3.38–3.52, a 25–28% discount.",
+    "FY27 guidance: operating earnings and distributions 25.5c (flat); ~99.9% occupancy, ~9.2-year weighted lease expiry.",
+    "Rates at 4.85% (highest since 2008) weigh on property values; CommBank expects cuts in Aug and Nov 2027.",
+    "Tenant risk: David Jones administration update (5 Nov 2026) — check exposure."
+   ],
+   "thesis": {
+    "paragraph": "DRAFT. Castle: a diversified portfolio of long leases to large tenants with ~99.9% occupancy. Moat: modest — scale and sponsor (Charter Hall) relationships, not a true moat. Lords: externally managed by Charter Hall, which earns fees (watch alignment). Misperception: the market prices it as if high rates will last forever and property values will keep falling. Trigger needed: asset sales at book value, buy-backs, or a falling rate cycle.",
+    "misperception": "High rates are priced in as permanent; units trade ~25% below independently valued assets.",
+    "wrong": "Independent valuations fall sharply (NTA cut >15%) or a major tenant fails.",
+    "premortem": "Rates rise further, valuations are written down, and the discount never closes.",
+    "trigger": "",
+    "moats": [
+     "scale"
+    ],
+    "moatRating": 0,
+    "castleRating": 1,
+    "lords": {
+     "honest": 1,
+     "able": 1,
+     "note": "External manager: fees and alignment to check."
+    }
+   },
+   "fundamentals": {
+    "asOf": "2026-11-22",
+    "source": "FY26 results and Nov 2026 prices. NAV = NTA per security.",
+    "url": "",
+    "nav": 4.71
+   },
+   "levers": {},
+   "checklist": [],
+   "scorecard": {},
+   "keywords": "nta|distribution|guidance|tenant|buy-back|divest",
+   "reporting": "half",
+   "thesisBroken": false,
+   "reviewed": false,
+   "color": 1,
+   "ticker": "CLW",
+   "name": "Charter Hall Long WALE REIT",
+   "sector": "realestate",
+   "sub": "",
+   "animal": "elephant",
+   "sleeve": "elephant",
+   "horizon": "2028-11-22",
+   "tagline": "Long-lease property trust (pubs, service stations, offices, industrial) trading well below its asset value",
+   "section": "realestate"
   }
  ]
 }
