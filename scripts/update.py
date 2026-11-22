@@ -378,6 +378,36 @@ def latest_finance(co):
     return sorted(f, key=lambda x: x.get('period', ''))[-1] if f else None
 
 
+def funding_gap(co, today):
+    """Will cash last to the next big catalyst? Mirrors fundingGap() in index.html."""
+    f = latest_finance(co)
+    if not f or f.get('profitable'):
+        return None
+    burn = co.get('burnQ')
+    if burn in (None, ''):
+        burn = -f['opcf'] if f.get('opcf') is not None and f['opcf'] < 0 else None
+    if not burn:
+        return None
+    burn = float(burn)
+    tgt = None
+    ft = co.get('fundTo') or {}
+    if ft.get('date') and parse_date(ft['date']):
+        tgt = (ft.get('label') or 'target', parse_date(ft['date']))
+    else:
+        cs = sorted([c for c in co.get('catalysts', []) if c.get('big') and not c.get('done') and parse_date(c.get('date'))
+                     and parse_date(c.get('date')) >= today], key=lambda c: c['date'])
+        if cs:
+            tgt = (cs[0].get('title', 'catalyst'), parse_date(cs[0]['date']))
+    if not tgt:
+        return None
+    start = parse_date(f.get('period')) or today
+    q = max(0.0, (tgt[1] - start).days / 91.31)
+    need = burn * q + float(co.get('extraSpend') or 0)
+    left = float(f['cash']) - need
+    status = 'short' if left < 0 else ('tight' if left / burn < 2 else 'ok')
+    return {'status': status, 'label': tgt[0], 'date': tgt[1].isoformat(), 'left': round(left, 1), 'cash': f['cash'], 'burn': burn}
+
+
 def build_alerts(cfg, companies, prices, positions, new_anns, new_props, state, today, first_run, paper=None):
     paper = paper or {}
     A = cfg.get('alerts', {})
@@ -433,6 +463,14 @@ def build_alerts(cfg, companies, prices, positions, new_anns, new_props, state, 
                     amt = f"{tr['shares']:,} shares" if tr.get('shares') else 'your planned amount'
                     lim, why = suggest_limit('ladder', last, float(tr['price']), cfg)
                     fire(f'ladder:{t}:{i}', 1, f"**SELL {t}** — sell-ladder step '{tr.get('label','')}' reached (≥ A${float(tr['price']):.2f}). Sell {amt} with a limit at **A${lim:g}** ({why}).", 'action')
+        # funding gap (raise before catalyst) - your spreadsheet rule
+        if held:
+            g = funding_gap(co, today)
+            if g and g['status'] != 'ok':
+                txt = (f"**{t}** ({who}): cash A${g['cash']}m at ~A${g['burn']:g}m a quarter may not last to {g['label']} ({g['date']})"
+                       + (f" — short by about A${-g['left']:g}m. **Capital raise likely**: consider trimming before it and buying back at the raise." if g['status'] == 'short'
+                          else " — under 2 quarters spare, a raise around the catalyst is likely."))
+                fire(f'fund:{t}', g['status'], txt, 'action' if g['status'] == 'short' else 'info')
         bought = pos.get('bought') or (paper.get('holdings') or {}).get(t, {}).get('date')
         if bought:
             b = parse_date(bought)
