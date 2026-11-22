@@ -410,6 +410,7 @@ function viewCompany(tk){
   ${thesisCard(co)}
   ${metricsCard(co,e)}
   ${sheetChecks(co,e)}
+  ${partnerCard(co)}
   <div class="grid g2">${posCard(co)}${paperCard(co,e,lp)}</div>
   ${scenarioCard(co,e)}
   ${leversCard(co)}
@@ -787,8 +788,10 @@ function importUpdate(text){
   const added=[],changed=[];
   for(const c of u.companies||[]){const ex=companyById(c.ticker);
     const af=c.addFinance;delete c.addFinance;if(af)(u._af=u._af||[]).push([c.ticker,af]);
+    const ap=c.append;delete c.append;if(ap)(u._ap=u._ap||[]).push([c.ticker,ap]);
     if(ex){deepMerge(ex,c);changed.push(c.ticker)}else{S.data.companies.push(Object.assign({id:c.ticker.toLowerCase(),scenarios:[],trials:[],catalysts:[],history:[],promises:[],finance:[],raises:[],recurring:[],facts:[],thesis:{},fundamentals:{},levers:{},checklist:[],scorecard:{},keywords:'',reporting:'half',thesisBroken:false,reviewed:false,color:Math.floor(Math.random()*8)},c));added.push(c.ticker)}}
   for(const[tk,af]of u._af||[]){const co=companyById(tk);co.finance=co.finance||[];for(const e of af){co.finance=co.finance.filter(f=>(f.period||'').slice(0,7)!==(e.period||'').slice(0,7));co.finance.push({opcf:null,rnd:null,staff:null,admin:null,shares:null,profitable:false,...e})}}
+  for(const[tk,ap]of u._ap||[]){const co=companyById(tk);for(const[k,items]of Object.entries(ap)){co[k]=co[k]||[];for(const it of items){const key=typeof it==='string'?it:(it.title||it.name||it.text||JSON.stringify(it));if(!co[k].some(x=>(typeof x==='string'?x:(x.title||x.name||x.text||JSON.stringify(x)))===key))co[k].push(it)}}}
   migrate(S.data); if(added.length||changed.length)markDirty('companies');
   if(u.value){S.value=u.value;markDirty('value')}
   route();alert(`Imported ${u.label||'update'}.\nAdded: ${added.join(', ')||'none'}\nUpdated: ${changed.join(', ')||'none'}${u.value?'\nWhere-the-value-is panel updated.':''}\n\nPress Save changes to keep it.`);
@@ -1078,6 +1081,24 @@ function trialCalcCard(co){
    <label class="chk">Active sites <input id="tc-sites" type="number" style="width:70px"></label><label class="chk">Patients/site/month <input id="tc-rate" type="number" step="0.1" value="1" style="width:70px"></label>
    <label class="chk">Treatment (months) <input id="tc-treat" type="number" step="0.5" value="3" style="width:70px"></label><label class="chk">Analysis (months) <input id="tc-anal" type="number" step="0.5" value="3" style="width:70px"></label></div>
    <p class="small" id="tc-out"></p><p class="tiny muted">Compare with the company's guided date in the catalyst list; a big gap is an early warning of a delay.</p></details></div>`;
+}
+
+/* ====================================================== Partner lead indicator (your Neuren/Acadia method)
+   The partner reports first; its sales predict the royalty income and milestones before the company reports. */
+function partnerCard(co){
+  const p=co.partner; if(!p)return '';
+  const qs=[...(p.quarters||[])].sort((a,b)=>(a.period||'').localeCompare(b.period||''));
+  const rows=qs.map(q=>{const r=q.sales&&q.royalty!=null?q.royalty/q.sales:null;return `<tr><td>${fmtDate(q.period)}</td><td class="num">${q.sales??'–'}</td><td class="num">${q.royalty??'–'}</td><td class="num">${r!=null?(r*100).toFixed(1)+'%':'–'}</td><td class="small muted">${esc(q.note||'')}</td></tr>`}).join('');
+  const yr=p.guidance&&p.guidance.year, ytd=qs.filter(q=>(q.period||'').startsWith(String(yr))).reduce((a,q)=>a+(+q.sales||0),0), ytdR=qs.filter(q=>(q.period||'').startsWith(String(yr))).reduce((a,q)=>a+(+q.royalty||0),0);
+  const last=qs.filter(q=>q.sales&&q.royalty!=null).pop(), rate=num(p.rate)??(last?last.royalty/last.sales:null);
+  let g='';
+  if(p.guidance){const lo=p.guidance.low,hi=p.guidance.high;
+    g=`<p class="small">${yr} sales guidance <b>${p.unit||'US$'}${lo}–${hi}m</b>; year to date ${p.unit||'US$'}${ytd.toFixed(0)}m → implied next quarter <b>${p.unit||'US$'}${(lo-ytd).toFixed(0)}–${(hi-ytd).toFixed(0)}m</b>.${rate?` At ~${(rate*100).toFixed(1)}% that is ~${p.unit||'US$'}${((lo-ytd)*rate).toFixed(1)}–${((hi-ytd)*rate).toFixed(1)}m of royalty (full year ~${p.unit||'US$'}${(ytdR+(lo-ytd)*rate).toFixed(0)}–${(ytdR+(hi-ytd)*rate).toFixed(0)}m).`:''}</p>`}
+  const ms=(p.milestones||[]).map(m=>{const prog=m.progress!=null&&m.threshold?Math.min(1,m.progress/m.threshold):null;
+    return `<div class="gate"><b class="${m.done?'ok':'unk'}">${m.done?'✓':'…'}</b><span>${esc(m.label)}${prog!=null&&!m.done?` — ${Math.round(prog*100)}% of the way (${m.progress}/${m.threshold})`:''} <span class="tiny muted">${esc(m.note||'')}</span></span></div>`}).join('');
+  return `<div class="card"><div class="row"><h3 style="margin:0">Partner lead indicator: ${esc(p.name)}</h3><span class="sp"></span>${p.nextReport?`<span class="small">Next partner report ${fmtDate(p.nextReport)}</span>`:''}</div>
+   <table><thead><tr><th>Quarter</th><th class="num">Partner sales (${esc(p.unit||'US$')}m)</th><th class="num">Royalty to ${esc(co.ticker)}</th><th class="num">Royalty %</th><th></th></tr></thead><tbody>${rows||'<tr><td colspan="5" class="muted">No partner quarters yet.</td></tr>'}</tbody></table>
+   ${g}${ms}${p.note?`<p class="tiny muted">${esc(p.note)}</p>`:''}</div>`;
 }
 
 </script>
