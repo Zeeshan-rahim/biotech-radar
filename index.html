@@ -170,6 +170,7 @@ async function load(){
   const [paper,value]=await Promise.all([getJSON('paper.json',null),getJSON('value.json',{})]);
   if(!cfg||!data){$('#main').innerHTML='<div class="card"><h3>Data not found</h3><p>This page needs to be opened from your GitHub Pages address (or a local web server), so it can read the <code>data</code> folder. Opening the file directly from your computer won\'t work.</p></div>';$('#status').textContent='';return}
   migrate(data);
+  if(cfg.animals&&cfg.animals.insect)cfg.animals.insect.icon='🐝';
   Object.assign(S,{cfg,data,prices,anns,props,decisions:dec,reactions:rx,alerts:al,status:st,value,
     paper:paper||{capital:(cfg.portfolio||{}).paperCapital||500000,start:null,cash:(cfg.portfolio||{}).paperCapital||500000,holdings:{},trades:[],benchStart:null}});
   document.title=cfg.appName||'ZRPL Investing';
@@ -457,6 +458,7 @@ function viewCompany(tk){
   ${decisionCard(co,e,lp,pos)}
   ${thesisCard(co)}
   ${runwayCard(co)}
+  ${memoCard(co)}
   ${metricsCard(co,e)}
   ${sheetChecks(co,e)}
   ${partnerCard(co)}
@@ -1236,6 +1238,32 @@ function runwayCard(co){
 function runwayAttn(){
   return S.data.companies.filter(runwayApplies).map(co=>({co,rf:raiseForecast(co,runwaySeries(co))})).filter(x=>x.rf&&x.rf.open&&x.rf.open.period<=qAdd(qEnd(TODAY_ISO),3))
     .map(x=>`<li><b>Raise ahead: ${x.co.ticker}</b> — window opens ${qLabel(x.rf.open.period)}${x.rf.must?`, very likely by ${qLabel(x.rf.must.period)}`:''}. ${heldReal(x.co.ticker)?'You hold it: plan to trim before, rebuy at the raise.':'Wait for the raise price before buying.'}</li>`);
+}
+
+/* ====================================================== Research memo card (Neuren-style deep research)
+   Dual valuation (Wall Street SOTP/rNPV vs David Craig operator/M&A), Four Walls audit, POS,
+   commercial model, entry/exit ladder and critique. Stored as co.memo. */
+function memoCard(co){
+  const m=co.memo; if(!m)return '';
+  const lp=lastPrice(co.ticker), px=lp?lp.v:m.refPrice;
+  const up=v=>px&&v?` <span class="tiny ${v>=px?'ok':'no'}">(${v>=px?'+':''}${Math.round((v/px-1)*100)}%)</span>`:'';
+  const vals=(m.valuations||[]).map(v=>`<div class="kpi"><span>${esc(v.name)}</span><b>${v.low&&v.high?`${money(v.low)}–${money(v.high)}`:money(v.perShare)}</b><span>${esc(v.method||'')}${up(v.perShare||((v.low+v.high)/2))}</span></div>`).join('');
+  const walls=(m.fourWalls||[]).map(w=>`<tr><td><b>${esc(w.wall)}</b></td><td class="small">${esc(w.failure||'')}</td><td class="small">${esc(w.solution||'')}</td><td>${w.score!=null?`<span class="pill ${w.score>=2?'p-buy':w.score==1?'p-warn':'p-bad'}">${['Not climbed','Partly','Climbed'][w.score]||w.score}</span>`:''}</td></tr>`).join('');
+  const comm=(m.commercial||[]).map(c=>`<tr><td>${esc(c.layer)}</td><td class="small">${esc(c.assumption)}</td><td class="num"><b>${esc(c.figure)}</b></td></tr>`).join('');
+  const sotp=(m.sotp||[]).map(c=>`<tr><td>${esc(c.part)}</td><td class="small">${esc(c.method)}</td><td class="num">${c.perShare!=null?money(c.perShare):'–'}</td></tr>`).join('');
+  const plan=(m.plan||[]).map(t=>`<tr><td><b>${esc(t.tranche)}</b></td><td class="num">${esc(t.size||'')}</td><td class="num">${esc(t.price||'')}</td><td class="small">${esc(t.timing||'')}</td><td class="small">${esc(t.why||'')}</td></tr>`).join('');
+  const list=(a,cls)=>a&&a.length?`<ul class="small" style="margin:4px 0 0 18px;padding:0">${a.map(x=>`<li${cls?` class="${cls}"`:''}>${esc(x)}</li>`).join('')}</ul>`:'';
+  return `<div class="card"><div class="row"><h3 style="margin:0">Research memo: ${esc(m.title||'valuation and plan')}</h3><span class="sp"></span><span class="tiny muted">${esc(m.source||'')} · ${m.date?fmtDate(m.date):''}${m.refPrice?` · ref. price ${money(m.refPrice)}`:''}</span></div>
+   ${m.summary?`<p style="margin:8px 0">${esc(m.summary)}</p>`:''}
+   ${vals?`<div class="grid g3" style="margin:8px 0">${vals}</div>`:''}
+   ${m.pos?`<p class="small"><span class="pill p-hold">POS ${+(m.pos*100).toFixed(1)}%</span> ${esc(m.posNote||'')}</p>`:''}
+   ${m.raise?`<p class="small"><span class="pill p-warn">Raise view</span> ${esc(m.raise)}</p>`:''}
+   ${walls?`<details open><summary>David Craig's Four Walls audit</summary><table><thead><tr><th>Wall</th><th>How companies fail</th><th>This company</th><th></th></tr></thead><tbody>${walls}</tbody></table></details>`:''}
+   ${sotp?`<details><summary>Sum-of-the-parts (per share)</summary><table><thead><tr><th>Part</th><th>Method</th><th class="num">A$/share</th></tr></thead><tbody>${sotp}</tbody></table></details>`:''}
+   ${comm?`<details><summary>Commercial model</summary><table><thead><tr><th>Layer</th><th>Assumption</th><th class="num">Figure</th></tr></thead><tbody>${comm}</tbody></table></details>`:''}
+   ${plan?`<details open><summary>${esc(m.planTitle||'Entry / exit plan')}</summary><table><thead><tr><th>Step</th><th class="num">Size</th><th class="num">Price</th><th>When</th><th>Why</th></tr></thead><tbody>${plan}</tbody></table>${list(m.rules)}</details>`:''}
+   ${m.critique&&m.critique.length?`<details open><summary>Claude's critique of this memo</summary>${list(m.critique)}</details>`:''}
+  </div>`;
 }
 
 </script>
