@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-22",
+ "updated": "2026-11-23",
  "companies": [
   {
    "id": "neu",
@@ -2776,6 +2776,235 @@
    "animal": "monkey",
    "tagline": "Essential infrastructure maintenance (defence, telecoms, water, roads) on long contracts",
    "section": "industrials"
+  },
+  {
+   "id": "sol",
+   "scenarios": [
+    {
+     "name": "Premium closes",
+     "prob": 30,
+     "value": 49,
+     "success": false,
+     "note": "NAV +6% a year, price falls to 1.0x NAV; plus ~A$3.5 dividends."
+    },
+    {
+     "name": "Base",
+     "prob": 50,
+     "value": 64.4,
+     "success": true,
+     "note": "NAV +9% a year to ~A$50.7; 1.2x NAV; plus ~A$3.6 dividends."
+    },
+    {
+     "name": "Bull",
+     "prob": 20,
+     "value": 76.4,
+     "success": true,
+     "note": "NAV +11% a year; 1.35x NAV; plus dividends."
+    }
+   ],
+   "trials": [],
+   "catalysts": [],
+   "history": [],
+   "promises": [],
+   "finance": [],
+   "raises": [],
+   "recurring": [],
+   "facts": [
+    "FY26 (to 31 Jul 2026): post-tax NAV A$14.5bn, NAV per share up 27.2% to A$38.17 (includes ~A$0.8bn of tax assets from the Brickworks merger). Pre-tax NAV A$13.7bn, pre-tax NAV return 10.2% (4.2% above the index).",
+    "Net cash flow from investments (NCFI, its 'earnings') A$572m (+11.5%; +8.3% per share); NCFI per share has grown ~15% a year over five years (75c → 151c).",
+    "Dividends 111c fully franked (+7.8%) — 28th straight year of dividend growth; paid every year since listing in 1903.",
+    "A$3.8bn of available liquidity (A$2.7bn cash and liquid investments) — a war chest for buying in a downturn. Listed shares now only ~40% of the portfolio (90% in FY21).",
+    "Price ~A$48.15 (16 Nov 2026), near a record high: about 1.26x post-tax NAV — a premium, not a discount. Market value ~A$18bn; very liquid."
+   ],
+   "thesis": {
+    "paragraph": "Castle: Australia's oldest investment house, compounding a diversified portfolio (listed shares, private companies including Brickworks building products, credit, property) and paying a rising fully franked dividend for 28 years. Moat: permanent capital and patience — it can buy when others must sell, and it does deals (credit, private equity) that funds can't. Lords: the Millner family's long-term culture plus CEO Todd Barlow, who is shifting the portfolio from 90% listed shares to 40%; honest, conservative, aligned. The problem is price, not quality: at ~A$48 it trades at about 1.26x NAV and ~32x its cash earnings, so the market already loves it — there is no misperception to profit from today. This is a Monkey to own on a market sell-off, when it historically slips toward NAV.",
+    "misperception": "None today — the market sees the quality and prices it at a premium. The opportunity comes in a market panic when the premium shrinks.",
+    "wrong": "NCFI per share stops growing, a large private or credit investment goes bad, or management pays too much deploying the A$3.8bn war chest.",
+    "premortem": "Bought at a 26% premium to NAV; markets fell, the premium closed to zero and NAV fell 15% — a 30%+ loss in a 'safe' stock.",
+    "moats": [
+     "scale",
+     "brand"
+    ],
+    "moatRating": 2,
+    "castleRating": 2,
+    "castle": {
+     "company": "Investment house: listed equities (~40%), private companies (Brickworks Building Products now the largest), credit, real assets and cash.",
+     "collaborators": "Co-investors and global private-market partners; Ironbark Partnership Capital.",
+     "customers": "Its own shareholders (income seekers, SMSFs) — it competes for capital, not customers.",
+     "competitors": "Listed investment companies (AFIC, Argo), private equity and credit funds.",
+     "climate": "Interest rates (credit book benefits), the share market, property values, building activity (Brickworks)."
+    },
+    "lords": {
+     "honest": 2,
+     "able": 2,
+     "note": "Chairman Robert Millner (since 1997), CEO Todd Barlow (since 2014). 28 years of dividend growth; NAV/share up ~1,900% vs ~660% for the index over the long term."
+    }
+   },
+   "fundamentals": {
+    "asOf": "2026-11-23",
+    "source": "FY26 results (24 Sep 2026). EPS = NCFI per share A$1.51 (its preferred earnings measure); growth 10% = between FY26 per-share growth (8.3%) and the 5-year rate (15%). ROC = pre-tax NAV return 10.2%. FCF = NCFI A$572m. Shares ≈ 380m (A$14.5bn ÷ A$38.17).",
+    "url": "https://announcements.asx.com.au/asxpdf/20260924/pdf/074fz1j48qrdsj.pdf",
+    "shares": 380,
+    "eps": 1.51,
+    "growth": 0.1,
+    "fcf": 572,
+    "roc": 0.102,
+    "nav": 38.17,
+    "netDebt": 0
+   },
+   "levers": {
+    "price": {
+     "near": "—",
+     "far": ""
+    },
+    "cost": {
+     "near": "Low cost (≈56 staff for a A$14bn portfolio).",
+     "far": ""
+    },
+    "expand": {
+     "near": "Deploy A$3.8bn liquidity into credit and private deals at good prices.",
+     "far": "Global private partnerships."
+    },
+    "more": {
+     "near": "Larger credit book.",
+     "far": ""
+    },
+    "revitalise": {
+     "near": "Brickworks building products cycle recovery.",
+     "far": ""
+    },
+    "close": {
+     "near": "Sell mature listed holdings (e.g. Tuas, Aeris, Apex sold).",
+     "far": ""
+    }
+   },
+   "checklist": [
+    {
+     "rating": "yes",
+     "answer": "Diversified portfolio that compounds over decades."
+    },
+    {
+     "rating": "yes",
+     "answer": "Clear plan: grow NCFI per share and NAV."
+    },
+    {
+     "rating": "yes",
+     "answer": "Very low cost base."
+    },
+    {
+     "rating": "yes",
+     "answer": "Reinvests ~25–30% of cash flow."
+    },
+    {
+     "rating": "partly",
+     "answer": "Not a sales business; deal flow is its 'sales'."
+    },
+    {
+     "rating": "yes",
+     "answer": "Small team, low overheads."
+    },
+    {
+     "rating": "unknown",
+     "answer": "Not known."
+    },
+    {
+     "rating": "yes",
+     "answer": "Long-tenured, conservative leadership."
+    },
+    {
+     "rating": "yes",
+     "answer": "Deep investment team (CIO, sector heads)."
+    },
+    {
+     "rating": "yes",
+     "answer": "Reports NAV and NCFI clearly every half."
+    }
+   ],
+   "scorecard": {},
+   "keywords": "nav|net asset value|dividend|result|acquisition|credit|brickworks|ncfi",
+   "reporting": "half",
+   "thesisBroken": false,
+   "reviewed": false,
+   "color": 3,
+   "ticker": "SOL",
+   "name": "Soul Patts (Washington H. Soul Pattinson)",
+   "sector": "financials",
+   "sub": "",
+   "horizon": "2029-11-23",
+   "sleeve": "monkey",
+   "animal": "monkey",
+   "tagline": "124-year-old investment house: listed shares, private companies (incl. Brickworks), credit and property",
+   "section": "financials"
+  },
+  {
+   "id": "vhy",
+   "scenarios": [
+    {
+     "name": "Banks de-rate",
+     "prob": 30,
+     "value": 74,
+     "success": false,
+     "note": "Price −15%, plus ~A$9 distributions over 3 years."
+    },
+    {
+     "name": "Base",
+     "prob": 50,
+     "value": 98,
+     "success": true,
+     "note": "~3% a year price growth plus ~A$9 distributions."
+    },
+    {
+     "name": "Bull",
+     "prob": 20,
+     "value": 108,
+     "success": true,
+     "note": "Resources rally; ~6% a year plus distributions."
+    }
+   ],
+   "trials": [],
+   "catalysts": [],
+   "history": [],
+   "promises": [],
+   "finance": [],
+   "raises": [],
+   "recurring": [],
+   "facts": [
+    "Tracks the FTSE Australia High Dividend Yield Index; ~90–96 holdings; fee 0.25% a year; ~A$8.5bn in the fund.",
+    "Top holdings (Nov 2026): CBA 9.8%, BHP 9.0%, NAB 6.6%, Westpac 6.5%, ANZ 6.3% — the big four banks alone are ~29%.",
+    "Unit price (NAV) A$82.39 on 20 Nov 2026. Last distribution A$1.20 (paid 16 Oct 2026, ~86% franked); 12-month yield ~3.5–3.7% before franking.",
+    "It is a basket, not a business: there is no castle, moat or management to judge — the result is the average of its holdings."
+   ],
+   "thesis": {
+    "paragraph": "Not a stock: a low-cost basket of Australia's biggest dividend payers. By Mehta's animals it is a herd of Turtles (big banks, Telstra) and Bears (BHP, Rio, Woodside) — slow growers and cyclicals, the two groups your plan avoids or times. It also leans hardest into the part of the market the value panel calls most expensive (big banks ~25x earnings). Expected return ≈ 3.6% yield + ~1.2% franking + ~3% growth ≈ 7–8% a year, below every sleeve target. Use it outside the 10-stock plan if you want simple, franked income — not as a value bet.",
+    "misperception": "None — it is the market's consensus portfolio.",
+    "wrong": "N/A (index fund).",
+    "premortem": "Bank valuations normalise from ~25x to ~16x earnings and VHY falls 20% while paying its 3.6% yield.",
+    "moats": [],
+    "moatRating": 0,
+    "castleRating": 1
+   },
+   "fundamentals": {
+    "asOf": "2026-11-20",
+    "source": "Vanguard product page (20 Nov 2026), InvestSMART holdings. ETFs have no EPS/PEG in our sense.",
+    "url": "https://www.vanguard.com.au/personal/invest-with-us/etf?portId=8210"
+   },
+   "levers": {},
+   "checklist": [],
+   "scorecard": {},
+   "keywords": "distribution|vanguard|index",
+   "reporting": "half",
+   "thesisBroken": false,
+   "reviewed": false,
+   "color": 1,
+   "ticker": "VHY",
+   "name": "Vanguard Australian Shares High Yield ETF",
+   "sector": "financials",
+   "sub": "",
+   "horizon": "2029-11-23",
+   "sleeve": "watch",
+   "animal": "turtle",
+   "tagline": "ETF of ~90 high-dividend ASX shares — mostly big banks, miners, Telstra, Woodside",
+   "section": "financials"
   }
  ]
 }
