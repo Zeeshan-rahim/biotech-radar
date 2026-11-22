@@ -1585,23 +1585,23 @@
     {
      "name": "Bear",
      "prob": 25,
-     "value": 50,
+     "value": 53,
      "success": false,
-     "note": "AI and regulation fears play out; multiple compresses."
+     "note": "De-rating to ~18x on AI/regulation fears; incl. ~A$3 dividends."
     },
     {
      "name": "Base",
      "prob": 55,
-     "value": 76,
+     "value": 79,
      "success": true,
-     "note": "~10% earnings growth continues; trades near Morningstar fair value."
+     "note": "~10–12% EPSA growth, near Morningstar fair value; incl. dividends."
     },
     {
      "name": "Bull",
      "prob": 20,
-     "value": 95,
+     "value": 98,
      "success": true,
-     "note": "Interactive hits targets and the market re-rates it."
+     "note": "Interactive hits target; premium rating."
     }
    ],
    "trials": [],
@@ -1635,41 +1635,118 @@
    "raises": [],
    "recurring": [],
    "facts": [
-    "FY26 (to 30 Sep): normalised NPATA +9.7% in constant currency to A$1.58bn; EPS before amortisation +13% (constant currency) to A$2.59.",
-    "Shares fell ~6.7% to about A$61.8 on result day (12 Nov 2026).",
-    "Morningstar: wide moat, fair value A$76; market worried about AI disruption.",
-    "CEO Trevor Croker retires April 2027; successor Dafne Guisard named (succession plan in place).",
-    "Interactive division targets US$1bn revenue by FY29; FY27 guidance: constant-currency profit growth (no number)."
+    "FY26 (to 30 Sep 2026): NPATA A$1,578.5m (+10% constant currency); EBITA margin up 140bp to 36.7%; EPSA 259.3c (+13% constant currency).",
+    "Operating cash flow A$1.9bn; net debt/EBITDA 0.4x; ~A$1.9bn returned via dividends and buy-backs; A$590m left on the A$2.5bn buy-back.",
+    "Market share: ~43% of North American gaming operations; Product Madness #1 in social slots (~23% share) while the social slots market shrank.",
+    "CEO Trevor Croker retires April 2027; internal successor named. Shares fell ~6% on the news, then recovered to A$64.32 (18 Nov).",
+    "Morningstar: wide moat, fair value A$76; market fears AI disruption of game content."
    ],
    "thesis": {
-    "paragraph": "DRAFT. Castle: the global leader in casino gaming machines and game content, gaining share in every key segment. Moat: content/technology and a large installed base earning recurring fees (printer/cartridge), plus brand with casino operators. Lords: long-serving CEO handing over to a named internal successor — orderly. Misperception: the market fears AI will erode its game-content edge; results so far show share gains.",
-    "misperception": "Market thinks AI-made content will commoditise slot games.",
-    "wrong": "Two consecutive halves of market-share loss in North America, or interactive losses widening.",
-    "premortem": "Regulators tighten gambling (social casino / online), or the new CEO stumbles.",
+    "paragraph": "Castle: the world's leading slot-machine content and installed-base business, plus the #1 social casino publisher and a growing real-money online arm — it keeps taking share in shrinking markets, which only a castle can do. Moat: game content and brands (Lightning Link, Dragon Link), a huge installed base earning daily fees (printer/cartridge), switching costs for casinos, and scale in R&D. Lords: disciplined capital returns (big buy-backs, low debt), orderly internal CEO succession. Misperception: the market fears AI will commoditise game content; the evidence so far is share gains and margin expansion. But at ~25x EPSA for ~12% growth the price already reflects the quality — a wonderful company at a fair price, not a bargain.",
+    "misperception": "AI-made games will commoditise slot content. Evidence: share gains in every key segment in FY26.",
+    "wrong": "Two halves of North American share loss; interactive keeps losing money; social casino regulation bans or restricts the model.",
+    "premortem": "New CEO misallocates capital (large acquisition), US social-casino regulation bites, and the multiple de-rates to ~18x.",
     "moats": [
      "printer",
      "patent",
      "brand",
-     "switching"
+     "switching",
+     "scale"
     ],
     "moatRating": 2,
     "castleRating": 2,
     "lords": {
      "honest": 2,
      "able": 2,
-     "note": "Orderly succession announced with the result. Check pay and buy-back discipline in deep research."
+     "note": "Long-serving CEO retiring April 2027 with an internal successor (Dafne Guisard). ~A$1.9bn returned to shareholders in FY26 with net debt/EBITDA only 0.4x. Watch: pay structure and any large acquisition under the new CEO."
+    },
+    "castle": {
+     "company": "Gaming machines and content (land-based), Product Madness (social casino), Aristocrat Interactive (online real-money, iLottery). Goal: interactive to US$1bn revenue by FY29.",
+     "collaborators": "Casino operators lease its machines; app stores take a cut of social casino revenue (direct-to-consumer now ~30% of sales, lifting margins).",
+     "customers": "Casinos (US especially), players via casinos and mobile apps. Brand pull of top game franchises drives casino demand.",
+     "competitors": "Light & Wonder, IGT and smaller studios; litigation with Light & Wonder over copied games settled Jan 2026. Social casino peers losing share to Product Madness.",
+     "climate": "Gambling regulation (social casino and online), US state legalisation of iGaming (tailwind), AI-generated content (threat and tool), AUD/USD."
     }
    },
    "fundamentals": {
-    "asOf": "2026-11-22",
-    "source": "FY26 result; Google Finance share count (Jul 2026). EPS = EPS before amortisation (constant currency). Net debt, FCF and invested capital still to enter.",
-    "url": "",
-    "shares": 599.45,
-    "eps": 2.59,
-    "growth": 0.1
+    "asOf": "2026-09-30",
+    "source": "FY26 result (12 Nov 2026). EBIT = EBITA A$2.24bn. Net debt ≈ 0.4x EBITDA (my estimate ~A$1.0bn). FCF ≈ operating cash flow A$1.9bn less ~A$0.5bn capex (my estimate — confirm in the annual report). Invested capital not yet found, so ROC is blank.",
+    "url": "https://www.prnewswire.com/news-releases/aristocrat-delivers-strong-fy26-result-with-13epsa-growth-exceptional-execution-supporting-momentum-into-fy27-302937053.html",
+    "shares": 600,
+    "eps": 2.593,
+    "growth": 0.12,
+    "ebit": 2240,
+    "netDebt": 1000,
+    "fcf": 1400
    },
-   "levers": {},
-   "checklist": [],
+   "levers": {
+    "price": {
+     "near": "Premium games and leased units command higher daily fees.",
+     "far": "Pricing power from leading franchises."
+    },
+    "cost": {
+     "near": "Direct-to-consumer social casino sales avoid app-store fees.",
+     "far": "Scale and shared R&D across segments."
+    },
+    "expand": {
+     "near": "iLottery launches (July 2026), new US iGaming states.",
+     "far": "Interactive to US$1bn revenue by FY29; acquisitions (watch discipline)."
+    },
+    "more": {
+     "near": "Gaming operations installed base keeps growing.",
+     "far": "Same content across land, online and social."
+    },
+    "revitalise": {
+     "near": "New game franchises each year.",
+     "far": "Next-generation cabinets."
+    },
+    "close": {
+     "near": "Sold Big Fish and exited Plarium (done).",
+     "far": "Could prune weaker interactive units."
+    }
+   },
+   "checklist": [
+    {
+     "rating": "yes",
+     "answer": "Gaming, social and online gaming demand persists; content is the scarce asset."
+    },
+    {
+     "rating": "yes",
+     "answer": "Clear growth plan (interactive US$1bn by FY29) and a record of share gains."
+    },
+    {
+     "rating": "yes",
+     "answer": "EBITA margin 36.7%, up 140bp; direct-to-consumer shift should keep lifting margins."
+    },
+    {
+     "rating": "yes",
+     "answer": "Heavy, continuous investment in game design; the content pipeline is the R&D."
+    },
+    {
+     "rating": "partly",
+     "answer": "Sales effort sits in casino relationships; not disclosed separately."
+    },
+    {
+     "rating": "yes",
+     "answer": "Direct-to-consumer shift, scale, pricing of premium leased units."
+    },
+    {
+     "rating": "unknown",
+     "answer": "Not disclosed — check employee reviews and the annual report."
+    },
+    {
+     "rating": "yes",
+     "answer": "Orderly, long-planned CEO handover."
+    },
+    {
+     "rating": "yes",
+     "answer": "Internal successor named 12 months ahead."
+    },
+    {
+     "rating": "partly",
+     "answer": "Segment margins reported in detail; internal cost analysis not public."
+    }
+   ],
    "scorecard": {},
    "keywords": "result|guidance|interactive|ceo|buy-back",
    "reporting": "half",
@@ -1691,24 +1768,24 @@
    "scenarios": [
     {
      "name": "Bear",
-     "prob": 30,
-     "value": 4.5,
+     "prob": 35,
+     "value": 4,
      "success": false,
-     "note": "Fee cuts plus UK write-offs; growth stalls."
+     "note": "Fee cut plus weak volumes; UK keeps losing money."
     },
     {
      "name": "Base",
-     "prob": 50,
-     "value": 10.5,
+     "prob": 45,
+     "value": 8,
      "success": true,
-     "note": "Australian core grows, UK losses contained; near Morningstar fair value."
+     "note": "Volumes recover with rate cuts; UK losses narrow."
     },
     {
      "name": "Bull",
      "prob": 20,
-     "value": 14,
+     "value": 11,
      "success": true,
-     "note": "UK exited or fixed; re-rating towards past highs."
+     "note": "UK exited or profitable; re-rating."
     }
    ],
    "trials": [],
@@ -1747,17 +1824,17 @@
    "raises": [],
    "recurring": [],
    "facts": [
-    "FY26 continuing-operations EBITDA +12% to A$152m; shares fell 17% on the result (Aug 2026).",
-    "Morningstar: wide moat (network effects, switching costs), a natural monopoly; fair value A$10.50.",
-    "Price about A$6.70 (19 Nov 2026); 52-week range about A$6.15–16; down ~51% this year.",
-    "Headwinds: regulated fee decrease (IPART), lower property transfer volumes, struggling UK business.",
-    "Director Janelle Hopkins bought 4,000 shares on market (31 Aug 2026). CBA owns ~24%."
+    "FY26: revenue A$406.9m (+7%), EBITDA A$151.7m (+12%), NPATA A$65.3m (+35%), free cash flow A$93.5m (+39%), net debt A$158.7m (1.0x EBITDA).",
+    "Australia: ~90% of all property settlements (99% of eConveyancing); EBITDA margin 55.8%. UK EBITDA loss A$41.1m.",
+    "FY27 guidance cut at the AGM (Nov 2026): revenue A$355–380m, EBITDA margin 29–31.5%, core NPAT −A$6m to +A$6m.",
+    "IPART final report (Nov 2026): regulated revenue cut ~16% on average versus current fees, from 1 July 2027; regulation extended to some other PEXA services.",
+    "Interoperability (forced competition) was shelved by ARNECC in March 2026 — the monopoly is intact but now regulated like a utility."
    ],
    "thesis": {
-    "paragraph": "DRAFT. Castle: the only electronic conveyancing network in Australia — almost every property settlement runs through it. Moat: network effects and switching costs (banks, lawyers and conveyancers are all on it), plus a regulatory position. Lords: to be assessed — the UK expansion has destroyed value so far. Misperception: the market is pricing the whole company off UK losses and a fee cut, while the Australian monopoly keeps growing.",
-    "misperception": "Market treats PEXA as broken because of UK losses and a regulated fee cut.",
-    "wrong": "Regulation opens Australia to real competition (interoperability) or fees are cut deeply again.",
-    "premortem": "UK keeps burning cash, management doubles down, and the Australian fee cut is worse than expected.",
+    "paragraph": "Castle: Australia's property-settlement monopoly — almost every settlement runs through it. Moat: network effects and switching costs are real, and competition via interoperability was shelved. Lords: the CEO is cutting debt and has improved cash flow, but the UK keeps losing ~A$40m a year. Deep research changes the picture: the regulator is capping its prices (~16% cut from July 2027) and FY27 guidance has fallen to roughly break-even core profit. A regulated monopoly with falling earnings is a Turtle (or a Snake if the UK is fixed), not a Monkey. The market's pessimism is mostly justified for now — moved to the watch list.",
+    "misperception": "Largely none today: the fall reflects real regulation and weaker property volumes. Possible future one: the UK option valued at zero.",
+    "wrong": "(For a future buy) UK losses keep growing, or further fee cuts.",
+    "premortem": "Buying a 'cheap monopoly' that the regulator keeps squeezing while UK losses continue.",
     "moats": [
      "network",
      "switching",
@@ -1766,21 +1843,96 @@
     "moatRating": 2,
     "castleRating": 1,
     "lords": {
-     "honest": null,
+     "honest": 2,
      "able": 1,
-     "note": "UK capital allocation is the question. One director bought on market in Aug 2026."
+     "note": "Debt repaid (A$92m in FY26), Digital Solutions sold. The capability question is the UK: lender adoption slower than desired. A director bought shares on market (Aug 2026)."
+    },
+    "castle": {
+     "company": "Australian Exchange (settlements), PEXA Clear (compliance), NZ pilot, UK remortgage platform (NatWest live).",
+     "collaborators": "Banks (CBA owns ~24%), lawyers and conveyancers, state land titles offices.",
+     "customers": "Conveyancers and lenders; consumers pay indirectly through settlement fees.",
+     "competitors": "Sympli (ASX/ATI) — marginal; UK incumbents and lenders' own systems.",
+     "climate": "IPART/ARNECC price regulation, property transfer volumes (falling with 4.85% rates), UK adoption pace."
     }
    },
    "fundamentals": {
-    "asOf": "2026-11-22",
-    "source": "Fool/Morningstar data Nov 2026. Reported EPS is depressed by UK losses; growth uses EBITDA growth as a placeholder.",
-    "url": "",
+    "asOf": "2026-06-30",
+    "source": "FY26 result (28 Aug 2026), AGM guidance (Nov 2026). EPS = FY26 continuing EPS 10.91c. Growth set to 0 because FY27 profit is guided down.",
+    "url": "https://www.marketindex.com.au/data-api/api/v1/announcements/XASX:PXA:3A700205/pdf/inline/pexa-group-fy26-results-announcement",
     "shares": 175.94,
     "eps": 0.109,
-    "growth": 0.12
+    "growth": 0,
+    "netDebt": 158.7,
+    "fcf": 93.5
    },
-   "levers": {},
-   "checklist": [],
+   "levers": {
+    "price": {
+     "near": "Blocked: regulator cutting fees ~16% from July 2027.",
+     "far": "Limited to regulated increases."
+    },
+    "cost": {
+     "near": "Cost-efficiency measures flagged for FY27.",
+     "far": "Lower UK investment."
+    },
+    "expand": {
+     "near": "UK sale-and-purchase for NatWest; NZ pilot.",
+     "far": "PEXA Clear compliance services."
+    },
+    "more": {
+     "near": "Volumes recover when rates fall and property turnover rises.",
+     "far": "Refinancing volumes."
+    },
+    "revitalise": {
+     "near": "New products on the Exchange.",
+     "far": ""
+    },
+    "close": {
+     "near": "Exit or shrink the UK if adoption stays slow — the key upside lever.",
+     "far": ""
+    }
+   },
+   "checklist": [
+    {
+     "rating": "yes",
+     "answer": "Settlement infrastructure will always be needed."
+    },
+    {
+     "rating": "partly",
+     "answer": "Growth ambition (UK, NZ) but returns so far negative."
+    },
+    {
+     "rating": "no",
+     "answer": "FY26 EBITDA margin 37.3% falling to 29–31.5% in FY27 guidance; regulated fees cap the future."
+    },
+    {
+     "rating": "partly",
+     "answer": "Capex A$35m Australia, A$16.5m international; spend needed to keep the platform secure."
+    },
+    {
+     "rating": "partly",
+     "answer": "UK lender adoption slower than desired."
+    },
+    {
+     "rating": "partly",
+     "answer": "Cost-efficiency measures; fee cuts dominate."
+    },
+    {
+     "rating": "unknown",
+     "answer": "Not disclosed."
+    },
+    {
+     "rating": "partly",
+     "answer": "CEO in role since 2024; board engaged on regulation."
+    },
+    {
+     "rating": "unknown",
+     "answer": "Not disclosed."
+    },
+    {
+     "rating": "partly",
+     "answer": "Detailed segment reporting; cost-to-serve debated with IPART."
+    }
+   ],
    "scorecard": {},
    "keywords": "ipart|uk|guidance|result|transactions",
    "reporting": "half",
@@ -1791,8 +1943,8 @@
    "name": "PEXA Group",
    "sector": "realestate",
    "sub": "",
-   "animal": "monkey",
-   "sleeve": "monkey",
+   "animal": "turtle",
+   "sleeve": "watch",
    "horizon": "2029-11-22",
    "tagline": "Australia's electronic property-settlement network, expanding into the UK",
    "section": "realestate"
@@ -1803,23 +1955,23 @@
     {
      "name": "Bear",
      "prob": 35,
-     "value": 40,
+     "value": 43,
      "success": false,
-     "note": "Iron ore falls further as Simandou ramps; earnings trough lasts."
+     "note": "Iron ore ~US$75, copper corrects; ~A$38 + ~A$5 dividends."
     },
     {
      "name": "Base",
      "prob": 45,
-     "value": 58,
+     "value": 61,
      "success": true,
-     "note": "Iron ore stabilises, copper and potash grow."
+     "note": "Iron ore ~US$90, copper firm, Jansen on line; + dividends."
     },
     {
      "name": "Bull",
      "prob": 20,
-     "value": 72,
+     "value": 77,
      "success": true,
-     "note": "Copper shortage and China stimulus."
+     "note": "Copper shortage; + dividends."
     }
    ],
    "trials": [],
@@ -1864,17 +2016,18 @@
    "raises": [],
    "recurring": [],
    "facts": [
-    "Closed at A$51.40 on 20 Nov 2026, a seven-month low; CBA overtook it as the ASX's largest company.",
-    "Iron ore pressured by Simandou (Guinea) supply ramping up faster than expected.",
-    "Low-cost, high-quality assets: likely to stay profitable through the commodity cycle (Morningstar).",
-    "Jansen Stage 1 potash about 75% complete; first production targeted mid-2027.",
-    "Analyst views range widely: consensus target about A$61; some DCF valuations A$39–48."
+    "FY26 (to 30 Jun 2026): underlying EBITDA US$32.9bn (+27%, margin ~59%); underlying attributable profit US$13.2bn (+30%); ROCE 26.1%.",
+    "Copper produced >US$18bn of EBITDA (54% of group) at a 70% margin; iron ore >US$14bn EBITDA.",
+    "Net debt US$8.7bn (0.3x EBITDA), below its US$10–20bn target; FY26 dividends US$8.7bn.",
+    "Iron ore now ~US$88–90/t; Goldman Sachs cut its 2027 forecast to US$92/t; Simandou ramping towards ~120Mt a year.",
+    "New CEO Brandon Craig (internal, 25+ years at BHP) since 1 July 2026; Mike Henry left after the failed Anglo American bid.",
+    "Shares A$51.40 (20 Nov 2026), a seven-month low."
    ],
    "thesis": {
-    "paragraph": "DRAFT — Bear watch. Castle: some of the world's lowest-cost iron ore and copper mines. Moat: low cost (bottom of the cost curve) and scale. Lords: generally disciplined capital allocation; CFO changing. Misperception to wait for: when iron ore panic peaks and the market prices the cycle low as permanent. We are not there yet — the sell-off has only just started.",
-    "misperception": "Not yet — wait until the market extrapolates depressed earnings forever.",
-    "wrong": "Structural collapse in Chinese steel demand plus Simandou at full rate keeps iron ore below cost for years.",
-    "premortem": "Bought too early in a long down-cycle; copper also falls.",
+    "paragraph": "Castle: the world's largest copper producer and the lowest-cost major iron ore producer, with potash from mid-2027 — it stays profitable at the bottom of the cycle. Moat: low cost and scale. Lords: an internal CEO continuing a disciplined strategy; a very strong balance sheet. But FY26 earnings came from near-peak copper prices, and iron ore is sliding as Simandou ramps up. On my mid-cycle estimate BHP trades at ~9.5x EV / mid-cycle EBIT — above your ≤8x Bear rule. Not the cycle low yet. Bear entry: roughly A$38–43, or when iron-ore pessimism peaks.",
+    "misperception": "Not yet. Wait for the market to price today's falling iron ore as permanent.",
+    "wrong": "Copper and iron ore fall together for years; Jansen keeps overrunning.",
+    "premortem": "Bought in late 2026 thinking it was cheap, then iron ore fell to US$75 and copper corrected from its high.",
     "moats": [
      "lowcost",
      "scale"
@@ -1884,17 +2037,93 @@
     "lords": {
      "honest": 2,
      "able": 2,
-     "note": ""
+     "note": "Formal CEO succession, internal appointee. ~US$80bn returned to shareholders under the previous CEO. Watch: M&A appetite (Anglo attempts) and Jansen cost overruns (US$2.3bn impairment)."
+    },
+    "castle": {
+     "company": "Copper (Escondida, Copper SA, Vicuña JV), WA iron ore, steelmaking coal, Jansen potash (first production mid-2027).",
+     "collaborators": "JV partners (Lundin in Vicuña); Chinese steel mills, now buying through the state buyer CMRG.",
+     "customers": "Chinese steel mills (iron ore), smelters (copper), fertiliser makers (potash).",
+     "competitors": "Rio Tinto, Vale, Fortescue, Simandou (new supply); copper majors.",
+     "climate": "China steel demand, Simandou supply, electrification (copper tailwind), carbon policy, Samarco legal liabilities."
     }
    },
    "fundamentals": {
-    "asOf": "2026-11-22",
-    "source": "Research 22 Nov 2026. Mid-cycle EBIT, net debt and book value to enter in deep research.",
-    "url": "",
-    "shares": null
+    "asOf": "2026-06-30",
+    "source": "FY26 results (18 Aug 2026). Converted at ~0.64 AUD/USD (my assumption). Mid-cycle EBIT = my estimate: FY25-level EBITDA (~US$26bn) less ~US$6.5bn D&A ≈ US$18.5bn ≈ A$29bn. Shares ~5,077m (estimate). Book value not yet entered.",
+    "url": "https://www.tradingview.com/news/reuters.com,2026-08-18:newsml_RSR0375Ra:0-reg-bhp-group-limited-bhp-fy2026-results-announcement/",
+    "shares": 5077,
+    "netDebt": 13600,
+    "ebitMid": 29000,
+    "roc": 0.261
    },
-   "levers": {},
-   "checklist": [],
+   "levers": {
+    "price": {
+     "near": "None — a price taker.",
+     "far": "A copper shortage could lift prices long term."
+    },
+    "cost": {
+     "near": "BHP Operating System: >US$5bn savings claimed.",
+     "far": "Lowest-cost iron ore."
+    },
+    "expand": {
+     "near": "Jansen potash mid-2027.",
+     "far": "Copper growth (Vicuña, Resolution)."
+    },
+    "more": {
+     "near": "Record iron ore volumes; FY27 copper guidance 1,650–1,800kt.",
+     "far": ""
+    },
+    "revitalise": {
+     "near": "Copper SA expansion.",
+     "far": ""
+    },
+    "close": {
+     "near": "Nickel on care and maintenance; coal reduced.",
+     "far": ""
+    }
+   },
+   "checklist": [
+    {
+     "rating": "yes",
+     "answer": "Copper demand from electrification; iron ore demand mature."
+    },
+    {
+     "rating": "yes",
+     "answer": "Growth projects in copper and potash."
+    },
+    {
+     "rating": "partly",
+     "answer": "~59% EBITDA margin at the peak; will fall with iron ore."
+    },
+    {
+     "rating": "partly",
+     "answer": "Large technology/operating-system investment; R&D not the key driver."
+    },
+    {
+     "rating": "unknown",
+     "answer": "Not applicable to commodities."
+    },
+    {
+     "rating": "yes",
+     "answer": "Lowest-cost assets protect margins through the cycle."
+    },
+    {
+     "rating": "partly",
+     "answer": "Large workforce; relations generally stable."
+    },
+    {
+     "rating": "yes",
+     "answer": "Formal succession, smooth transition."
+    },
+    {
+     "rating": "yes",
+     "answer": "Formal CEO succession completed."
+    },
+    {
+     "rating": "yes",
+     "answer": "Detailed unit-cost reporting by asset."
+    }
+   ],
    "scorecard": {},
    "keywords": "iron ore|copper|jansen|production|guidance",
    "reporting": "half",
@@ -1917,23 +2146,23 @@
     {
      "name": "Bear",
      "prob": 30,
-     "value": 3.65,
+     "value": 3.48,
      "success": false,
-     "note": "NTA falls; price ~A$2.90 plus ~A$0.75 distributions."
+     "note": "NTA cut 10%, 30% discount persists; + ~A$0.51 distributions."
     },
     {
      "name": "Base",
      "prob": 50,
-     "value": 4.77,
+     "value": 4.51,
      "success": true,
-     "note": "Discount narrows to ~15% as rates fall; plus distributions."
+     "note": "Discount narrows to 15% as rates fall; + distributions."
     },
     {
      "name": "Bull",
      "prob": 20,
-     "value": 5.48,
+     "value": 4.98,
      "success": true,
-     "note": "Trigger (asset sales / buy-back / bid) closes the gap to NTA."
+     "note": "Trigger (buy-back / sales) closes the gap; + distributions."
     }
    ],
    "trials": [],
@@ -1956,17 +2185,20 @@
    "raises": [],
    "recurring": [],
    "facts": [
-    "NTA A$4.71 per security at 30 Jun 2026; recent unit price about A$3.38–3.52, a 25–28% discount.",
-    "FY27 guidance: operating earnings and distributions 25.5c (flat); ~99.9% occupancy, ~9.2-year weighted lease expiry.",
-    "Rates at 4.85% (highest since 2008) weigh on property values; CommBank expects cuts in Aug and Nov 2027.",
-    "Tenant risk: David Jones administration update (5 Nov 2026) — check exposure."
+    "NTA A$4.71 (30 Jun 2026); price ~A$3.55 (11 Nov 2026) — about 25% below NTA.",
+    "FY26 operating earnings 25.5c (+2%); FY27 guidance 25.5c earnings and distribution (flat) — ~7.2% yield at A$3.55, unfranked.",
+    "Balance-sheet gearing 27.5% (target 25–35%); look-through gearing 41% (Dec 2025). ~85% of FY27 debt hedged at ~3.0%.",
+    "505 properties, A$6.1bn portfolio, 99.9% occupancy, 9.2-year WALE; largest tenants: governments, Endeavour, Telstra, BP.",
+    "FY26: sold A$324m of assets at a 4.7% yield (strong prices) and bought A$572m at 7.4% — sales support the NTA.",
+    "David Jones administration (5 Nov 2026): CLW owns 50% of the Sydney flagship, ~4% of net property income, ~12 months' rent covered by a bank guarantee; FY27 guidance unchanged.",
+    "Lease expiries peak in FY29 (>10% of leases)."
    ],
    "thesis": {
-    "paragraph": "DRAFT. Castle: a diversified portfolio of long leases to large tenants with ~99.9% occupancy. Moat: modest — scale and sponsor (Charter Hall) relationships, not a true moat. Lords: externally managed by Charter Hall, which earns fees (watch alignment). Misperception: the market prices it as if high rates will last forever and property values will keep falling. Trigger needed: asset sales at book value, buy-backs, or a falling rate cycle.",
-    "misperception": "High rates are priced in as permanent; units trade ~25% below independently valued assets.",
-    "wrong": "Independent valuations fall sharply (NTA cut >15%) or a major tenant fails.",
-    "premortem": "Rates rise further, valuations are written down, and the discount never closes.",
-    "trigger": "",
+    "paragraph": "Castle: a big, diversified portfolio of long leases (9.2 years) to governments and large companies, 99.9% occupied. Moat: weak — scale and Charter Hall's deal flow, not a true moat; this is an Elephant, valued on its assets. Lords: externally managed by Charter Hall (fee alignment is the question), but capital management is sensible: low balance-sheet gearing, debt mostly hedged, and assets sold at strong prices. Misperception: with rates at 4.85% the market prices the trust ~25% below independently valued, recently tested asset values. Trigger: asset sales at or above book plus buy-backs, and the rate cycle turning in 2027.",
+    "misperception": "High rates are priced in as permanent; units ~25% below an NTA that recent asset sales support.",
+    "wrong": "NTA cut >10%, a major tenant failure beyond David Jones, or gearing pushed above 35%.",
+    "premortem": "Rates rise again, valuations fall, the external manager keeps buying assets instead of buying back units, and the discount never closes.",
+    "trigger": "Asset recycling at or above book (FY26: A$324m sold at a 4.7% yield) with proceeds available for buy-backs, plus expected rate cuts in 2027. Moderate, not certain — watch for a buy-back announcement.",
     "moats": [
      "scale"
     ],
@@ -1975,17 +2207,92 @@
     "lords": {
      "honest": 1,
      "able": 1,
-     "note": "External manager: fees and alignment to check."
+     "note": "Externally managed: check fees and whether the manager prefers growing assets (more fees) to buy-backs. Capital management so far prudent."
+    },
+    "castle": {
+     "company": "Net-lease REIT: pubs and bottle shops, service stations, government offices, logistics, data centres, social infrastructure.",
+     "collaborators": "Charter Hall Group (external manager, earns fees); lenders (A$2bn refinancing done).",
+     "customers": "Tenants: federal and state governments (~18%), Endeavour, Telstra, BP, Coles, Metcash; about half of leases CPI-linked.",
+     "competitors": "Other REITs and unlisted funds bidding for the same assets.",
+     "climate": "Interest rates (4.85%, cuts expected 2027), property valuations, tenant health (David Jones)."
     }
    },
    "fundamentals": {
-    "asOf": "2026-11-22",
-    "source": "FY26 results and Nov 2026 prices. NAV = NTA per security.",
-    "url": "",
-    "nav": 4.71
+    "asOf": "2026-06-30",
+    "source": "FY26 results (13 Aug 2026), David Jones release (5 Nov 2026). NAV = NTA per security; EPS = operating earnings per security.",
+    "url": "https://announcements.asx.com.au/asxpdf/20260813/pdf/072q0m1fm3jtls.pdf",
+    "nav": 4.71,
+    "eps": 0.255,
+    "growth": 0
    },
-   "levers": {},
-   "checklist": [],
+   "levers": {
+    "price": {
+     "near": "CPI-linked rent rises on about half the leases.",
+     "far": ""
+    },
+    "cost": {
+     "near": "Lower debt margins after the A$2bn refinancing.",
+     "far": ""
+    },
+    "expand": {
+     "near": "Acquisitions at ~7.4% yields.",
+     "far": ""
+    },
+    "more": {
+     "near": "Occupancy already 99.9%; growth from rent reviews.",
+     "far": ""
+    },
+    "revitalise": {
+     "near": "Re-leasing the FY29 expiries.",
+     "far": ""
+    },
+    "close": {
+     "near": "Selling non-core assets at strong prices (done FY26); possibly the David Jones stake.",
+     "far": ""
+    }
+   },
+   "checklist": [
+    {
+     "rating": "yes",
+     "answer": "Long-leased essential property stays in demand."
+    },
+    {
+     "rating": "partly",
+     "answer": "Steady, not growth-oriented; flat FY27."
+    },
+    {
+     "rating": "partly",
+     "answer": "Rental margin high; distributions flat; interest costs rise as hedges roll off."
+    },
+    {
+     "rating": "unknown",
+     "answer": "Not applicable (property trust)."
+    },
+    {
+     "rating": "unknown",
+     "answer": "Not applicable."
+    },
+    {
+     "rating": "yes",
+     "answer": "Hedging, refinancing, CPI rent reviews."
+    },
+    {
+     "rating": "unknown",
+     "answer": "Externally managed — Charter Hall staff."
+    },
+    {
+     "rating": "partly",
+     "answer": "Externally managed; board changes Sep 2026."
+    },
+    {
+     "rating": "unknown",
+     "answer": "Manager-level succession, not disclosed for the trust."
+    },
+    {
+     "rating": "partly",
+     "answer": "Detailed property-level reporting."
+    }
+   ],
    "scorecard": {},
    "keywords": "nta|distribution|guidance|tenant|buy-back|divest",
    "reporting": "half",
