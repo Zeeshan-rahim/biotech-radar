@@ -1,5 +1,7 @@
 {
  "NEU": {
+  "held": false,
+  "bought": "",
   "plan": [
    {
     "label": "Tranche 1 – de-risk now",
