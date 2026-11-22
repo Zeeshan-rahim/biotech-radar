@@ -744,6 +744,10 @@ function viewSettings(){
    <div class="row" style="margin-top:6px">Sell/trim when expected return falls below <input class="w-s" type="number" value="${R.sellFloorReturn*100}" onchange="setCfg('rules.sellFloorReturn',this.value/100)">% a year</div>
    <h3 style="margin-top:14px">Alerts</h3>
    <div class="row">Warn <input class="w-s" type="number" value="${A.catalystDaysAhead}" onchange="setCfg('alerts.catalystDaysAhead',+this.value)"> days before a catalyst · big move ≥ <input class="w-s" type="number" value="${A.bigMovePct}" onchange="setCfg('alerts.bigMovePct',+this.value)">% · runway below <input class="w-s" type="number" value="${A.runwayMonths}" onchange="setCfg('alerts.runwayMonths',+this.value)"> months</div></div>
+  <div class="card"><h3>Import research or the Monday update</h3>
+   <p class="small muted">Choose a file Claude sent you (or paste its text). New stocks are added; existing stocks only get the fields in the file. Your positions, thesis notes and review decisions are kept unless the file changes them. Then press Save changes.</p>
+   <div class="row"><label class="btn">Choose file<input type="file" accept=".json" style="display:none" onchange="this.files[0]&&this.files[0].text().then(importUpdate)"></label></div>
+   <textarea id="imp" placeholder="…or paste the update text here" style="min-height:70px;margin-top:6px"></textarea><button onclick="importUpdate(document.getElementById('imp').value)">Import pasted text</button></div>
   <div class="card"><h3>GitHub connection</h3><p class="small muted">Lets this page save your edits and start an update. The token stays in this browser only.</p>
    <div class="row"><input placeholder="your GitHub username" value="${esc(GH.owner||'')}" onchange="GH.owner=this.value.trim();LS.set('radar.gh',GH)"><input placeholder="repository name" value="${esc(GH.repo||'')}" onchange="GH.repo=this.value.trim();LS.set('radar.gh',GH)"><input class="w-s" value="${esc(GH.branch||'main')}" onchange="GH.branch=this.value.trim();LS.set('radar.gh',GH)"></div>
    <div class="row" style="margin-top:6px"><input type="password" style="flex:1" placeholder="fine-grained access token (github_pat_…)" value="${esc(GH.token||'')}" onchange="GH.token=this.value.replace(/[^A-Za-z0-9_]/g,'');LS.set('radar.gh',GH);renderBanners()"><button onclick="testGH()">Test</button></div></div>
@@ -768,6 +772,17 @@ document.addEventListener('change',ev=>{const el=ev.target, p=el.dataset&&el.dat
   if(path==='sector'&&v==='health'&&!co.sub){co.sub='other';co.section='other'}
   markDirty('companies');
   if(['sector','sub','name','animal','sleeve'].some(k=>path===k))route(); else {const keep=window.scrollY; const h=location.hash; route(); window.scrollTo({top:keep})}});
+function deepMerge(t,s){for(const[k,v]of Object.entries(s)){if(v&&typeof v==='object'&&!Array.isArray(v)&&t[k]&&typeof t[k]==='object'&&!Array.isArray(t[k]))deepMerge(t[k],v);else t[k]=v}return t}
+function importUpdate(text){
+  let u; try{const m=String(text).match(/\{[\s\S]*\}/);u=JSON.parse(m?m[0]:text)}catch(e){return alert('That is not a valid update file: '+e.message)}
+  if(!u||u.kind!=='zrpl-update')return alert('This is not a ZRPL update file.');
+  const added=[],changed=[];
+  for(const c of u.companies||[]){const ex=companyById(c.ticker);
+    if(ex){deepMerge(ex,c);changed.push(c.ticker)}else{S.data.companies.push(Object.assign({id:c.ticker.toLowerCase(),scenarios:[],trials:[],catalysts:[],history:[],promises:[],finance:[],raises:[],recurring:[],facts:[],thesis:{},fundamentals:{},levers:{},checklist:[],scorecard:{},keywords:'',reporting:'half',thesisBroken:false,reviewed:false,color:Math.floor(Math.random()*8)},c));added.push(c.ticker)}}
+  migrate(S.data); if(added.length||changed.length)markDirty('companies');
+  if(u.value){S.value=u.value;markDirty('value')}
+  route();alert(`Imported ${u.label||'update'}.\nAdded: ${added.join(', ')||'none'}\nUpdated: ${changed.join(', ')||'none'}${u.value?'\nWhere-the-value-is panel updated.':''}\n\nPress Save changes to keep it.`);
+}
 function toggleMoat(id,k,on){const co=companyById(id);co.thesis=co.thesis||{};co.thesis.moats=(co.thesis.moats||[]).filter(x=>x!==k);if(on)co.thesis.moats.push(k);markDirty('companies')}
 function toggleThesis(id){const co=companyById(id);if(!co.thesisBroken&&!confirm('Mark the thesis as broken? Holdings will get a sell alert with a near-market limit price.'))return;co.thesisBroken=!co.thesisBroken;(co.history=co.history||[]).push({date:TODAY_ISO,title:co.thesisBroken?'Thesis marked broken':'Thesis restored',desc:''});markDirty('companies');route()}
 function paperBuy(t){const co=companyById(t),lp=lastPrice(t);if(!lp)return;const P=S.paper,cap=+P.capital||500000,w=sleeveRules(co).weight||0;
@@ -815,7 +830,7 @@ async function gh(path,opt={}){let r;const url=`https://api.github.com/repos/${e
   if(!r.ok&&r.status!==404)throw new Error(`${r.status} ${(await r.text()).slice(0,140)}`);return r.status===404?null:(r.status===204?{}:r.json())}
 async function putFile(name,content,msg){const p=`contents/data/${name}`;const cur=await gh(p+`?ref=${GH.branch}`);
   await gh(p,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg,content:b64(content),branch:GH.branch,sha:cur&&cur.sha})})}
-function fileBody(f){return f==='paper'?JSON.stringify(S.paper,null,1):f==='companies'?JSON.stringify({...S.data,updated:TODAY_ISO},null,1):f==='config'?JSON.stringify(S.cfg,null,1):f==='decisions'?JSON.stringify(S.decisions,null,1):JSON.stringify(positionsForRepo(),null,1)}
+function fileBody(f){return f==='value'?JSON.stringify(S.value,null,1):f==='paper'?JSON.stringify(S.paper,null,1):f==='companies'?JSON.stringify({...S.data,updated:TODAY_ISO},null,1):f==='config'?JSON.stringify(S.cfg,null,1):f==='decisions'?JSON.stringify(S.decisions,null,1):JSON.stringify(positionsForRepo(),null,1)}
 function positionsForRepo(){if(GH.sync==='full')return S.positions;const o={};for(const[t,p]of Object.entries(S.positions)){const held=+p.shares>0;if(!held&&!(p.plan&&p.plan.length))continue;o[t]={held,bought:p.bought||'',plan:(p.plan||[]).map(s=>({label:s.label,price:s.price,done:!!s.done}))}}return o}
 async function saveAll(){
   const files=[...S.dirty];
