@@ -432,6 +432,7 @@ function viewHome(){
    ${V.headline?`<p class="decision" style="margin:8px 0">${esc(V.headline)}</p>`:''}
    <table><tbody>${sectorRows}</tbody></table>
    ${V.method?`<p class="tiny muted">${esc(V.method)}</p>`:''}</div>
+  ${reviewListCard()}
   <div class="card"><h3>What needs attention</h3>${act.length?`<ul class="small">${act.join('')}</ul>`:'<p class="small muted">Nothing to do today — no buy-zone stocks and no sell rules triggered on holdings.</p>'}</div>
   <div class="card"><h3>The plan: 10 stocks</h3><table><thead><tr><th>Sleeve</th><th class="num">Slots × size</th><th class="num">Target</th><th class="num">Paper now</th><th>Stocks in this sleeve</th></tr></thead><tbody>${planRows}
    <tr><td><b>Cash</b></td><td></td><td class="num">${pf.cashWeight}%</td><td class="num">${(ps.cash/ps.val*100).toFixed(1)}%</td><td class="tiny muted">Sleeves are maximums — cash waits when nothing is cheap.</td></tr></tbody></table>
@@ -1328,6 +1329,25 @@ function twinCard(){
    <details ${hold?'open':''}><summary>Twin holdings (${Object.keys(T.holdings||{}).length})</summary><table><thead><tr><th>Stock</th><th class="num">Shares</th><th class="num">Cost</th><th class="num">Last</th><th class="num">Gain</th><th>Bought</th></tr></thead><tbody>${hold||'<tr><td colspan="6" class="muted">None — nothing has passed the rules yet. That is the point: the twin waits.</td></tr>'}</tbody></table></details>
    <details><summary>Twin trades (latest 8 of ${(T.trades||[]).length})</summary><table><tbody>${tr||'<tr><td class="muted">No trades yet.</td></tr>'}</tbody></table></details>
    <p class="tiny muted">${esc(T.rules||'')}</p></div>`;
+}
+
+/* Research to review — every draft stock, in the order worth doing */
+function reviewListCard(){
+  const rows=S.data.companies.filter(c=>!c.reviewed).map(co=>{
+    const lp=lastPrice(co.ticker), e=lp&&co.scenarios?evaluate(co,lp.v):null, held=heldReal(co.ticker)||heldPaper(co.ticker);
+    const ratio=e&&e.buy?lp.v/e.buy:9, plan=co.sleeve&&!['watch','core'].includes(co.sleeve);
+    const why=held?'You hold it — its sell price drives your emails':e&&/^Buy|Cheap/.test(e.signal)?'Near or in the buy zone — reviewing unlocks the Buy':plan?'In your plan':'Watch list';
+    return {co,lp,e,held,ratio,plan,why,rank:(held?0:e&&/^Buy|Cheap/.test(e.signal)?1:plan?2:3)*100+Math.min(ratio,9)};
+  }).sort((a,b)=>a.rank-b.rank);
+  if(!rows.length)return `<div class="card"><h3>✅ Research to review</h3><p class="small">All research is reviewed. The rules twin can use every stock.</p></div>`;
+  const done=S.data.companies.length-rows.length;
+  const tr=rows.map((r,i)=>`<tr class="click" onclick="location.hash='co/${r.co.ticker}'"><td class="num">${i+1}</td><td><b>${r.co.ticker}</b> ${animalTag(r.co)} <span class="tiny muted">${esc(r.co.name||'')}</span></td>
+    <td><span class="pill ${r.held?'p-sell':r.rank<200?'p-buy':r.plan?'p-hold':'p-none'}">${esc(r.why)}</span></td>
+    <td class="small">${r.e?esc(r.e.signal):'–'}</td><td class="num">${r.lp?money(r.lp.v):'–'}</td><td class="num">${r.e&&r.e.buy?money(r.e.buy):'–'}</td>
+    <td class="num">${r.e&&r.e.buy&&r.lp?`${r.ratio<=1?'<b class="ok">':''}${pct(r.ratio-1,0)}${r.ratio<=1?'</b>':''}`:'–'}</td><td><a href="#co/${r.co.ticker}">Review →</a></td></tr>`).join('');
+  return `<div class="card"><div class="row"><h3 style="margin:0">📝 Research to review (${rows.length})</h3><span class="sp"></span><span class="small">${done} reviewed · do one each Friday, top first</span></div>
+   <details ${rows.length?'open':''}><summary class="small">On each stock: read the thesis, memo, metrics and scenarios → change anything you disagree with → <b>Looks right — mark reviewed</b> → <b>Save changes</b>.</summary>
+   <table style="margin-top:6px"><thead><tr><th class="num">#</th><th>Stock</th><th>Why now</th><th>Signal</th><th class="num">Price</th><th class="num">Buy ≤</th><th class="num">vs buy</th><th></th></tr></thead><tbody>${tr}</tbody></table></details></div>`;
 }
 </script>
 </body>
