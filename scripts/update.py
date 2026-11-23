@@ -460,6 +460,112 @@ def raise_window(co, today):
     return out
 
 
+# ------------------------------------------------------------------ automatic rules twin
+def stake_fee(value):
+    return 3.0 if value <= 30000 else round(value * 0.0001, 2)
+
+
+def twin_step(cfg, companies, prices, twin, today):
+    """Trade the A$500k plan strictly by the rules, at the latest close. Returns list of alert dicts.
+    Buys: signal Buy + research reviewed + plan sleeve + free slot + caps; rare/insect wait if a raise window opens within ~2 quarters.
+    Sells: thesis broken, at/above sell price, or holding limit reached."""
+    pf = cfg.get('portfolio') or {}
+    sleeves = cfg.get('sleeves') or {}
+    bm = pf.get('benchmark')
+    last = lambda t: ((prices.get(t, {}).get('history') or [[None, None]])[-1])
+    if not twin.get('start'):
+        cap = float(pf.get('paperCapital', 500000))
+        twin.update({'capital': cap, 'cash': cap, 'start': today.isoformat(), 'holdings': {}, 'trades': [], 'history': [],
+                     'benchStart': last(bm)[1] if bm else None,
+                     'rules': 'Buy at the close when a reviewed stock signals Buy (sized by its sleeve weight, slot/2–18%/Health Care 30% limits; rare & Insects wait for the raise). Sell at the close on thesis broken, sell price reached, or holding limit. Stake brokerage charged.'})
+    day = max((last(c['ticker'])[0] or '') for c in companies) if companies else ''
+    if not day or day <= (twin.get('lastDay') or ''):
+        return []
+    twin['lastDay'] = day
+    byT = {c['ticker']: c for c in companies}
+    out = []
+    H = twin['holdings']
+
+    def value():
+        return twin['cash'] + sum(h['shares'] * (last(t)[1] or h['cost']) for t, h in H.items())
+
+    def trade(t, side, sh, px, reason):
+        amt = sh * px
+        fee = stake_fee(amt)
+        if side == 'buy':
+            twin['cash'] -= amt + fee
+            H[t] = {'shares': sh, 'cost': (amt + fee) / sh, 'date': today.isoformat(), 'sleeve': byT[t].get('sleeve')}
+        else:
+            h = H.pop(t)
+            twin['cash'] += amt - fee
+            gain = amt - fee - h['shares'] * h['cost']
+            reason += f" (gain A${gain:,.0f})"
+        twin['trades'].append({'date': today.isoformat(), 'priceDate': last(t)[0], 't': t, 'side': side, 'shares': sh, 'price': px, 'fee': fee, 'reason': reason})
+        out.append({'key': f'twin:{t}:{side}:{today}', 'level': 'info',
+                    'text': f"🤖 **Rules twin {side.upper()} {t}**: {sh:,} @ A${px:.3f} — {reason}. Did you do the same?"})
+
+    # sells
+    for t in list(H):
+        co = byT.get(t)
+        px = last(t)[1]
+        if not co or not px:
+            continue
+        ev = evaluate(co, px, cfg, today, prices.get(t, {}).get('history'))
+        maxy = sleeve_rules(co, cfg).get('maxYears', 3)
+        held_days = (today - parse_date(H[t]['date'])).days
+        if ev['signal'] == 'Sell — thesis broken':
+            trade(t, 'sell', H[t]['shares'], px, 'thesis marked broken')
+        elif ev['signal'] == 'Sell / trim':
+            trade(t, 'sell', H[t]['shares'], px, f"price reached the sell price A${ev['sell']:.3f}")
+        elif held_days >= maxy * 365.25:
+            trade(t, 'sell', H[t]['shares'], px, f'{maxy:g}-year holding limit reached')
+    # buys
+    total = value()
+    health = sum(h['shares'] * (last(t)[1] or 0) for t, h in H.items() if (byT.get(t) or {}).get('sector') == 'health')
+    cands = []
+    for co in companies:
+        t = co['ticker']
+        sl = co.get('sleeve') or 'watch'
+        rules = sleeves.get(sl) or {}
+        px = last(t)[1]
+        if t in H or not px or not co.get('reviewed') or sl in ('watch', 'core') or not rules.get('slots'):
+            continue
+        if sum(1 for h in H.values() if h.get('sleeve') == sl) >= rules['slots']:
+            continue
+        ev = evaluate(co, px, cfg, today, prices.get(t, {}).get('history'))
+        if ev['signal'] != 'Buy':
+            continue
+        if (sl in ('rare', 'insect') or co.get('animal') == 'insect'):
+            rw = raise_window(co, today)
+            if rw and parse_date(rw['open']) <= today + timedelta(days=200):
+                continue
+        cands.append((ev.get('expRet') or 0, co, px, rules))
+    for _, co, px, rules in sorted(cands, key=lambda x: -x[0]):
+        t = co['ticker']
+        w = min(max(float(rules.get('weight', 0)), pf.get('minWeight', 2)), pf.get('maxWeight', 18)) / 100
+        amt = total * w
+        if co.get('sector') == 'health':
+            amt = min(amt, total * pf.get('healthCap', 30) / 100 - health)
+        amt = min(amt, twin['cash'] - 50)   # weights leave ~6% cash by design; never go negative
+        sh = int(amt // px)
+        if sh <= 0 or sh * px < total * pf.get('minWeight', 2) / 100 * 0.5:
+            continue
+        trade(t, 'buy', sh, px, f"signal Buy at A${px:.3f} ({co.get('animal','')}, {co.get('sleeve')} sleeve, {w*100:g}% weight)")
+        if co.get('sector') == 'health':
+            health += sh * px
+    # history point
+    bpx = last(bm)[1] if bm else None
+    hist = twin['history']
+    pt = [day, round(value(), 2), round(twin['capital'] * bpx / twin['benchStart'], 2) if bpx and twin.get('benchStart') else None]
+    if hist and hist[-1][0] == day:
+        hist[-1] = pt
+    else:
+        hist.append(pt)
+    twin['history'] = hist[-1500:]
+    twin['trades'] = twin['trades'][-1000:]
+    return out
+
+
 def build_alerts(cfg, companies, prices, positions, new_anns, new_props, state, today, first_run, paper=None):
     paper = paper or {}
     A = cfg.get('alerts', {})
@@ -733,6 +839,11 @@ def main():
     if bm:
         update_prices(prices, bm)
     al = build_alerts(cfg, companies, prices, positions, new_anns, new_props, alerts['state'], today, first_run, paper)
+    twin = load('twin.json', {})
+    try:
+        al += twin_step(cfg, companies, prices, twin, today)
+    except Exception as e:
+        ERRORS.append(f'rules twin: {e}')
     if first_run and al:
         al.insert(0, {'key': 'first', 'text': 'First run of your radar: this shows where everything stands today.', 'level': 'info'})
     if al:
@@ -745,6 +856,7 @@ def main():
     save('proposals.json', props)
     save('reactions.json', reactions)
     save('alerts.json', alerts)
+    save('twin.json', twin)
     save('status.json', {'lastRun': datetime.now(SYD).isoformat(timespec='minutes'), 'errors': ERRORS[:50], 'notes': NOTES[:50],
                          'sources': SOURCES, 'newAnnouncements': len(new_anns), 'newProposals': new_props,
                          'pendingProposals': pending, 'alerts': len(al)})
