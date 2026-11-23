@@ -167,12 +167,12 @@ async function load(){
     getJSON('config.json',null),getJSON('companies.json',null),getJSON('prices.json',{}),getJSON('announcements.json',{}),
     getJSON('proposals.json',{items:[]}),getJSON('decisions.json',{}),getJSON('reactions.json',{}),getJSON('alerts.json',{log:[]}),
     getJSON('status.json',{}),getJSON('positions.json',null)]);
-  const [paper,value]=await Promise.all([getJSON('paper.json',null),getJSON('value.json',{})]);
+  const [paper,value,twin]=await Promise.all([getJSON('paper.json',null),getJSON('value.json',{}),getJSON('twin.json',null)]);
   if(!cfg||!data){$('#main').innerHTML='<div class="card"><h3>Data not found</h3><p>This page needs to be opened from your GitHub Pages address (or a local web server), so it can read the <code>data</code> folder. Opening the file directly from your computer won\'t work.</p></div>';$('#status').textContent='';return}
   migrate(data);
   if(cfg.animals&&cfg.animals.insect)cfg.animals.insect.icon='🐝';
   cfg.sleeves=cfg.sleeves||{};cfg.sleeves.core=cfg.sleeves.core||{label:'Core ETF / income (outside the 10-stock plan)',slots:0,weight:0,targetReturn:.07,maxYears:10,note:'Simple franked income; not a value bet.'};
-  Object.assign(S,{cfg,data,prices,anns,props,decisions:dec,reactions:rx,alerts:al,status:st,value,
+  Object.assign(S,{twin,cfg,data,prices,anns,props,decisions:dec,reactions:rx,alerts:al,status:st,value,
     paper:paper||{capital:(cfg.portfolio||{}).paperCapital||500000,start:null,cash:(cfg.portfolio||{}).paperCapital||500000,holdings:{},trades:[],benchStart:null}});
   document.title=cfg.appName||'ZRPL Investing';
   const local=LS.get('radar.positions',null);
@@ -436,7 +436,8 @@ function viewHome(){
   <div class="card"><h3>The plan: 10 stocks</h3><table><thead><tr><th>Sleeve</th><th class="num">Slots × size</th><th class="num">Target</th><th class="num">Paper now</th><th>Stocks in this sleeve</th></tr></thead><tbody>${planRows}
    <tr><td><b>Cash</b></td><td></td><td class="num">${pf.cashWeight}%</td><td class="num">${(ps.cash/ps.val*100).toFixed(1)}%</td><td class="tiny muted">Sleeves are maximums — cash waits when nothing is cheap.</td></tr></tbody></table>
    <p class="tiny muted">Total ${totalW}%. Each stock ${pf.minWeight}–${pf.maxWeight}%, Health Care ≤ ${pf.healthCap}%, at most 10 stocks. Liquidity ≥ A$${(pf.liquidityMin/1000).toFixed(0)}k a day (Insects ≥ A$${(pf.insectLiquidityMin/1000).toFixed(0)}k, market value A$${pf.insectMcapMin}–${pf.insectMcapMax}m).</p></div>
-  <div class="card"><div class="row"><h3 style="margin:0">Paper portfolio (A$${(ps.cap/1000).toFixed(0)}k model)</h3><span class="sp"></span><span class="small">${S.paper.start?'Since '+fmtDate(S.paper.start):'Not started — buy from a stock page'}</span></div>
+  ${twinCard()}
+  <div class="card"><div class="row"><h3 style="margin:0">Your paper portfolio — manual (A$${(ps.cap/1000).toFixed(0)}k model)</h3><span class="sp"></span><span class="small">${S.paper.start?'Since '+fmtDate(S.paper.start):'Not started — buy from a stock page'}</span></div>
    <div class="grid g3" style="margin-top:10px"><div class="kpi"><span>Value</span><b>${money(ps.val,0)}</b><span>cash ${money(ps.cash,0)}</span></div>
    <div class="kpi"><span>Return</span><b style="color:var(--${ps.ret>=0?'buy':'bad'})">${pct(ps.ret,1)}</b><span>price only; dividends from Stage 2</span></div>
    <div class="kpi"><span>Benchmark (${esc(pf.benchmark||'')})</span><b>${ps.bret!=null?pct(ps.bret,1):'–'}</b><span>${esc(pf.benchmarkLabel||'')}</span></div></div>
@@ -1284,6 +1285,49 @@ function nearSellAttn(){
       if(left<=180)out.push(`<li><b>${t} holding limit</b> — your ${maxy}-year limit ends ${fmtDate(iso(end))} (${Math.max(left,0)} days). ${left<=30?'Sell or re-justify now.':'Plan the exit.'}</li>`)}
   }
   return out;
+}
+/* ====================================================== Automatic rules twin (robot-run, read-only here)
+   Compares: the twin (rules only), your real trades in Records since the twin started, and VAS. */
+function realSince(start){
+  if(typeof R==='undefined')return null;
+  const L=ledger(); let real=0,cost=0,unreal=0,mv=0;
+  L.realised.filter(r=>r.sellDate>=start&&r.buyDate&&r.buyDate>=start).forEach(r=>{real+=r.gain;cost+=r.cost});
+  for(const[t,ps]of Object.entries(L.open)){const lp=lastPrice(t);for(const p of ps){if(p.date<start)continue;const c=p.left*p.unit;cost+=c;if(lp){unreal+=p.left*lp.v-c;mv+=p.left*lp.v}}}
+  // parcels bought before the start: count only the change in value since the start
+  let pre=0;for(const[t,ps]of Object.entries(L.open)){const h=(S.prices[t]||{}).history||[],lp=lastPrice(t);if(!lp)continue;const s0=(h.find(x=>x[0]>=start)||h[h.length-1]||[])[1];if(!s0)continue;for(const p of ps)if(p.date<start)pre+=p.left*(lp.v-s0)}
+  return {pnl:real+unreal+pre,cost,real,unreal,pre};
+}
+function twinChart(h){
+  if(!h||h.length<2)return '<p class="tiny muted">The chart appears after the robot\'s second run.</p>';
+  const W=760,H=170,L=56,Rr=10,T=10,B=24, vals=h.flatMap(x=>[x[1],x[2]]).filter(v=>v!=null), mx=Math.max(...vals), mn=Math.min(...vals), pad=(mx-mn)*.1||1000;
+  const x=i=>L+(W-L-Rr)*i/(h.length-1), y=v=>T+(H-T-B)*(1-(v-(mn-pad))/((mx+pad)-(mn-pad)));
+  const path=k=>h.map((p,i)=>p[k]==null?'':`${i&&h[i-1][k]!=null?'L':'M'}${x(i).toFixed(1)},${y(p[k]).toFixed(1)}`).join('');
+  return `<svg width="100%" viewBox="0 0 ${W} ${H}"><line x1="${L}" x2="${W-Rr}" y1="${y(500000)}" y2="${y(500000)}" stroke="var(--line)" stroke-dasharray="3 3"/>
+   <text x="${L-6}" y="${y(mx)+4}" text-anchor="end">${(mx/1000).toFixed(0)}k</text><text x="${L-6}" y="${y(mn)+4}" text-anchor="end">${(mn/1000).toFixed(0)}k</text>
+   <path d="${path(2)}" fill="none" stroke="var(--muted)" stroke-width="2"/><path d="${path(1)}" fill="none" stroke="var(--c2)" stroke-width="2.6"/>
+   <text x="${L}" y="${H-6}">${fmtDate(h[0][0])}</text><text x="${W-Rr}" y="${H-6}" text-anchor="end">${fmtDate(h[h.length-1][0])}</text>
+   <g transform="translate(${L+150},${H-6})"><rect width="12" height="4" y="-4" fill="var(--c2)"/><text x="16">Rules twin</text><rect x="110" width="12" height="4" y="-4" fill="var(--muted)"/><text x="126">VAS (same A$500k)</text></g></svg>`;
+}
+function twinCard(){
+  const T=S.twin;
+  if(!T||!T.start)return `<div class="card"><h3>🤖 Rules twin — keeping a check on you</h3><p class="small muted">The robot starts the twin on its next run: A$500k of paper money traded strictly by the rules (buy only when a reviewed stock says Buy, sell only on the sell email triggers). Nothing for you to do.</p></div>`;
+  const last=T.history[T.history.length-1]||[T.start,T.capital,null], val=last[1], twRet=val/T.capital-1, vasRet=last[2]?last[2]/T.capital-1:null;
+  const inv=Object.entries(T.holdings||{}).reduce((a,[t,h])=>a+h.shares*h.cost,0), twinPnl=val-T.capital;
+  const me=realSince(T.start);
+  const meRet=me&&me.cost?me.pnl/me.cost:null, twInvRet=(()=>{const sold=(T.trades||[]).filter(x=>x.side==='buy').reduce((a,x)=>a+x.shares*x.price+x.fee,0);return sold?twinPnl/sold:null})();
+  const hold=Object.entries(T.holdings||{}).map(([t,h])=>{const lp=lastPrice(t);return `<tr><td><a href="#co/${t}">${t}</a></td><td class="num">${h.shares.toLocaleString()}</td><td class="num">${money(h.cost)}</td><td class="num">${lp?money(lp.v):'–'}</td><td class="num">${lp?pct(lp.v/h.cost-1,1):'–'}</td><td>${fmtDate(h.date)}</td></tr>`}).join('');
+  const tr=[...(T.trades||[])].reverse().slice(0,8).map(x=>`<tr><td>${fmtDate(x.date)}</td><td><span class="pill ${x.side==='buy'?'p-buy':'p-sell'}">${x.side}</span> <a href="#co/${x.t}">${x.t}</a></td><td class="num">${x.shares.toLocaleString()} @ ${money(x.price)}</td><td class="small">${esc(x.reason)}</td></tr>`).join('');
+  const gap=me&&meRet!=null&&twInvRet!=null?meRet-twInvRet:null;
+  return `<div class="card"><div class="row"><h3 style="margin:0">🤖 Rules twin vs you</h3><span class="sp"></span><span class="small">Since ${fmtDate(T.start)} · robot-run, you can't edit it</span></div>
+   <div class="grid g3" style="margin:10px 0">
+    <div class="kpi"><span>Rules twin (A$500k)</span><b>${money(val,0)}</b><span>${pct(twRet,1)} · ${money(inv,0)} invested, ${money(T.cash,0)} cash</span></div>
+    <div class="kpi"><span>You (real trades since start)</span><b>${me?money(me.pnl,0):'–'}</b><span>${me&&me.cost?`${pct(meRet,1)} on ${money(me.cost,0)} you put in`:'Restore Records on this browser'}${me&&me.pre?` · incl. ${money(me.pre,0)} on older holdings`:''}</span></div>
+    <div class="kpi"><span>VAS (same A$500k)</span><b>${last[2]?money(last[2],0):'–'}</b><span>${vasRet!=null?pct(vasRet,1):'waiting for VAS price'}</span></div></div>
+   ${gap!=null?`<p class="small"><span class="pill ${gap>=0?'p-buy':'p-bad'}">${gap>=0?'You are ahead of the rules':'The rules are ahead of you'}</span> by ${(Math.abs(gap)*100).toFixed(1)} percentage points on money invested. ${gap<0?'That gap is the cost of trading outside the rules.':'Your judgement is adding value — keep the journal going so you know why.'}</p>`:''}
+   ${twinChart(T.history)}
+   <details ${hold?'open':''}><summary>Twin holdings (${Object.keys(T.holdings||{}).length})</summary><table><thead><tr><th>Stock</th><th class="num">Shares</th><th class="num">Cost</th><th class="num">Last</th><th class="num">Gain</th><th>Bought</th></tr></thead><tbody>${hold||'<tr><td colspan="6" class="muted">None — nothing has passed the rules yet. That is the point: the twin waits.</td></tr>'}</tbody></table></details>
+   <details><summary>Twin trades (latest 8 of ${(T.trades||[]).length})</summary><table><tbody>${tr||'<tr><td class="muted">No trades yet.</td></tr>'}</tbody></table></details>
+   <p class="tiny muted">${esc(T.rules||'')}</p></div>`;
 }
 </script>
 </body>
