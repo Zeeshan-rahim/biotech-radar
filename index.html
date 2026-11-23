@@ -171,6 +171,7 @@ async function load(){
   if(!cfg||!data){$('#main').innerHTML='<div class="card"><h3>Data not found</h3><p>This page needs to be opened from your GitHub Pages address (or a local web server), so it can read the <code>data</code> folder. Opening the file directly from your computer won\'t work.</p></div>';$('#status').textContent='';return}
   migrate(data);
   if(cfg.animals&&cfg.animals.insect)cfg.animals.insect.icon='🐝';
+  cfg.sleeves=cfg.sleeves||{};cfg.sleeves.core=cfg.sleeves.core||{label:'Core ETF / income (outside the 10-stock plan)',slots:0,weight:0,targetReturn:.07,maxYears:10,note:'Simple franked income; not a value bet.'};
   Object.assign(S,{cfg,data,prices,anns,props,decisions:dec,reactions:rx,alerts:al,status:st,value,
     paper:paper||{capital:(cfg.portfolio||{}).paperCapital||500000,start:null,cash:(cfg.portfolio||{}).paperCapital||500000,holdings:{},trades:[],benchStart:null}});
   document.title=cfg.appName||'ZRPL Investing';
@@ -411,6 +412,7 @@ function viewHome(){
     ...buys.map(x=>`<li><b>${x.e.signal==='Buy'?'Buy zone':'Cheap but check'}: ${x.co.ticker}</b> ${animalTag(x.co)} at ${money(x.lp.v)} (buy ≤ ${money(x.e.buy)})${x.e.fails&&x.e.fails.length?' — fails: '+x.e.fails.map(g=>esc(g.label)).join(', '):x.e.unknown&&x.e.unknown.length?' — no data yet for: '+x.e.unknown.map(g=>esc(g.label)).join(', '):''}${x.e.draft?' <span class="pill p-warn">draft</span>':''}</li>`)];
   act.push(...fundAttn());
   act.push(...runwayAttn());
+  act.push(...nearSellAttn());
   // plan
   const ps=paperStats(), sl=S.cfg.sleeves||{};
   const planRows=Object.entries(sl).filter(([k,v])=>v.slots>0).map(([k,v])=>{
@@ -502,6 +504,7 @@ function decisionCard(co,e,lp,pos){
   }
   const dt=co.sector==='health'&&driverTrial(co); if(dt){const sp=e.psucc, tp=trialPos(dt); if(Math.abs(sp-tp)>.12)lines.push(`<span class="pill p-warn">Check</span> Your scenarios give a ${Math.round(sp*100)}% chance of a good outcome, but the trial model says ${Math.round(tp*100)}% for ${esc(dt.name)}. ${sp<tp?'Fine if commercial risk explains the gap.':'Your scenarios look more optimistic than base rates.'}`)}
   {const fl=fundLine(co);if(fl)lines.push(fl)}
+  {const wa=co.alerts||{};if(wa.watch)lines.push(`<span class="pill p-hold">📧 Email alerts on</span> <span class="small">${(wa.buyBelow||[]).map(l=>`buy ≤ ${money(l.price)}`).concat((wa.ladder||[]).map(l=>`${esc(l.label)} ≥ ${money(l.price)}`)).join(' · ')}${wa.note?` — ${esc(wa.note)}`:''}. Also: sell price, get-ready (within 5%), raise window.</span>`)}
   return `<div class="card decision"><h3>Decision</h3>${lines.map(l=>`<p style="margin:6px 0">${l}</p>`).join('')}</div>`;
 }
 function ta(P,path,val,ph,rows=3){return `<textarea style="min-height:${rows*22}px" placeholder="${esc(ph||'')}" data-p="${P}:${path}">${esc(val||'')}</textarea>`}
@@ -1266,6 +1269,19 @@ function memoCard(co){
   </div>`;
 }
 
+
+/* near sell price / ladder step / time limit — mirrors the robot's GET READY emails */
+function nearSellAttn(){
+  const pct=((S.cfg.alerts||{}).nearSellPct||5)/100, out=[];
+  for(const co of S.data.companies){const t=co.ticker;if(!(heldReal(t)||heldPaper(t)))continue;const lp=lastPrice(t);if(!lp)continue;
+    const e=co.scenarios?evaluate(co,lp.v):null;
+    if(e&&e.signal==='Hold'&&e.sell&&lp.v>=e.sell*(1-pct))out.push(`<li><b>Get ready to sell ${t}</b> — ${money(lp.v)} is within ${((e.sell/lp.v-1)*100).toFixed(1)}% of the sell price ${money(e.sell)}. You can pre-set a limit sell at ${money(e.sell)} on Stake.</li>`);
+    const p=S.positions[t]||{};
+    if(p.bought){const maxy=sleeveRules(co).maxYears||3,end=new Date(pd(p.bought).getTime()+maxy*365.25*864e5),left=Math.round((end-TODAY)/864e5);
+      if(left<=180)out.push(`<li><b>${t} holding limit</b> — your ${maxy}-year limit ends ${fmtDate(iso(end))} (${Math.max(left,0)} days). ${left<=30?'Sell or re-justify now.':'Plan the exit.'}</li>`)}
+  }
+  return out;
+}
 </script>
 </body>
 </html>
