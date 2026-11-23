@@ -15,7 +15,7 @@ import json, os, re, sys, time, urllib.request, urllib.error, io
 from datetime import date, datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.dirname(__file__))
-from model import evaluate, trial_pos, parse_date, suggest_limit, sleeve_rules  # noqa: E402
+from model import evaluate, trial_pos, parse_date, suggest_limit, sleeve_rules, round_tick  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 DATA = os.path.join(ROOT, 'data')
@@ -411,6 +411,55 @@ def funding_gap(co, today):
     return {'status': status, 'label': tgt[0], 'date': tgt[1].isoformat(), 'left': round(left, 1), 'cash': f['cash'], 'burn': burn}
 
 
+def raise_window(co, today):
+    """Python mirror of the site's raise forecast: actual 4C cash, then your quarterly forecasts, then flat burn."""
+    def qend(d):
+        m = ((d.month - 1) // 3 + 1) * 3
+        nxt = date(d.year + (m == 12), 1 if m == 12 else m + 1, 1)
+        return nxt - timedelta(days=1)
+    def lab(d):
+        return ['Mar', 'Jun', 'Sep', 'Dec'][(d.month - 1) // 3] + '-' + str(d.year)[2:]
+    rows = {}
+    for f in co.get('finance') or []:
+        d = parse_date(f.get('period'))
+        if d and f.get('cash') is not None:
+            rows[qend(d)] = {'cash': float(f['cash']), 'opcf': f.get('opcf'), 'kind': 'a'}
+    for f in co.get('forecasts') or []:
+        d = parse_date(f.get('period'))
+        if d and f.get('cash') is not None and rows.get(qend(d), {}).get('kind') != 'a':
+            rows[qend(d)] = {'cash': float(f['cash']), 'opcf': f.get('opcf'), 'kind': 'f'}
+    if not rows:
+        return None
+    ks = sorted(rows)
+    last = ks[-1]; r = rows[last]
+    burns = [rows[k]['opcf'] for k in ks if rows[k].get('opcf') is not None]
+    opcf = rows[last]['opcf'] if rows[last]['kind'] == 'f' and rows[last].get('opcf') is not None else (sum(burns[-4:]) / len(burns[-4:]) if burns else None)
+    if co.get('burnQ') not in (None, '') and rows[last]['kind'] == 'a':
+        opcf = -float(co['burnQ'])
+    horizon = qend(today + timedelta(days=730))
+    cur = last; cash = r['cash']
+    while opcf is not None and opcf < 0 and cur < horizon:
+        cur = qend(cur + timedelta(days=5)); cash += opcf
+        rows[cur] = {'cash': cash, 'opcf': opcf, 'kind': 'auto'}
+    ks = sorted(rows)
+    out = {}
+    for i, k in enumerate(ks):
+        if k < qend(today) and rows[k]['kind'] == 'a':
+            continue
+        nb = rows[ks[i + 1]].get('opcf') if i + 1 < len(ks) else rows[k].get('opcf')
+        nb = -nb if nb is not None and nb < 0 else None
+        if not nb:
+            continue
+        ql = rows[k]['cash'] / nb
+        if 'open' not in out and ql < 3:
+            out.update(open=k.isoformat(), open_label=lab(k), cash=round(rows[k]['cash'], 1), report=(k + timedelta(days=30)).isoformat())
+        if 'must_label' not in out and ql < 2:
+            out['must_label'] = lab(k)
+    if 'open' not in out or parse_date(out['open']) > today + timedelta(days=280):
+        return None   # only alert when the window opens within ~3 quarters
+    return out
+
+
 def build_alerts(cfg, companies, prices, positions, new_anns, new_props, state, today, first_run, paper=None):
     paper = paper or {}
     A = cfg.get('alerts', {})
@@ -429,8 +478,10 @@ def build_alerts(cfg, companies, prices, positions, new_anns, new_props, state, 
         # levels and sell rules
         held_real = bool(positions.get(t, {}).get('held') or positions.get(t, {}).get('shares'))
         held_paper = t in (paper.get('holdings') or {})
-        held = held_real or held_paper
-        who = 'your holding' if held_real else ('paper portfolio' if held_paper else '')
+        wa = co.get('alerts') or {}
+        watch = bool(wa.get('watch'))
+        held = held_real or held_paper or watch
+        who = 'your holding' if held_real else ('paper portfolio' if held_paper else ('watch alert' if watch else ''))
         if last:
             ev = evaluate(co, last, cfg, today, px)
             tag = ' (draft assumptions — review them)' if ev.get('draft') else ''
@@ -444,6 +495,9 @@ def build_alerts(cfg, companies, prices, positions, new_anns, new_props, state, 
                     fire(f'zone:{t}', 'Sell', f"**SELL / TRIM {t}** ({who}): A${last:.3f} is at or above your sell price A${ev['sell']:.3f}{tag}. Suggested sell limit **A${lim:g}** ({why}).", 'action')
                 else:
                     fire(f'zone:{t}', 'Sell', f"**{t}** is above its sell price A${ev['sell']:.3f} — not one to buy now{tag}.")
+            elif sig == 'Hold' and held and ev.get('sell') and last >= ev['sell'] * (1 - A.get('nearSellPct', 5) / 100):
+                gap = (ev['sell'] / last - 1) * 100
+                fire(f'near:{t}', 1, f"**GET READY {t}** ({who}): A${last:.3f} is within {gap:.1f}% of your sell price A${ev['sell']:.3f}{tag}. If it closes at or above it you'll get a SELL email with a limit price; you can also pre-set a limit sell at **A${round_tick(ev['sell']):g}** on Stake now.", 'action')
             elif sig == 'Buy':
                 chk = f"passes the {co.get('animal','')} checks" if ev['gates'] else 'speculative sleeve: judged on the scenarios and success odds'
                 fire(f'zone:{t}', 'Buy', f"**BUY ZONE {t}**: A${last:.3f} is at or below your buy price A${ev['buy']:.3f} ({chk}){tag}.", 'action')
@@ -451,7 +505,9 @@ def build_alerts(cfg, companies, prices, positions, new_anns, new_props, state, 
                 fire(f'zone:{t}', 'Unchecked', f"**{t}** is below your buy price A${ev['buy']:.3f}, but these checks have no data yet: {', '.join(g['label'] for g in ev['unknown'])}. Research before buying.")
             elif sig == 'Cheap — fails checks':
                 fire(f'zone:{t}', 'Cheap', f"**{t}** is below your buy price A${ev['buy']:.3f} but fails: {', '.join(g['label'] for g in ev['fails'])}.")
-            elif sig == 'Hold' and (state.get(f'zone:{t}') in ('Buy', 'Sell', 'Thesis', 'Cheap', 'Unchecked') or first_run):
+            if sig != 'Hold' or not ev.get('sell') or last < ev['sell'] * (1 - A.get('nearSellPct', 5) / 100) * 0.98:
+                state.pop(f'near:{t}', None)
+            if sig == 'Hold' and (state.get(f'zone:{t}') in ('Buy', 'Sell', 'Thesis', 'Cheap', 'Unchecked') or first_run):
                 fire(f'zone:{t}', 'Hold', f"**{t}** is in the hold zone (buy ≤ A${ev['buy']:.3f}, sell ≥ A${ev['sell']:.3f}).")
         # big move
             if len(px) >= 2:
@@ -460,12 +516,33 @@ def build_alerts(cfg, companies, prices, positions, new_anns, new_props, state, 
                     fire(f'move:{t}:{px[-1][0]}', 1, f"**{t}** moved {mv:+.1f}% on {px[-1][0]} (A${px[-2][1]:.3f} → A${px[-1][1]:.3f}).", 'action')
         # position ladder and time limit
         pos = positions.get(t) or {}
-        if last and pos.get('plan'):
-            for i, tr in enumerate(pos['plan']):
+        plan = pos.get('plan') or wa.get('ladder') or []
+        if last and plan:
+            for i, tr in enumerate(plan):
+                if not tr.get('done') and tr.get('price') and float(tr['price']) * (1 - A.get('nearSellPct', 5) / 100) <= last < float(tr['price']):
+                    fire(f'ladnear:{t}:{i}', 1, f"**GET READY {t}**: A${last:.3f} is within {(float(tr['price'])/last-1)*100:.1f}% of sell-ladder step '{tr.get('label','')}' (A${float(tr['price']):.2f}). Consider pre-setting a limit sell at A${float(tr['price']):.2f} on Stake.", 'action')
                 if not tr.get('done') and tr.get('price') and last >= float(tr['price']):
                     amt = f"{tr['shares']:,} shares" if tr.get('shares') else 'your planned amount'
                     lim, why = suggest_limit('ladder', last, float(tr['price']), cfg)
-                    fire(f'ladder:{t}:{i}', 1, f"**SELL {t}** — sell-ladder step '{tr.get('label','')}' reached (≥ A${float(tr['price']):.2f}). Sell {amt} with a limit at **A${lim:g}** ({why}).", 'action')
+                    if held_real or held_paper:
+                        fire(f'ladder:{t}:{i}', 1, f"**SELL {t}** — sell-ladder step '{tr.get('label','')}' reached (≥ A${float(tr['price']):.2f}). Sell {amt} with a limit at **A${lim:g}** ({why}).", 'action')
+                    else:
+                        fire(f'ladder:{t}:{i}', 1, f"**{t} reached exit level** '{tr.get('label','')}' (≥ A${float(tr['price']):.2f}; watch alert). If you hold it outside the site, sell {amt} with a limit at **A${lim:g}** ({why}).", 'action')
+        # watch-alert buy levels (entry plan)
+        if last:
+            for i, lv in enumerate(wa.get('buyBelow') or []):
+                lp = float(lv['price'])
+                if last <= lp:
+                    fire(f'buylvl:{t}:{i}', 'hit', f"**BUY LEVEL {t}**: A${last:.3f} is at or below your entry level '{lv.get('label','')}' (A${lp:.3f}). Check the latest news and the research memo before placing a limit buy at or below A${round_tick(lp, up=False):g}.", 'action')
+                elif last <= lp * (1 + A.get('nearSellPct', 5) / 100):
+                    fire(f'buylvl:{t}:{i}', 'near', f"**GET READY {t}**: A${last:.3f} is within {(last/lp-1)*100:.1f}% of your entry level '{lv.get('label','')}' (A${lp:.3f}).", 'info')
+                elif last > lp * 1.15:
+                    state.pop(f'buylvl:{t}:{i}', None)
+        # raise window from quarterly forecasts (rare disease / insects / watched)
+        if held or co.get('sleeve') in ('rare', 'insect') or co.get('animal') == 'insect':
+            rw = raise_window(co, today)
+            if rw:
+                fire(f'raise:{t}', rw['open'], f"**RAISE AHEAD {t}**{' (' + who + ')' if who else ''}: cash A${rw['cash']:g}m falls under 3 quarters of burn in the **{rw['open_label']}** quarter (report ~{rw['report']})" + (f"; very likely by {rw['must_label']}" if rw.get('must_label') else '') + ". " + ("You hold it: plan to trim before and rebuy at the raise." if held_real else "Your rule: the raise is the entry — wait for the placement price."), 'action')
         # funding gap (raise before catalyst) - your spreadsheet rule
         if held:
             g = funding_gap(co, today)
@@ -478,8 +555,17 @@ def build_alerts(cfg, companies, prices, positions, new_anns, new_props, state, 
         if bought:
             b = parse_date(bought)
             maxy = sleeve_rules(co, cfg).get('maxYears', 3)
-            if b and today >= b + timedelta(days=int(maxy * 365.25) - 30):
-                fire(f'time:{t}', 1, f"**{t}**: your {maxy}-year maximum holding period ends {(b + timedelta(days=int(maxy*365.25))).isoformat()}.", 'action')
+            if b:
+                end = b + timedelta(days=int(maxy * 365.25))
+                left = (end - today).days
+                for d in sorted(A.get('timeWarnDays', [180, 90, 30])):
+                    if left <= d:
+                        lim, why = suggest_limit('time', last, None, cfg) if last else (None, '')
+                        msg = (f"**{t}** ({who}): your {maxy:g}-year holding limit ends **{end.isoformat()}** — {max(left,0)} days left. "
+                               + ("Time to sell or re-justify the thesis." if left <= 30 else "Start planning the exit: re-check the thesis and sell price.")
+                               + (f" Suggested limit if selling: A${lim:g} ({why})." if lim and left <= 30 else ''))
+                        fire(f'time:{t}', d, msg, 'action' if left <= 90 else 'info')
+                        break
         # catalysts
         for c in co.get('catalysts', []) + expand_recurring(co, today, 2):
             if c.get('done'):

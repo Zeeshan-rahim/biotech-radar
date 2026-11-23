@@ -125,7 +125,8 @@ def check_gates(co, m, cfg):
 
 def sleeve_rules(co, cfg):
     sl = cfg.get('sleeves', {})
-    return sl.get(co.get('sleeve') or 'watch') or sl.get('watch') or {'targetReturn': 0.15, 'maxYears': 3}
+    defaults = {'core': {'label': 'Core ETF / income (outside the 10-stock plan)', 'slots': 0, 'weight': 0, 'targetReturn': 0.07, 'maxYears': 10}}
+    return sl.get(co.get('sleeve') or 'watch') or defaults.get(co.get('sleeve')) or sl.get('watch') or {'targetReturn': 0.15, 'maxYears': 3}
 
 
 def evaluate(co, price, cfg, today=None, history=None):
