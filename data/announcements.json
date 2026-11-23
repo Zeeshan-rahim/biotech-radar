@@ -219,6 +219,16 @@
  ],
  "LTP": [
   {
+   "id": "2924-03165254-3A707187",
+   "at": "2026-11-23T17:22:48+11:00",
+   "date": "2026-11-23",
+   "headline": "Application for quotation of securities - LTP",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03165254-3A707187?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "11KB",
+   "ticker": "LTP"
+  },
+  {
    "id": "2924-03164860-3A707130",
    "at": "2026-11-23T08:33:50+11:00",
    "date": "2026-11-23",
@@ -447,6 +457,16 @@
  ],
  "CLW": [
   {
+   "id": "2924-03165315-2A1712341",
+   "at": "2026-11-23T19:16:23+11:00",
+   "date": "2026-11-23",
+   "headline": "Change in substantial holding",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03165315-2A1712341?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "1255KB",
+   "ticker": "CLW"
+  },
+  {
    "id": "2924-03162924-2A1711138",
    "at": "2026-11-18T08:31:52+11:00",
    "date": "2026-11-18",
@@ -499,6 +519,36 @@
  ],
  "VNT": [
   {
+   "id": "2924-03165168-2A1712219",
+   "at": "2026-11-23T15:35:07+11:00",
+   "date": "2026-11-23",
+   "headline": "Ceasing to be a substantial holder",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03165168-2A1712219?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "238KB",
+   "ticker": "VNT"
+  },
+  {
+   "id": "2924-03165163-2A1712213",
+   "at": "2026-11-23T15:22:02+11:00",
+   "date": "2026-11-23",
+   "headline": "Ceasing to be a substantial holder from CGF",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03165163-2A1712213?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "266KB",
+   "ticker": "VNT"
+  },
+  {
+   "id": "2924-03165160-2A1712209",
+   "at": "2026-11-23T15:18:27+11:00",
+   "date": "2026-11-23",
+   "headline": "Ceasing to be a substantial holder",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03165160-2A1712209?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "438KB",
+   "ticker": "VNT"
+  },
+  {
    "id": "2924-03164874-2A1712062",
    "at": "2026-11-23T08:45:45+11:00",
    "date": "2026-11-23",
@@ -550,6 +600,16 @@
   }
  ],
  "SOL": [
+  {
+   "id": "2924-03165265-2A1712277",
+   "at": "2026-11-23T17:42:42+11:00",
+   "date": "2026-11-23",
+   "headline": "Change in substantial holding from SOL",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03165265-2A1712277?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "185KB",
+   "ticker": "SOL"
+  },
   {
    "id": "2924-03163390-2A1711371",
    "at": "2026-11-18T18:08:58+11:00",

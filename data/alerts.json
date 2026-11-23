@@ -16,10 +16,55 @@
   "soon:emv-c1": 1,
   "zone:PXA": "Sell",
   "zone:VNT": "Cheap",
-  "zone:VHY": "Sell",
-  "ann:2924-03164860-3A707130": 1
+  "zone:VHY": "Hold",
+  "ann:2924-03164860-3A707130": 1,
+  "raise:DXB": "2027-03-31",
+  "raise:EMV": "2027-06-30",
+  "fund:EMV": "tight",
+  "raise:CU6": "2027-06-30",
+  "raise:LTP": "2027-03-31"
  },
  "log": [
+  {
+   "at": "2026-11-23T19:43+11:00",
+   "items": [
+    {
+     "key": "raise:DXB",
+     "text": "**RAISE AHEAD DXB**: cash A$17.8m falls under 3 quarters of burn in the **Mar-27** quarter (report ~2027-04-30); very likely by Jun-27. Your rule: the raise is the entry — wait for the placement price.",
+     "level": "action"
+    },
+    {
+     "key": "raise:EMV",
+     "text": "**RAISE AHEAD EMV** (watch alert): cash A$8.6m falls under 3 quarters of burn in the **Jun-27** quarter (report ~2027-07-30); very likely by Sep-27. Your rule: the raise is the entry — wait for the placement price.",
+     "level": "action"
+    },
+    {
+     "key": "fund:EMV",
+     "text": "**EMV** (watch alert): cash A$17.1m at ~A$2.55m a quarter may not last to FDA De Novo decision (your target) (2027-12-31) — under 2 quarters spare, a raise around the catalyst is likely.",
+     "level": "info"
+    },
+    {
+     "key": "raise:CU6",
+     "text": "**RAISE AHEAD CU6**: cash A$77.9m falls under 3 quarters of burn in the **Jun-27** quarter (report ~2027-07-30); very likely by Sep-27. Your rule: the raise is the entry — wait for the placement price.",
+     "level": "action"
+    },
+    {
+     "key": "raise:LTP",
+     "text": "**RAISE AHEAD LTP**: cash A$13.2m falls under 3 quarters of burn in the **Mar-27** quarter (report ~2027-04-30); very likely by Jun-27. Your rule: the raise is the entry — wait for the placement price.",
+     "level": "action"
+    },
+    {
+     "key": "zone:VHY",
+     "text": "**VHY** is in the hold zone (buy ≤ A$81.108, sell ≥ A$85.832).",
+     "level": "info"
+    },
+    {
+     "key": "twin:EMV:buy:2026-11-23",
+     "level": "info",
+     "text": "🤖 **Rules twin BUY EMV**: 14,134 @ A$1.415 — signal Buy at A$1.415 (insect, device sleeve, 4% weight). Did you do the same?"
+    }
+   ]
+  },
   {
    "at": "2026-11-23T10:28+11:00",
    "items": [

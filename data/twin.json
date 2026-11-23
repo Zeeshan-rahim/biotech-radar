@@ -1,0 +1,35 @@
+{
+ "capital": 500000.0,
+ "cash": 479997.39,
+ "start": "2026-11-23",
+ "holdings": {
+  "EMV": {
+   "shares": 14134,
+   "cost": 1.4152122541389558,
+   "date": "2026-11-23",
+   "sleeve": "device"
+  }
+ },
+ "trades": [
+  {
+   "date": "2026-11-23",
+   "priceDate": "2026-11-23",
+   "t": "EMV",
+   "side": "buy",
+   "shares": 14134,
+   "price": 1.415,
+   "fee": 3.0,
+   "reason": "signal Buy at A$1.415 (insect, device sleeve, 4% weight)"
+  }
+ ],
+ "history": [
+  [
+   "2026-11-23",
+   499997.0,
+   500000.0
+  ]
+ ],
+ "benchStart": 106.19,
+ "rules": "Buy at the close when a reviewed stock signals Buy (sized by its sleeve weight, slot/2–18%/Health Care 30% limits; rare & Insects wait for the raise). Sell at the close on thesis broken, sell price reached, or holding limit. Stake brokerage charged.",
+ "lastDay": "2026-11-23"
+}
