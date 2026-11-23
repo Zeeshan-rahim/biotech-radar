@@ -717,6 +717,32 @@
      "The plan has no readout date. Your trial-timing estimate is ~Dec 2027; the company will guide at ~50% enrolment. T2 should be timed 3–6 months before that.",
      "Your ladder already matches the site's sell-ladder alerts (A$23, 31, 38, 48), so the robot will email each step."
     ]
+   },
+   "alerts": {
+    "watch": true,
+    "note": "Personal holding (not Z Rahim Pty Ltd): shares removed from the site; sell emails kept.",
+    "ladder": [
+     {
+      "label": "T1 De-risk (9,500)",
+      "price": 23,
+      "shares": 9500
+     },
+     {
+      "label": "T2 Pre-readout (11,500)",
+      "price": 31,
+      "shares": 11500
+     },
+     {
+      "label": "T3 SOTP (10,000)",
+      "price": 38,
+      "shares": 10000
+     },
+     {
+      "label": "T4 M&A runner (7,000)",
+      "price": 48,
+      "shares": 7000
+     }
+    ]
    }
   },
   {
@@ -1751,6 +1777,30 @@
     "critique": [
      "Device sleeve, not a rare disease — Four Walls adapted.",
      "Break-even needs ~70–80 units (your sheet); hospital capital budgets are slow."
+    ]
+   },
+   "alerts": {
+    "watch": true,
+    "note": "Watch alerts: entry level, raise window, sell price and exit ladder.",
+    "buyBelow": [
+     {
+      "label": "E1 entry (or at a raise)",
+      "price": 1.3
+     }
+    ],
+    "ladder": [
+     {
+      "label": "Exit 1 — De Novo clearance",
+      "price": 2.5
+     },
+     {
+      "label": "Exit 2 — first sales",
+      "price": 4
+     },
+     {
+      "label": "Exit 3 — M&A",
+      "price": 5
+     }
     ]
    }
   },
@@ -3833,24 +3883,24 @@
    "scenarios": [
     {
      "name": "Banks de-rate",
-     "prob": 30,
-     "value": 74,
+     "prob": 25,
+     "value": 84.5,
      "success": false,
-     "note": "Price −15%, plus ~A$9 distributions over 3 years."
+     "note": "Price −12% to ~A$72.5, plus ~A$9 distributions and ~A$3 franking credits over 3 years."
     },
     {
      "name": "Base",
-     "prob": 50,
-     "value": 98,
+     "prob": 55,
+     "value": 102,
      "success": true,
-     "note": "~3% a year price growth plus ~A$9 distributions."
+     "note": "~3% a year price growth to ~A$90, plus ~A$9 distributions and ~A$3 franking."
     },
     {
      "name": "Bull",
      "prob": 20,
-     "value": 108,
+     "value": 110.7,
      "success": true,
-     "note": "Resources rally; ~6% a year plus distributions."
+     "note": "Resources rally: ~6% a year, plus distributions and franking."
     }
    ],
    "trials": [],
@@ -3867,7 +3917,7 @@
     "It is a basket, not a business: there is no castle, moat or management to judge — the result is the average of its holdings."
    ],
    "thesis": {
-    "paragraph": "Not a stock: a low-cost basket of Australia's biggest dividend payers. By Mehta's animals it is a herd of Turtles (big banks, Telstra) and Bears (BHP, Rio, Woodside) — slow growers and cyclicals, the two groups your plan avoids or times. It also leans hardest into the part of the market the value panel calls most expensive (big banks ~25x earnings). Expected return ≈ 3.6% yield + ~1.2% franking + ~3% growth ≈ 7–8% a year, below every sleeve target. Use it outside the 10-stock plan if you want simple, franked income — not as a value bet.",
+    "paragraph": "Not a stock: a low-cost basket of Australia's biggest dividend payers. By Mehta's animals it is a herd of Turtles (big banks, Telstra) and Bears (BHP, Rio, Woodside) — slow growers and cyclicals, the two groups your plan avoids or times. It also leans hardest into the part of the market the value panel calls most expensive (big banks ~25x earnings). Expected return ≈ 3.6% yield + ~1.2% franking + ~3% growth ≈ 7–8% a year, below every sleeve target. Use it outside the 10-stock plan if you want simple, franked income — not as a value bet. Held by Z Rahim Pty Ltd (481 units @ A$82.9958) in a separate 'Core ETF / income' sleeve: target ~7% a year including franking credits, which the company can use.",
     "misperception": "None — it is the market's consensus portfolio.",
     "wrong": "N/A (index fund).",
     "premortem": "Bank valuations normalise from ~25x to ~16x earnings and VHY falls 20% while paying its 3.6% yield.",
@@ -3893,7 +3943,7 @@
    "sector": "financials",
    "sub": "",
    "horizon": "2029-11-23",
-   "sleeve": "watch",
+   "sleeve": "core",
    "animal": "turtle",
    "tagline": "ETF of ~90 high-dividend ASX shares — mostly big banks, miners, Telstra, Woodside",
    "section": "financials"
@@ -4128,7 +4178,8 @@
     "Royalty = 1.232% of A$ iron-ore revenue from MAC (operated by BHP) — ~90% margin, no capex, but fully exposed to the iron-ore price and AUD.",
     "Thacker Pass (Nevada) lithium royalty: >95% engineering done, but on 11 Nov 2026 Lithium Americas raised the Phase 1 capex estimate to ~US$3.83bn from US$2.93bn — timing risk for the growth royalty. Added a copper royalty (Santa Cruz, Arizona).",
     "Price ~A$3.76 (17 Nov 2026), down from ~A$4.42 in Aug as iron ore eased; ~529m shares; market value ~A$2.0bn; trailing yield ~6% fully franked.",
-    "Your sheet: target = EPS × 12 (market P/E − 1) + cash/share; moat wide; expected FY26 dividend ~22c."
+    "Your sheet: target = EPS × 12 (market P/E − 1) + cash/share; moat wide; expected FY26 dividend ~22c.",
+    "Held: 10,095 shares @ A$3.9701 (~A$40.1k). At that price the expected return is ~5–6% a year including dividends — below the Bear 15% target, so the site will show it near its sell price."
    ],
    "thesis": {
     "paragraph": "Castle: a toll on one of the world's lowest-cost, longest-life iron-ore hubs (BHP's Mining Area C) — no costs, no capex, ~90% margins, fully franked dividends. Moat: the royalty contract itself (a 'licence' nobody can compete with) on a tier-1 asset. Lords: a small, disciplined team; the Trident/Thacker diversification is sensible but the lithium royalty now faces a US$0.9bn capex blowout at the operator. It is a Bear because earnings move with the iron-ore price: buy when iron ore is depressed and the market extrapolates it, sell when it booms. At ~11x mid-cycle EV/EBIT it is fair, not cheap; the Bear buy zone is roughly A$2.95–3.00 (≈8x).",
@@ -4164,7 +4215,7 @@
    "sector": "materials",
    "sub": "",
    "horizon": "2029-11-23",
-   "sleeve": "watch",
+   "sleeve": "bear",
    "animal": "bear",
    "tagline": "1.232% royalty on BHP's Mining Area C iron ore, plus Thacker Pass lithium and other royalties",
    "section": "materials"
