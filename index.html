@@ -1047,6 +1047,9 @@ function viewRecords(pre){
     <tr><td>Capital gains (company: no 50% discount)</td><td class="num">${money(gains,2)}</td></tr>
     <tr><td>Capital losses</td><td class="num">${money(losses,2)}</td></tr>
     <tr><td><b>Net capital gain/(loss) this year</b> <span class="tiny muted">before any carried-forward losses</span></td><td class="num"><b>${money(gains+losses,2)}</b></td></tr>
+    <tr><td>Capital losses brought forward from earlier years <span class="tiny muted">(from last year's tax return — ask your accountant)</span></td><td class="num"><input type="number" step="0.01" style="width:130px;text-align:right" value="${(R.lossesBF||{})[fy]??''}" onchange="R.lossesBF=R.lossesBF||{};R.lossesBF[${fy}]=+this.value||0;rSave();route()"></td></tr>
+    ${(()=>{const bf=+((R.lossesBF||{})[fy]||0),net=gains+losses;if(!bf)return '';const used=Math.min(bf,Math.max(0,net)),left=bf-used+(net<0?-net:0),taxable=Math.max(0,net-used);
+      return `<tr><td>Losses used this year</td><td class="num">${money(used,2)}</td></tr><tr><td><b>Losses still to carry forward</b> <span class="tiny muted">to ${fyLabel(fy+1).split(' ')[0]}</span></td><td class="num"><b style="color:${left>0?'var(--warn)':'var(--buy)'}">${money(left,2)}</b></td></tr><tr><td><b>Net capital gain after losses (taxable)</b></td><td class="num"><b>${money(taxable,2)}</b></td></tr>`})()}
     <tr><td>Dividends — cash received</td><td class="num">${money(cash,2)}</td></tr>
     <tr><td>Franking credits</td><td class="num">${money(cred,2)}</td></tr>
     <tr><td><b>Dividends grossed up (assessable)</b></td><td class="num"><b>${money(cash+cred,2)}</b></td></tr>
