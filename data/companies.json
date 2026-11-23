@@ -1285,7 +1285,7 @@
     "Your 'cash × 5' anchor at Jun-26: A$17.1m ÷ 92.9m × 5 ≈ A$0.92 a share, well below the ~A$1.65 price — the market is paying for the trial outcome."
    ],
    "horizon": "2029-11-22",
-   "reviewed": false,
+   "reviewed": true,
    "scenarios": [
     {
      "name": "Fails / delayed",
@@ -1819,7 +1819,7 @@
     "Competition: Pylarify, Illuccix, Posluma (established PSMA PET agents); Clarity argues approved agents have 27–40% sensitivity."
    ],
    "horizon": "2029-11-23",
-   "reviewed": false,
+   "reviewed": true,
    "scenarios": [
     {
      "name": "Phase 3 miss / delay",
@@ -2354,7 +2354,7 @@
     "Executive chairman Lee Rodne: salary A$250k → A$376k plus A$100k bonus (Jun 2026) while pre-revenue; holds ~52.7m shares (~29%) directly and indirectly."
    ],
    "horizon": "2029-11-22",
-   "reviewed": false,
+   "reviewed": true,
    "scenarios": [
     {
      "name": "Stalls / dilutes",
@@ -2470,6 +2470,11 @@
     {
      "date": "2026-11-09",
      "title": "LTR Secures Indian Patent Supporting SPONTAN and ROXUS",
+     "desc": ""
+    },
+    {
+     "date": "2026-11-23",
+     "title": "ROXUS U.S. Rollout Reaches 500 Bottles Across 43 States",
      "desc": ""
     }
    ],
@@ -3547,7 +3552,7 @@
    "keywords": "nta|distribution|guidance|tenant|buy-back|divest",
    "reporting": "half",
    "thesisBroken": false,
-   "reviewed": false,
+   "reviewed": true,
    "color": 1,
    "ticker": "CLW",
    "name": "Charter Hall Long WALE REIT",
@@ -3707,7 +3712,7 @@
    "keywords": "result|guidance|contract|buy-back|restructure|ceo",
    "reporting": "half",
    "thesisBroken": false,
-   "reviewed": false,
+   "reviewed": true,
    "color": 3,
    "ticker": "VNT",
    "name": "Ventia Services Group",
@@ -3936,7 +3941,7 @@
    "keywords": "distribution|vanguard|index",
    "reporting": "half",
    "thesisBroken": false,
-   "reviewed": false,
+   "reviewed": true,
    "color": 1,
    "ticker": "VHY",
    "name": "Vanguard Australian Shares High Yield ETF",
@@ -3975,7 +3980,13 @@
    ],
    "trials": [],
    "catalysts": [],
-   "history": [],
+   "history": [
+    {
+     "date": "2026-10-22",
+     "title": "Results of Annual General Meeting",
+     "desc": ""
+    }
+   ],
    "promises": [],
    "finance": [],
    "raises": [],
@@ -4056,7 +4067,13 @@
    ],
    "trials": [],
    "catalysts": [],
-   "history": [],
+   "history": [
+    {
+     "date": "2026-10-15",
+     "title": "Resolution of ASIC matters",
+     "desc": ""
+    }
+   ],
    "promises": [],
    "finance": [],
    "raises": [],
@@ -4168,7 +4185,13 @@
    ],
    "trials": [],
    "catalysts": [],
-   "history": [],
+   "history": [
+    {
+     "date": "2026-10-29",
+     "title": "Portfolio Update - September 2026 Quarter",
+     "desc": ""
+    }
+   ],
    "promises": [],
    "finance": [],
    "raises": [],
@@ -4208,7 +4231,7 @@
    "keywords": "royalty|mining area c|thacker|quarterly|dividend|acquisition|iron ore",
    "reporting": "half",
    "thesisBroken": false,
-   "reviewed": false,
+   "reviewed": true,
    "color": 6,
    "ticker": "DRR",
    "name": "Deterra Royalties",
