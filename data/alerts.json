@@ -3,7 +3,7 @@
   "zone:NEU": "Hold",
   "zone:DXB": "Hold",
   "zone:EMV": "Buy",
-  "zone:CU6": "Cheap",
+  "zone:CU6": "Hold",
   "soon:cu6-c0": 1,
   "zone:LTP": "Unchecked",
   "overdue:ltp-c1": 1,
@@ -25,6 +25,16 @@
   "raise:LTP": "2027-03-31"
  },
  "log": [
+  {
+   "at": "2026-11-24T10:37+11:00",
+   "items": [
+    {
+     "key": "zone:CU6",
+     "text": "**CU6** is in the hold zone (buy ≤ A$1.815, sell ≥ A$2.384).",
+     "level": "info"
+    }
+   ]
+  },
   {
    "at": "2026-11-23T19:43+11:00",
    "items": [

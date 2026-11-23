@@ -291,6 +291,16 @@
  ],
  "ALL": [
   {
+   "id": "2924-03165447-2A1712381",
+   "at": "2026-11-24T08:25:36+11:00",
+   "date": "2026-11-24",
+   "headline": "Update - Notification of buy-back - ALL",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03165447-2A1712381?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "11KB",
+   "ticker": "ALL"
+  },
+  {
    "id": "2924-03164191-2A1711765",
    "at": "2026-11-20T08:36:27+11:00",
    "date": "2026-11-20",
@@ -518,6 +528,16 @@
   }
  ],
  "VNT": [
+  {
+   "id": "2924-03165357-2A1712375",
+   "at": "2026-11-24T07:33:00+11:00",
+   "date": "2026-11-24",
+   "headline": "Update - Notification of buy-back - VNT",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03165357-2A1712375?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "11KB",
+   "ticker": "VNT"
+  },
   {
    "id": "2924-03165168-2A1712219",
    "at": "2026-11-23T15:35:07+11:00",

@@ -27,9 +27,14 @@
    "2026-11-23",
    499997.0,
    500000.0
+  ],
+  [
+   "2026-11-24",
+   500209.01,
+   506686.13
   ]
  ],
  "benchStart": 106.19,
  "rules": "Buy at the close when a reviewed stock signals Buy (sized by its sleeve weight, slot/2–18%/Health Care 30% limits; rare & Insects wait for the raise). Sell at the close on thesis broken, sell price reached, or holding limit. Stake brokerage charged.",
- "lastDay": "2026-11-23"
+ "lastDay": "2026-11-24"
 }
