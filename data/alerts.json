@@ -22,9 +22,31 @@
   "raise:EMV": "2027-06-30",
   "fund:EMV": "tight",
   "raise:CU6": "2027-06-30",
-  "raise:LTP": "2027-03-31"
+  "raise:LTP": "2027-03-31",
+  "ann:2924-03166249-2A1712796": 1,
+  "ann:2924-03166090-2A1712732": 1
  },
  "log": [
+  {
+   "at": "2026-11-25T10:36+11:00",
+   "items": [
+    {
+     "key": "ann:2924-03166249-2A1712796",
+     "text": "**CU6** price-sensitive: Chair's Address to Shareholders (2026-11-25). [PDF](https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03166249-2A1712796?access_token=83ff96335c2d45a094df02a206a39ff4)",
+     "level": "info"
+    },
+    {
+     "key": "ann:2924-03166090-2A1712732",
+     "text": "**WTC** price-sensitive: Richard White confirms conclusion of AFP investigation (2026-11-25). [PDF](https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03166090-2A1712732?access_token=83ff96335c2d45a094df02a206a39ff4)",
+     "level": "info"
+    },
+    {
+     "key": "proposals",
+     "text": "2 new item(s) waiting in your Review queue.",
+     "level": "info"
+    }
+   ]
+  },
   {
    "at": "2026-11-24T10:37+11:00",
    "items": [

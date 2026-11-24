@@ -2,7 +2,18 @@
  "NEU": {},
  "DXB": {},
  "EMV": {},
- "CU6": {},
+ "CU6": {
+  "2924-03166249-2A1712796": {
+   "base": 1.85,
+   "day": "2026-11-25",
+   "d1": -1.1,
+   "d5": null,
+   "complete5": false,
+   "headline": "Chair's Address to Shareholders",
+   "date": "2026-11-25",
+   "kind": "info"
+  }
+ },
  "LTP": {
   "2924-03164860-3A707130": {
    "base": 0.385,
@@ -23,6 +34,17 @@
  "SOL": {},
  "VHY": {},
  "ASX": {},
- "WTC": {},
+ "WTC": {
+  "2924-03166090-2A1712732": {
+   "base": 46.59,
+   "day": "2026-11-25",
+   "d1": 2.6,
+   "d5": null,
+   "complete5": false,
+   "headline": "Richard White confirms conclusion of AFP investigation",
+   "date": "2026-11-25",
+   "kind": "info"
+  }
+ },
  "DRR": {}
 }

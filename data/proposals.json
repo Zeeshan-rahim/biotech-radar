@@ -453,6 +453,60 @@
     }
    ],
    "created": "2026-11-23"
+  },
+  {
+   "id": "CU6:2924-03166249-2A1712796",
+   "ticker": "CU6",
+   "company": "cu6",
+   "date": "2026-11-25",
+   "at": "2026-11-25T09:38:36+11:00",
+   "headline": "Chair's Address to Shareholders",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03166249-2A1712796?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": true,
+   "kind": "info",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-11-25",
+      "title": "Chair's Address to Shareholders",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-25",
+   "reaction": {
+    "d1": -1.1,
+    "d5": null
+   }
+  },
+  {
+   "id": "WTC:2924-03166090-2A1712732",
+   "ticker": "WTC",
+   "company": "wtc",
+   "date": "2026-11-25",
+   "at": "2026-11-25T08:22:00+11:00",
+   "headline": "Richard White confirms conclusion of AFP investigation",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03166090-2A1712732?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": true,
+   "kind": "info",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-11-25",
+      "title": "Richard White confirms conclusion of AFP investigation",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-25",
+   "reaction": {
+    "d1": 2.6,
+    "d5": null
+   }
   }
  ]
 }

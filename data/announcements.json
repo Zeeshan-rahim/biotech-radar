@@ -177,6 +177,36 @@
  ],
  "CU6": [
   {
+   "id": "2924-03166249-2A1712796",
+   "at": "2026-11-25T09:38:36+11:00",
+   "date": "2026-11-25",
+   "headline": "Chair's Address to Shareholders",
+   "sensitive": true,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03166249-2A1712796?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "208KB",
+   "ticker": "CU6"
+  },
+  {
+   "id": "2924-03166240-2A1712794",
+   "at": "2026-11-25T09:33:46+11:00",
+   "date": "2026-11-25",
+   "headline": "Becoming a substantial holder",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03166240-2A1712794?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "253KB",
+   "ticker": "CU6"
+  },
+  {
+   "id": "2924-03166221-2A1712786",
+   "at": "2026-11-25T09:21:36+11:00",
+   "date": "2026-11-25",
+   "headline": "AGM MD Presentation",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03166221-2A1712786?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "1758KB",
+   "ticker": "CU6"
+  },
+  {
    "id": "2924-03164964-2A1712102",
    "at": "2026-11-23T09:39:56+11:00",
    "date": "2026-11-23",
@@ -310,6 +340,16 @@
   }
  ],
  "ALL": [
+  {
+   "id": "2924-03166138-2A1712745",
+   "at": "2026-11-25T08:37:10+11:00",
+   "date": "2026-11-25",
+   "headline": "Update - Notification of buy-back - ALL",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03166138-2A1712745?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "11KB",
+   "ticker": "ALL"
+  },
   {
    "id": "2924-03165447-2A1712381",
    "at": "2026-11-24T08:25:36+11:00",
@@ -507,6 +547,16 @@
  ],
  "CLW": [
   {
+   "id": "2924-03166180-2A1712769",
+   "at": "2026-11-25T09:00:06+11:00",
+   "date": "2026-11-25",
+   "headline": "Ceasing to be a substantial holder",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03166180-2A1712769?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "497KB",
+   "ticker": "CLW"
+  },
+  {
    "id": "2924-03165315-2A1712341",
    "at": "2026-11-23T19:16:23+11:00",
    "date": "2026-11-23",
@@ -568,6 +618,16 @@
   }
  ],
  "VNT": [
+  {
+   "id": "2924-03166043-2A1712721",
+   "at": "2026-11-25T07:57:25+11:00",
+   "date": "2026-11-25",
+   "headline": "Update - Notification of buy-back - VNT",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03166043-2A1712721?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "11KB",
+   "ticker": "VNT"
+  },
   {
    "id": "2924-03165820-2A1712577",
    "at": "2026-11-24T15:09:22+11:00",
@@ -836,6 +896,16 @@
   }
  ],
  "WTC": [
+  {
+   "id": "2924-03166090-2A1712732",
+   "at": "2026-11-25T08:22:00+11:00",
+   "date": "2026-11-25",
+   "headline": "Richard White confirms conclusion of AFP investigation",
+   "sensitive": true,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03166090-2A1712732?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "197KB",
+   "ticker": "WTC"
+  },
   {
    "id": "2924-03159264-2A1709340",
    "at": "2026-11-09T08:21:31+11:00",
