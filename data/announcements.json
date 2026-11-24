@@ -105,6 +105,26 @@
  ],
  "EMV": [
   {
+   "id": "2924-03165913-6A1356726",
+   "at": "2026-11-24T17:11:27+11:00",
+   "date": "2026-11-24",
+   "headline": "Results of AGM",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03165913-6A1356726?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "136KB",
+   "ticker": "EMV"
+  },
+  {
+   "id": "2924-03165765-6A1356671",
+   "at": "2026-11-24T13:56:57+11:00",
+   "date": "2026-11-24",
+   "headline": "AGM Chair's Address & MD Presentation",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03165765-6A1356671?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "2783KB",
+   "ticker": "EMV"
+  },
+  {
    "id": "2924-03164135-6A1356001",
    "at": "2026-11-20T08:21:56+11:00",
    "date": "2026-11-20",
@@ -353,6 +373,26 @@
  ],
  "PXA": [
   {
+   "id": "2924-03165785-3A707290",
+   "at": "2026-11-24T14:21:12+11:00",
+   "date": "2026-11-24",
+   "headline": "Notification of cessation of securities - PXA",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03165785-3A707290?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "8KB",
+   "ticker": "PXA"
+  },
+  {
+   "id": "2924-03165735-3A707282",
+   "at": "2026-11-24T13:17:47+11:00",
+   "date": "2026-11-24",
+   "headline": "Becoming a substantial holder from MUFG",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03165735-3A707282?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "2909KB",
+   "ticker": "PXA"
+  },
+  {
    "id": "2924-03164683-3A707099",
    "at": "2026-11-20T19:20:18+11:00",
    "date": "2026-11-20",
@@ -528,6 +568,16 @@
   }
  ],
  "VNT": [
+  {
+   "id": "2924-03165820-2A1712577",
+   "at": "2026-11-24T15:09:22+11:00",
+   "date": "2026-11-24",
+   "headline": "Becoming a substantial holder",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03165820-2A1712577?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "218KB",
+   "ticker": "VNT"
+  },
   {
    "id": "2924-03165357-2A1712375",
    "at": "2026-11-24T07:33:00+11:00",
