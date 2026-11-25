@@ -53,6 +53,26 @@
  ],
  "DXB": [
   {
+   "id": "2924-03166594-3A707458",
+   "at": "2026-11-25T16:56:22+11:00",
+   "date": "2026-11-25",
+   "headline": "Results of AGM",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03166594-3A707458?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "297KB",
+   "ticker": "DXB"
+  },
+  {
+   "id": "2924-03166444-3A707426",
+   "at": "2026-11-25T13:21:21+11:00",
+   "date": "2026-11-25",
+   "headline": "Chair Address and AGM Presentation",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03166444-3A707426?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "2033KB",
+   "ticker": "DXB"
+  },
+  {
    "id": "2924-03158555-3A705898",
    "at": "2026-11-05T16:34:51+11:00",
    "date": "2026-11-05",
@@ -176,6 +196,16 @@
   }
  ],
  "CU6": [
+  {
+   "id": "2924-03166416-2A1712883",
+   "at": "2026-11-25T12:51:16+11:00",
+   "date": "2026-11-25",
+   "headline": "Results of AGM",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03166416-2A1712883?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "16KB",
+   "ticker": "CU6"
+  },
   {
    "id": "2924-03166249-2A1712796",
    "at": "2026-11-25T09:38:36+11:00",

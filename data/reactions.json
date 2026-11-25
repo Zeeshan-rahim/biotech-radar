@@ -6,7 +6,7 @@
   "2924-03166249-2A1712796": {
    "base": 1.85,
    "day": "2026-11-25",
-   "d1": -1.1,
+   "d1": 5.4,
    "d5": null,
    "complete5": false,
    "headline": "Chair's Address to Shareholders",
@@ -19,7 +19,7 @@
    "base": 0.385,
    "day": "2026-11-23",
    "d1": -1.3,
-   "d5": 1.3,
+   "d5": -9.1,
    "complete5": false,
    "headline": "ROXUS U.S. Rollout Reaches 500 Bottles Across 43 States",
    "date": "2026-11-23",
@@ -38,7 +38,7 @@
   "2924-03166090-2A1712732": {
    "base": 46.59,
    "day": "2026-11-25",
-   "d1": 2.6,
+   "d1": -2.7,
    "d5": null,
    "complete5": false,
    "headline": "Richard White confirms conclusion of AFP investigation",
