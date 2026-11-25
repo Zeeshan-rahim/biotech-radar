@@ -1,5 +1,26 @@
 {
- "NEU": {},
+ "NEU": {
+  "2924-03167012-2A1713114": {
+   "base": 21.32,
+   "day": "2026-11-26",
+   "d1": 0.0,
+   "d5": null,
+   "complete5": false,
+   "headline": "Trading Halt",
+   "date": "2026-11-26",
+   "kind": "halt"
+  },
+  "2924-03166994-2A1713107": {
+   "base": 21.32,
+   "day": "2026-11-26",
+   "d1": 0.0,
+   "d5": null,
+   "complete5": false,
+   "headline": "Pause in Trading",
+   "date": "2026-11-26",
+   "kind": "halt"
+  }
+ },
  "DXB": {},
  "EMV": {},
  "CU6": {
@@ -7,7 +28,7 @@
    "base": 1.85,
    "day": "2026-11-25",
    "d1": 5.4,
-   "d5": null,
+   "d5": 1.9,
    "complete5": false,
    "headline": "Chair's Address to Shareholders",
    "date": "2026-11-25",
@@ -19,7 +40,7 @@
    "base": 0.385,
    "day": "2026-11-23",
    "d1": -1.3,
-   "d5": -9.1,
+   "d5": -5.2,
    "complete5": false,
    "headline": "ROXUS U.S. Rollout Reaches 500 Bottles Across 43 States",
    "date": "2026-11-23",
@@ -39,7 +60,7 @@
    "base": 46.59,
    "day": "2026-11-25",
    "d1": -2.7,
-   "d5": null,
+   "d5": -4.2,
    "complete5": false,
    "headline": "Richard White confirms conclusion of AFP investigation",
    "date": "2026-11-25",

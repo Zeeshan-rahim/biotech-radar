@@ -382,7 +382,7 @@
    "created": "2026-11-23",
    "reaction": {
     "d1": -1.3,
-    "d5": -9.1
+    "d5": -5.2
    }
   },
   {
@@ -478,7 +478,7 @@
    "created": "2026-11-25",
    "reaction": {
     "d1": 5.4,
-    "d5": null
+    "d5": 1.9
    }
   },
   {
@@ -505,6 +505,60 @@
    "created": "2026-11-25",
    "reaction": {
     "d1": -2.7,
+    "d5": -4.2
+   }
+  },
+  {
+   "id": "NEU:2924-03167012-2A1713114",
+   "ticker": "NEU",
+   "company": "neu",
+   "date": "2026-11-26",
+   "at": "2026-11-26T10:09:21+11:00",
+   "headline": "Trading Halt",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03167012-2A1713114?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": true,
+   "kind": "halt",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-11-26",
+      "title": "Trading Halt",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-26",
+   "reaction": {
+    "d1": 0.0,
+    "d5": null
+   }
+  },
+  {
+   "id": "NEU:2924-03166994-2A1713107",
+   "ticker": "NEU",
+   "company": "neu",
+   "date": "2026-11-26",
+   "at": "2026-11-26T09:53:26+11:00",
+   "headline": "Pause in Trading",
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03166994-2A1713107?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "sensitive": true,
+   "kind": "halt",
+   "sentiment": "unclear",
+   "patches": [
+    {
+     "op": "addHistory",
+     "entry": {
+      "date": "2026-11-26",
+      "title": "Pause in Trading",
+      "desc": ""
+     }
+    }
+   ],
+   "created": "2026-11-26",
+   "reaction": {
+    "d1": 0.0,
     "d5": null
    }
   }
