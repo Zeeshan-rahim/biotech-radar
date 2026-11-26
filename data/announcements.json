@@ -905,6 +905,16 @@
  ],
  "ASX": [
   {
+   "id": "2924-03167474-2A1713277",
+   "at": "2026-11-26T19:20:13+11:00",
+   "date": "2026-11-26",
+   "headline": "ASX Announces A$300 million Medium Term Notes Issue",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03167474-2A1713277?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "89KB",
+   "ticker": "ASX"
+  },
+  {
    "id": "2924-03158197-2A1708456",
    "at": "2026-11-05T08:43:40+11:00",
    "date": "2026-11-05",

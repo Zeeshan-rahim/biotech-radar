@@ -27,9 +27,20 @@
   "ann:2924-03166090-2A1712732": 1,
   "move:LTP:2026-11-25": 1,
   "halt:2924-03167012-2A1713114": 1,
-  "halt:2924-03166994-2A1713107": 1
+  "halt:2924-03166994-2A1713107": 1,
+  "buylvl:EMV:0": "near"
  },
  "log": [
+  {
+   "at": "2026-11-26T19:36+11:00",
+   "items": [
+    {
+     "key": "buylvl:EMV:0",
+     "text": "**GET READY EMV**: A$1.320 is within 1.5% of your entry level 'E1 entry (or at a raise)' (A$1.300).",
+     "level": "info"
+    }
+   ]
+  },
   {
    "at": "2026-11-26T10:37+11:00",
    "items": [
