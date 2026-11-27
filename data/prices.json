@@ -25,10 +25,15 @@
     "2026-11-26",
     21.32,
     null
+   ],
+   [
+    "2026-11-27",
+    18.73,
+    908264
    ]
   ],
-  "last": 21.32,
-  "lastDate": "2026-11-26",
+  "last": 18.73,
+  "lastDate": "2026-11-27",
   "source": "ASX last price (history builds up each run)"
  },
  "DXB": {
@@ -57,10 +62,15 @@
     "2026-11-26",
     0.19,
     450398
+   ],
+   [
+    "2026-11-27",
+    0.195,
+    488711
    ]
   ],
-  "last": 0.19,
-  "lastDate": "2026-11-26",
+  "last": 0.195,
+  "lastDate": "2026-11-27",
   "source": "ASX last price (history builds up each run)"
  },
  "EMV": {
@@ -89,10 +99,15 @@
     "2026-11-26",
     1.32,
     89661
+   ],
+   [
+    "2026-11-27",
+    1.285,
+    115451
    ]
   ],
-  "last": 1.32,
-  "lastDate": "2026-11-26",
+  "last": 1.285,
+  "lastDate": "2026-11-27",
   "source": "ASX last price (history builds up each run)"
  },
  "CU6": {
@@ -121,10 +136,15 @@
     "2026-11-26",
     1.825,
     3365965
+   ],
+   [
+    "2026-11-27",
+    1.8,
+    4122120
    ]
   ],
-  "last": 1.825,
-  "lastDate": "2026-11-26",
+  "last": 1.8,
+  "lastDate": "2026-11-27",
   "source": "ASX last price (history builds up each run)"
  },
  "LTP": {
@@ -153,10 +173,15 @@
     "2026-11-26",
     0.365,
     123127
+   ],
+   [
+    "2026-11-27",
+    0.375,
+    126013
    ]
   ],
-  "last": 0.365,
-  "lastDate": "2026-11-26",
+  "last": 0.375,
+  "lastDate": "2026-11-27",
   "source": "ASX last price (history builds up each run)"
  },
  "VAS": {
@@ -185,10 +210,15 @@
     "2026-11-26",
     108.61,
     263622
+   ],
+   [
+    "2026-11-27",
+    109.5,
+    151423
    ]
   ],
-  "last": 108.61,
-  "lastDate": "2026-11-26",
+  "last": 109.5,
+  "lastDate": "2026-11-27",
   "source": "ASX last price (history builds up each run)"
  },
  "ALL": {
@@ -217,10 +247,15 @@
     "2026-11-26",
     65.3,
     1042265
+   ],
+   [
+    "2026-11-27",
+    65.34,
+    1579348
    ]
   ],
-  "last": 65.3,
-  "lastDate": "2026-11-26",
+  "last": 65.34,
+  "lastDate": "2026-11-27",
   "source": "ASX last price (history builds up each run)"
  },
  "PXA": {
@@ -249,10 +284,15 @@
     "2026-11-26",
     6.45,
     374224
+   ],
+   [
+    "2026-11-27",
+    6.46,
+    243873
    ]
   ],
-  "last": 6.45,
-  "lastDate": "2026-11-26",
+  "last": 6.46,
+  "lastDate": "2026-11-27",
   "source": "ASX last price (history builds up each run)"
  },
  "BHP": {
@@ -281,10 +321,15 @@
     "2026-11-26",
     53.99,
     8089755
+   ],
+   [
+    "2026-11-27",
+    55.06,
+    5596563
    ]
   ],
-  "last": 53.99,
-  "lastDate": "2026-11-26",
+  "last": 55.06,
+  "lastDate": "2026-11-27",
   "source": "ASX last price (history builds up each run)"
  },
  "CLW": {
@@ -313,10 +358,15 @@
     "2026-11-26",
     3.5300000000000002,
     1459703
+   ],
+   [
+    "2026-11-27",
+    3.5700000000000003,
+    1212051
    ]
   ],
-  "last": 3.5300000000000002,
-  "lastDate": "2026-11-26",
+  "last": 3.5700000000000003,
+  "lastDate": "2026-11-27",
   "source": "ASX last price (history builds up each run)"
  },
  "VNT": {
@@ -340,10 +390,15 @@
     "2026-11-26",
     4.61,
     3147983
+   ],
+   [
+    "2026-11-27",
+    4.71,
+    2682244
    ]
   ],
-  "last": 4.61,
-  "lastDate": "2026-11-26",
+  "last": 4.71,
+  "lastDate": "2026-11-27",
   "source": "ASX last price (history builds up each run)"
  },
  "SOL": {
@@ -367,10 +422,15 @@
     "2026-11-26",
     46.75,
     343826
+   ],
+   [
+    "2026-11-27",
+    46.57,
+    308426
    ]
   ],
-  "last": 46.75,
-  "lastDate": "2026-11-26",
+  "last": 46.57,
+  "lastDate": "2026-11-27",
   "source": "ASX last price (history builds up each run)"
  },
  "VHY": {
@@ -394,10 +454,15 @@
     "2026-11-26",
     83.8,
     143014
+   ],
+   [
+    "2026-11-27",
+    84.48,
+    139670
    ]
   ],
-  "last": 83.8,
-  "lastDate": "2026-11-26",
+  "last": 84.48,
+  "lastDate": "2026-11-27",
   "source": "ASX last price (history builds up each run)"
  },
  "ASX": {
@@ -421,10 +486,15 @@
     "2026-11-26",
     67.46000000000001,
     409487
+   ],
+   [
+    "2026-11-27",
+    67.01,
+    700365
    ]
   ],
-  "last": 67.46000000000001,
-  "lastDate": "2026-11-26",
+  "last": 67.01,
+  "lastDate": "2026-11-27",
   "source": "ASX last price (history builds up each run)"
  },
  "WTC": {
@@ -448,10 +518,15 @@
     "2026-11-26",
     46.81,
     2093728
+   ],
+   [
+    "2026-11-27",
+    53.870000000000005,
+    5159418
    ]
   ],
-  "last": 46.81,
-  "lastDate": "2026-11-26",
+  "last": 53.870000000000005,
+  "lastDate": "2026-11-27",
   "source": "ASX last price (history builds up each run)"
  },
  "DRR": {
@@ -475,10 +550,15 @@
     "2026-11-26",
     3.7600000000000002,
     2241111
+   ],
+   [
+    "2026-11-27",
+    3.87,
+    2156655
    ]
   ],
-  "last": 3.7600000000000002,
-  "lastDate": "2026-11-26",
+  "last": 3.87,
+  "lastDate": "2026-11-27",
   "source": "ASX last price (history builds up each run)"
  }
 }

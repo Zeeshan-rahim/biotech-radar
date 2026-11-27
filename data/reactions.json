@@ -4,7 +4,7 @@
    "base": 21.32,
    "day": "2026-11-26",
    "d1": 0.0,
-   "d5": null,
+   "d5": -12.1,
    "complete5": false,
    "headline": "Trading Halt",
    "date": "2026-11-26",
@@ -14,11 +14,21 @@
    "base": 21.32,
    "day": "2026-11-26",
    "d1": 0.0,
-   "d5": null,
+   "d5": -12.1,
    "complete5": false,
    "headline": "Pause in Trading",
    "date": "2026-11-26",
    "kind": "halt"
+  },
+  "2924-03167692-2A1713364": {
+   "base": 21.32,
+   "day": "2026-11-27",
+   "d1": -12.1,
+   "d5": null,
+   "complete5": false,
+   "headline": "Neuren updates on Pitt Hopkins Phase 3 development program",
+   "date": "2026-11-27",
+   "kind": "trial"
   }
  },
  "DXB": {},
@@ -28,7 +38,7 @@
    "base": 1.85,
    "day": "2026-11-25",
    "d1": 5.4,
-   "d5": -1.4,
+   "d5": -2.7,
    "complete5": false,
    "headline": "Chair's Address to Shareholders",
    "date": "2026-11-25",
@@ -40,8 +50,8 @@
    "base": 0.385,
    "day": "2026-11-23",
    "d1": -1.3,
-   "d5": -5.2,
-   "complete5": false,
+   "d5": -2.6,
+   "complete5": true,
    "headline": "ROXUS U.S. Rollout Reaches 500 Bottles Across 43 States",
    "date": "2026-11-23",
    "kind": "info"
@@ -60,10 +70,20 @@
    "base": 46.59,
    "day": "2026-11-25",
    "d1": -2.7,
-   "d5": 0.5,
+   "d5": 15.6,
    "complete5": false,
    "headline": "Richard White confirms conclusion of AFP investigation",
    "date": "2026-11-25",
+   "kind": "info"
+  },
+  "2924-03167618-2A1713330": {
+   "base": 46.81,
+   "day": "2026-11-27",
+   "d1": 15.1,
+   "d5": null,
+   "complete5": false,
+   "headline": "2026 AGM addresses, presentation slides and trading update",
+   "date": "2026-11-27",
    "kind": "info"
   }
  },

@@ -1,6 +1,16 @@
 {
  "NEU": [
   {
+   "id": "2924-03167692-2A1713364",
+   "at": "2026-11-27T09:59:31+11:00",
+   "date": "2026-11-27",
+   "headline": "Neuren updates on Pitt Hopkins Phase 3 development program",
+   "sensitive": true,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03167692-2A1713364?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "171KB",
+   "ticker": "NEU"
+  },
+  {
    "id": "2924-03167012-2A1713114",
    "at": "2026-11-26T10:09:21+11:00",
    "date": "2026-11-26",
@@ -144,6 +154,36 @@
   }
  ],
  "EMV": [
+  {
+   "id": "2924-03167869-6A1357580",
+   "at": "2026-11-27T14:21:42+11:00",
+   "date": "2026-11-27",
+   "headline": "Change of Director's Interest Notice x4",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03167869-6A1357580?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "331KB",
+   "ticker": "EMV"
+  },
+  {
+   "id": "2924-03167862-6A1357577",
+   "at": "2026-11-27T14:18:17+11:00",
+   "date": "2026-11-27",
+   "headline": "Notification regarding unquoted securities - EMV",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03167862-6A1357577?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "14KB",
+   "ticker": "EMV"
+  },
+  {
+   "id": "2924-03167860-6A1357575",
+   "at": "2026-11-27T14:16:52+11:00",
+   "date": "2026-11-27",
+   "headline": "Notification regarding unquoted securities - EMV",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03167860-6A1357575?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "24KB",
+   "ticker": "EMV"
+  },
   {
    "id": "2924-03165913-6A1356726",
    "at": "2026-11-24T17:11:27+11:00",
@@ -669,6 +709,16 @@
  ],
  "VNT": [
   {
+   "id": "2924-03167510-2A1713296",
+   "at": "2026-11-27T07:32:50+11:00",
+   "date": "2026-11-27",
+   "headline": "Update - Notification of buy-back - VNT",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03167510-2A1713296?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "11KB",
+   "ticker": "VNT"
+  },
+  {
    "id": "2924-03166842-2A1713029",
    "at": "2026-11-26T08:25:56+11:00",
    "date": "2026-11-26",
@@ -790,6 +840,26 @@
   }
  ],
  "SOL": [
+  {
+   "id": "2924-03167839-2A1713444",
+   "at": "2026-11-27T13:52:12+11:00",
+   "date": "2026-11-27",
+   "headline": "Results of 2026 Annual General Meeting",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03167839-2A1713444?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "248KB",
+   "ticker": "SOL"
+  },
+  {
+   "id": "2924-03167640-2A1713345",
+   "at": "2026-11-27T09:21:21+11:00",
+   "date": "2026-11-27",
+   "headline": "SOL 2026 AGM Chair Address and MD & CEO Presentation",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03167640-2A1713345?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "1954KB",
+   "ticker": "SOL"
+  },
   {
    "id": "2924-03165265-2A1712277",
    "at": "2026-11-23T17:42:42+11:00",
@@ -966,6 +1036,46 @@
   }
  ],
  "WTC": [
+  {
+   "id": "2924-03167998-2A1713500",
+   "at": "2026-11-27T16:43:17+11:00",
+   "date": "2026-11-27",
+   "headline": "Change of Director's Interest Notice (x4)",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03167998-2A1713500?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "1892KB",
+   "ticker": "WTC"
+  },
+  {
+   "id": "2924-03167995-2A1713497",
+   "at": "2026-11-27T16:41:47+11:00",
+   "date": "2026-11-27",
+   "headline": "Notification regarding unquoted securities - WTC",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03167995-2A1713497?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "12KB",
+   "ticker": "WTC"
+  },
+  {
+   "id": "2924-03167907-2A1713468",
+   "at": "2026-11-27T15:09:27+11:00",
+   "date": "2026-11-27",
+   "headline": "Results of Meeting",
+   "sensitive": false,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03167907-2A1713468?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "204KB",
+   "ticker": "WTC"
+  },
+  {
+   "id": "2924-03167618-2A1713330",
+   "at": "2026-11-27T09:00:31+11:00",
+   "date": "2026-11-27",
+   "headline": "2026 AGM addresses, presentation slides and trading update",
+   "sensitive": true,
+   "url": "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-03167618-2A1713330?access_token=83ff96335c2d45a094df02a206a39ff4",
+   "pages": "2124KB",
+   "ticker": "WTC"
+  },
   {
    "id": "2924-03166090-2A1712732",
    "at": "2026-11-25T08:22:00+11:00",
