@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23",
+ "updated": "2026-11-27",
  "companies": [
   {
    "id": "neu",
@@ -310,6 +310,16 @@
     {
      "date": "2026-11-05",
      "title": "Q3 2026 DAYBUE net sales up 39%, full year guidance upgraded",
+     "desc": ""
+    },
+    {
+     "date": "2026-11-26",
+     "title": "Trading Halt",
+     "desc": ""
+    },
+    {
+     "date": "2026-11-26",
+     "title": "Pause in Trading",
      "desc": ""
     }
    ],
@@ -2062,6 +2072,11 @@
     {
      "date": "2026-11-11",
      "title": "Trading Halt",
+     "desc": ""
+    },
+    {
+     "date": "2026-11-25",
+     "title": "Chair's Address to Shareholders",
      "desc": ""
     }
    ],
@@ -4071,6 +4086,11 @@
     {
      "date": "2026-10-15",
      "title": "Resolution of ASIC matters",
+     "desc": ""
+    },
+    {
+     "date": "2026-11-25",
+     "title": "Richard White confirms conclusion of AFP investigation",
      "desc": ""
     }
    ],
