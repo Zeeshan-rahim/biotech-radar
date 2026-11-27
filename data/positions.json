@@ -24,5 +24,10 @@
     "done": false
    }
   ]
+ },
+ "DRR": {
+  "held": true,
+  "bought": "2026-07-15",
+  "plan": []
  }
 }
