@@ -753,7 +753,9 @@
       "shares": 7000
      }
     ]
-   }
+   },
+   "buyOverride": 18.8,
+   "sellOverride": 25.2
   },
   {
    "id": "dxb",
