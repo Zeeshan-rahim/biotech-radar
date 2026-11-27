@@ -462,7 +462,8 @@ def raise_window(co, today):
 
 # ------------------------------------------------------------------ automatic rules twin
 def stake_fee(value):
-    return 3.0 if value <= 30000 else round(value * 0.0001, 2)
+    """CommSec online brokerage (matches the user's contract notes)."""
+    return 10.0 if value <= 1000 else 19.95 if value <= 10000 else 29.95 if value <= 25000 else round(value * 0.0012, 2)
 
 
 def twin_step(cfg, companies, prices, twin, today):
@@ -477,7 +478,7 @@ def twin_step(cfg, companies, prices, twin, today):
         cap = float(pf.get('paperCapital', 500000))
         twin.update({'capital': cap, 'cash': cap, 'start': today.isoformat(), 'holdings': {}, 'trades': [], 'history': [],
                      'benchStart': last(bm)[1] if bm else None,
-                     'rules': 'Buy at the close when a reviewed stock signals Buy (sized by its sleeve weight, slot/2–18%/Health Care 30% limits; rare & Insects wait for the raise). Sell at the close on thesis broken, sell price reached, or holding limit. Stake brokerage charged.'})
+                     'rules': 'Buy at the close when a reviewed stock signals Buy (sized by its sleeve weight, slot/2–18%/Health Care 30% limits; rare & Insects wait for the raise). Sell at the close on thesis broken, sell price reached, or holding limit. CommSec brokerage charged.'})
     day = max((last(c['ticker'])[0] or '') for c in companies) if companies else ''
     if not day or day <= (twin.get('lastDay') or ''):
         return []
@@ -603,7 +604,7 @@ def build_alerts(cfg, companies, prices, positions, new_anns, new_props, state, 
                     fire(f'zone:{t}', 'Sell', f"**{t}** is above its sell price A${ev['sell']:.3f} — not one to buy now{tag}.")
             elif sig == 'Hold' and held and ev.get('sell') and last >= ev['sell'] * (1 - A.get('nearSellPct', 5) / 100):
                 gap = (ev['sell'] / last - 1) * 100
-                fire(f'near:{t}', 1, f"**GET READY {t}** ({who}): A${last:.3f} is within {gap:.1f}% of your sell price A${ev['sell']:.3f}{tag}. If it closes at or above it you'll get a SELL email with a limit price; you can also pre-set a limit sell at **A${round_tick(ev['sell']):g}** on Stake now.", 'action')
+                fire(f'near:{t}', 1, f"**GET READY {t}** ({who}): A${last:.3f} is within {gap:.1f}% of your sell price A${ev['sell']:.3f}{tag}. If it closes at or above it you'll get a SELL email with a limit price; you can also pre-set a limit sell at **A${round_tick(ev['sell']):g}** on CommSec now.", 'action')
             elif sig == 'Buy':
                 chk = f"passes the {co.get('animal','')} checks" if ev['gates'] else 'speculative sleeve: judged on the scenarios and success odds'
                 fire(f'zone:{t}', 'Buy', f"**BUY ZONE {t}**: A${last:.3f} is at or below your buy price A${ev['buy']:.3f} ({chk}){tag}.", 'action')
@@ -626,7 +627,7 @@ def build_alerts(cfg, companies, prices, positions, new_anns, new_props, state, 
         if last and plan:
             for i, tr in enumerate(plan):
                 if not tr.get('done') and tr.get('price') and float(tr['price']) * (1 - A.get('nearSellPct', 5) / 100) <= last < float(tr['price']):
-                    fire(f'ladnear:{t}:{i}', 1, f"**GET READY {t}**: A${last:.3f} is within {(float(tr['price'])/last-1)*100:.1f}% of sell-ladder step '{tr.get('label','')}' (A${float(tr['price']):.2f}). Consider pre-setting a limit sell at A${float(tr['price']):.2f} on Stake.", 'action')
+                    fire(f'ladnear:{t}:{i}', 1, f"**GET READY {t}**: A${last:.3f} is within {(float(tr['price'])/last-1)*100:.1f}% of sell-ladder step '{tr.get('label','')}' (A${float(tr['price']):.2f}). Consider pre-setting a limit sell at A${float(tr['price']):.2f} on CommSec.", 'action')
                 if not tr.get('done') and tr.get('price') and last >= float(tr['price']):
                     amt = f"{tr['shares']:,} shares" if tr.get('shares') else 'your planned amount'
                     lim, why = suggest_limit('ladder', last, float(tr['price']), cfg)
