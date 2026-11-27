@@ -127,6 +127,7 @@ aside .grp{color:var(--g3);font-weight:700}
 .banner{border-left:5px solid currentColor}
 .gate b.ok{background:var(--buy-soft);border-radius:50%;padding:0 4px} .gate b.no{background:var(--bad-soft);border-radius:50%;padding:0 4px}
 .foot{border-top:1px solid var(--line);padding-top:12px}
+.drop{display:block;border:2px dashed var(--line);border-radius:12px;padding:22px;text-align:center;cursor:pointer;background:color-mix(in srgb,var(--g2) 5%,var(--panel))}.drop:hover,.drop.over{border-color:var(--g2);background:color-mix(in srgb,var(--g2) 12%,var(--panel))}
 </style>
 </head>
 <body>
@@ -318,6 +319,7 @@ function route(){
   else if(view==='alerts')m.innerHTML=viewAlerts();
   else if(view==='settings')m.innerHTML=viewSettings();
   else if(view==='records')m.innerHTML=viewRecords(parts[1]);
+  else if(view==='trade')m.innerHTML=viewTrade(parts[1]);
   else m.innerHTML=viewHome();
   window.scrollTo({top:0});
   if(view==='co')drawChart(parts[1]);
@@ -325,7 +327,7 @@ function route(){
 function pending(){return S.props.items.filter(p=>!S.decisions[p.id])}
 function renderNav(v){
   const n=pending().length;
-  const L=[['home','Home & value'],['calendar','Catalyst calendar'],['review','Review queue'+(n?`<span class="n">${n}</span>`:'')],['alerts','Alerts'],['records','Records'+((typeof reviewsDue==='function'&&reviewsDue().length)?`<span class="n">${reviewsDue().length}</span>`:'')],['settings','Settings & positions']];
+  const L=[['home','Home & value'],['calendar','Catalyst calendar'],['review','Review queue'+(n?`<span class="n">${n}</span>`:'')],['alerts','Alerts'],['trade','Buy & Sell'],['records','Records'+((typeof reviewsDue==='function'&&reviewsDue().length)?`<span class="n">${reviewsDue().length}</span>`:'')],['settings','Settings & positions']];
   $('#nav').innerHTML=L.map(([k,l])=>`<a href="#${k}" class="${v===k||(!v&&k==='home')?'on':''}">${l}</a>`).join('');
 }
 const SECC={energy:'#E8590C',materials:'#A0522D',industrials:'#5C6BC0',discretionary:'#D6336C',staples:'#2F9E44',health:'#0CA678',financials:'#1C7ED6',it:'#7048E8',comms:'#F08C00',utilities:'#1098AD',realestate:'#AE3EC9'};
@@ -646,7 +648,7 @@ function posCard(co){
   const p=S.positions[co.ticker]||{}, lp=lastPrice(co.ticker), T=co.ticker;
   const plan=(p.plan||[]).map((s,i)=>`<tr><td><input value="${esc(s.label||'')}" onchange="setPos('${T}','plan.${i}.label',this.value)"></td><td><input type="number" step="0.01" value="${s.price??''}" onchange="setPos('${T}','plan.${i}.price',+this.value)"></td><td><input type="number" value="${s.shares??''}" onchange="setPos('${T}','plan.${i}.shares',+this.value)"></td><td><input type="checkbox" ${s.done?'checked':''} onchange="setPos('${T}','plan.${i}.done',this.checked)"></td><td>${lp&&s.price&&lp.v>=s.price&&!s.done?'<span class="pill p-sell">reached</span>':''}</td><td><button class="danger" onclick="delPlan('${T}',${i})">✕</button></td></tr>`).join('');
   const nT=(typeof R!=='undefined')?R.trades.filter(x=>x.t===T).length:0;
-  return `<div class="card"><div class="row"><h3 style="margin:0">Your position</h3><span class="sp"></span><a class="btn" href="#records/${T}">Record a real trade</a></div>
+  return `<div class="card"><div class="row"><h3 style="margin:0">Your position</h3><span class="sp"></span><a class="btn" href="#trade/${T}">Record a real trade</a></div>
    ${nT?`<p class="tiny muted">${nT} trade(s) in Records — shares, cost and first-bought date below are kept in step with the log.</p>`:''}
    <div class="row"><label class="chk">Shares <input type="number" value="${p.shares??''}" onchange="setPos('${T}','shares',+this.value)"></label>
    <label class="chk">Avg cost A$ <input type="number" step="0.001" value="${p.cost??''}" onchange="setPos('${T}','cost',+this.value)"></label>
@@ -947,7 +949,7 @@ function syncPositionFromLog(t){
 function reviewsDue(){return R.trades.filter(t=>t.reviewOn&&!t.review&&t.reviewOn<=TODAY_ISO)}
 
 /* ---------- actions */
-function rFeeAuto(){const q=+$('#t-qty').value,p=+$('#t-px').value;if(q&&p)$('#t-fee').value=stakeFee(q*p)}
+function rFeeAuto(){const q=+$('#t-qty').value,p=+$('#t-px').value;if(q&&p)$('#t-fee').value=brokerFee(q*p)}
 function addTrade(){
   const g=id=>$('#'+id).value.trim();
   const t={id:rid(),date:g('t-date'),t:g('t-tk').toUpperCase(),side:g('t-side'),qty:+g('t-qty'),price:+g('t-px'),fee:+g('t-fee')||0,
@@ -1024,15 +1026,7 @@ function viewRecords(pre){
    <button onclick="backupRecords()">Download backup</button><label class="btn">Restore backup<input type="file" accept=".json" hidden onchange="restoreRecords(this.files[0])"></label></div>
    <p class="small muted">Real trades only (the paper portfolio stays on the Home page). Stored only in this browser — never sent to GitHub. Recording a trade also updates "Your position" on the stock page, so the sell-ladder alerts stay right.</p></div>
   ${due.length?`<div class="card"><h3>Journal reviews due (${due.length})</h3><p class="small">Open each trade below and write what happened. This is how the method gets better.</p></div>`:''}
-  <div class="card"><h3>Record a trade (after it fills on Stake)</h3>
-   <div class="row"><input type="date" id="t-date" value="${TODAY_ISO}"><input id="t-tk" list="t-cos" placeholder="Ticker" value="${t0}" style="width:90px"><datalist id="t-cos">${coOpts}</datalist>
-   <select id="t-side"><option value="buy">Buy</option><option value="sell">Sell</option></select>
-   <input type="number" id="t-qty" placeholder="Shares" oninput="rFeeAuto()" style="width:110px"><input type="number" step="0.001" id="t-px" placeholder="Price A$" oninput="rFeeAuto()" style="width:110px">
-   <input type="number" step="0.01" id="t-fee" placeholder="Brokerage A$" style="width:120px" title="Filled with Stake's ASX fee (A$3 up to A$30k, then 0.01%) — check your contract note"></div>
-   <input id="t-why" placeholder="Why (one line) — e.g. 'Site says Buy, research reviewed, PEG 0.9, trigger: cost-out'" style="width:100%;margin-top:6px">
-   <div class="row" style="margin-top:6px"><input id="t-expect" placeholder="What I expect, and by when" style="flex:1"><input id="t-wrong" placeholder="I'm wrong if…" style="flex:1"></div>
-   <div class="row" style="margin-top:6px"><label class="chk">Review on <input type="date" id="t-rev" value="${iso(new Date(TODAY.getTime()+182*864e5))}"></label><span class="sp"></span><button class="primary" onclick="addTrade()">Record trade</button></div>
-   <p class="tiny muted">Cost base includes brokerage. Sells are matched to the oldest parcel first (FIFO). If you chose specific parcels when selling, tell your accountant.</p></div>
+  <div class="card"><div class="row"><h3 style="margin:0">Record a trade</h3><span class="sp"></span><a class="btn primary" href="#trade">Go to Buy & Sell →</a></div><p class="small muted">Trades are now recorded in <b>Buy & Sell</b>: drop the CommSec contract note PDF there and it fills everything in.</p><datalist id="t-cos">${coOpts}</datalist></div>
   <div class="card"><h3>Parcels held (from the log)</h3><table><thead><tr><th>Stock</th><th class="num">Shares</th><th class="num">Parcels</th><th class="num">Avg cost</th><th class="num">Cost base</th><th class="num">Value</th><th class="num">Gain</th></tr></thead><tbody>${hold||'<tr><td colspan="7" class="muted">No trades recorded yet.</td></tr>'}</tbody></table></div>
   <div class="card"><h3>Trade log and decision journal</h3><table><thead><tr><th>Date</th><th>Stock</th><th></th><th class="num">Shares</th><th class="num">Price</th><th class="num">Fee</th><th>Why / review</th><th></th></tr></thead><tbody>${trows||'<tr><td colspan="8" class="muted">None yet.</td></tr>'}</tbody></table></div>
   <div class="card"><h3>Dividends received</h3>
@@ -1280,7 +1274,7 @@ function nearSellAttn(){
   const pct=((S.cfg.alerts||{}).nearSellPct||5)/100, out=[];
   for(const co of S.data.companies){const t=co.ticker;if(!(heldReal(t)||heldPaper(t)))continue;const lp=lastPrice(t);if(!lp)continue;
     const e=co.scenarios?evaluate(co,lp.v):null;
-    if(e&&e.signal==='Hold'&&e.sell&&lp.v>=e.sell*(1-pct))out.push(`<li><b>Get ready to sell ${t}</b> — ${money(lp.v)} is within ${((e.sell/lp.v-1)*100).toFixed(1)}% of the sell price ${money(e.sell)}. You can pre-set a limit sell at ${money(e.sell)} on Stake.</li>`);
+    if(e&&e.signal==='Hold'&&e.sell&&lp.v>=e.sell*(1-pct))out.push(`<li><b>Get ready to sell ${t}</b> — ${money(lp.v)} is within ${((e.sell/lp.v-1)*100).toFixed(1)}% of the sell price ${money(e.sell)}. You can pre-set a limit sell at ${money(e.sell)} on CommSec.</li>`);
     const p=S.positions[t]||{};
     if(p.bought){const maxy=sleeveRules(co).maxYears||3,end=new Date(pd(p.bought).getTime()+maxy*365.25*864e5),left=Math.round((end-TODAY)/864e5);
       if(left<=180)out.push(`<li><b>${t} holding limit</b> — your ${maxy}-year limit ends ${fmtDate(iso(end))} (${Math.max(left,0)} days). ${left<=30?'Sell or re-justify now.':'Plan the exit.'}</li>`)}
@@ -1348,6 +1342,106 @@ function reviewListCard(){
   return `<div class="card"><div class="row"><h3 style="margin:0">📝 Research to review (${rows.length})</h3><span class="sp"></span><span class="small">${done} reviewed · do one each Friday, top first</span></div>
    <details ${rows.length?'open':''}><summary class="small">On each stock: read the thesis, memo, metrics and scenarios → change anything you disagree with → <b>Looks right — mark reviewed</b> → <b>Save changes</b>.</summary>
    <table style="margin-top:6px"><thead><tr><th class="num">#</th><th>Stock</th><th>Why now</th><th>Signal</th><th class="num">Price</th><th class="num">Buy ≤</th><th class="num">vs buy</th><th></th></tr></thead><tbody>${tr}</tbody></table></details></div>`;
+}
+
+/* ====================================================== Buy & Sell: drop CommSec contract notes, or type a trade */
+function brokerFee(value){return value<=1000?10:value<=10000?19.95:value<=25000?29.95:Math.round(value*0.0012*100)/100}   // CommSec online (matches your statement)
+let PDFJS=null, CN_PENDING=[];
+async function loadPdfjs(){
+  if(PDFJS)return PDFJS;
+  const srcs=[['pdf.min.mjs','pdf.worker.min.mjs'],['lib/pdf.min.mjs','lib/pdf.worker.min.mjs'],['https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/legacy/build/pdf.min.mjs','https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/legacy/build/pdf.worker.min.mjs']];
+  for(const[m,w]of srcs){try{const lib=await import(new URL(m,location.href).href);lib.GlobalWorkerOptions.workerSrc=new URL(w,location.href).href;PDFJS=lib;return lib}catch(e){}}
+  throw new Error('Could not load the PDF reader (check your internet connection).');
+}
+async function pdfText(file){
+  const lib=await loadPdfjs(), doc=await lib.getDocument({data:new Uint8Array(await file.arrayBuffer())}).promise; let out=[];
+  for(let p=1;p<=Math.min(doc.numPages,3);p++){const tc=await (await doc.getPage(p)).getTextContent();out.push(tc.items.map(i=>i.str).join('\n'))}
+  return out.join('\n');
+}
+function parseCN(text,fname){
+  const T=text.replace(/ /g,' '), up=T.toUpperCase(), r={file:fname,warn:[]};
+  r.side=/WE HAVE SOLD|\bSELL\b|CNOTESELL|NET PROCEEDS/.test(up)&&!/WE HAVE BOUGHT/.test(up)?'sell':/WE HAVE BOUGHT|\bBUY\b/.test(up)?'buy':null;
+  const dates=[...T.matchAll(/\b(\d{2})\/(\d{2})\/(\d{4})\b/g)].map(m=>`${m[3]}-${m[2]}-${m[1]}`).sort(); r.date=dates[0]||null;
+  const conf=(up.match(/CONFIRMATION NO:?\s*(\d{6,})/)||[])[1]||(T.match(/\b(1\d{8})\b/)||[])[1]; r.conf=conf||null;
+  r.account=(T.match(/\b(\d{7})\b/)||[])[1]||null;
+  const known=new Set(S.data.companies.map(c=>c.ticker)), stop=new Set(['BUY','SELL','AUD','GST','ASX','ORIGINAL','TAX','DATE','UNITS','PRICE','TOTAL','AFSL','ABN','CBOE','NSW','LTD','PTY','ETF','DR','A/C','AT']);
+  const toks=[...T.matchAll(/(?:^|\n)\s*([A-Z0-9]{3,6})\s*(?=\n|$)/g)].map(m=>m[1]).filter(x=>!stop.has(x)&&/[A-Z]/.test(x));
+  r.t=toks.find(x=>known.has(x))||toks[0]||null;
+  {const co=r.t&&companyById(r.t);r.name=co?co.name:((T.split('\n').map(x=>x.trim()).find(x=>/^[A-Z0-9 &.,'()-]{6,}$/.test(x)&&/LIMITED|LTD|ETF|TRUST|GROUP|FUND|HOLDINGS|PHARMA|CORP/.test(x)&&!/COMMONWEALTH|COMMSEC|ASX|CBOE/.test(x)))||'');}
+  const prices=[...T.matchAll(/\b(\d+\.\d{4,6})\b/g)].map(m=>+m[1]), money=[...T.matchAll(/\$\s?([\d,]+\.\d{2})/g)].map(m=>+m[1].replace(/,/g,'')),
+        ints=[...T.matchAll(/(?:^|\s)(\d{1,3}(?:,\d{3})+|\d{1,8})(?=\s|$)/g)].map(m=>+m[1].replace(/,/g,'')).filter(n=>n>0);
+  const avg=(up.match(/AVERAGE PRICE:?\s*\n?\s*(\d+\.\d+)/)||[])[1]; r.price=avg?+avg:prices[0]||null;
+  if(r.price){for(const n of ints){const c=money.find(d=>Math.abs(n*r.price-d)<=Math.max(0.05,n*r.price*0.0005));if(c){r.qty=n;r.consideration=c;break}}}
+  if(r.consideration){
+    const others=money.filter(d=>d!==r.consideration);
+    if(r.side==='buy'){const tot=others.filter(d=>d>r.consideration&&d-r.consideration<=600).sort((a,b)=>b-a)[0];if(tot)r.fee=Math.round((tot-r.consideration)*100)/100}
+    else{const net=others.filter(d=>d<r.consideration&&r.consideration-d<=600).sort((a,b)=>b-a)[0];if(net)r.fee=Math.round((r.consideration-net)*100)/100}
+  }
+  const bro=(up.match(/BROKERAGE[^$]*\$\s?([\d,]+\.\d{2})/)||[])[1]; if(r.fee==null&&bro)r.fee=+bro.replace(/,/g,'');
+  if(r.fee==null&&r.consideration)r.fee=brokerFee(r.consideration),r.warn.push('brokerage estimated');
+  ['side','date','t','qty','price'].forEach(k=>{if(r[k]==null)r.warn.push('could not read '+k)});
+  if(r.t&&!known.has(r.t))r.warn.push(r.t+' is not on the site yet (it will still be recorded)');
+  r.id=r.conf?'cn'+r.conf:null;
+  r.dup=R.trades.some(x=>(r.id&&x.id===r.id)||(x.date===r.date&&x.t===r.t&&+x.qty===r.qty&&Math.abs(x.price-r.price)<1e-6&&x.side===r.side));
+  return r;
+}
+async function cnFiles(files){
+  const box=$('#cn-status'); if(box)box.textContent='Reading…';
+  for(const f of files){try{const txt=await pdfText(f);CN_PENDING.push(parseCN(txt,f.name))}catch(e){CN_PENDING.push({file:f.name,warn:['Could not read this PDF: '+e.message],bad:true})}}
+  route();
+}
+function cnDrop(ev){ev.preventDefault();ev.currentTarget.classList.remove('over');cnFiles([...ev.dataTransfer.files].filter(f=>/pdf$/i.test(f.name)))}
+function cnRecord(i){
+  const r=CN_PENDING[i],g=k=>($(`#cn-${k}-${i}`)||{}).value;
+  const t={id:r.id||rid(),date:g('date'),t:(g('t')||'').toUpperCase(),side:g('side'),qty:+g('qty'),price:+g('price'),fee:+g('fee')||0,why:(g('why')||'').trim(),expect:(g('expect')||'').trim(),wrong:'',
+    reviewOn:iso(new Date(TODAY.getTime()+182*864e5)),created:new Date().toISOString(),source:`CommSec contract note ${r.conf||''} (${r.file})`};
+  if(!t.date||!t.t||!(t.qty>0)||!(t.price>0))return alert('Date, ticker, shares and price are needed.');
+  if(!t.why)return alert('Write one line on why — the journal is how the platform keeps a check on you.');
+  if(R.trades.some(x=>x.id===t.id))return alert('This contract note is already recorded.');
+  if(t.side==='sell'){const held=(ledger().open[t.t]||[]).reduce((a,p)=>a+p.left,0);if(t.qty>held+1e-9&&!confirm(`Records only hold ${held} ${t.t}. Record anyway?`))return}
+  const co=companyById(t.t);if(co&&co.scenarios){const lp=lastPrice(t.t),e=evaluate(co,t.price);t.snap={signal:e.signal,buy:e.buy,sell:e.sell,ev:e.ev,animal:co.animal,sleeve:co.sleeve,reviewed:!!co.reviewed,lastClose:lp&&lp.v}}
+  R.trades.push(t);rSave();syncPositionFromLog(t.t);CN_PENDING.splice(i,1);toast(`${t.side==='buy'?'Bought':'Sold'} ${t.qty} ${t.t} recorded`);route();
+}
+function cnDiscard(i){CN_PENDING.splice(i,1);route()}
+function signalsNow(){
+  const b=[],s=[];
+  for(const co of S.data.companies){const lp=lastPrice(co.ticker);if(!lp||!co.scenarios)continue;const e=evaluate(co,lp.v),held=heldReal(co.ticker);
+    if(e.signal==='Buy')b.push(`<li><a href="#co/${co.ticker}"><b>${co.ticker}</b></a> ${animalTag(co)} at ${money(lp.v)} — buy ≤ ${money(e.buy)}${co.reviewed?'':' <span class="pill p-warn">draft: review first</span>'}</li>`);
+    if(held&&/^Sell/.test(e.signal))s.push(`<li><a href="#co/${co.ticker}"><b>${co.ticker}</b></a> ${esc(e.signal)} — sell ≥ ${money(e.sell)} (limit ${money(suggestLimit(e.signal.includes('broken')?'thesis':'over',lp.v,e.sell).price)})</li>`)}
+  return {b,s};
+}
+function viewTrade(pre){
+  const coOpts=S.data.companies.map(c=>`<option value="${c.ticker}">`).join(''), t0=pre&&companyById(pre)?pre:'', sig=signalsNow();
+  const rows=CN_PENDING.map((r,i)=>r.bad?`<tr><td colspan="9" class="small" style="color:var(--bad)">${esc(r.file)}: ${esc(r.warn.join('; '))} <button onclick="cnDiscard(${i})">✕</button></td></tr>`:`
+   <tr style="${r.dup?'opacity:.6':''}"><td><input type="date" id="cn-date-${i}" value="${r.date||''}"></td><td><input id="cn-t-${i}" value="${r.t||''}" style="width:70px" list="tr-cos"></td>
+   <td><select id="cn-side-${i}"><option value="buy" ${r.side==='buy'?'selected':''}>Buy</option><option value="sell" ${r.side==='sell'?'selected':''}>Sell</option></select></td>
+   <td><input type="number" id="cn-qty-${i}" value="${r.qty??''}" style="width:90px"></td><td><input type="number" step="0.0001" id="cn-price-${i}" value="${r.price??''}" style="width:95px"></td>
+   <td><input type="number" step="0.01" id="cn-fee-${i}" value="${r.fee??''}" style="width:75px"></td>
+   <td><input id="cn-why-${i}" placeholder="Why (one line) — required" style="width:100%;min-width:220px"><input id="cn-expect-${i}" placeholder="What I expect (optional)" style="width:100%;margin-top:4px"></td>
+   <td>${r.dup?'<span class="pill p-warn">already recorded</span>':`<button class="primary" onclick="cnRecord(${i})">Record</button>`} <button onclick="cnDiscard(${i})">✕</button></td></tr>
+   <tr><td colspan="8" class="tiny muted" style="border-top:none">${esc(r.file)} · confirmation ${esc(r.conf||'?')} · ${esc(r.name||'')} ${r.consideration?`· consideration ${money(r.consideration,2)}`:''} ${r.warn.length?`<span style="color:var(--warn)">· ${esc(r.warn.join('; '))}</span>`:'· all fields read ✓'}</td></tr>`).join('');
+  const recent=[...R.trades].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,8).map(t=>`<tr><td>${fmtDate(t.date)}</td><td><span class="pill ${t.side==='buy'?'p-buy':'p-sell'}">${t.side}</span> <a href="#co/${t.t}">${t.t}</a></td><td class="num">${(+t.qty).toLocaleString()} @ ${money(t.price)}</td><td class="num">${money(t.fee)}</td><td class="small">${esc(t.why)}</td></tr>`).join('');
+  return `<div class="grid g2">
+   <div class="card"><h3>🟢 What the site says to buy</h3>${sig.b.length?`<ul class="small">${sig.b.join('')}</ul>`:'<p class="small muted">Nothing in the buy zone. Waiting is the plan.</p>'}</div>
+   <div class="card"><h3>🔴 What the site says to sell (your holdings)</h3>${sig.s.length?`<ul class="small">${sig.s.join('')}</ul>`:'<p class="small muted">No sell triggers on your holdings.</p>'}</div></div>
+  <div class="card"><h3>📄 Drop your CommSec contract notes here</h3>
+   <label class="drop" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="cnDrop(event)">
+     <input type="file" accept="application/pdf,.pdf" multiple hidden onchange="cnFiles([...this.files])">
+     <b>Drag the PDF(s) here</b> or click to choose — buys and sells, one or many at a time.<br><span class="tiny muted" id="cn-status">Read in your browser only; the PDF is never uploaded anywhere.</span></label>
+   ${rows?`<div style="overflow-x:auto"><table style="margin-top:10px"><thead><tr><th>Date</th><th>Stock</th><th></th><th>Units</th><th>Price</th><th>Brokerage</th><th>Journal</th><th></th></tr></thead><tbody>${rows}</tbody></table></div><datalist id="tr-cos">${coOpts}</datalist>
+     <p class="tiny muted">Check the figures, write one line on why, then Record. Brokerage is read from the note (total cost − consideration for buys; consideration − net proceeds for sells).</p>`:''}</div>
+  <div class="card"><h3>Or type it in</h3>
+   <div class="row"><input type="date" id="t-date" value="${TODAY_ISO}"><input id="t-tk" list="t-cos" placeholder="Ticker" value="${t0}" style="width:90px"><datalist id="t-cos">${coOpts}</datalist>
+   <select id="t-side"><option value="buy">Buy</option><option value="sell">Sell</option></select>
+   <input type="number" id="t-qty" placeholder="Shares" oninput="rFeeAuto()" style="width:110px"><input type="number" step="0.001" id="t-px" placeholder="Price A$" oninput="rFeeAuto()" style="width:110px">
+   <input type="number" step="0.01" id="t-fee" placeholder="Brokerage A$" style="width:120px" title="Filled with CommSec's fee (A$19.95 to A$10k, A$29.95 to A$25k, then 0.12%) — check your contract note"></div>
+   <input id="t-why" placeholder="Why (one line) — e.g. 'Site says Buy, research reviewed, PEG 0.9, trigger: cost-out'" style="width:100%;margin-top:6px">
+   <div class="row" style="margin-top:6px"><input id="t-expect" placeholder="What I expect, and by when" style="flex:1"><input id="t-wrong" placeholder="I'm wrong if…" style="flex:1"></div>
+   <div class="row" style="margin-top:6px"><label class="chk">Review on <input type="date" id="t-rev" value="${iso(new Date(TODAY.getTime()+182*864e5))}"></label><span class="sp"></span><button class="primary" onclick="addTrade()">Record trade</button></div>
+   <p class="tiny muted">Cost base includes brokerage. Sells are matched to the oldest parcel first (FIFO). If you chose specific parcels when selling, tell your accountant.</p></div>
+
+  <div class="card"><div class="row"><h3 style="margin:0">Latest trades</h3><span class="sp"></span><a href="#records">All records, parcels, dividends and tax →</a></div>
+   <table><thead><tr><th>Date</th><th>Trade</th><th class="num">Units @ price</th><th class="num">Fee</th><th>Why</th></tr></thead><tbody>${recent||'<tr><td colspan="5" class="muted">None yet.</td></tr>'}</tbody></table></div>`;
 }
 </script>
 </body>
